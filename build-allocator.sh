@@ -26,8 +26,10 @@ MAX_ERRS="-fmax-errors=3"
 C_FLAGS="-fPIC ${DEBUG} ${OPT} ${WARN_FLAGS} ${MAX_ERRS} ${FEATURES} -ldl"
 CPP_FLAGS="-fno-rtti ${C_FLAGS}"
 
-COMPILE="g++ -I./include -shared -o libbkmalloc.so -x c++ -DBKMALLOC_IMPL ${CPP_FLAGS}"
+COMPILE="g++ -I./include -shared -o libbkmalloc.so -x c++ include/bkmalloc.h  -DBKMALLOC_IMPL ${CPP_FLAGS}"
 echo ${COMPILE}
 ${COMPILE} || exit $?
 
-g++ -I./include -fPIC -shared src/zswap_compression.cpp -L./libbkmalloc.so -o hook.so -lz -g
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+g++ -fPIC -shared src/zswap_compression.cpp -I./include -L$SCRIPT_DIR/libbkmalloc.so -o $SCRIPT_DIR/hook.so -lz -g
