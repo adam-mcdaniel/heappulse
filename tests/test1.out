@@ -1,1 +1,739 @@
+Checking compression stats
+sigaction successful
+Protecting allocations
+Protecting addr: 0x7f66446807e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643680000, n_bytes: 4096, compressed_size: 0
+[FAULT] Working thread, giving back access: 0x7f6643680000
+Protecting addr: 0x7f6644480680, n_bytes: 128, compressed_size: 0
+Protecting addr: 0x7f6643880000, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880020, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880040, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880060, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880080, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438800a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438800c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438800e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880100, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880120, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880140, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880160, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880180, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438801a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438801c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438801e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880200, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880220, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880240, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880260, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880280, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438802a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438802c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438802e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880300, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880320, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880340, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880360, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880380, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438803a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438803c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438803e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880400, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880420, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880440, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880460, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880480, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438804a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438804c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438804e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880500, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880520, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880540, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880560, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880580, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438805a0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438805c0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f66438805e0, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880600, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880620, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643880640, n_bytes: 32, compressed_size: 0
+Protecting addr: 0x7f6643e80100, n_bytes: 224, compressed_size: 0
+Done protecting allocations
+[FAULT] Working thread, giving back access: 0x7f6643e80128
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 26
+Compression succeeded
+Compressing 4096 bytes
+   src_address: 0x7ffe8fdb24f0
+   dst_address: 0x7ffe8fdb14e0
+   aligned_src_address: 0x0x7ffe8fdb2000
+   aligned_dst_address: 0x0x7ffe8fdb1000
+   estimated_compressed_size: 4110
+   actual_compressed_size: 87
+Compression succeeded
+Compressing 128 bytes
+   src_address: 0x7ffe8fdb3470
+   dst_address: 0x7ffe8fdb33e0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 141
+   actual_compressed_size: 103
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 32 bytes
+   src_address: 0x7ffe8fdb34d0
+   dst_address: 0x7ffe8fdb34a0
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 45
+   actual_compressed_size: 11
+Compression succeeded
+Compressing 224 bytes
+   src_address: 0x7ffe8fdb3410
+   dst_address: 0x7ffe8fdb3320
+   aligned_src_address: 0x0x7ffe8fdb3000
+   aligned_dst_address: 0x0x7ffe8fdb3000
+   estimated_compressed_size: 237
+   actual_compressed_size: 35
+Compression succeeded
+Unprotecting allocations
+Done unprotecting allocations
+Creating new bucket entry: lower_bytes_bound: 16, upper_bytes_bound: 32 -> n_entries: 1, total_compressed_sizes: 26 avg_compressed_size: 26 avg_compression_ratio: 0.8125
+Creating new bucket entry: lower_bytes_bound: 64, upper_bytes_bound: 128 -> n_entries: 1, total_compressed_sizes: 87 avg_compressed_size: 87 avg_compression_ratio: 0.0210756
+Updating bucket entry: n_entries: 2, total_compressed_sizes: 190 avg_compressed_size: 95 avg_compression_ratio: 0.0446429
+Creating new bucket entry: lower_bytes_bound: 10, upper_bytes_bound: 16 -> n_entries: 1, total_compressed_sizes: 11 avg_compressed_size: 11 avg_compression_ratio: 0.0025653
+Updating bucket entry: n_entries: 2, total_compressed_sizes: 22 avg_compressed_size: 11 avg_compression_ratio: 0.00509259
+Updating bucket entry: n_entries: 3, total_compressed_sizes: 33 avg_compressed_size: 11 avg_compression_ratio: 0.00758272
+Updating bucket entry: n_entries: 4, total_compressed_sizes: 44 avg_compressed_size: 11 avg_compression_ratio: 0.0100365
+Updating bucket entry: n_entries: 5, total_compressed_sizes: 55 avg_compressed_size: 11 avg_compression_ratio: 0.0124547
+Updating bucket entry: n_entries: 6, total_compressed_sizes: 66 avg_compressed_size: 11 avg_compression_ratio: 0.0148381
+Updating bucket entry: n_entries: 7, total_compressed_sizes: 77 avg_compressed_size: 11 avg_compression_ratio: 0.0171875
+Updating bucket entry: n_entries: 8, total_compressed_sizes: 88 avg_compressed_size: 11 avg_compression_ratio: 0.0195035
+Updating bucket entry: n_entries: 9, total_compressed_sizes: 99 avg_compressed_size: 11 avg_compression_ratio: 0.021787
+Updating bucket entry: n_entries: 10, total_compressed_sizes: 110 avg_compressed_size: 11 avg_compression_ratio: 0.0240385
+Updating bucket entry: n_entries: 11, total_compressed_sizes: 121 avg_compressed_size: 11 avg_compression_ratio: 0.0262587
+Updating bucket entry: n_entries: 12, total_compressed_sizes: 132 avg_compressed_size: 11 avg_compression_ratio: 0.0284483
+Updating bucket entry: n_entries: 13, total_compressed_sizes: 143 avg_compressed_size: 11 avg_compression_ratio: 0.0306079
+Updating bucket entry: n_entries: 14, total_compressed_sizes: 154 avg_compressed_size: 11 avg_compression_ratio: 0.0327381
+Updating bucket entry: n_entries: 15, total_compressed_sizes: 165 avg_compressed_size: 11 avg_compression_ratio: 0.0348395
+Updating bucket entry: n_entries: 16, total_compressed_sizes: 176 avg_compressed_size: 11 avg_compression_ratio: 0.0369128
+Updating bucket entry: n_entries: 17, total_compressed_sizes: 187 avg_compressed_size: 11 avg_compression_ratio: 0.0389583
+Updating bucket entry: n_entries: 18, total_compressed_sizes: 198 avg_compressed_size: 11 avg_compression_ratio: 0.0409768
+Updating bucket entry: n_entries: 19, total_compressed_sizes: 209 avg_compressed_size: 11 avg_compression_ratio: 0.0429688
+Updating bucket entry: n_entries: 20, total_compressed_sizes: 220 avg_compressed_size: 11 avg_compression_ratio: 0.0449346
+Updating bucket entry: n_entries: 21, total_compressed_sizes: 231 avg_compressed_size: 11 avg_compression_ratio: 0.046875
+Updating bucket entry: n_entries: 22, total_compressed_sizes: 242 avg_compressed_size: 11 avg_compression_ratio: 0.0487903
+Updating bucket entry: n_entries: 23, total_compressed_sizes: 253 avg_compressed_size: 11 avg_compression_ratio: 0.0506811
+Updating bucket entry: n_entries: 24, total_compressed_sizes: 264 avg_compressed_size: 11 avg_compression_ratio: 0.0525478
+Updating bucket entry: n_entries: 25, total_compressed_sizes: 275 avg_compressed_size: 11 avg_compression_ratio: 0.0543908
+Updating bucket entry: n_entries: 26, total_compressed_sizes: 286 avg_compressed_size: 11 avg_compression_ratio: 0.0562107
+Updating bucket entry: n_entries: 27, total_compressed_sizes: 297 avg_compressed_size: 11 avg_compression_ratio: 0.0580078
+Updating bucket entry: n_entries: 28, total_compressed_sizes: 308 avg_compressed_size: 11 avg_compression_ratio: 0.0597826
+Updating bucket entry: n_entries: 29, total_compressed_sizes: 319 avg_compressed_size: 11 avg_compression_ratio: 0.0615355
+Updating bucket entry: n_entries: 30, total_compressed_sizes: 330 avg_compressed_size: 11 avg_compression_ratio: 0.0632669
+Updating bucket entry: n_entries: 31, total_compressed_sizes: 341 avg_compressed_size: 11 avg_compression_ratio: 0.0649771
+Updating bucket entry: n_entries: 32, total_compressed_sizes: 352 avg_compressed_size: 11 avg_compression_ratio: 0.0666667
+Updating bucket entry: n_entries: 33, total_compressed_sizes: 363 avg_compressed_size: 11 avg_compression_ratio: 0.0683358
+Updating bucket entry: n_entries: 34, total_compressed_sizes: 374 avg_compressed_size: 11 avg_compression_ratio: 0.069985
+Updating bucket entry: n_entries: 35, total_compressed_sizes: 385 avg_compressed_size: 11 avg_compression_ratio: 0.0716146
+Updating bucket entry: n_entries: 36, total_compressed_sizes: 396 avg_compressed_size: 11 avg_compression_ratio: 0.0732249
+Updating bucket entry: n_entries: 37, total_compressed_sizes: 407 avg_compressed_size: 11 avg_compression_ratio: 0.0748162
+Updating bucket entry: n_entries: 38, total_compressed_sizes: 418 avg_compressed_size: 11 avg_compression_ratio: 0.0763889
+Updating bucket entry: n_entries: 39, total_compressed_sizes: 429 avg_compressed_size: 11 avg_compression_ratio: 0.0779433
+Updating bucket entry: n_entries: 40, total_compressed_sizes: 440 avg_compressed_size: 11 avg_compression_ratio: 0.0794798
+Updating bucket entry: n_entries: 41, total_compressed_sizes: 451 avg_compressed_size: 11 avg_compression_ratio: 0.0809986
+Updating bucket entry: n_entries: 42, total_compressed_sizes: 462 avg_compressed_size: 11 avg_compression_ratio: 0.0825
+Updating bucket entry: n_entries: 43, total_compressed_sizes: 473 avg_compressed_size: 11 avg_compression_ratio: 0.0839844
+Updating bucket entry: n_entries: 44, total_compressed_sizes: 484 avg_compressed_size: 11 avg_compression_ratio: 0.085452
+Updating bucket entry: n_entries: 45, total_compressed_sizes: 495 avg_compressed_size: 11 avg_compression_ratio: 0.0869031
+Updating bucket entry: n_entries: 46, total_compressed_sizes: 506 avg_compressed_size: 11 avg_compression_ratio: 0.088338
+Updating bucket entry: n_entries: 47, total_compressed_sizes: 517 avg_compressed_size: 11 avg_compression_ratio: 0.0897569
+Updating bucket entry: n_entries: 48, total_compressed_sizes: 528 avg_compressed_size: 11 avg_compression_ratio: 0.0911602
+Updating bucket entry: n_entries: 49, total_compressed_sizes: 539 avg_compressed_size: 11 avg_compression_ratio: 0.0925481
+Updating bucket entry: n_entries: 50, total_compressed_sizes: 550 avg_compressed_size: 11 avg_compression_ratio: 0.0939208
+Updating bucket entry: n_entries: 51, total_compressed_sizes: 561 avg_compressed_size: 11 avg_compression_ratio: 0.0952785
+Creating new bucket entry: lower_bytes_bound: 32, upper_bytes_bound: 64 -> n_entries: 1, total_compressed_sizes: 35 avg_compressed_size: 35 avg_compression_ratio: 0.00572644
+Done
 Hello World!
+SIZE CLASS            COUNT
+---------------------------
+32                      101
+64                        0
+128                       3
+256                       1
+512                       0
+1024                      0
+2048                      0
+4096                      1
+8192                      0
+16384                     0
+32768                     0
+65536                     0
+131072                    0
+262144                    0
+BIG                       0
+0x7f6643880760: addr: 0x7f6643880760, n_bytes: 32, compressed_size: 0
+0x7f6643880780: addr: 0x7f6643880780, n_bytes: 32, compressed_size: 0
+0x7f66438807a0: addr: 0x7f66438807a0, n_bytes: 32, compressed_size: 0
+0x7f66438807c0: addr: 0x7f66438807c0, n_bytes: 32, compressed_size: 0
+0x7f66438807e0: addr: 0x7f66438807e0, n_bytes: 32, compressed_size: 0
+0x7f6643880800: addr: 0x7f6643880800, n_bytes: 32, compressed_size: 0
+0x7f66446807e0: addr: 0x7f66446807e0, n_bytes: 32, compressed_size: 26
+0x7f6643880820: addr: 0x7f6643880820, n_bytes: 32, compressed_size: 0
+0x7f6643880840: addr: 0x7f6643880840, n_bytes: 32, compressed_size: 0
+0x7f6643880860: addr: 0x7f6643880860, n_bytes: 32, compressed_size: 0
+0x7f6643880880: addr: 0x7f6643880880, n_bytes: 32, compressed_size: 0
+0x7f66438808a0: addr: 0x7f66438808a0, n_bytes: 32, compressed_size: 0
+0x7f66438808c0: addr: 0x7f66438808c0, n_bytes: 32, compressed_size: 0
+0x7f66438808e0: addr: 0x7f66438808e0, n_bytes: 32, compressed_size: 0
+0x7f6643880900: addr: 0x7f6643880900, n_bytes: 32, compressed_size: 0
+0x7f6643880920: addr: 0x7f6643880920, n_bytes: 32, compressed_size: 0
+0x7f6643880940: addr: 0x7f6643880940, n_bytes: 32, compressed_size: 0
+0x7f6643880960: addr: 0x7f6643880960, n_bytes: 32, compressed_size: 0
+0x7f6643880980: addr: 0x7f6643880980, n_bytes: 32, compressed_size: 0
+0x7f66438809a0: addr: 0x7f66438809a0, n_bytes: 32, compressed_size: 0
+0x7f66438809c0: addr: 0x7f66438809c0, n_bytes: 32, compressed_size: 0
+0x7f66438809e0: addr: 0x7f66438809e0, n_bytes: 32, compressed_size: 0
+0x7f6643880a00: addr: 0x7f6643880a00, n_bytes: 32, compressed_size: 0
+0x7f6643880a20: addr: 0x7f6643880a20, n_bytes: 32, compressed_size: 0
+0x7f6643880a40: addr: 0x7f6643880a40, n_bytes: 32, compressed_size: 0
+0x7f6643880a60: addr: 0x7f6643880a60, n_bytes: 32, compressed_size: 0
+0x7f6643880a80: addr: 0x7f6643880a80, n_bytes: 32, compressed_size: 0
+0x7f6643880aa0: addr: 0x7f6643880aa0, n_bytes: 32, compressed_size: 0
+0x7f6643880ac0: addr: 0x7f6643880ac0, n_bytes: 32, compressed_size: 0
+0x7f6643880ae0: addr: 0x7f6643880ae0, n_bytes: 32, compressed_size: 0
+0x7f6643880b00: addr: 0x7f6643880b00, n_bytes: 32, compressed_size: 0
+0x7f6643680000: addr: 0x7f6643680000, n_bytes: 4096, compressed_size: 87
+0x7f6643880b20: addr: 0x7f6643880b20, n_bytes: 32, compressed_size: 0
+0x7f6643880b40: addr: 0x7f6643880b40, n_bytes: 32, compressed_size: 0
+0x7f6643880b60: addr: 0x7f6643880b60, n_bytes: 32, compressed_size: 0
+0x7f6643880b80: addr: 0x7f6643880b80, n_bytes: 32, compressed_size: 0
+0x7f6643880ba0: addr: 0x7f6643880ba0, n_bytes: 32, compressed_size: 0
+0x7f6643880bc0: addr: 0x7f6643880bc0, n_bytes: 32, compressed_size: 0
+0x7f6643880be0: addr: 0x7f6643880be0, n_bytes: 32, compressed_size: 0
+0x7f6643880c00: addr: 0x7f6643880c00, n_bytes: 32, compressed_size: 0
+0x7f6643880c20: addr: 0x7f6643880c20, n_bytes: 32, compressed_size: 0
+0x7f6643880c40: addr: 0x7f6643880c40, n_bytes: 32, compressed_size: 0
+0x7f6643880c60: addr: 0x7f6643880c60, n_bytes: 32, compressed_size: 0
+0x7f6644480680: addr: 0x7f6644480680, n_bytes: 128, compressed_size: 103
+0x7f6643880000: addr: 0x7f6643880000, n_bytes: 32, compressed_size: 11
+0x7f6643880020: addr: 0x7f6643880020, n_bytes: 32, compressed_size: 11
+0x7f6643880040: addr: 0x7f6643880040, n_bytes: 32, compressed_size: 11
+0x7f6643880060: addr: 0x7f6643880060, n_bytes: 32, compressed_size: 11
+0x7f6643880080: addr: 0x7f6643880080, n_bytes: 32, compressed_size: 11
+0x7f66438800a0: addr: 0x7f66438800a0, n_bytes: 32, compressed_size: 11
+0x7f66438800c0: addr: 0x7f66438800c0, n_bytes: 32, compressed_size: 11
+0x7f66438800e0: addr: 0x7f66438800e0, n_bytes: 32, compressed_size: 11
+0x7f6643880100: addr: 0x7f6643880100, n_bytes: 32, compressed_size: 11
+0x7f6643880120: addr: 0x7f6643880120, n_bytes: 32, compressed_size: 11
+0x7f6643880140: addr: 0x7f6643880140, n_bytes: 32, compressed_size: 11
+0x7f6643880160: addr: 0x7f6643880160, n_bytes: 32, compressed_size: 11
+0x7f6643880180: addr: 0x7f6643880180, n_bytes: 32, compressed_size: 11
+0x7f66438801a0: addr: 0x7f66438801a0, n_bytes: 32, compressed_size: 11
+0x7f66438801c0: addr: 0x7f66438801c0, n_bytes: 32, compressed_size: 11
+0x7f66438801e0: addr: 0x7f66438801e0, n_bytes: 32, compressed_size: 11
+0x7f6643880200: addr: 0x7f6643880200, n_bytes: 32, compressed_size: 11
+0x7f6643880220: addr: 0x7f6643880220, n_bytes: 32, compressed_size: 11
+0x7f6643880240: addr: 0x7f6643880240, n_bytes: 32, compressed_size: 11
+0x7f6643880260: addr: 0x7f6643880260, n_bytes: 32, compressed_size: 11
+0x7f6643880280: addr: 0x7f6643880280, n_bytes: 32, compressed_size: 11
+0x7f66438802a0: addr: 0x7f66438802a0, n_bytes: 32, compressed_size: 11
+0x7f66438802c0: addr: 0x7f66438802c0, n_bytes: 32, compressed_size: 11
+0x7f66438802e0: addr: 0x7f66438802e0, n_bytes: 32, compressed_size: 11
+0x7f6643880300: addr: 0x7f6643880300, n_bytes: 32, compressed_size: 11
+0x7f6643880320: addr: 0x7f6643880320, n_bytes: 32, compressed_size: 11
+0x7f6643880340: addr: 0x7f6643880340, n_bytes: 32, compressed_size: 11
+0x7f6643880360: addr: 0x7f6643880360, n_bytes: 32, compressed_size: 11
+0x7f6643880380: addr: 0x7f6643880380, n_bytes: 32, compressed_size: 11
+0x7f66438803a0: addr: 0x7f66438803a0, n_bytes: 32, compressed_size: 11
+0x7f66438803c0: addr: 0x7f66438803c0, n_bytes: 32, compressed_size: 11
+0x7f66438803e0: addr: 0x7f66438803e0, n_bytes: 32, compressed_size: 11
+0x7f6643880400: addr: 0x7f6643880400, n_bytes: 32, compressed_size: 11
+0x7f6643880420: addr: 0x7f6643880420, n_bytes: 32, compressed_size: 11
+0x7f6643880440: addr: 0x7f6643880440, n_bytes: 32, compressed_size: 11
+0x7f6643880460: addr: 0x7f6643880460, n_bytes: 32, compressed_size: 11
+0x7f6643880480: addr: 0x7f6643880480, n_bytes: 32, compressed_size: 11
+0x7f66438804a0: addr: 0x7f66438804a0, n_bytes: 32, compressed_size: 11
+0x7f66438804c0: addr: 0x7f66438804c0, n_bytes: 32, compressed_size: 11
+0x7f66438804e0: addr: 0x7f66438804e0, n_bytes: 32, compressed_size: 11
+0x7f6643880500: addr: 0x7f6643880500, n_bytes: 32, compressed_size: 11
+0x7f6643880520: addr: 0x7f6643880520, n_bytes: 32, compressed_size: 11
+0x7f6643880540: addr: 0x7f6643880540, n_bytes: 32, compressed_size: 11
+0x7f6643880560: addr: 0x7f6643880560, n_bytes: 32, compressed_size: 11
+0x7f6643880580: addr: 0x7f6643880580, n_bytes: 32, compressed_size: 11
+0x7f66438805a0: addr: 0x7f66438805a0, n_bytes: 32, compressed_size: 11
+0x7f66438805c0: addr: 0x7f66438805c0, n_bytes: 32, compressed_size: 11
+0x7f66438805e0: addr: 0x7f66438805e0, n_bytes: 32, compressed_size: 11
+0x7f6643880600: addr: 0x7f6643880600, n_bytes: 32, compressed_size: 11
+0x7f6643880620: addr: 0x7f6643880620, n_bytes: 32, compressed_size: 11
+0x7f6643880640: addr: 0x7f6643880640, n_bytes: 32, compressed_size: 11
+0x7f6643880660: addr: 0x7f6643880660, n_bytes: 32, compressed_size: 0
+0x7f6643880680: addr: 0x7f6643880680, n_bytes: 32, compressed_size: 0
+0x7f66438806a0: addr: 0x7f66438806a0, n_bytes: 32, compressed_size: 0
+0x7f6643e80100: addr: 0x7f6643e80100, n_bytes: 224, compressed_size: 35
+0x7f66438806c0: addr: 0x7f66438806c0, n_bytes: 32, compressed_size: 0
+0x7f66438806e0: addr: 0x7f66438806e0, n_bytes: 32, compressed_size: 0
+0x7f6643880700: addr: 0x7f6643880700, n_bytes: 32, compressed_size: 0
+0x7f6643880720: addr: 0x7f6643880720, n_bytes: 32, compressed_size: 0
+0x7f6643880740: addr: 0x7f6643880740, n_bytes: 32, compressed_size: 0
+Number of entries: 104
+Number of collisions: 106
+Max collisions for any given key: 2
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 561
+  Total uncompressed size: 5888
+  Number of entries: 51
+  Compression ratio (lower is better): 0.0952785
+Bucket 11 (32 bytes)
+  Total compressed size: 26
+  Total uncompressed size: 32
+  Number of entries: 1
+  Compression ratio (lower is better): 0.8125
+Bucket 12 (64 bytes)
+  Total compressed size: 35
+  Total uncompressed size: 6112
+  Number of entries: 1
+  Compression ratio (lower is better): 0.00572644
+Bucket 13 (128 bytes)
+  Total compressed size: 190
+  Total uncompressed size: 4256
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0446429
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+Number of entries: 4
+Number of collisions: 5
+Max collisions for any given key: 2
+Elapsed time: 2513433 microseconds
