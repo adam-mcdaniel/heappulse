@@ -1,0 +1,3 @@
+set env LD_PRELOAD=./libbkmalloc.so
+set env BKMALLOC_OPTS=--hooks-file=./hook.so --log-hooks
+run
