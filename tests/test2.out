@@ -1,361 +1,174 @@
-Checking compression stats
-sigaction successful
+Checking compression statsChecking compression stats
+
 Protecting allocations
-Protecting addr: 0x7f5bfc480680, n_bytes: 128, compressed_size: 0
-Protecting addr: 0x7f5bfa680000, n_bytes: 1024, compressed_size: 0
-Protecting addr: 0x7f5bfa480000, n_bytes: 1024, compressed_size: 0
-Protecting addr: 0x7f5bfa280000, n_bytes: 32, compressed_size: 0
-[FAULT] Not the working thread: 0x7f5bfa48014b
-Protecting addr: 0x7f5bfb080000, n_bytes: 320, compressed_size: 0
-Protecting addr: 0x7f5bfbe80100, n_bytes: 224, compressed_size: 0
-Protecting addr: 0x7f5bfb080200, n_bytes: 320, compressed_size: 0
-Protecting addr: 0x7f5bfbe80200, n_bytes: 224, compressed_size: 0
-Protecting addr: 0x7f5bfc6807e0, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfc680800, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfa080000, n_bytes: 4096, compressed_size: 0
-[FAULT] Working thread, giving back access: 0x7f5bfa080000
+[FAULT] Working thread, giving back access: 0x7f8c7aa80000
 Done protecting allocations
-[FAULT] Working thread, giving back access: 0x7f5bfbe80228
-Compressing 128 bytes
-   src_address: 0x7f5bfb9fea60
-   dst_address: 0x7f5bfb9fe9d0
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 141
-   actual_compressed_size: 103
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfb9fe6e0
-   dst_address: 0x7f5bfb9fe2d0
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfb9fe6e0
-   dst_address: 0x7f5bfb9fe2d0
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfb9feac0
-   dst_address: 0x7f5bfb9fea90
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfb9fe9a0
-   dst_address: 0x7f5bfb9fe850
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfb9fea00
-   dst_address: 0x7f5bfb9fe910
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 23
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfb9fe9a0
-   dst_address: 0x7f5bfb9fe850
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfb9fea00
-   dst_address: 0x7f5bfb9fe910
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 41
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfb9feac0
-   dst_address: 0x7f5bfb9fea90
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 27
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfb9feac0
-   dst_address: 0x7f5bfb9fea90
-   aligned_src_address: 0x0x7f5bfb9fe000
-   aligned_dst_address: 0x0x7f5bfb9fe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 4096 bytes
-   src_address: 0x7f5bfb9fdae0
-   dst_address: 0x7f5bfb9fcad0
-   aligned_src_address: 0x0x7f5bfb9fd000
-   aligned_dst_address: 0x0x7f5bfb9fc000
-   estimated_compressed_size: 4110
-   actual_compressed_size: 87
-Compression succeeded
+[FAULT] Working thread, giving back access: 0x7f8c7f280328
 Unprotecting allocations
 Done unprotecting allocations
-[FAULT] Got access: 0x7f5bfa48014b
-Creating new bucket entry: lower_bytes_bound: 64, upper_bytes_bound: 128 -> n_entries: 1, total_compressed_sizes: 103 avg_compressed_size: 103 avg_compression_ratio: 0.804688
-Creating new bucket entry: lower_bytes_bound: 16, upper_bytes_bound: 32 -> n_entries: 1, total_compressed_sizes: 17 avg_compressed_size: 17 avg_compression_ratio: 0.0147569
-Updating bucket entry: n_entries: 2, total_compressed_sizes: 34 avg_compressed_size: 17 avg_compression_ratio: 0.015625
-Creating new bucket entry: lower_bytes_bound: 10, upper_bytes_bound: 16 -> n_entries: 1, total_compressed_sizes: 11 avg_compressed_size: 11 avg_compression_ratio: 0.00498188
-Updating bucket entry: n_entries: 3, total_compressed_sizes: 65 avg_compressed_size: 21.6667 avg_compression_ratio: 0.0260417
-Updating bucket entry: n_entries: 4, total_compressed_sizes: 88 avg_compressed_size: 22 avg_compression_ratio: 0.0323529
-Updating bucket entry: n_entries: 5, total_compressed_sizes: 119 avg_compressed_size: 23.8 avg_compression_ratio: 0.0391447
-Creating new bucket entry: lower_bytes_bound: 32, upper_bytes_bound: 64 -> n_entries: 1, total_compressed_sizes: 41 avg_compressed_size: 41 avg_compression_ratio: 0.0125613
-Updating bucket entry: n_entries: 6, total_compressed_sizes: 146 avg_compressed_size: 24.3333 avg_compression_ratio: 0.047526
-Updating bucket entry: n_entries: 2, total_compressed_sizes: 22 avg_compressed_size: 11 avg_compression_ratio: 0.00982143
-Updating bucket entry: n_entries: 2, total_compressed_sizes: 190 avg_compressed_size: 95 avg_compression_ratio: 0.0449811
+Updated buckets
 Done
-Checking compression stats
-sigaction successful
-Protecting allocations
-Protecting addr: 0x7f5bfc480680, n_bytes: 128, compressed_size: 103
-Protecting addr: 0x7f5bfa680000, n_bytes: 1024, compressed_size: 17
-[FAULT] Not the working thread: 0x7f5bfa6803c4
-Protecting addr: 0x7f5bfa480000, n_bytes: 1024, compressed_size: 17
-Protecting addr: 0x7f5bfa280000, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfb080000, n_bytes: 320, compressed_size: 31
-Protecting addr: 0x7f5bfbe80100, n_bytes: 224, compressed_size: 23
-Protecting addr: 0x7f5bfb080200, n_bytes: 320, compressed_size: 31
-Protecting addr: 0x7f5bfbe80200, n_bytes: 224, compressed_size: 41
-Protecting addr: 0x7f5bfc6807e0, n_bytes: 32, compressed_size: 27
-Protecting addr: 0x7f5bfc680800, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfa080000, n_bytes: 4096, compressed_size: 87
-[FAULT] Working thread, giving back access: 0x7f5bfa080000
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Protecting allocationsBucket 
+2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 22
+  Total uncompressed size: 64
+  Number of entries: 2
+  Compression ratio (lower is better): 0.34375
+Bucket 11 (32 bytes)
+  Total compressed size: 146
+  Total uncompressed size: 3008
+  Number of entries: 6
+  Compression ratio (lower is better): 0.0485372
+Bucket 12 (64 bytes)
+  Total compressed size: 78
+  Total uncompressed size: 2784
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0280172
+Bucket 13 (128 bytes)
+  Total compressed size: 175
+  Total uncompressed size: 7008
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0249715
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+[FAULT] Not the working thread: 0x7f8c7b080270
+[FAULT] Working thread, giving back access: 0x7f8c7aa80000
 Done protecting allocations
-Compressing 128 bytes
-   src_address: 0x7f5bfaffea60
-   dst_address: 0x7f5bfaffe9d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 141
-   actual_compressed_size: 103
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfaffe6e0
-   dst_address: 0x7f5bfaffe2d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfaffe6e0
-   dst_address: 0x7f5bfaffe2d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfaffe9a0
-   dst_address: 0x7f5bfaffe850
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfaffea00
-   dst_address: 0x7f5bfaffe910
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 23
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfaffe9a0
-   dst_address: 0x7f5bfaffe850
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfaffea00
-   dst_address: 0x7f5bfaffe910
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 41
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 27
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 4096 bytes
-   src_address: 0x7f5bfaffdae0
-   dst_address: 0x7f5bfaffcad0
-   aligned_src_address: 0x0x7f5bfaffd000
-   aligned_dst_address: 0x0x7f5bfaffc000
-   estimated_compressed_size: 4110
-   actual_compressed_size: 133
-Compression succeeded
+[FAULT] Working thread, giving back access: 0x7f8c7f280228
 Unprotecting allocations
 Done unprotecting allocations
-[FAULT] Got access: 0x7f5bfa6803c4
-Updating bucket entry: n_entries: 3, total_compressed_sizes: 293 avg_compressed_size: 97.6667 avg_compression_ratio: 0.0673254
-Updating bucket entry: n_entries: 7, total_compressed_sizes: 163 avg_compressed_size: 23.2857 avg_compression_ratio: 0.0397949
-Updating bucket entry: n_entries: 8, total_compressed_sizes: 180 avg_compressed_size: 22.5 avg_compression_ratio: 0.0351562
-Updating bucket entry: n_entries: 3, total_compressed_sizes: 33 avg_compressed_size: 11 avg_compression_ratio: 0.0145246
-Updating bucket entry: n_entries: 9, total_compressed_sizes: 211 avg_compressed_size: 23.4444 avg_compression_ratio: 0.0387868
-Updating bucket entry: n_entries: 10, total_compressed_sizes: 234 avg_compressed_size: 23.4 avg_compression_ratio: 0.0413136
-Updating bucket entry: n_entries: 11, total_compressed_sizes: 265 avg_compressed_size: 24.0909 avg_compression_ratio: 0.0442848
-Updating bucket entry: n_entries: 2, total_compressed_sizes: 82 avg_compressed_size: 41 avg_compression_ratio: 0.0235092
-Updating bucket entry: n_entries: 12, total_compressed_sizes: 292 avg_compressed_size: 24.3333 avg_compression_ratio: 0.0485372
-Updating bucket entry: n_entries: 4, total_compressed_sizes: 44 avg_compressed_size: 11 avg_compression_ratio: 0.0190972
-Creating new bucket entry: lower_bytes_bound: 128, upper_bytes_bound: 256 -> n_entries: 1, total_compressed_sizes: 133 avg_compressed_size: 133 avg_compression_ratio: 0.0207813
+[FAULT] Got access: 0x7f8c7b080270
+Updated buckets
 Done
-Checking compression stats
-sigaction successful
-Protecting allocations
-Protecting addr: 0x7f5bfc480680, n_bytes: 128, compressed_size: 103
-Protecting addr: 0x7f5bfa680000, n_bytes: 1024, compressed_size: 17
-[FAULT] Not the working thread: 0x7f5bfa68018d
-Protecting addr: 0x7f5bfa480000, n_bytes: 1024, compressed_size: 17
-Protecting addr: 0x7f5bfa280000, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfb080000, n_bytes: 320, compressed_size: 31
-Protecting addr: 0x7f5bfbe80100, n_bytes: 224, compressed_size: 23
-Protecting addr: 0x7f5bfb080200, n_bytes: 320, compressed_size: 31
-Protecting addr: 0x7f5bfbe80200, n_bytes: 224, compressed_size: 41
-Protecting addr: 0x7f5bfc6807e0, n_bytes: 32, compressed_size: 27
-Protecting addr: 0x7f5bfc680800, n_bytes: 32, compressed_size: 0
-Protecting addr: 0x7f5bfa080000, n_bytes: 4096, compressed_size: 133
-[FAULT] Working thread, giving back access: 0x7f5bfa080000
-Done protecting allocations
-Compressing 128 bytes
-   src_address: 0x7f5bfaffea60
-   dst_address: 0x7f5bfaffe9d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 141
-   actual_compressed_size: 103
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfaffe6e0
-   dst_address: 0x7f5bfaffe2d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 1024 bytes
-   src_address: 0x7f5bfaffe6e0
-   dst_address: 0x7f5bfaffe2d0
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 1037
-   actual_compressed_size: 17
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfaffe9a0
-   dst_address: 0x7f5bfaffe850
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfaffea00
-   dst_address: 0x7f5bfaffe910
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 23
-Compression succeeded
-Compressing 320 bytes
-   src_address: 0x7f5bfaffe9a0
-   dst_address: 0x7f5bfaffe850
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 333
-   actual_compressed_size: 31
-Compression succeeded
-Compressing 224 bytes
-   src_address: 0x7f5bfaffea00
-   dst_address: 0x7f5bfaffe910
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 237
-   actual_compressed_size: 41
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 27
-Compression succeeded
-Compressing 32 bytes
-   src_address: 0x7f5bfaffeac0
-   dst_address: 0x7f5bfaffea90
-   aligned_src_address: 0x0x7f5bfaffe000
-   aligned_dst_address: 0x0x7f5bfaffe000
-   estimated_compressed_size: 45
-   actual_compressed_size: 11
-Compression succeeded
-Compressing 4096 bytes
-   src_address: 0x7f5bfaffdae0
-   dst_address: 0x7f5bfaffcad0
-   aligned_src_address: 0x0x7f5bfaffd000
-   aligned_dst_address: 0x0x7f5bfaffc000
-   estimated_compressed_size: 4110
-   actual_compressed_size: 141
-Compression succeeded
-Unprotecting allocations
-Done unprotecting allocations
-[FAULT] Got access: 0x7f5bfa68018d
-Updating bucket entry: n_entries: 4, total_compressed_sizes: 396 avg_compressed_size: 99 avg_compression_ratio: 0.0883929
-Updating bucket entry: n_entries: 13, total_compressed_sizes: 309 avg_compressed_size: 23.7692 avg_compression_ratio: 0.043892
-Updating bucket entry: n_entries: 14, total_compressed_sizes: 326 avg_compressed_size: 23.2857 avg_compression_ratio: 0.0404266
-Updating bucket entry: n_entries: 5, total_compressed_sizes: 55 avg_compressed_size: 11 avg_compression_ratio: 0.0235445
-Updating bucket entry: n_entries: 15, total_compressed_sizes: 357 avg_compressed_size: 23.8 avg_compression_ratio: 0.0425811
-Updating bucket entry: n_entries: 16, total_compressed_sizes: 380 avg_compressed_size: 23.75 avg_compression_ratio: 0.044145
-Updating bucket entry: n_entries: 17, total_compressed_sizes: 411 avg_compressed_size: 24.1765 avg_compression_ratio: 0.0460349
-Updating bucket entry: n_entries: 3, total_compressed_sizes: 123 avg_compressed_size: 41 avg_compression_ratio: 0.0331358
-Updating bucket entry: n_entries: 18, total_compressed_sizes: 438 avg_compressed_size: 24.3333 avg_compression_ratio: 0.0488839
-Updating bucket entry: n_entries: 6, total_compressed_sizes: 66 avg_compressed_size: 11 avg_compression_ratio: 0.0278716
-Updating bucket entry: n_entries: 2, total_compressed_sizes: 274 avg_compressed_size: 137 avg_compression_ratio: 0.0261052
-Done
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 44
+  Total uncompressed size: 128
+  Number of entries: 4
+  Compression ratio (lower is better): 0.34375
+Bucket 11 (32 bytes)
+  Total compressed size: 292
+  Total uncompressed size: 5952
+  Number of entries: 12
+  Compression ratio (lower is better): 0.0490591
+Bucket 12 (64 bytes)
+  Total compressed size: 161
+  Total uncompressed size: 3232
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0498144
+Bucket 13 (128 bytes)
+  Total compressed size: 358
+  Total uncompressed size: 11232
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0318732
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 44
+  Total uncompressed size: 128
+  Number of entries: 4
+  Compression ratio (lower is better): 0.34375
+Bucket 11 (32 bytes)
+  Total compressed size: 292
+  Total uncompressed size: 5952
+  Number of entries: 12
+  Compression ratio (lower is better): 0.0490591
+Bucket 12 (64 bytes)
+  Total compressed size: 161
+  Total uncompressed size: 3232
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0498144
+Bucket 13 (128 bytes)
+  Total compressed size: 358
+  Total uncompressed size: 11232
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0318732
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+Elapsed time: 1000785 microseconds

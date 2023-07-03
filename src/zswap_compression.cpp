@@ -12,8 +12,8 @@
 #include <sys/mman.h>
 #include <condition_variable>
 
-const int INTERVAL_MS = 2500;  // Interval in seconds to track memory usage (in milliseconds)
-const int MAX_TRACKED_ALLOCS = 10000;
+const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
+const int MAX_TRACKED_ALLOCS = 1000000;
 const int BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
 
@@ -229,11 +229,21 @@ struct BucketKey {
             upper_bytes_bound = 0;
         } else {
             int bucket_size_index = 0;
+
             while (BUCKET_SIZES[bucket_size_index] < n_bytes) {
                 bucket_size_index++;
             }
-            lower_bytes_bound = BUCKET_SIZES[std::max(bucket_size_index - 1, 0)];
-            upper_bytes_bound = BUCKET_SIZES[bucket_size_index];
+
+            if (bucket_size_index == 0) {
+                lower_bytes_bound = 0;
+                upper_bytes_bound = BUCKET_SIZES[0];
+            } else if (bucket_size_index < NUM_BUCKETS) {
+                lower_bytes_bound = BUCKET_SIZES[bucket_size_index - 1];
+                upper_bytes_bound = BUCKET_SIZES[bucket_size_index];
+            } else {
+                lower_bytes_bound = 0;
+                upper_bytes_bound = std::numeric_limits<u64>::max();
+            }
         }
     }
 
@@ -435,7 +445,7 @@ void protect_allocation_entries()
         perror("sigaction");
         exit(EXIT_FAILURE);
     } else {
-        std::cout << "sigaction successful" << std::endl;
+        // std::cout << "sigaction successful" << std::endl;
     }
 
     long page_size = sysconf(_SC_PAGESIZE);
@@ -443,7 +453,7 @@ void protect_allocation_entries()
     std::cout << "Protecting allocations" << std::endl;
     for (int i=0; i<stack_alloc_map.size(); i++) {
         if (stack_alloc_map.hashtable[i].occupied) {
-            std::cout << "Protecting " << stack_alloc_map.hashtable[i].value << std::endl;
+            // std::cout << "Protecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This protects the entire page from being written to.
             unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.addr;
             void* aligned_address = (void*)(address & ~(page_size - 1));
@@ -555,19 +565,19 @@ void check_compression_entry(void *&addr, CompressionEntry& entry) {
 
     uLongf estimated_compressed_size = compressed_size;
     int result = compress(compressed_data, &compressed_size, (const Bytef*)input_copy, input_size);
-    std::cout << "Compressing " << input_size << " bytes" << std::endl;
-    std::cout << "   src_address: 0x" << std::hex << src_address << std::endl;
-    std::cout << "   dst_address: 0x" << std::hex << dst_address << std::endl;
-    std::cout << "   aligned_src_address: 0x" << std::hex << aligned_src_address << std::endl;
-    std::cout << "   aligned_dst_address: 0x" << std::hex << aligned_dst_address << std::endl;
-    std::cout << "   estimated_compressed_size: " << std::dec << estimated_compressed_size << std::endl;
-    std::cout << "   actual_compressed_size: " << std::dec << compressed_size << std::endl;
 
     if (result != Z_OK) {
-        std::cout << "Compression failed" << std::endl;
+        // std::cout << "Compression failed" << std::endl;
+        std::cout << "Compression of " << input_size << " bytes failed" << std::endl;
+        std::cout << "   src_address: 0x" << std::hex << src_address << std::endl;
+        std::cout << "   dst_address: 0x" << std::hex << dst_address << std::endl;
+        std::cout << "   aligned_src_address: 0x" << std::hex << aligned_src_address << std::endl;
+        std::cout << "   aligned_dst_address: 0x" << std::hex << aligned_dst_address << std::endl;
+        std::cout << "   estimated_compressed_size: " << std::dec << estimated_compressed_size << std::endl;
+        std::cout << "   actual_compressed_size: " << std::dec << compressed_size << std::endl;
         return;
-    } else {
-        std::cout << "Compression succeeded" << std::endl;
+    // } else {
+    //     std::cout << "Compression succeeded" << std::endl;
     }
 
     entry.compressed_size = compressed_size;
@@ -592,7 +602,7 @@ void put_into_buckets() {
                 bucket_entry.total_compressed_sizes += compression_size;
                 bucket_entry.total_uncompressed_sizes += stack_alloc_map.hashtable[i].value.n_bytes;
                 bucket_entry.n_entries++;
-                std::cout << "Updating bucket entry: " << bucket_entry << std::endl;
+                // std::cout << "Updating bucket entry: " << bucket_entry << std::endl;
                 // Insert the bucket entry into the map
                 buckets_map.put(bucket_key, bucket_entry);
             } else {
@@ -600,12 +610,13 @@ void put_into_buckets() {
                 bucket_entry.total_compressed_sizes = compression_size;
                 bucket_entry.total_uncompressed_sizes += stack_alloc_map.hashtable[i].value.n_bytes;
                 bucket_entry.n_entries = 1;
-                std::cout << "Creating new bucket entry: " << bucket_key << " -> " << bucket_entry << std::endl;
+                // std::cout << "Creating new bucket entry: " << bucket_key << " -> " << bucket_entry << std::endl;
                 // Insert the bucket entry into the map
                 buckets_map.put(bucket_key, bucket_entry);
             }
         }
     }
+    std::cout << "Updated buckets" << std::endl;
 }
 
 void check_compression_stats() {
@@ -624,9 +635,7 @@ void check_compression_stats() {
 struct Hooks {
     Timer timer;
 
-    u64 hist[BK_NR_SIZE_CLASSES + 1];
-
-    Hooks() : hist(), timer() {
+    Hooks() : timer() {
         // // Allocate a dummy page
         // dummy_pages = mmap(NULL, 8192, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
         // if (dummy_pages == MAP_FAILED) {
@@ -645,6 +654,7 @@ struct Hooks {
  
             // Old
             check_compression_stats();
+            report();
 
             /*
             // Ancient
@@ -675,7 +685,7 @@ struct Hooks {
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-        if (is_working_thread()) {
+        if (IS_PROTECTED) {
             return;
         }
         
@@ -685,11 +695,10 @@ struct Hooks {
         u32       idx;
 
         block = BK_ADDR_PARENT_BLOCK(addr);
-        idx   = block->meta.size_class_idx;
 
-        if (idx == BK_BIG_ALLOC_SIZE_CLASS_IDX) { idx = BK_NR_SIZE_CLASSES; }
-        hist[idx] += 1;
-
+        // idx   = block->meta.size_class_idx;
+        // if (idx == BK_BIG_ALLOC_SIZE_CLASS_IDX) { idx = BK_NR_SIZE_CLASSES; }
+        // hist[idx] += 1;
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
     }
@@ -698,32 +707,16 @@ struct Hooks {
         mprotect(addr, getpagesize(), PROT_READ | PROT_WRITE);
         record_free(addr);
         compression_test();
-        bk_Block *block;
-        u32       idx;
 
-        block = BK_ADDR_PARENT_BLOCK(addr);
-        idx   = block->meta.size_class_idx;
-
-        if (idx == BK_BIG_ALLOC_SIZE_CLASS_IDX) { idx = BK_NR_SIZE_CLASSES; }
-        hist[idx] -= 1;
+        // bk_Block *block;
+        // u32       idx;
+        // block = BK_ADDR_PARENT_BLOCK(addr);
+        // idx   = block->meta.size_class_idx;
+        // if (idx == BK_BIG_ALLOC_SIZE_CLASS_IDX) { idx = BK_NR_SIZE_CLASSES; }
+        // hist[idx] -= 1;
     }
 
-    ~Hooks() {
-        u32 i;
-
-        printf("%-10s %16s\n", "SIZE CLASS", "COUNT");
-        printf("---------------------------\n");
-        for (i = 0; i < BK_NR_SIZE_CLASSES + 1; i += 1) {
-            if (i == BK_NR_SIZE_CLASSES) {
-                printf("%-10s %16lu\n", "BIG", this->hist[i]);
-            } else {
-                printf("%-10lu %16lu\n", bk_size_class_idx_to_size(i), this->hist[i]);
-            }
-        }
-
-        stack_alloc_map.print();
-        stack_alloc_map.print_stats();
-
+    void report() {
         std::cout << "Bucket stats:" << std::endl;
         for (int i=0; i<NUM_BUCKETS; i++) {
             std::cout << "Bucket " << i << " (" << BUCKET_SIZES[i] << " bytes)" << std::endl;
@@ -738,8 +731,23 @@ struct Hooks {
             std::cout << "  Number of entries: " << entry.n_entries << std::endl;
             std::cout << "  Compression ratio (lower is better): " << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
         }
-        // buckets_map.print();
-        buckets_map.print_stats();
+    }
+
+    ~Hooks() {
+        u32 i;
+
+        // printf("%-10s %16s\n", "SIZE CLASS", "COUNT");
+        // printf("---------------------------\n");
+        // for (i = 0; i < BK_NR_SIZE_CLASSES + 1; i += 1) {
+        //     if (i == BK_NR_SIZE_CLASSES) {
+        //         printf("%-10s %16lu\n", "BIG", this->hist[i]);
+        //     } else {
+        //         printf("%-10lu %16lu\n", bk_size_class_idx_to_size(i), this->hist[i]);
+        //     }
+        // }
+        // stack_alloc_map.print();
+        // stack_alloc_map.print_stats();
+        report();
     }
 };
 

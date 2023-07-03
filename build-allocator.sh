@@ -31,5 +31,6 @@ echo ${COMPILE}
 ${COMPILE} || exit $?
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 g++ -fPIC -shared src/zswap_compression.cpp -I./include -L$SCRIPT_DIR/libbkmalloc.so -o $SCRIPT_DIR/hook.so -lz -g
+
+

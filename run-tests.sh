@@ -1,3 +1,5 @@
+. ./build-allocator.sh
+
 g++ tests/test1.cpp -o tests/test1.exe -g
 ./run.sh ./tests/test1.exe tests/test1.in > tests/test1.out 2> tests/test1.err
 
