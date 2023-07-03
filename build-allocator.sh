@@ -27,7 +27,6 @@ C_FLAGS="-fPIC ${DEBUG} ${OPT} ${WARN_FLAGS} ${MAX_ERRS} ${FEATURES} -ldl"
 CPP_FLAGS="-fno-rtti ${C_FLAGS}"
 
 COMPILE="g++ -I./include -shared -o libbkmalloc.so -x c++ include/bkmalloc.h  -DBKMALLOC_IMPL ${CPP_FLAGS}"
-echo ${COMPILE}
 ${COMPILE} || exit $?
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
