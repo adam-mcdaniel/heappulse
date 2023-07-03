@@ -1,3 +1,4 @@
 .yedrc
 *.so
 debug.sh
+*.txt
