@@ -13,6 +13,6 @@ fi
 if [ -z "$INPUT_FILE" ]; then
     LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN"
 else
-    LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN" < "$INPUT_FILE"
+    LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN" "$INPUT_FILE" 0<&-
 fi
 
