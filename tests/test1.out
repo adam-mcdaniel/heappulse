@@ -1,8 +1,8 @@
 Checking compression stats
 Protecting allocations
-[FAULT] Working thread, giving back access: 0x7f8d91280000
+[FAULT] Working thread, giving back access: 0x7f6ea9680000
 Done protecting allocations
-[FAULT] Working thread, giving back access: 0x7f8d94280128
+[FAULT] Working thread, giving back access: 0x7f6eac880128
 Unprotecting allocations
 Done unprotecting allocations
 Updated buckets
@@ -29,10 +29,10 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 2211
-  Total uncompressed size: 10688
-  Number of entries: 201
-  Compression ratio (lower is better): 0.206868
+  Total compressed size: 2189
+  Total uncompressed size: 10624
+  Number of entries: 199
+  Compression ratio (lower is better): 0.206043
 Bucket 11 (32 bytes)
   Total compressed size: 27
   Total uncompressed size: 160
@@ -81,10 +81,10 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 2211
-  Total uncompressed size: 10688
-  Number of entries: 201
-  Compression ratio (lower is better): 0.206868
+  Total compressed size: 2189
+  Total uncompressed size: 10624
+  Number of entries: 199
+  Compression ratio (lower is better): 0.206043
 Bucket 11 (32 bytes)
   Total compressed size: 27
   Total uncompressed size: 160
@@ -110,4 +110,4 @@ Bucket 17 (2048 bytes)
   No entries
 Bucket 18 (4096 bytes)
   No entries
-Elapsed time: 2570174 microseconds
+Elapsed time: 2674735 microseconds

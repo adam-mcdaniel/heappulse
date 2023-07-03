@@ -5,7 +5,7 @@ PROGRAM_TO_RUN="$1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -z "$PROGRAM_TO_RUN" ]; then
-    echo "Usage: $0 <program to run> <input file>"
+    echo "Usage: $0 <program to run>"
     exit 1
 fi
 

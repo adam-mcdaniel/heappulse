@@ -1,6 +1,7 @@
 #define BKMALLOC_HOOK
 #include "bkmalloc.h"
 #include <zlib.h>
+#include <fstream>
 #include <iostream>
 #include <stdio.h>
 #include <chrono>
@@ -340,10 +341,6 @@ std::jmp_buf jump_buffer;
 
 void check_compression_stats();
 
-// A condition variable for blocking the non-working threads
-// until the working thread unprotects the memory.
-std::condition_variable protection_handler_cv;
-
 // This is the handler for SIGSEGV. It's called when we try to access
 // a protected page. This will put the thread to sleep until we finish
 // compressing the page. This thread will then be woken up when we
@@ -428,13 +425,11 @@ void protect_allocation(void *addr) {
     std::cout << "Protected allocation" << std::endl;
 }*/
 
-// Go through each of the allocations, and protect them with mprotect
-// so that they're read-only while we're compressing them.
-void protect_allocation_entries()
+// This sets the SEGV signal handler to be the protection handler.
+// The protection handler will capture the segfault caused by mprotect,
+// and keep the program blocked until the compression tests are done
+void setup_protection_handler()
 {
-    std::lock_guard<std::mutex> guard(protect_mutex);
-    become_working_thread();
-
     struct sigaction sa;
     memset(&sa, 0, sizeof(struct sigaction));
     sigemptyset(&sa.sa_mask);
@@ -447,6 +442,15 @@ void protect_allocation_entries()
     } else {
         // std::cout << "sigaction successful" << std::endl;
     }
+}
+
+// Go through each of the allocations, and protect them with mprotect
+// so that they're read-only while we're compressing them.
+void protect_allocation_entries()
+{
+    std::lock_guard<std::mutex> guard(protect_mutex);
+    become_working_thread();
+    setup_protection_handler();
 
     long page_size = sysconf(_SC_PAGESIZE);
 
@@ -634,15 +638,13 @@ void check_compression_stats() {
 
 struct Hooks {
     Timer timer;
+    std::ofstream csv_file;
+    int n_reports = 0;
+    std::mutex report_mutex;
 
     Hooks() : timer() {
-        // // Allocate a dummy page
-        // dummy_pages = mmap(NULL, 8192, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-        // if (dummy_pages == MAP_FAILED) {
-        //     std::cout << "Failed to allocate dummy page" << std::endl;
-        //     exit(1);
-        // }
-        // mprotect(dummy_pages, 8192, PROT_READ | PROT_WRITE);
+        setup_protection_handler();
+        create_stats_csv();
     }
 
     void compression_test() {
@@ -717,6 +719,9 @@ struct Hooks {
     }
 
     void report() {
+        std::lock_guard<std::mutex> lock(report_mutex);
+
+        n_reports++;
         std::cout << "Bucket stats:" << std::endl;
         for (int i=0; i<NUM_BUCKETS; i++) {
             std::cout << "Bucket " << i << " (" << BUCKET_SIZES[i] << " bytes)" << std::endl;
@@ -730,7 +735,17 @@ struct Hooks {
             std::cout << "  Total uncompressed size: " << entry.total_uncompressed_sizes << std::endl;
             std::cout << "  Number of entries: " << entry.n_entries << std::endl;
             std::cout << "  Compression ratio (lower is better): " << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+            csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
         }
+    }
+
+    void create_stats_csv() {
+        if (csv_file.is_open()) {
+            csv_file.close();
+        }
+        
+        csv_file.open("bucket_stats.csv", std::ios::trunc | std::ios::out);
+        csv_file << "Iteration (" << INTERVAL_MS << " millisecond intervals), Bucket Size, Total Compressed Size, Total Uncompressed Size, Number of Compressions, Compression Ratio" << std::endl;
     }
 
     ~Hooks() {
@@ -747,7 +762,9 @@ struct Hooks {
         // }
         // stack_alloc_map.print();
         // stack_alloc_map.print_stats();
+        compression_test();
         report();
+        csv_file.close();
     }
 };
 
