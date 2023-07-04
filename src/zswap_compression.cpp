@@ -665,9 +665,9 @@ struct Hooks {
             // pthread_join(t1, NULL);
  
             // Old
+            timer.reset();
             check_compression_stats();
             report();
-            timer.reset();
 
             /*
             // Ancient
