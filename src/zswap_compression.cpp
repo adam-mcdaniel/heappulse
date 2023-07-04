@@ -699,9 +699,9 @@ struct Hooks {
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-        if (IS_PROTECTED) {
-            return;
-        }
+        // if (IS_PROTECTED) {
+        //     return;
+        // }
         
         record_alloc(addr, {addr, n_bytes, 0});
         compression_test();
