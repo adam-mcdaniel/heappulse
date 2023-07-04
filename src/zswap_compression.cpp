@@ -533,8 +533,12 @@ void record_alloc(void *addr, CompressionEntry entry) {
 }
 
 void record_free(void *addr) {
+    if (!stack_alloc_map.has(addr)) {
+        return;
+    }
     std::lock_guard<std::mutex> lock(alloc_map_mutex);
     try {
+        mprotect(addr, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
         stack_alloc_map.remove(addr);
     } catch (std::exception& e) {
         std::cout << "Failed to remove " << addr << " from stack_alloc_map" << std::endl;
@@ -640,28 +644,30 @@ struct Hooks {
     Timer timer;
     std::ofstream csv_file;
     int n_reports = 0;
-    std::mutex report_mutex;
-
+    std::mutex report_mutex, compression_stats_mutex;
     Hooks() : timer() {
         setup_protection_handler();
         create_stats_csv();
     }
 
     void compression_test() {
+        if (!compression_stats_mutex.try_lock()) {
+            return;
+        }
         setup_protection_handler();
         if (timer.has_elapsed(INTERVAL_MS)) {
-            // std::thread t1(check_compression_stats);
+            std::thread t1(check_compression_stats);
             // Wait for t1 to finish
-            // t1.join();
+            t1.join();
             // Thread with pthreads
             // pthread_t t1;
             // pthread_create(&t1, NULL, (void* (*)(void*))check_compression_stats, NULL);
             // pthread_join(t1, NULL);
  
             // Old
-            check_compression_stats();
-            report();
             timer.reset();
+            // check_compression_stats();
+            report();
 
             /*
             // Ancient
@@ -689,6 +695,7 @@ struct Hooks {
             // }
             */
         }
+        compression_stats_mutex.unlock();
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
@@ -709,10 +716,9 @@ struct Hooks {
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
     }
 
-    void post_free(bk_Heap *heap, void *addr) {
-        while (IS_PROTECTED) {}
+    void pre_free(bk_Heap *heap, void *addr) {
+        // std::cout << "Freeing " << addr << std::endl;
         
-        mprotect(addr, getpagesize(), PROT_READ | PROT_WRITE);
         record_free(addr);
         compression_test();
 
@@ -778,5 +784,12 @@ static Hooks hooks;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    // setup_protection_handler();
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
+}
+
+extern "C"
+void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+    // setup_protection_handler();
+    hooks.pre_free(heap, addr);
 }
