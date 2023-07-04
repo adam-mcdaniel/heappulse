@@ -655,12 +655,12 @@ struct Hooks {
             // Wait for t1 to finish
             // t1.join();
             // Thread with pthreads
-            pthread_t t1;
-            pthread_create(&t1, NULL, (void* (*)(void*))check_compression_stats, NULL);
-            pthread_join(t1, NULL);
+            // pthread_t t1;
+            // pthread_create(&t1, NULL, (void* (*)(void*))check_compression_stats, NULL);
+            // pthread_join(t1, NULL);
  
             // Old
-            // check_compression_stats();
+            check_compression_stats();
             report();
 
             /*
