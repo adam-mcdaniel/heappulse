@@ -656,18 +656,18 @@ struct Hooks {
         }
         setup_protection_handler();
         if (timer.has_elapsed(INTERVAL_MS)) {
-            std::thread t1(check_compression_stats);
+            // std::thread t1(check_compression_stats);
             // Wait for t1 to finish
-            t1.join();
+            // t1.join();
             // Thread with pthreads
             // pthread_t t1;
             // pthread_create(&t1, NULL, (void* (*)(void*))check_compression_stats, NULL);
             // pthread_join(t1, NULL);
  
             // Old
-            timer.reset();
-            // check_compression_stats();
+            check_compression_stats();
             report();
+            timer.reset();
 
             /*
             // Ancient
