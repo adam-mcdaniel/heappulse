@@ -393,7 +393,7 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
 }
 /*
 void protect_allocation(void *addr) {
-    std::lock_guard<std::mutex> guard(protect_mutex);
+    volatile std::lock_guard<std::mutex> guard(protect_mutex);
 
     // WORKING_THREAD_ID = (u64)pthread_self();
     // IS_PROTECTED = true;
@@ -448,7 +448,7 @@ void setup_protection_handler()
 // so that they're read-only while we're compressing them.
 void protect_allocation_entries()
 {
-    std::lock_guard<std::mutex> guard(protect_mutex);
+    volatile std::lock_guard<std::mutex> guard(protect_mutex);
     become_working_thread();
     setup_protection_handler();
 
@@ -486,7 +486,7 @@ void protect_allocation_entries()
 // Go through each of the allocations, and unprotect them with mprotect
 // so that they're read-write again.
 void unprotect_allocation_entries() {
-    std::lock_guard<std::mutex> guard(protect_mutex);
+    volatile std::lock_guard<std::mutex> guard(protect_mutex);
 
     long page_size = sysconf(_SC_PAGESIZE);
 
@@ -527,7 +527,7 @@ void record_alloc(void *addr, CompressionEntry entry) {
     } else {
         alloc_map_mutex.unlock();
     }
-    std::lock_guard<std::mutex> lock(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock(alloc_map_mutex);
     
     stack_alloc_map.put(addr, entry);
 }
@@ -536,7 +536,7 @@ void record_free(void *addr) {
     if (!stack_alloc_map.has(addr)) {
         return;
     }
-    std::lock_guard<std::mutex> lock(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock(alloc_map_mutex);
     try {
         mprotect(addr, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
         stack_alloc_map.remove(addr);
@@ -546,7 +546,7 @@ void record_free(void *addr) {
 }
 
 CompressionEntry get_compression_entry(void *addr) {
-    std::lock_guard<std::mutex> lock(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock(alloc_map_mutex);
     // return alloc_map[addr];
     return stack_alloc_map.get(addr);
 }
@@ -593,8 +593,8 @@ void check_compression_entry(void *&addr, CompressionEntry& entry) {
 
 
 void put_into_buckets() {
-    std::lock_guard<std::mutex> lock1(alloc_map_mutex);
-    std::lock_guard<std::mutex> lock2(buckets_map_mutex);
+    volatile std::lock_guard<std::mutex> lock1(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock2(buckets_map_mutex);
 
     // Iterate over all entries in the map and get their sizes and put their compression stats into buckets
     for (int i=0; i<stack_alloc_map.size(); i++) {
@@ -731,7 +731,7 @@ struct Hooks {
     }
 
     void report() {
-        std::lock_guard<std::mutex> lock(report_mutex);
+        volatile std::lock_guard<std::mutex> lock(report_mutex);
 
         n_reports++;
         std::cout << "Bucket stats:" << std::endl;

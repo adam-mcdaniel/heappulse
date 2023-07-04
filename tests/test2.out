@@ -1,0 +1,112 @@
+Checking compression stats
+Protecting allocations
+[FAULT] Working thread, giving back access: 0x7f1265c80000
+Done protecting allocations
+[FAULT] Working thread, giving back access: 0x7f126a680328
+Unprotecting allocations
+Done unprotecting allocations
+Updated buckets
+Done
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 22
+  Total uncompressed size: 6880
+  Number of entries: 2
+  Compression ratio (lower is better): 0.00319767
+Bucket 11 (32 bytes)
+  Total compressed size: 179
+  Total uncompressed size: 3168
+  Number of entries: 7
+  Compression ratio (lower is better): 0.0565025
+Bucket 12 (64 bytes)
+  Total compressed size: 97
+  Total uncompressed size: 6816
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0142312
+Bucket 13 (128 bytes)
+  Total compressed size: 103
+  Total uncompressed size: 3264
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0315564
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  Total compressed size: 22
+  Total uncompressed size: 6880
+  Number of entries: 2
+  Compression ratio (lower is better): 0.00319767
+Bucket 11 (32 bytes)
+  Total compressed size: 179
+  Total uncompressed size: 3168
+  Number of entries: 7
+  Compression ratio (lower is better): 0.0565025
+Bucket 12 (64 bytes)
+  Total compressed size: 97
+  Total uncompressed size: 6816
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0142312
+Bucket 13 (128 bytes)
+  Total compressed size: 103
+  Total uncompressed size: 3264
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0315564
+Bucket 14 (256 bytes)
+  No entries
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  No entries
+Elapsed time: 1001405 microseconds
