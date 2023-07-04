@@ -648,6 +648,7 @@ struct Hooks {
     }
 
     void compression_test() {
+        setup_protection_handler();
         if (timer.has_elapsed(INTERVAL_MS)) {
             timer.reset();
             // std::thread t1(check_compression_stats);
