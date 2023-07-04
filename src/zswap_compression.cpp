@@ -653,9 +653,13 @@ struct Hooks {
             // std::thread t1(check_compression_stats);
             // Wait for t1 to finish
             // t1.join();
+            // Thread with pthreads
+            pthread_t t1;
+            pthread_create(&t1, NULL, (void* (*)(void*))check_compression_stats, NULL);
+            pthread_join(t1, NULL);
  
             // Old
-            check_compression_stats();
+            // check_compression_stats();
             report();
 
             /*
@@ -693,11 +697,10 @@ struct Hooks {
         
         record_alloc(addr, {addr, n_bytes, 0});
         compression_test();
-        bk_Block *block;
-        u32       idx;
 
-        block = BK_ADDR_PARENT_BLOCK(addr);
-
+        // bk_Block *block;
+        // u32       idx;
+        // block = BK_ADDR_PARENT_BLOCK(addr);
         // idx   = block->meta.size_class_idx;
         // if (idx == BK_BIG_ALLOC_SIZE_CLASS_IDX) { idx = BK_NR_SIZE_CLASSES; }
         // hist[idx] += 1;
@@ -706,6 +709,8 @@ struct Hooks {
     }
 
     void post_free(bk_Heap *heap, void *addr) {
+        while (IS_PROTECTED) {}
+        
         mprotect(addr, getpagesize(), PROT_READ | PROT_WRITE);
         record_free(addr);
         compression_test();
