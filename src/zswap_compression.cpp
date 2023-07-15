@@ -13,10 +13,14 @@
 #include <sys/mman.h>
 #include <condition_variable>
 
+#define OUTPUT_CSV "bucket_stats.csv"
+
 const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
+// const int INTERVAL_MS = 1000;  // Interval in seconds to track memory usage (in milliseconds)
 const int MAX_TRACKED_ALLOCS = 1000000;
 const int BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
+
 
 struct Timer {
     std::chrono::steady_clock::time_point start_time;
@@ -77,7 +81,9 @@ struct StackMap {
         return std::hash<KeyType>{}(key) % Size;
     }
 
-    StackMap() : hashtable() {}
+    StackMap() : hashtable() {
+        clear();
+    }
 
     void put(const KeyType& key, const ValueType& value) {
         std::size_t index = hash(key);
@@ -156,9 +162,13 @@ struct StackMap {
     }
 
     void map(void (*func)(KeyType&, ValueType&)) {
+        int j = 0;
         for (int i=0; i<Size; i++) {
             if (hashtable[i].occupied) {
                 func(hashtable[i].key, hashtable[i].value);
+                if (++j == entries) {
+                    break;
+                }
             }
         }
     }
@@ -200,6 +210,8 @@ struct CompressionEntry {
     u64 n_bytes;
     uLong compressed_size;
 
+    CompressionEntry() : addr(NULL), n_bytes(0), compressed_size(0) {}
+
     friend std::ostream& operator<<(std::ostream& os, const CompressionEntry& entry) {
         os << "addr: " << entry.addr << ", n_bytes: " << entry.n_bytes << ", compressed_size: " << entry.compressed_size;
         return os;
@@ -207,11 +219,12 @@ struct CompressionEntry {
 };
 
 struct BucketEntry {
-    u64 n_entries;
+    double n_entries;
     double total_compressed_sizes;
     double total_uncompressed_sizes;
     BucketEntry() : n_entries(0), total_compressed_sizes(0) {}
-    BucketEntry(u64 n_entries, u64 total_compressed_sizes) : n_entries(n_entries), total_compressed_sizes(total_compressed_sizes) {}
+    BucketEntry(double n_entries, double total_compressed_sizes) : n_entries(n_entries), total_compressed_sizes(total_compressed_sizes) {}
+    BucketEntry(double n_entries, double total_compressed_sizes, double total_uncompressed_sizes) : n_entries(n_entries), total_compressed_sizes(total_compressed_sizes), total_uncompressed_sizes(total_uncompressed_sizes) {}
 
     friend std::ostream& operator<<(std::ostream& os, const BucketEntry& entry) {
         return os << "n_entries: " << entry.n_entries << ", total_compressed_sizes: " << entry.total_compressed_sizes << " avg_compressed_size: " << (double)entry.total_compressed_sizes / entry.n_entries << " avg_compression_ratio: " << (double)entry.total_compressed_sizes / entry.total_uncompressed_sizes;
@@ -242,7 +255,7 @@ struct BucketKey {
                 lower_bytes_bound = BUCKET_SIZES[bucket_size_index - 1];
                 upper_bytes_bound = BUCKET_SIZES[bucket_size_index];
             } else {
-                lower_bytes_bound = 0;
+                lower_bytes_bound = BUCKET_SIZES[NUM_BUCKETS-1];
                 upper_bytes_bound = std::numeric_limits<u64>::max();
             }
         }
@@ -354,15 +367,20 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
 
     // Is this thread the main?
     if (is_working_thread()) {
-        sprintf(buf, "[FAULT] Working thread, giving back access: 0x%lx\n", (long) si->si_addr);
-        write(STDOUT_FILENO, buf, strlen(buf));
+        // sprintf(buf, "[FAULT] Working thread, giving back access: 0x%lx\n", (long) si->si_addr);
+        // write(STDOUT_FILENO, buf, strlen(buf));
 
         long page_size = sysconf(_SC_PAGESIZE);
         void* aligned_address = (void*)((unsigned long)si->si_addr & ~(page_size - 1));
         mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
     } else {
-        sprintf(buf, "[FAULT] Not the working thread: 0x%lx\n", (long) si->si_addr);
-        write(STDOUT_FILENO, buf, strlen(buf));
+        if (!IS_PROTECTED) {
+            sprintf(buf, "Dereferenced address 0x%lx when unprotected, halting program\n", (long) si->si_addr);
+            write(STDOUT_FILENO, buf, strlen(buf));
+            sleep(1);
+        }
+        // sprintf(buf, "[FAULT] Not the working thread: 0x%lx\n", (long) si->si_addr);
+        // write(STDOUT_FILENO, buf, strlen(buf));
         while (IS_PROTECTED) {}
 
         sprintf(buf, "[FAULT] Got access: 0x%lx\n", (long) si->si_addr);
@@ -448,7 +466,8 @@ void setup_protection_handler()
 // so that they're read-only while we're compressing them.
 void protect_allocation_entries()
 {
-    volatile std::lock_guard<std::mutex> guard(protect_mutex);
+    // volatile std::lock_guard<std::mutex> lock1(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock2(protect_mutex);
     become_working_thread();
     setup_protection_handler();
 
@@ -486,7 +505,8 @@ void protect_allocation_entries()
 // Go through each of the allocations, and unprotect them with mprotect
 // so that they're read-write again.
 void unprotect_allocation_entries() {
-    volatile std::lock_guard<std::mutex> guard(protect_mutex);
+    // volatile std::lock_guard<std::mutex> lock1(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock2(protect_mutex);
 
     long page_size = sysconf(_SC_PAGESIZE);
 
@@ -573,6 +593,7 @@ void check_compression_entry(void *&addr, CompressionEntry& entry) {
 
     uLongf estimated_compressed_size = compressed_size;
     int result = compress(compressed_data, &compressed_size, (const Bytef*)input_copy, input_size);
+    entry.compressed_size = compressed_size;
 
     if (result != Z_OK) {
         // std::cout << "Compression failed" << std::endl;
@@ -583,12 +604,9 @@ void check_compression_entry(void *&addr, CompressionEntry& entry) {
         std::cout << "   aligned_dst_address: 0x" << std::hex << aligned_dst_address << std::endl;
         std::cout << "   estimated_compressed_size: " << std::dec << estimated_compressed_size << std::endl;
         std::cout << "   actual_compressed_size: " << std::dec << compressed_size << std::endl;
-        return;
     // } else {
     //     std::cout << "Compression succeeded" << std::endl;
     }
-
-    entry.compressed_size = compressed_size;
 }
 
 
@@ -596,31 +614,35 @@ void put_into_buckets() {
     volatile std::lock_guard<std::mutex> lock1(alloc_map_mutex);
     volatile std::lock_guard<std::mutex> lock2(buckets_map_mutex);
 
+    int j = 0;
     // Iterate over all entries in the map and get their sizes and put their compression stats into buckets
     for (int i=0; i<stack_alloc_map.size(); i++) {
         // Is the entry in the bucket map?
         if (stack_alloc_map.hashtable[i].occupied) {
             // Find what bucket the entry belongs to
-            int compression_size = stack_alloc_map.hashtable[i].value.compressed_size;
-            BucketKey bucket_key(compression_size);
+            uLong compressed_size = stack_alloc_map.hashtable[i].value.compressed_size,
+                uncompressed_size = stack_alloc_map.hashtable[i].value.n_bytes;
+            
+            BucketKey bucket_key(uncompressed_size);
             BucketEntry bucket_entry;
             if (buckets_map.has(bucket_key)) {
                 // Update the bucket entry
                 bucket_entry = buckets_map.get(bucket_key);
-                bucket_entry.total_compressed_sizes += compression_size;
-                bucket_entry.total_uncompressed_sizes += stack_alloc_map.hashtable[i].value.n_bytes;
+                bucket_entry.total_compressed_sizes += compressed_size;
+                bucket_entry.total_uncompressed_sizes += uncompressed_size;
                 bucket_entry.n_entries++;
                 // std::cout << "Updating bucket entry: " << bucket_entry << std::endl;
-                // Insert the bucket entry into the map
-                buckets_map.put(bucket_key, bucket_entry);
             } else {
                 // Create a new bucket entry
-                bucket_entry.total_compressed_sizes = compression_size;
-                bucket_entry.total_uncompressed_sizes += stack_alloc_map.hashtable[i].value.n_bytes;
+                bucket_entry.total_compressed_sizes = compressed_size;
+                bucket_entry.total_uncompressed_sizes = uncompressed_size;
                 bucket_entry.n_entries = 1;
                 // std::cout << "Creating new bucket entry: " << bucket_key << " -> " << bucket_entry << std::endl;
-                // Insert the bucket entry into the map
-                buckets_map.put(bucket_key, bucket_entry);
+            }
+            // Insert the bucket entry into the map
+            buckets_map.put(bucket_key, bucket_entry);
+            if (++j == stack_alloc_map.entries) {
+                break;
             }
         }
     }
@@ -651,7 +673,7 @@ struct Hooks {
     }
 
     void compression_test() {
-        if (!compression_stats_mutex.try_lock()) {
+        if (IS_PROTECTED || !compression_stats_mutex.try_lock()) {
             return;
         }
         setup_protection_handler();
@@ -668,6 +690,7 @@ struct Hooks {
             timer.reset();
             check_compression_stats();
             report();
+            timer.reset();
 
             /*
             // Ancient
@@ -702,8 +725,16 @@ struct Hooks {
         // if (IS_PROTECTED) {
         //     return;
         // }
+        if (IS_PROTECTED) {
+            return;
+        }
         
-        record_alloc(addr, {addr, n_bytes, 0});
+
+        CompressionEntry entry;
+        entry.compressed_size = 0;
+        entry.addr = addr;
+        entry.n_bytes = n_bytes;
+        record_alloc(addr, entry);
         compression_test();
 
         // bk_Block *block;
@@ -719,7 +750,13 @@ struct Hooks {
     void pre_free(bk_Heap *heap, void *addr) {
         // std::cout << "Freeing " << addr << std::endl;
         
+        // record_free(addr);
+        // compression_test();
+
         record_free(addr);
+        if (IS_PROTECTED) {
+            return;
+        }
         compression_test();
 
         // bk_Block *block;
@@ -734,6 +771,17 @@ struct Hooks {
         volatile std::lock_guard<std::mutex> lock(report_mutex);
 
         n_reports++;
+        double total_compressed_heap_size = 0, total_uncompressed_heap_size = 0;
+        for (int i=0; i<NUM_BUCKETS; i++) {
+            BucketKey key = BucketKey::nth(i);
+            if (!buckets_map.has(key)) {
+                continue;
+            }
+            BucketEntry entry = buckets_map.get(key);
+            total_compressed_heap_size += entry.total_compressed_sizes;
+            total_uncompressed_heap_size += entry.total_uncompressed_sizes;
+        }
+
         std::cout << "Bucket stats:" << std::endl;
         for (int i=0; i<NUM_BUCKETS; i++) {
             std::cout << "Bucket " << i << " (" << BUCKET_SIZES[i] << " bytes)" << std::endl;
@@ -747,7 +795,22 @@ struct Hooks {
             std::cout << "  Total uncompressed size: " << entry.total_uncompressed_sizes << std::endl;
             std::cout << "  Number of entries: " << entry.n_entries << std::endl;
             std::cout << "  Compression ratio (lower is better): " << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
-            csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+            std::cout << "  Total portion of heap (uncompressed): " << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << std::endl;
+            std::cout << "  Total portion of heap (compressed): " << (double)entry.total_compressed_sizes / total_compressed_heap_size << std::endl;
+
+            // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+
+            csv_file << n_reports << "," // Interval #
+                     << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                     << entry.n_entries << "," // Number of Allocations
+                     << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                     << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << "," // Bucket's Uncompressed Portion of Heap
+                     << (double)entry.total_compressed_sizes / total_compressed_heap_size << "," // Bucket's Compressed Portion of Heap
+                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                     << total_uncompressed_heap_size << "," // Total Uncompressed Heap Size
+                     << total_compressed_heap_size << "," // Total Compressed Heap Size
+                     << std::endl;
         }
     }
 
@@ -757,7 +820,19 @@ struct Hooks {
         }
         
         csv_file.open("bucket_stats.csv", std::ios::trunc | std::ios::out);
-        csv_file << "Iteration (" << INTERVAL_MS << " millisecond intervals), Bucket Size, Total Compressed Size, Total Uncompressed Size, Number of Compressions, Compression Ratio" << std::endl;
+        // csv_file << "Iteration (" << INTERVAL_MS << " millisecond intervals), Bucket Size, Total Compressed Size, Total Uncompressed Size, Number of Compressions, Compression Ratio" << std::endl;
+
+        csv_file << "Interval # (" << INTERVAL_MS << " ms), "
+            << "Bucket Size, "
+            << "Number of Allocations, "
+            << "Buckets's Compression Efficiency (compressed/uncompressed), "
+            << "Bucket's Uncompressed Portion of Heap, "
+            << "Bucket's Compressed Portion of Heap, "
+            << "Bucket's Uncompressed Size, "
+            << "Bucket's Compressed Size, "
+            << "Total Uncompressed Heap Size, "
+            << "Total Compressed Heap Size, "
+            << std::endl;
     }
 
     ~Hooks() {

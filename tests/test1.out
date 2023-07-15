@@ -1,8 +1,6 @@
 Checking compression stats
 Protecting allocations
-[FAULT] Working thread, giving back access: 0x7f1831880000
 Done protecting allocations
-[FAULT] Working thread, giving back access: 0x7f1834a80128
 Unprotecting allocations
 Done unprotecting allocations
 Updated buckets
@@ -29,27 +27,30 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 2211
-  Total uncompressed size: 6432
-  Number of entries: 201
-  Compression ratio (lower is better): 0.34375
+  No entries
 Bucket 11 (32 bytes)
-  Total compressed size: 26
-  Total uncompressed size: 6816
-  Number of entries: 1
-  Compression ratio (lower is better): 0.00381455
+  Total compressed size: 2238
+  Total uncompressed size: 6464
+  Number of entries: 202
+  Compression ratio (lower is better): 0.346225
+  Total portion of heap (uncompressed): 0.592375
+  Total portion of heap (compressed): 0.92023
 Bucket 12 (64 bytes)
-  Total compressed size: 91
-  Total uncompressed size: 10752
-  Number of entries: 2
-  Compression ratio (lower is better): 0.00846354
+  No entries
 Bucket 13 (128 bytes)
   Total compressed size: 103
-  Total uncompressed size: 6784
+  Total uncompressed size: 128
   Number of entries: 1
-  Compression ratio (lower is better): 0.0151828
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0117302
+  Total portion of heap (compressed): 0.042352
 Bucket 14 (256 bytes)
-  No entries
+  Total compressed size: 36
+  Total uncompressed size: 224
+  Number of entries: 1
+  Compression ratio (lower is better): 0.160714
+  Total portion of heap (uncompressed): 0.0205279
+  Total portion of heap (compressed): 0.0148026
 Bucket 15 (512 bytes)
   No entries
 Bucket 16 (1024 bytes)
@@ -57,7 +58,12 @@ Bucket 16 (1024 bytes)
 Bucket 17 (2048 bytes)
   No entries
 Bucket 18 (4096 bytes)
-  No entries
+  Total compressed size: 55
+  Total uncompressed size: 4096
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0134277
+  Total portion of heap (uncompressed): 0.375367
+  Total portion of heap (compressed): 0.0226151
 Hello World!
 Bucket stats:
 Bucket 0 (1 bytes)
@@ -81,27 +87,30 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 2211
-  Total uncompressed size: 6432
-  Number of entries: 201
-  Compression ratio (lower is better): 0.34375
+  No entries
 Bucket 11 (32 bytes)
-  Total compressed size: 26
-  Total uncompressed size: 6816
-  Number of entries: 1
-  Compression ratio (lower is better): 0.00381455
+  Total compressed size: 2238
+  Total uncompressed size: 6464
+  Number of entries: 202
+  Compression ratio (lower is better): 0.346225
+  Total portion of heap (uncompressed): 0.592375
+  Total portion of heap (compressed): 0.92023
 Bucket 12 (64 bytes)
-  Total compressed size: 91
-  Total uncompressed size: 10752
-  Number of entries: 2
-  Compression ratio (lower is better): 0.00846354
+  No entries
 Bucket 13 (128 bytes)
   Total compressed size: 103
-  Total uncompressed size: 6784
+  Total uncompressed size: 128
   Number of entries: 1
-  Compression ratio (lower is better): 0.0151828
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0117302
+  Total portion of heap (compressed): 0.042352
 Bucket 14 (256 bytes)
-  No entries
+  Total compressed size: 36
+  Total uncompressed size: 224
+  Number of entries: 1
+  Compression ratio (lower is better): 0.160714
+  Total portion of heap (uncompressed): 0.0205279
+  Total portion of heap (compressed): 0.0148026
 Bucket 15 (512 bytes)
   No entries
 Bucket 16 (1024 bytes)
@@ -109,5 +118,10 @@ Bucket 16 (1024 bytes)
 Bucket 17 (2048 bytes)
   No entries
 Bucket 18 (4096 bytes)
-  No entries
-Elapsed time: 2580893 microseconds
+  Total compressed size: 55
+  Total uncompressed size: 4096
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0134277
+  Total portion of heap (uncompressed): 0.375367
+  Total portion of heap (compressed): 0.0226151
+Elapsed time: 2509152 microseconds

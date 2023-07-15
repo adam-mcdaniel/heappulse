@@ -4,3 +4,4 @@ debug.sh
 *.txt
 *.exe
 a.out
+.vscode/

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <pthread.h>
+#include <unistd.h>
 #include <thread>
 #include <chrono>
 
@@ -27,7 +28,8 @@ void* threadFunction(void* arg) {
         // Write to the allocated memory
         // Here, we are simply writing 'A' to the memory repeatedly
         for (int i = 0; i < MEMORY_SIZE; i++) {
-            int *x = (int*)malloc(10);
+            int *x = (int*)malloc(10 * i);
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
             memory[i] = 'A';
             free(x);
         }

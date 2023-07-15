@@ -1,8 +1,6 @@
 Checking compression stats
 Protecting allocations
-[FAULT] Working thread, giving back access: 0x7f1265c80000
 Done protecting allocations
-[FAULT] Working thread, giving back access: 0x7f126a680328
 Unprotecting allocations
 Done unprotecting allocations
 Updated buckets
@@ -29,35 +27,65 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 22
-  Total uncompressed size: 6880
-  Number of entries: 2
-  Compression ratio (lower is better): 0.00319767
+  No entries
 Bucket 11 (32 bytes)
-  Total compressed size: 179
-  Total uncompressed size: 3168
-  Number of entries: 7
-  Compression ratio (lower is better): 0.0565025
+  Total compressed size: 27
+  Total uncompressed size: 32
+  Number of entries: 1
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00332226
+  Total portion of heap (compressed): 0.062645
 Bucket 12 (64 bytes)
-  Total compressed size: 97
-  Total uncompressed size: 6816
-  Number of entries: 2
-  Compression ratio (lower is better): 0.0142312
+  No entries
 Bucket 13 (128 bytes)
   Total compressed size: 103
-  Total uncompressed size: 3264
+  Total uncompressed size: 128
   Number of entries: 1
-  Compression ratio (lower is better): 0.0315564
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.013289
+  Total portion of heap (compressed): 0.238979
 Bucket 14 (256 bytes)
-  No entries
+  Total compressed size: 121
+  Total uncompressed size: 672
+  Number of entries: 3
+  Compression ratio (lower is better): 0.18006
+  Total portion of heap (uncompressed): 0.0697674
+  Total portion of heap (compressed): 0.280742
 Bucket 15 (512 bytes)
-  No entries
+  Total compressed size: 62
+  Total uncompressed size: 640
+  Number of entries: 2
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.0664452
+  Total portion of heap (compressed): 0.143852
 Bucket 16 (1024 bytes)
-  No entries
+  Total compressed size: 40
+  Total uncompressed size: 2048
+  Number of entries: 2
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.212625
+  Total portion of heap (compressed): 0.0928074
 Bucket 17 (2048 bytes)
-  No entries
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.209302
+  Total portion of heap (compressed): 0.0533643
 Bucket 18 (4096 bytes)
-  No entries
+  Total compressed size: 55
+  Total uncompressed size: 4096
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0134277
+  Total portion of heap (uncompressed): 0.425249
+  Total portion of heap (compressed): 0.12761
+Checking compression stats
+Protecting allocations
+Done protecting allocations
+Unprotecting allocations
+Done unprotecting allocations
+Updated buckets
+Done
 Bucket stats:
 Bucket 0 (1 bytes)
   No entries
@@ -80,33 +108,373 @@ Bucket 8 (9 bytes)
 Bucket 9 (10 bytes)
   No entries
 Bucket 10 (16 bytes)
-  Total compressed size: 22
-  Total uncompressed size: 6880
-  Number of entries: 2
-  Compression ratio (lower is better): 0.00319767
+  No entries
 Bucket 11 (32 bytes)
-  Total compressed size: 179
-  Total uncompressed size: 3168
-  Number of entries: 7
-  Compression ratio (lower is better): 0.0565025
-Bucket 12 (64 bytes)
-  Total compressed size: 97
-  Total uncompressed size: 6816
+  Total compressed size: 54
+  Total uncompressed size: 64
   Number of entries: 2
-  Compression ratio (lower is better): 0.0142312
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00301205
+  Total portion of heap (compressed): 0.06
+Bucket 12 (64 bytes)
+  No entries
 Bucket 13 (128 bytes)
-  Total compressed size: 103
-  Total uncompressed size: 3264
-  Number of entries: 1
-  Compression ratio (lower is better): 0.0315564
+  Total compressed size: 206
+  Total uncompressed size: 256
+  Number of entries: 2
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0120482
+  Total portion of heap (compressed): 0.228889
 Bucket 14 (256 bytes)
-  No entries
+  Total compressed size: 253
+  Total uncompressed size: 1344
+  Number of entries: 6
+  Compression ratio (lower is better): 0.188244
+  Total portion of heap (uncompressed): 0.063253
+  Total portion of heap (compressed): 0.281111
 Bucket 15 (512 bytes)
-  No entries
+  Total compressed size: 124
+  Total uncompressed size: 1280
+  Number of entries: 4
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.060241
+  Total portion of heap (compressed): 0.137778
 Bucket 16 (1024 bytes)
-  No entries
+  Total compressed size: 80
+  Total uncompressed size: 4096
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.192771
+  Total portion of heap (compressed): 0.0888889
 Bucket 17 (2048 bytes)
-  No entries
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.0948795
+  Total portion of heap (compressed): 0.0255556
 Bucket 18 (4096 bytes)
+  Total compressed size: 160
+  Total uncompressed size: 12192
+  Number of entries: 3
+  Compression ratio (lower is better): 0.0131234
+  Total portion of heap (uncompressed): 0.573795
+  Total portion of heap (compressed): 0.177778
+Checking compression stats
+Protecting allocations
+Done protecting allocations
+Unprotecting allocations
+Done unprotecting allocations
+Updated buckets
+Done
+Bucket stats:
+Bucket 0 (1 bytes)
   No entries
-Elapsed time: 1001405 microseconds
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  No entries
+Bucket 11 (32 bytes)
+  Total compressed size: 81
+  Total uncompressed size: 96
+  Number of entries: 3
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00332594
+  Total portion of heap (compressed): 0.0604478
+Bucket 12 (64 bytes)
+  No entries
+Bucket 13 (128 bytes)
+  Total compressed size: 309
+  Total uncompressed size: 384
+  Number of entries: 3
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0133038
+  Total portion of heap (compressed): 0.230597
+Bucket 14 (256 bytes)
+  Total compressed size: 384
+  Total uncompressed size: 2016
+  Number of entries: 9
+  Compression ratio (lower is better): 0.190476
+  Total portion of heap (uncompressed): 0.0698448
+  Total portion of heap (compressed): 0.286567
+Bucket 15 (512 bytes)
+  Total compressed size: 186
+  Total uncompressed size: 1920
+  Number of entries: 6
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.0665188
+  Total portion of heap (compressed): 0.138806
+Bucket 16 (1024 bytes)
+  Total compressed size: 120
+  Total uncompressed size: 6144
+  Number of entries: 6
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.21286
+  Total portion of heap (compressed): 0.0895522
+Bucket 17 (2048 bytes)
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.0698448
+  Total portion of heap (compressed): 0.0171642
+Bucket 18 (4096 bytes)
+  Total compressed size: 237
+  Total uncompressed size: 16288
+  Number of entries: 4
+  Compression ratio (lower is better): 0.0145506
+  Total portion of heap (uncompressed): 0.564302
+  Total portion of heap (compressed): 0.176866
+Checking compression stats
+Protecting allocations
+Done protecting allocations
+Unprotecting allocations
+Done unprotecting allocations
+Updated buckets
+Done
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  No entries
+Bucket 11 (32 bytes)
+  Total compressed size: 108
+  Total uncompressed size: 128
+  Number of entries: 4
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00350877
+  Total portion of heap (compressed): 0.0607083
+Bucket 12 (64 bytes)
+  No entries
+Bucket 13 (128 bytes)
+  Total compressed size: 412
+  Total uncompressed size: 512
+  Number of entries: 4
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0140351
+  Total portion of heap (compressed): 0.231591
+Bucket 14 (256 bytes)
+  Total compressed size: 513
+  Total uncompressed size: 2688
+  Number of entries: 12
+  Compression ratio (lower is better): 0.190848
+  Total portion of heap (uncompressed): 0.0736842
+  Total portion of heap (compressed): 0.288364
+Bucket 15 (512 bytes)
+  Total compressed size: 248
+  Total uncompressed size: 2560
+  Number of entries: 8
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.0701754
+  Total portion of heap (compressed): 0.139404
+Bucket 16 (1024 bytes)
+  Total compressed size: 160
+  Total uncompressed size: 8192
+  Number of entries: 8
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.224561
+  Total portion of heap (compressed): 0.0899382
+Bucket 17 (2048 bytes)
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.0552632
+  Total portion of heap (compressed): 0.0129286
+Bucket 18 (4096 bytes)
+  Total compressed size: 315
+  Total uncompressed size: 20384
+  Number of entries: 5
+  Compression ratio (lower is better): 0.0154533
+  Total portion of heap (uncompressed): 0.558772
+  Total portion of heap (compressed): 0.177066
+Checking compression stats
+Protecting allocations
+Done protecting allocations
+Unprotecting allocations
+Done unprotecting allocations
+Updated buckets
+Done
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  No entries
+Bucket 11 (32 bytes)
+  Total compressed size: 135
+  Total uncompressed size: 160
+  Number of entries: 5
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00362845
+  Total portion of heap (compressed): 0.0605653
+Bucket 12 (64 bytes)
+  No entries
+Bucket 13 (128 bytes)
+  Total compressed size: 515
+  Total uncompressed size: 640
+  Number of entries: 5
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0145138
+  Total portion of heap (compressed): 0.231045
+Bucket 14 (256 bytes)
+  Total compressed size: 653
+  Total uncompressed size: 3360
+  Number of entries: 15
+  Compression ratio (lower is better): 0.194345
+  Total portion of heap (uncompressed): 0.0761974
+  Total portion of heap (compressed): 0.292956
+Bucket 15 (512 bytes)
+  Total compressed size: 310
+  Total uncompressed size: 3200
+  Number of entries: 10
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.0725689
+  Total portion of heap (compressed): 0.139076
+Bucket 16 (1024 bytes)
+  Total compressed size: 200
+  Total uncompressed size: 10240
+  Number of entries: 10
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.232221
+  Total portion of heap (compressed): 0.0897263
+Bucket 17 (2048 bytes)
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.0457184
+  Total portion of heap (compressed): 0.0103185
+Bucket 18 (4096 bytes)
+  Total compressed size: 393
+  Total uncompressed size: 24480
+  Number of entries: 6
+  Compression ratio (lower is better): 0.0160539
+  Total portion of heap (uncompressed): 0.555152
+  Total portion of heap (compressed): 0.176312
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  No entries
+Bucket 11 (32 bytes)
+  Total compressed size: 135
+  Total uncompressed size: 160
+  Number of entries: 5
+  Compression ratio (lower is better): 0.84375
+  Total portion of heap (uncompressed): 0.00362845
+  Total portion of heap (compressed): 0.0605653
+Bucket 12 (64 bytes)
+  No entries
+Bucket 13 (128 bytes)
+  Total compressed size: 515
+  Total uncompressed size: 640
+  Number of entries: 5
+  Compression ratio (lower is better): 0.804688
+  Total portion of heap (uncompressed): 0.0145138
+  Total portion of heap (compressed): 0.231045
+Bucket 14 (256 bytes)
+  Total compressed size: 653
+  Total uncompressed size: 3360
+  Number of entries: 15
+  Compression ratio (lower is better): 0.194345
+  Total portion of heap (uncompressed): 0.0761974
+  Total portion of heap (compressed): 0.292956
+Bucket 15 (512 bytes)
+  Total compressed size: 310
+  Total uncompressed size: 3200
+  Number of entries: 10
+  Compression ratio (lower is better): 0.096875
+  Total portion of heap (uncompressed): 0.0725689
+  Total portion of heap (compressed): 0.139076
+Bucket 16 (1024 bytes)
+  Total compressed size: 200
+  Total uncompressed size: 10240
+  Number of entries: 10
+  Compression ratio (lower is better): 0.0195312
+  Total portion of heap (uncompressed): 0.232221
+  Total portion of heap (compressed): 0.0897263
+Bucket 17 (2048 bytes)
+  Total compressed size: 23
+  Total uncompressed size: 2016
+  Number of entries: 1
+  Compression ratio (lower is better): 0.0114087
+  Total portion of heap (uncompressed): 0.0457184
+  Total portion of heap (compressed): 0.0103185
+Bucket 18 (4096 bytes)
+  Total compressed size: 393
+  Total uncompressed size: 24480
+  Number of entries: 6
+  Compression ratio (lower is better): 0.0160539
+  Total portion of heap (uncompressed): 0.555152
+  Total portion of heap (compressed): 0.176312
+Elapsed time: 1107909 microseconds
