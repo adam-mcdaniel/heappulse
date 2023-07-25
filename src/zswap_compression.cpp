@@ -950,11 +950,23 @@ struct Hooks {
             AllocationSiteKey site_key = sites_map.hashtable[i].key;
             std::cout << "  Site " << std::dec << i << " (" << (site_key.path_to_file == NULL? "Null" : site_key.path_to_file) << ":" << site_key.line_number << ") at address 0x" << std::hex << (long long int)site_key.return_address << std::endl;
             AllocationSiteEntry site_entry = sites_map.hashtable[i].value;
+            auto buckets_map = site_entry.buckets_map;
             
+
+            double total_compressed_site_size = 0, total_uncompressed_site_size = 0;
+            for (int j=0; j<NUM_BUCKETS; j++) {
+                BucketKey key = BucketKey::nth(j);
+                if (!buckets_map.has(key)) {
+                    continue;
+                }
+                BucketEntry entry = buckets_map.get(key);
+                total_compressed_site_size += entry.total_compressed_sizes;
+                total_uncompressed_site_size += entry.total_uncompressed_sizes;
+            }
+
             // Iterate over the buckets in the site
             for (int j=0; j<NUM_BUCKETS; j++) {
                 std::cout << "    Bucket " << std::dec << j << " (" << BUCKET_SIZES[j] << " bytes)" << std::endl;
-                auto buckets_map = site_entry.buckets_map;
 
                 BucketKey key = BucketKey::nth(j);
                 if (!buckets_map.has(key)) {
@@ -966,8 +978,8 @@ struct Hooks {
                 std::cout << "      Total uncompressed size: " << entry.total_uncompressed_sizes << std::endl;
                 std::cout << "      Number of entries: " << entry.n_entries << std::endl;
                 std::cout << "      Compression ratio (lower is better): " << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
-                std::cout << "      Total portion of allocation site's data (uncompressed): " << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << std::endl;
-                std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_heap_size << std::endl;
+                std::cout << "      Total portion of allocation site's data (uncompressed): " << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << std::endl;
+                std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_site_size << std::endl;
 
                 // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
 
