@@ -12,15 +12,49 @@
 #include <thread>
 #include <sys/mman.h>
 #include <condition_variable>
+#include <dlfcn.h>
 
 #define OUTPUT_CSV "bucket_stats.csv"
 
 const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
 // const int INTERVAL_MS = 1000;  // Interval in seconds to track memory usage (in milliseconds)
 const int MAX_TRACKED_ALLOCS = 1000000;
-const int BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096};
+const int MAX_TRACKED_SITES = 1000;
+const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 1073741824};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
 
+
+const char *get_path_to_file_from_code_address(void *address) {
+    Dl_info dl_info;
+    if (dladdr(address, &dl_info)) {
+        // std::cerr << "Executable Name: " << dl_info.dli_fname << std::endl;
+        // std::cerr << "Symbol Name: " << (dl_info.dli_sname != NULL? dl_info.dli_sname : "Null") << std::endl;
+        return dl_info.dli_fname;
+    } else {
+        std::cerr << "Error: Unable to get the executable name.\n";
+        exit(1);
+    }
+}
+
+// std::mutex get_addr_mutex;
+// void get_line_from_code_address(void *address, char *buf) {
+//     volatile std::lock_guard<std::mutex> lock(get_addr_mutex);
+//     Dl_info dl_info;
+//     dladdr(address, &dl_info);
+//     // Call `addr2line` on the command line using the address
+//     // and the executable name from `get_path_to_file_from_code_address`
+//     char command[1024];
+//     command[0] = 0;
+//     // sprintf(command, "addr2line -e %s %lld", dl_info.dli_fname, address);
+//     // // std::string command = "addr2line -e " + executable_name + " " + std::to_string((long)address);
+//     // // std::string result = "";
+//     // FILE *fp = popen(command, "r");
+//     // if (fp == NULL) {
+//     //     std::cerr << "Failed to run command: " << command << std::endl;
+//     //     exit(1);
+//     // }
+//     // fgets(buf, sizeof(buf), fp);
+// }
 
 struct Timer {
     std::chrono::steady_clock::time_point start_time;
@@ -139,7 +173,7 @@ struct StackMap {
     }
 
     void clear() {
-        for (int i=0; i<Size; i++) {
+        for (u64 i=0; i<Size; i++) {
             hashtable[i].occupied = false;
         }
         entries = 0;
@@ -163,7 +197,7 @@ struct StackMap {
 
     void map(void (*func)(KeyType&, ValueType&)) {
         int j = 0;
-        for (int i=0; i<Size; i++) {
+        for (u64 i=0; i<Size; i++) {
             if (hashtable[i].occupied) {
                 func(hashtable[i].key, hashtable[i].value);
                 if (++j == entries) {
@@ -206,14 +240,17 @@ struct StackMap {
 
 
 struct CompressionEntry {
-    void *addr;
+    void *allocation_address;
     u64 n_bytes;
     uLong compressed_size;
+    void *return_address = NULL;
 
-    CompressionEntry() : addr(NULL), n_bytes(0), compressed_size(0) {}
+    CompressionEntry() : allocation_address(NULL), n_bytes(0), compressed_size(0) {}
+    CompressionEntry(void *allocation_address, u64 n_bytes, uLong compressed_size) : allocation_address(allocation_address), n_bytes(n_bytes), compressed_size(compressed_size) {}
+    CompressionEntry(void *allocation_address, u64 n_bytes, uLong compressed_size, void *return_address) : allocation_address(allocation_address), n_bytes(n_bytes), compressed_size(compressed_size), return_address(return_address) {}
 
     friend std::ostream& operator<<(std::ostream& os, const CompressionEntry& entry) {
-        os << "addr: " << entry.addr << ", n_bytes: " << entry.n_bytes << ", compressed_size: " << entry.compressed_size;
+        os << "addr: " << entry.allocation_address << ", n_bytes: " << entry.n_bytes << ", compressed_size: " << entry.compressed_size;
         return os;
     }
 };
@@ -242,7 +279,7 @@ struct BucketKey {
             lower_bytes_bound = 0;
             upper_bytes_bound = 0;
         } else {
-            int bucket_size_index = 0;
+            u64 bucket_size_index = 0;
 
             while (BUCKET_SIZES[bucket_size_index] < n_bytes) {
                 bucket_size_index++;
@@ -299,6 +336,22 @@ struct BucketKey {
     }
 };
 
+struct AllocationSiteKey {
+    void *return_address = NULL;
+    const char *path_to_file = NULL;
+    int line_number = -1;
+
+    AllocationSiteKey() : return_address(NULL), path_to_file(NULL), line_number(-1) {}
+
+    AllocationSiteKey(void *return_address) : return_address(return_address) {}
+    AllocationSiteKey(void *return_address, const char *path_to_file) : return_address(return_address), path_to_file(path_to_file) {}
+    AllocationSiteKey(void *return_address, const char *path_to_file, int line_number) : return_address(return_address), path_to_file(path_to_file), line_number(line_number) {}
+
+    bool operator==(const AllocationSiteKey& other) const {
+        return return_address == other.return_address && path_to_file == other.path_to_file && line_number == other.line_number;
+    }
+};
+
 namespace std {
   template <> struct hash<BucketKey>
   {
@@ -307,13 +360,50 @@ namespace std {
         return hash<u64>()(key.lower_bytes_bound) ^ hash<u64>()(key.upper_bytes_bound);
     }
   };
+
+template <> struct hash<AllocationSiteKey>
+{
+    size_t operator()(const AllocationSiteKey &key) const
+    {
+        return hash<void*>()(key.return_address) ^ hash<const char*>()(key.path_to_file) ^ hash<int>()(key.line_number);
+    }
+};
 }
+
+struct AllocationSiteEntry {
+    // For each allocation site, put each allocation size into a bucket
+    StackMap<BucketKey, BucketEntry, NUM_BUCKETS> buckets_map;
+
+    void add_compression_entry(CompressionEntry entry) {
+        // Put it into the proper bucket, based on the size of the allocation
+        BucketKey bucket_key(entry.n_bytes);
+        BucketEntry bucket_entry;
+        if (buckets_map.has(bucket_key)) {
+            // Update the bucket entry
+            bucket_entry = buckets_map.get(bucket_key);
+            bucket_entry.total_compressed_sizes += entry.compressed_size;
+            bucket_entry.total_uncompressed_sizes += entry.n_bytes;
+            bucket_entry.n_entries++;
+        } else {
+            // Create a new bucket entry
+            bucket_entry.total_compressed_sizes = entry.compressed_size;
+            bucket_entry.total_uncompressed_sizes = entry.n_bytes;
+            bucket_entry.n_entries = 1;
+        }
+        // Insert the bucket entry into the map
+        buckets_map.put(bucket_key, bucket_entry);
+    }
+};
 
 static StackMap<void*, CompressionEntry, MAX_TRACKED_ALLOCS> stack_alloc_map;
 std::mutex alloc_map_mutex;
 
 static StackMap<BucketKey, BucketEntry, NUM_BUCKETS> buckets_map;
 std::mutex buckets_map_mutex;
+
+static StackMap<AllocationSiteKey, AllocationSiteEntry, MAX_TRACKED_SITES> sites_map;
+std::mutex sites_mutex;
+
 
 std::mutex protect_mutex;
 
@@ -478,7 +568,7 @@ void protect_allocation_entries()
         if (stack_alloc_map.hashtable[i].occupied) {
             // std::cout << "Protecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This protects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.addr;
+            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.allocation_address;
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
@@ -515,7 +605,7 @@ void unprotect_allocation_entries() {
         if (stack_alloc_map.hashtable[i].occupied) {
             // std::cout << "Unprotecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This unprotects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.addr;
+            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.allocation_address;
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_WRITE | PROT_EXEC) == -1) {
                 perror("mprotect");
@@ -649,6 +739,39 @@ void put_into_buckets() {
     std::cout << "Updated buckets" << std::endl;
 }
 
+void track_allocation_sites() {
+    volatile std::lock_guard<std::mutex> lock1(alloc_map_mutex);
+    volatile std::lock_guard<std::mutex> lock2(sites_mutex);
+
+    // Iterate over the allocation map entries and put them into the sites map according to their return address
+    int j = 0;
+    for (int i=0; i<stack_alloc_map.size(); i++) {
+        if (stack_alloc_map.hashtable[i].occupied) {
+            void *return_address = stack_alloc_map.hashtable[i].value.return_address;
+            const char *path_to_file = get_path_to_file_from_code_address(return_address);
+            int line_number = -1;
+            char line[1024];
+            // get_line_from_code_address(return_address, line);
+            // std::cout << "line: " << line << std::endl;
+            // std::cout << "path_to_file: " << path_to_file << std::endl;
+            // std::cout << "return_address: " << return_address << std::endl;
+            AllocationSiteKey site_key(return_address, path_to_file, line_number);
+            AllocationSiteEntry site_entry;
+            if (sites_map.has(site_key)) {
+                // Update the site entry
+                site_entry = sites_map.get(site_key);
+            }
+            // Create a new site entry
+            site_entry.add_compression_entry(stack_alloc_map.hashtable[i].value);
+            // Insert the site entry into the map
+            sites_map.put(site_key, site_entry);
+            if (++j == stack_alloc_map.entries) {
+                break;
+            }
+        }
+    }
+}
+
 void check_compression_stats() {
     std::cout << "Checking compression stats" << std::endl;
     {
@@ -659,8 +782,10 @@ void check_compression_stats() {
         unprotect_allocation_entries();
     }
     put_into_buckets();
+    track_allocation_sites();
     std::cout << "Done" << std::endl;
 }
+
 
 struct Hooks {
     Timer timer;
@@ -721,20 +846,21 @@ struct Hooks {
         compression_stats_mutex.unlock();
     }
 
-    void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
         // if (IS_PROTECTED) {
         //     return;
         // }
+
         if (IS_PROTECTED) {
             return;
         }
-        
 
         CompressionEntry entry;
         entry.compressed_size = 0;
-        entry.addr = addr;
+        entry.allocation_address = allocation_address;
         entry.n_bytes = n_bytes;
-        record_alloc(addr, entry);
+        entry.return_address = BK_GET_RA();
+        record_alloc(allocation_address, entry);
         compression_test();
 
         // bk_Block *block;
@@ -768,7 +894,10 @@ struct Hooks {
     }
 
     void report() {
-        volatile std::lock_guard<std::mutex> lock(report_mutex);
+        volatile std::lock_guard<std::mutex> lock1(report_mutex);
+        volatile std::lock_guard<std::mutex> lock2(alloc_map_mutex);
+        volatile std::lock_guard<std::mutex> lock3(sites_mutex);
+        volatile std::lock_guard<std::mutex> lock4(buckets_map_mutex);
 
         n_reports++;
         double total_compressed_heap_size = 0, total_uncompressed_heap_size = 0;
@@ -812,6 +941,49 @@ struct Hooks {
                      << total_compressed_heap_size << "," // Total Compressed Heap Size
                      << std::endl;
         }
+
+        std::cout << "Site stats:" << std::endl;
+        for (int i=0; i<MAX_TRACKED_SITES; i++) {
+            if (!sites_map.hashtable[i].occupied) {
+                continue;
+            }
+            AllocationSiteKey site_key = sites_map.hashtable[i].key;
+            std::cout << "  Site " << std::dec << i << " (" << (site_key.path_to_file == NULL? "Null" : site_key.path_to_file) << ":" << site_key.line_number << ") at address 0x" << std::hex << (long long int)site_key.return_address << std::endl;
+            AllocationSiteEntry site_entry = sites_map.hashtable[i].value;
+            
+            // Iterate over the buckets in the site
+            for (int j=0; j<NUM_BUCKETS; j++) {
+                std::cout << "    Bucket " << std::dec << j << " (" << BUCKET_SIZES[j] << " bytes)" << std::endl;
+                auto buckets_map = site_entry.buckets_map;
+
+                BucketKey key = BucketKey::nth(j);
+                if (!buckets_map.has(key)) {
+                    std::cout << "      No entries" << std::endl;
+                    continue;
+                }
+                BucketEntry entry = buckets_map.get(key);
+                std::cout << "      Total compressed size: " << entry.total_compressed_sizes << std::endl;
+                std::cout << "      Total uncompressed size: " << entry.total_uncompressed_sizes << std::endl;
+                std::cout << "      Number of entries: " << entry.n_entries << std::endl;
+                std::cout << "      Compression ratio (lower is better): " << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+                std::cout << "      Total portion of allocation site's data (uncompressed): " << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << std::endl;
+                std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_heap_size << std::endl;
+
+                // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+
+                // csv_file << n_reports << "," // Interval #
+                //         << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                //         << entry.n_entries << "," // Number of Allocations
+                //         << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                //         << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << "," // Bucket's Uncompressed Portion of Heap
+                //         << (double)entry.total_compressed_sizes / total_compressed_heap_size << "," // Bucket's Compressed Portion of Heap
+                //         << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                //         << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                //         << total_uncompressed_heap_size << "," // Total Uncompressed Heap Size
+                //         << total_compressed_heap_size << "," // Total Compressed Heap Size
+                //         << std::endl;
+            }
+        }
     }
 
     void create_stats_csv() {
@@ -836,8 +1008,6 @@ struct Hooks {
     }
 
     ~Hooks() {
-        u32 i;
-
         // printf("%-10s %16s\n", "SIZE CLASS", "COUNT");
         // printf("---------------------------\n");
         // for (i = 0; i < BK_NR_SIZE_CLASSES + 1; i += 1) {
