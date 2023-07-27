@@ -34,7 +34,7 @@ Bucket 11 (32 bytes)
   Number of entries: 202
   Compression ratio (lower is better): 0.346225
   Total portion of heap (uncompressed): 0.592375
-  Total portion of heap (compressed): 0.920609
+  Total portion of heap (compressed): 0.923267
 Bucket 12 (64 bytes)
   No entries
 Bucket 13 (128 bytes)
@@ -43,14 +43,14 @@ Bucket 13 (128 bytes)
   Number of entries: 1
   Compression ratio (lower is better): 0.804688
   Total portion of heap (uncompressed): 0.0117302
-  Total portion of heap (compressed): 0.0423694
+  Total portion of heap (compressed): 0.0424917
 Bucket 14 (256 bytes)
-  Total compressed size: 35
+  Total compressed size: 28
   Total uncompressed size: 224
   Number of entries: 1
-  Compression ratio (lower is better): 0.15625
+  Compression ratio (lower is better): 0.125
   Total portion of heap (uncompressed): 0.0205279
-  Total portion of heap (compressed): 0.0143974
+  Total portion of heap (compressed): 0.0115512
 Bucket 15 (512 bytes)
   No entries
 Bucket 16 (1024 bytes)
@@ -63,7 +63,7 @@ Bucket 18 (4096 bytes)
   Number of entries: 1
   Compression ratio (lower is better): 0.0134277
   Total portion of heap (uncompressed): 0.375367
-  Total portion of heap (compressed): 0.0226244
+  Total portion of heap (compressed): 0.0226898
 Bucket 19 (262144 bytes)
   No entries
 Bucket 20 (524288 bytes)
@@ -78,129 +78,10 @@ Bucket 24 (8388608 bytes)
   No entries
 Bucket 25 (1073741824 bytes)
   No entries
+    File allocation_site_stats.csv does not exist
 Site stats:
-  Site 261 (/lib64/ld-linux-x86-64.so.2:-1) at address 0x7fc6091e1cca
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      Total compressed size: 103
-      Total uncompressed size: 128
-      Number of entries: 1
-      Compression ratio (lower is better): 0.804688
-      Total portion of allocation site's data (uncompressed): 1
-      Total portion of allocation site's data (compressed): 1
-    Bucket 14 (256 bytes)
-      No entries
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (262144 bytes)
-      No entries
-    Bucket 20 (524288 bytes)
-      No entries
-    Bucket 21 (1048576 bytes)
-      No entries
-    Bucket 22 (2097152 bytes)
-      No entries
-    Bucket 23 (4194304 bytes)
-      No entries
-    Bucket 24 (8388608 bytes)
-      No entries
-    Bucket 25 (1073741824 bytes)
-      No entries
-  Site 265 (./tests/test1.exe:-1) at address 0x5638d84561f7
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      Total compressed size: 2200
-      Total uncompressed size: 6400
-      Number of entries: 200
-      Compression ratio (lower is better): 0.34375
-      Total portion of allocation site's data (uncompressed): 0.966184
-      Total portion of allocation site's data (compressed): 0.98434
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 35
-      Total uncompressed size: 224
-      Number of entries: 1
-      Compression ratio (lower is better): 0.15625
-      Total portion of allocation site's data (uncompressed): 0.0338164
-      Total portion of allocation site's data (compressed): 0.01566
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (262144 bytes)
-      No entries
-    Bucket 20 (524288 bytes)
-      No entries
-    Bucket 21 (1048576 bytes)
-      No entries
-    Bucket 22 (2097152 bytes)
-      No entries
-    Bucket 23 (4194304 bytes)
-      No entries
-    Bucket 24 (8388608 bytes)
-      No entries
-    Bucket 25 (1073741824 bytes)
-      No entries
-  Site 708 (/lib/x86_64-linux-gnu/libc.so.6:-1) at address 0x7fc608e901db
+  Site 124 (/lib/x86_64-linux-gnu/libc.so.6:-1) at address 0x7f26b68901db
+    File site_stats__lib_x86_64-linux-gnu_libc_so_6_7f26b68901db.csv does not exist
     Bucket 0 (1 bytes)
       No entries
     Bucket 1 (2 bytes)
@@ -258,7 +139,67 @@ Site stats:
       No entries
     Bucket 25 (1073741824 bytes)
       No entries
-  Site 763 (/home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so:-1) at address 0x7fc6091cbdb4
+  Site 405 (/lib64/ld-linux-x86-64.so.2:-1) at address 0x7f26b6ae4cca
+    File site_stats__lib64_ld-linux-x86-64_so_2_7f26b6ae4cca.csv does not exist
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      No entries
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      Total compressed size: 103
+      Total uncompressed size: 128
+      Number of entries: 1
+      Compression ratio (lower is better): 0.804688
+      Total portion of allocation site's data (uncompressed): 1
+      Total portion of allocation site's data (compressed): 1
+    Bucket 14 (256 bytes)
+      No entries
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
+    Bucket 19 (262144 bytes)
+      No entries
+    Bucket 20 (524288 bytes)
+      No entries
+    Bucket 21 (1048576 bytes)
+      No entries
+    Bucket 22 (2097152 bytes)
+      No entries
+    Bucket 23 (4194304 bytes)
+      No entries
+    Bucket 24 (8388608 bytes)
+      No entries
+    Bucket 25 (1073741824 bytes)
+      No entries
+  Site 763 (/home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so:-1) at address 0x7f26b6acedb4
+    File site_stats__home_adam_Documentos_c++_allocation-compressibility-tracker_libbkmalloc_so_7f26b6acedb4.csv does not exist
     Bucket 0 (1 bytes)
       No entries
     Bucket 1 (2 bytes)
@@ -307,6 +248,70 @@ Site stats:
       Compression ratio (lower is better): 0.0134277
       Total portion of allocation site's data (uncompressed): 0.992248
       Total portion of allocation site's data (compressed): 0.833333
+    Bucket 19 (262144 bytes)
+      No entries
+    Bucket 20 (524288 bytes)
+      No entries
+    Bucket 21 (1048576 bytes)
+      No entries
+    Bucket 22 (2097152 bytes)
+      No entries
+    Bucket 23 (4194304 bytes)
+      No entries
+    Bucket 24 (8388608 bytes)
+      No entries
+    Bucket 25 (1073741824 bytes)
+      No entries
+  Site 906 (./tests/test1.exe:-1) at address 0x55ffcbbd91f7
+    File site_stats___tests_test1_exe_55ffcbbd91f7.csv does not exist
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      Total compressed size: 2200
+      Total uncompressed size: 6400
+      Number of entries: 200
+      Compression ratio (lower is better): 0.34375
+      Total portion of allocation site's data (uncompressed): 0.966184
+      Total portion of allocation site's data (compressed): 0.987433
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      No entries
+    Bucket 14 (256 bytes)
+      Total compressed size: 28
+      Total uncompressed size: 224
+      Number of entries: 1
+      Compression ratio (lower is better): 0.125
+      Total portion of allocation site's data (uncompressed): 0.0338164
+      Total portion of allocation site's data (compressed): 0.0125673
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
     Bucket 19 (262144 bytes)
       No entries
     Bucket 20 (524288 bytes)
@@ -351,7 +356,7 @@ Bucket 11 (32 bytes)
   Number of entries: 202
   Compression ratio (lower is better): 0.346225
   Total portion of heap (uncompressed): 0.592375
-  Total portion of heap (compressed): 0.920609
+  Total portion of heap (compressed): 0.923267
 Bucket 12 (64 bytes)
   No entries
 Bucket 13 (128 bytes)
@@ -360,14 +365,14 @@ Bucket 13 (128 bytes)
   Number of entries: 1
   Compression ratio (lower is better): 0.804688
   Total portion of heap (uncompressed): 0.0117302
-  Total portion of heap (compressed): 0.0423694
+  Total portion of heap (compressed): 0.0424917
 Bucket 14 (256 bytes)
-  Total compressed size: 35
+  Total compressed size: 28
   Total uncompressed size: 224
   Number of entries: 1
-  Compression ratio (lower is better): 0.15625
+  Compression ratio (lower is better): 0.125
   Total portion of heap (uncompressed): 0.0205279
-  Total portion of heap (compressed): 0.0143974
+  Total portion of heap (compressed): 0.0115512
 Bucket 15 (512 bytes)
   No entries
 Bucket 16 (1024 bytes)
@@ -380,7 +385,7 @@ Bucket 18 (4096 bytes)
   Number of entries: 1
   Compression ratio (lower is better): 0.0134277
   Total portion of heap (uncompressed): 0.375367
-  Total portion of heap (compressed): 0.0226244
+  Total portion of heap (compressed): 0.0226898
 Bucket 19 (262144 bytes)
   No entries
 Bucket 20 (524288 bytes)
@@ -395,129 +400,10 @@ Bucket 24 (8388608 bytes)
   No entries
 Bucket 25 (1073741824 bytes)
   No entries
+    File allocation_site_stats.csv already exists
 Site stats:
-  Site 261 (/lib64/ld-linux-x86-64.so.2:-1) at address 0x7fc6091e1cca
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      Total compressed size: 103
-      Total uncompressed size: 128
-      Number of entries: 1
-      Compression ratio (lower is better): 0.804688
-      Total portion of allocation site's data (uncompressed): 1
-      Total portion of allocation site's data (compressed): 1
-    Bucket 14 (256 bytes)
-      No entries
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (262144 bytes)
-      No entries
-    Bucket 20 (524288 bytes)
-      No entries
-    Bucket 21 (1048576 bytes)
-      No entries
-    Bucket 22 (2097152 bytes)
-      No entries
-    Bucket 23 (4194304 bytes)
-      No entries
-    Bucket 24 (8388608 bytes)
-      No entries
-    Bucket 25 (1073741824 bytes)
-      No entries
-  Site 265 (./tests/test1.exe:-1) at address 0x5638d84561f7
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      Total compressed size: 2200
-      Total uncompressed size: 6400
-      Number of entries: 200
-      Compression ratio (lower is better): 0.34375
-      Total portion of allocation site's data (uncompressed): 0.966184
-      Total portion of allocation site's data (compressed): 0.98434
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 35
-      Total uncompressed size: 224
-      Number of entries: 1
-      Compression ratio (lower is better): 0.15625
-      Total portion of allocation site's data (uncompressed): 0.0338164
-      Total portion of allocation site's data (compressed): 0.01566
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (262144 bytes)
-      No entries
-    Bucket 20 (524288 bytes)
-      No entries
-    Bucket 21 (1048576 bytes)
-      No entries
-    Bucket 22 (2097152 bytes)
-      No entries
-    Bucket 23 (4194304 bytes)
-      No entries
-    Bucket 24 (8388608 bytes)
-      No entries
-    Bucket 25 (1073741824 bytes)
-      No entries
-  Site 708 (/lib/x86_64-linux-gnu/libc.so.6:-1) at address 0x7fc608e901db
+  Site 124 (/lib/x86_64-linux-gnu/libc.so.6:-1) at address 0x7f26b68901db
+    File site_stats__lib_x86_64-linux-gnu_libc_so_6_7f26b68901db.csv already exists
     Bucket 0 (1 bytes)
       No entries
     Bucket 1 (2 bytes)
@@ -575,7 +461,67 @@ Site stats:
       No entries
     Bucket 25 (1073741824 bytes)
       No entries
-  Site 763 (/home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so:-1) at address 0x7fc6091cbdb4
+  Site 405 (/lib64/ld-linux-x86-64.so.2:-1) at address 0x7f26b6ae4cca
+    File site_stats__lib64_ld-linux-x86-64_so_2_7f26b6ae4cca.csv already exists
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      No entries
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      Total compressed size: 103
+      Total uncompressed size: 128
+      Number of entries: 1
+      Compression ratio (lower is better): 0.804688
+      Total portion of allocation site's data (uncompressed): 1
+      Total portion of allocation site's data (compressed): 1
+    Bucket 14 (256 bytes)
+      No entries
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
+    Bucket 19 (262144 bytes)
+      No entries
+    Bucket 20 (524288 bytes)
+      No entries
+    Bucket 21 (1048576 bytes)
+      No entries
+    Bucket 22 (2097152 bytes)
+      No entries
+    Bucket 23 (4194304 bytes)
+      No entries
+    Bucket 24 (8388608 bytes)
+      No entries
+    Bucket 25 (1073741824 bytes)
+      No entries
+  Site 763 (/home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so:-1) at address 0x7f26b6acedb4
+    File site_stats__home_adam_Documentos_c++_allocation-compressibility-tracker_libbkmalloc_so_7f26b6acedb4.csv already exists
     Bucket 0 (1 bytes)
       No entries
     Bucket 1 (2 bytes)
@@ -638,4 +584,68 @@ Site stats:
       No entries
     Bucket 25 (1073741824 bytes)
       No entries
-Elapsed time: 2508045 microseconds
+  Site 906 (./tests/test1.exe:-1) at address 0x55ffcbbd91f7
+    File site_stats___tests_test1_exe_55ffcbbd91f7.csv already exists
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      Total compressed size: 2200
+      Total uncompressed size: 6400
+      Number of entries: 200
+      Compression ratio (lower is better): 0.34375
+      Total portion of allocation site's data (uncompressed): 0.966184
+      Total portion of allocation site's data (compressed): 0.987433
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      No entries
+    Bucket 14 (256 bytes)
+      Total compressed size: 28
+      Total uncompressed size: 224
+      Number of entries: 1
+      Compression ratio (lower is better): 0.125
+      Total portion of allocation site's data (uncompressed): 0.0338164
+      Total portion of allocation site's data (compressed): 0.0125673
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
+    Bucket 19 (262144 bytes)
+      No entries
+    Bucket 20 (524288 bytes)
+      No entries
+    Bucket 21 (1048576 bytes)
+      No entries
+    Bucket 22 (2097152 bytes)
+      No entries
+    Bucket 23 (4194304 bytes)
+      No entries
+    Bucket 24 (8388608 bytes)
+      No entries
+    Bucket 25 (1073741824 bytes)
+      No entries
+Elapsed time: 2511413 microseconds

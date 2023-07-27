@@ -2,6 +2,7 @@
 #include "bkmalloc.h"
 #include <zlib.h>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include <stdio.h>
 #include <chrono>
@@ -15,6 +16,7 @@
 #include <dlfcn.h>
 
 #define OUTPUT_CSV "bucket_stats.csv"
+#define ALLOCATION_SITE_OUTPUT_CSV "allocation_site_stats.csv"
 
 const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
 // const int INTERVAL_MS = 1000;  // Interval in seconds to track memory usage (in milliseconds)
@@ -786,6 +788,10 @@ void check_compression_stats() {
     std::cout << "Done" << std::endl;
 }
 
+bool file_exists(const char *name) {
+    std::ifstream file(name);
+    return file.good();
+}
 
 struct Hooks {
     Timer timer;
@@ -942,6 +948,31 @@ struct Hooks {
                      << std::endl;
         }
 
+
+        std::ofstream all_site_stats_csv;
+        if (file_exists(ALLOCATION_SITE_OUTPUT_CSV)) {
+            std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV " already exists" << std::endl;
+            // Open the file for appending
+            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, (n_reports == 0? std::ios::trunc : std::ios::app) | std::ios::out);
+        } else {
+            std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV << " does not exist" << std::endl;
+            // Create the file
+            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, std::ios::trunc | std::ios::out);
+            // Write the header
+            all_site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
+                << "Allocation Site, "
+                << "Bucket Size, "
+                << "Number of Allocations, "
+                << "Buckets's Compression Efficiency (uncompressed/compressed), "
+                << "Bucket's Uncompressed Portion of Allocation Site's Data, "
+                << "Bucket's Compressed Portion of Allocation Site's Data, "
+                << "Bucket's Uncompressed Size, "
+                << "Bucket's Compressed Size, "
+                << "Total Uncompressed Allocation Site Data Size, "
+                << "Total Compressed Allocation Site Data Size, "
+                << std::endl;
+        }
+        std::ofstream site_stats_csv;
         std::cout << "Site stats:" << std::endl;
         for (int i=0; i<MAX_TRACKED_SITES; i++) {
             if (!sites_map.hashtable[i].occupied) {
@@ -949,6 +980,40 @@ struct Hooks {
             }
             AllocationSiteKey site_key = sites_map.hashtable[i].key;
             std::cout << "  Site " << std::dec << i << " (" << (site_key.path_to_file == NULL? "Null" : site_key.path_to_file) << ":" << site_key.line_number << ") at address 0x" << std::hex << (long long int)site_key.return_address << std::endl;
+            std::stringstream ss;
+            ss << "site_stats_" << (site_key.path_to_file == NULL? "" : site_key.path_to_file) << "_" << std::hex << (long long int)site_key.return_address << std::dec;
+            std::string site_stats_csv_name = ss.str();
+
+            while (site_stats_csv_name.find("/") != std::string::npos) {
+                site_stats_csv_name.replace(site_stats_csv_name.find("/"), 1, "_");
+            }
+            while (site_stats_csv_name.find(".") != std::string::npos) {
+                site_stats_csv_name.replace(site_stats_csv_name.find("."), 1, "_");
+            }
+            site_stats_csv_name += ".csv";
+
+            if (file_exists(site_stats_csv_name.c_str())) {
+                std::cout << "    File " << site_stats_csv_name << " already exists" << std::endl;
+                // Open the file for appending
+                site_stats_csv.open(site_stats_csv_name, std::ios::app | std::ios::out);
+            } else {
+                std::cout << "    File " << site_stats_csv_name << " does not exist" << std::endl;
+                // Create the file
+                site_stats_csv.open(site_stats_csv_name, std::ios::trunc | std::ios::out);
+                // Write the header
+                site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
+                    << "Bucket Size, "
+                    << "Number of Allocations, "
+                    << "Buckets's Compression Efficiency (uncompressed/compressed), "
+                    << "Bucket's Uncompressed Portion of Allocation Site's Data, "
+                    << "Bucket's Compressed Portion of Allocation Site's Data, "
+                    << "Bucket's Uncompressed Size, "
+                    << "Bucket's Compressed Size, "
+                    << "Total Uncompressed Allocation Site Data Size, "
+                    << "Total Compressed Allocation Site Data Size, "
+                    << std::endl;
+            }
+
             AllocationSiteEntry site_entry = sites_map.hashtable[i].value;
             auto buckets_map = site_entry.buckets_map;
             
@@ -981,21 +1046,34 @@ struct Hooks {
                 std::cout << "      Total portion of allocation site's data (uncompressed): " << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << std::endl;
                 std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_site_size << std::endl;
 
-                // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
+                site_stats_csv << n_reports << "," // Interval #
+                     << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                     << entry.n_entries << "," // Number of Allocations
+                     << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                     << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
+                     << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
+                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
+                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                     << std::endl;
 
-                // csv_file << n_reports << "," // Interval #
-                //         << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
-                //         << entry.n_entries << "," // Number of Allocations
-                //         << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
-                //         << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << "," // Bucket's Uncompressed Portion of Heap
-                //         << (double)entry.total_compressed_sizes / total_compressed_heap_size << "," // Bucket's Compressed Portion of Heap
-                //         << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
-                //         << entry.total_compressed_sizes << "," // Bucket's Compressed Size
-                //         << total_uncompressed_heap_size << "," // Total Uncompressed Heap Size
-                //         << total_compressed_heap_size << "," // Total Compressed Heap Size
-                //         << std::endl;
+                all_site_stats_csv << n_reports << "," // Interval #
+                     << site_key.path_to_file << " at address" << site_key.return_address << "," // Site's Return Address
+                     << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                     << entry.n_entries << "," // Number of Allocations
+                     << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                     << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
+                     << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
+                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
+                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                     << std::endl;
             }
+            site_stats_csv.close();
         }
+        all_site_stats_csv.close();
     }
 
     void create_stats_csv() {
@@ -1009,7 +1087,7 @@ struct Hooks {
         csv_file << "Interval # (" << INTERVAL_MS << " ms), "
             << "Bucket Size, "
             << "Number of Allocations, "
-            << "Buckets's Compression Efficiency (compressed/uncompressed), "
+            << "Buckets's Compression Efficiency (uncompressed/compressed), "
             << "Bucket's Uncompressed Portion of Heap, "
             << "Bucket's Compressed Portion of Heap, "
             << "Bucket's Uncompressed Size, "
