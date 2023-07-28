@@ -961,6 +961,8 @@ struct Hooks {
             // Write the header
             all_site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
                 << "Allocation Site, "
+                << "Site's Portion of Heap (uncompressed), "
+                << "Site's Portion of Heap (compressed), "
                 << "Bucket Size, "
                 << "Number of Allocations, "
                 << "Buckets's Compression Efficiency (uncompressed/compressed), "
@@ -1002,6 +1004,8 @@ struct Hooks {
                 site_stats_csv.open(site_stats_csv_name, std::ios::trunc | std::ios::out);
                 // Write the header
                 site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
+                    << "Site's Portion of Heap (uncompressed), "
+                    << "Site's Portion of Heap (compressed), "
                     << "Bucket Size, "
                     << "Number of Allocations, "
                     << "Buckets's Compression Efficiency (uncompressed/compressed), "
@@ -1047,29 +1051,33 @@ struct Hooks {
                 std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_site_size << std::endl;
 
                 site_stats_csv << n_reports << "," // Interval #
-                     << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
-                     << entry.n_entries << "," // Number of Allocations
-                     << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
-                     << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
-                     << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
-                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
-                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
-                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
-                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
-                     << std::endl;
+                    << total_uncompressed_site_size / total_uncompressed_heap_size << "," // Allocation Site's Portion of heap (uncompressed)
+                    << total_compressed_site_size / total_compressed_heap_size << "," // Allocation Site's Portion of heap (compressed)
+                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                    << entry.n_entries << "," // Number of Allocations
+                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                    << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
+                    << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
+                    << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                    << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                    << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
+                    << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                    << std::endl;
 
                 all_site_stats_csv << n_reports << "," // Interval #
-                     << site_key.path_to_file << " at address" << site_key.return_address << "," // Site's Return Address
-                     << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
-                     << entry.n_entries << "," // Number of Allocations
-                     << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
-                     << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
-                     << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
-                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
-                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
-                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
-                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
-                     << std::endl;
+                    << site_key.path_to_file << " at address" << site_key.return_address << "," // Site's Return Address
+                    << total_uncompressed_site_size / total_uncompressed_heap_size << "," // Allocation Site's Portion of heap (uncompressed)
+                    << total_compressed_site_size / total_compressed_heap_size << "," // Allocation Site's Portion of heap (compressed)
+                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                    << entry.n_entries << "," // Number of Allocations
+                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                    << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
+                    << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
+                    << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
+                    << entry.total_compressed_sizes << "," // Bucket's Compressed Size
+                    << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
+                    << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                    << std::endl;
             }
             site_stats_csv.close();
         }
