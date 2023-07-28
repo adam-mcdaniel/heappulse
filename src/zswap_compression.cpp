@@ -800,7 +800,6 @@ struct Hooks {
     std::mutex report_mutex, compression_stats_mutex;
     Hooks() : timer() {
         setup_protection_handler();
-        create_stats_csv();
     }
 
     void compression_test() {
@@ -906,6 +905,11 @@ struct Hooks {
         volatile std::lock_guard<std::mutex> lock4(buckets_map_mutex);
 
         n_reports++;
+
+        if (n_reports == 1) {
+            create_stats_csv();
+        }
+
         double total_compressed_heap_size = 0, total_uncompressed_heap_size = 0;
         for (int i=0; i<NUM_BUCKETS; i++) {
             BucketKey key = BucketKey::nth(i);
@@ -953,7 +957,7 @@ struct Hooks {
         if (file_exists(ALLOCATION_SITE_OUTPUT_CSV)) {
             std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV " already exists" << std::endl;
             // Open the file for appending
-            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, (n_reports == 0? std::ios::trunc : std::ios::app) | std::ios::out);
+            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, (n_reports == 1? std::ios::trunc : std::ios::app) | std::ios::out);
         } else {
             std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV << " does not exist" << std::endl;
             // Create the file
