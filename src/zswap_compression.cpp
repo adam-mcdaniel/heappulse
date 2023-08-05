@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <chrono>
 #include <vector>
 #include <signal.h>
@@ -14,6 +15,7 @@
 #include <sys/mman.h>
 #include <condition_variable>
 #include <dlfcn.h>
+#include <execinfo.h>
 
 #define OUTPUT_CSV "bucket_stats.csv"
 #define ALLOCATION_SITE_OUTPUT_CSV "allocation_site_stats.csv"
@@ -21,10 +23,32 @@
 const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
 // const int INTERVAL_MS = 1000;  // Interval in seconds to track memory usage (in milliseconds)
 const int MAX_TRACKED_ALLOCS = 1000000;
+const int BACKTRACE_DEPTH = 10;
 const int MAX_TRACKED_SITES = 1000;
 const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 1073741824};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
+static bool IS_PROTECTED = false;
 
+/* Obtain a backtrace and print it to stdout. */
+void print_trace() {
+    void *array[10];
+    char **strings;
+    int size, i;
+
+    size = backtrace(array, 10);
+    strings = backtrace_symbols(array, size);
+    if (strings != NULL) {
+        // printf("Obtained %d stack frames.\n", size);
+        std::cout << "Start Trace:" << std::endl;
+        for (i = 0; i < size; i++)
+            std::cout << i + 1 << ". " << strings[i] << std::endl;
+            // printf("%s\n", strings[i]);
+        free(strings);
+        std::cout << "End Trace" << std::endl;
+    } else {
+        std::cout << "Error" << std::endl;
+    }
+}
 
 const char *get_path_to_file_from_code_address(void *address) {
     Dl_info dl_info;
@@ -64,9 +88,7 @@ struct Timer {
     Timer() : start_time(std::chrono::steady_clock::now()) { }
 
     ~Timer() {
-        auto end_time = std::chrono::steady_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - this->start_time).count();
-        printf("Elapsed time: %lu microseconds\n", duration);
+        printf("Elapsed time: %lu microseconds\n", elapsed_microseconds());
     }
 
     void start() {
@@ -246,10 +268,35 @@ struct CompressionEntry {
     u64 n_bytes;
     uLong compressed_size;
     void *return_address = NULL;
+    void *backtrace_addrs[BACKTRACE_DEPTH];
+    int backtrace_size = 0;
 
     CompressionEntry() : allocation_address(NULL), n_bytes(0), compressed_size(0) {}
     CompressionEntry(void *allocation_address, u64 n_bytes, uLong compressed_size) : allocation_address(allocation_address), n_bytes(n_bytes), compressed_size(compressed_size) {}
     CompressionEntry(void *allocation_address, u64 n_bytes, uLong compressed_size, void *return_address) : allocation_address(allocation_address), n_bytes(n_bytes), compressed_size(compressed_size), return_address(return_address) {}
+
+    void get_backtrace() {
+        IS_PROTECTED = true;
+        backtrace_size = backtrace(backtrace_addrs, BACKTRACE_DEPTH);
+        IS_PROTECTED = false;
+    }
+
+    void print_backtrace() {
+        char **strings;
+
+        IS_PROTECTED = true;
+        strings = backtrace_symbols(backtrace_addrs, backtrace_size);
+        if (strings != NULL) {
+            std::cout << "Start Trace:" << std::endl;
+            for (int i = 0; i < backtrace_size; i++)
+                std::cout << i + 1 << ". " << strings[i] << std::endl;
+            free(strings);
+            std::cout << "End Trace" << std::endl;
+        } else {
+            std::cout << "Error" << std::endl;
+        }
+        IS_PROTECTED = false;
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const CompressionEntry& entry) {
         os << "addr: " << entry.allocation_address << ", n_bytes: " << entry.n_bytes << ", compressed_size: " << entry.compressed_size;
@@ -410,7 +457,6 @@ std::mutex sites_mutex;
 std::mutex protect_mutex;
 
 
-static bool IS_PROTECTED = false;
 static u64 WORKING_THREAD_ID = 0;
 
 bool is_working_thread() {
@@ -469,10 +515,10 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
         if (!IS_PROTECTED) {
             sprintf(buf, "Dereferenced address 0x%lx when unprotected, halting program\n", (long) si->si_addr);
             write(STDOUT_FILENO, buf, strlen(buf));
-            sleep(1);
+            usleep(250000);
         }
-        // sprintf(buf, "[FAULT] Not the working thread: 0x%lx\n", (long) si->si_addr);
-        // write(STDOUT_FILENO, buf, strlen(buf));
+        sprintf(buf, "[FAULT] Not the working thread: 0x%lx\n", (long) si->si_addr);
+        write(STDOUT_FILENO, buf, strlen(buf));
         while (IS_PROTECTED) {}
 
         sprintf(buf, "[FAULT] Got access: 0x%lx\n", (long) si->si_addr);
@@ -663,16 +709,20 @@ CompressionEntry get_compression_entry(void *addr) {
     return stack_alloc_map.get(addr);
 }
 
+const int MAX_COMPRESSED_SIZE = BUCKET_SIZES[NUM_BUCKETS - 1];
+static Bytef compressed_data[MAX_COMPRESSED_SIZE];
+
 // Create a function to be mapped over the entries
 void check_compression_entry(void *&addr, CompressionEntry& entry) {
     char *input_data = (char*)addr;
-    char input_copy[entry.n_bytes];
-    memcpy(input_copy, input_data, entry.n_bytes);
     const size_t input_size = entry.n_bytes;
-    input_data = input_copy;
+    // char input_copy[entry.n_bytes];
+    // memcpy(input_copy, input_data, input_size);
+    // input_data = input_copy;
     uLongf compressed_size = compressBound(input_size);
-    Bytef compressed_data[compressed_size];
+    // Bytef compressed_data[compressed_size];
 
+    // entry.print_backtrace();
 
     // Bytef compressed_data[1024];
     // Get page size
@@ -684,21 +734,21 @@ void check_compression_entry(void *&addr, CompressionEntry& entry) {
     void* aligned_src_address = (void*)(src_address & ~(page_size - 1));
 
     uLongf estimated_compressed_size = compressed_size;
-    int result = compress(compressed_data, &compressed_size, (const Bytef*)input_copy, input_size);
+    int result = compress(compressed_data, &compressed_size, (const Bytef*)input_data, input_size);
     entry.compressed_size = compressed_size;
 
-    if (result != Z_OK) {
-        // std::cout << "Compression failed" << std::endl;
-        std::cout << "Compression of " << input_size << " bytes failed" << std::endl;
-        std::cout << "   src_address: 0x" << std::hex << src_address << std::endl;
-        std::cout << "   dst_address: 0x" << std::hex << dst_address << std::endl;
-        std::cout << "   aligned_src_address: 0x" << std::hex << aligned_src_address << std::endl;
-        std::cout << "   aligned_dst_address: 0x" << std::hex << aligned_dst_address << std::endl;
-        std::cout << "   estimated_compressed_size: " << std::dec << estimated_compressed_size << std::endl;
-        std::cout << "   actual_compressed_size: " << std::dec << compressed_size << std::endl;
-    // } else {
-    //     std::cout << "Compression succeeded" << std::endl;
-    }
+    // if (result != Z_OK) {
+    //     // std::cout << "Compression failed" << std::endl;
+    //     // std::cout << "Compression of " << input_size << " bytes failed" << std::endl;
+    //     // std::cout << "   src_address: 0x" << std::hex << src_address << std::endl;
+    //     // std::cout << "   dst_address: 0x" << std::hex << dst_address << std::endl;
+    //     // std::cout << "   aligned_src_address: 0x" << std::hex << aligned_src_address << std::endl;
+    //     // std::cout << "   aligned_dst_address: 0x" << std::hex << aligned_dst_address << std::endl;
+    //     // std::cout << "   estimated_compressed_size: " << std::dec << estimated_compressed_size << std::endl;
+    //     // std::cout << "   actual_compressed_size: " << std::dec << compressed_size << std::endl;
+    // // } else {
+    // //     std::cout << "Compression succeeded" << std::endl;
+    // }
 }
 
 
@@ -738,7 +788,7 @@ void put_into_buckets() {
             }
         }
     }
-    std::cout << "Updated buckets" << std::endl;
+    // std::cout << "Updated buckets" << std::endl;
 }
 
 void track_allocation_sites() {
@@ -765,6 +815,10 @@ void track_allocation_sites() {
             }
             // Create a new site entry
             site_entry.add_compression_entry(stack_alloc_map.hashtable[i].value);
+
+            if (i % (stack_alloc_map.size() / 20) == 0) {
+                stack_alloc_map.hashtable[i].value.print_backtrace();
+            }
             // Insert the site entry into the map
             sites_map.put(site_key, site_entry);
             if (++j == stack_alloc_map.entries) {
@@ -775,7 +829,7 @@ void track_allocation_sites() {
 }
 
 void check_compression_stats() {
-    std::cout << "Checking compression stats" << std::endl;
+    // std::cout << "Checking compression stats" << std::endl;
     {
         volatile std::lock_guard<std::mutex> lock(alloc_map_mutex);
         protect_allocation_entries();
@@ -785,7 +839,7 @@ void check_compression_stats() {
     }
     put_into_buckets();
     track_allocation_sites();
-    std::cout << "Done" << std::endl;
+    // std::cout << "Done" << std::endl;
 }
 
 bool file_exists(const char *name) {
@@ -819,6 +873,7 @@ struct Hooks {
             // Old
             timer.reset();
             check_compression_stats();
+            timer.reset();
             report();
             timer.reset();
 
@@ -865,6 +920,8 @@ struct Hooks {
         entry.allocation_address = allocation_address;
         entry.n_bytes = n_bytes;
         entry.return_address = BK_GET_RA();
+        entry.get_backtrace();
+
         record_alloc(allocation_address, entry);
         compression_test();
 
@@ -954,30 +1011,29 @@ struct Hooks {
 
 
         std::ofstream all_site_stats_csv;
-        if (file_exists(ALLOCATION_SITE_OUTPUT_CSV)) {
-            std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV " already exists" << std::endl;
-            // Open the file for appending
-            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, (n_reports == 1? std::ios::trunc : std::ios::app) | std::ios::out);
-        } else {
-            std::cout << "    File " << ALLOCATION_SITE_OUTPUT_CSV << " does not exist" << std::endl;
-            // Create the file
-            all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, std::ios::trunc | std::ios::out);
-            // Write the header
+        all_site_stats_csv.open(ALLOCATION_SITE_OUTPUT_CSV, (n_reports == 1? std::ios::trunc : std::ios::app) | std::ios::out);
+
+        if (n_reports == 1) {
             all_site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
                 << "Allocation Site, "
+                << "Bucket Size, "
+                << "Buckets's Compression Efficiency (uncompressed/compressed), "
+                << "Buckets Uncompressed Portion of Heap, "
+                << "Buckets Compressed Portion of Heap, "
                 << "Site's Portion of Heap (uncompressed), "
                 << "Site's Portion of Heap (compressed), "
-                << "Bucket Size, "
                 << "Number of Allocations, "
-                << "Buckets's Compression Efficiency (uncompressed/compressed), "
                 << "Bucket's Uncompressed Portion of Allocation Site's Data, "
                 << "Bucket's Compressed Portion of Allocation Site's Data, "
                 << "Bucket's Uncompressed Size, "
                 << "Bucket's Compressed Size, "
                 << "Total Uncompressed Allocation Site Data Size, "
                 << "Total Compressed Allocation Site Data Size, "
+                << "Total Uncompressed Heap Size, "
+                << "Total Compressed Heap Size, "
                 << std::endl;
         }
+
         std::ofstream site_stats_csv;
         std::cout << "Site stats:" << std::endl;
         for (int i=0; i<MAX_TRACKED_SITES; i++) {
@@ -1008,17 +1064,21 @@ struct Hooks {
                 site_stats_csv.open(site_stats_csv_name, std::ios::trunc | std::ios::out);
                 // Write the header
                 site_stats_csv << "Interval # (" << INTERVAL_MS << " ms), "
+                    << "Bucket Size, "
+                    << "Buckets's Compression Efficiency (uncompressed/compressed), "
+                    << "Buckets Uncompressed Portion of Heap, "
+                    << "Buckets Compressed Portion of Heap, "
                     << "Site's Portion of Heap (uncompressed), "
                     << "Site's Portion of Heap (compressed), "
-                    << "Bucket Size, "
                     << "Number of Allocations, "
-                    << "Buckets's Compression Efficiency (uncompressed/compressed), "
                     << "Bucket's Uncompressed Portion of Allocation Site's Data, "
                     << "Bucket's Compressed Portion of Allocation Site's Data, "
                     << "Bucket's Uncompressed Size, "
                     << "Bucket's Compressed Size, "
                     << "Total Uncompressed Allocation Site Data Size, "
                     << "Total Compressed Allocation Site Data Size, "
+                    << "Total Uncompressed Heap Size, "
+                    << "Total Compressed Heap Size, "
                     << std::endl;
             }
 
@@ -1055,32 +1115,40 @@ struct Hooks {
                 std::cout << "      Total portion of allocation site's data (compressed): " << (double)entry.total_compressed_sizes / total_compressed_site_size << std::endl;
 
                 site_stats_csv << n_reports << "," // Interval #
+                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                    << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << "," // Bucket's Uncompressed Portion of Heap
+                    << (double)entry.total_compressed_sizes / total_compressed_heap_size << "," // Bucket's Compressed Portion of Heap
                     << total_uncompressed_site_size / total_uncompressed_heap_size << "," // Allocation Site's Portion of heap (uncompressed)
                     << total_compressed_site_size / total_compressed_heap_size << "," // Allocation Site's Portion of heap (compressed)
-                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
                     << entry.n_entries << "," // Number of Allocations
-                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
-                    << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
-                    << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
+                    << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of allocation site data
+                    << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of allocation site data
                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                    << total_uncompressed_heap_size << "," // Total Uncompressed Heap Size
+                    << total_compressed_heap_size << "," // Total Compressed Heap Size
                     << std::endl;
 
                 all_site_stats_csv << n_reports << "," // Interval #
                     << site_key.path_to_file << " at address" << site_key.return_address << "," // Site's Return Address
+                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
+                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
+                    << (double)entry.total_uncompressed_sizes / total_uncompressed_heap_size << "," // Bucket's Uncompressed Portion of Heap
+                    << (double)entry.total_compressed_sizes / total_compressed_heap_size << "," // Bucket's Compressed Portion of Heap
                     << total_uncompressed_site_size / total_uncompressed_heap_size << "," // Allocation Site's Portion of heap (uncompressed)
                     << total_compressed_site_size / total_compressed_heap_size << "," // Allocation Site's Portion of heap (compressed)
-                    << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
                     << entry.n_entries << "," // Number of Allocations
-                    << (double)entry.total_uncompressed_sizes / (double)entry.total_compressed_sizes << "," // Buckets's Compression Efficiency (uncompressed/compressed)
                     << (double)entry.total_uncompressed_sizes / total_uncompressed_site_size << "," // Bucket's Uncompressed Portion of Heap
                     << (double)entry.total_compressed_sizes / total_compressed_site_size << "," // Bucket's Compressed Portion of Heap
                     << entry.total_uncompressed_sizes << "," // Bucket's Uncompressed Size
                     << entry.total_compressed_sizes << "," // Bucket's Compressed Size
                     << total_uncompressed_site_size << "," // Total portion of allocation site's data (uncompressed)
                     << total_compressed_site_size << "," // Total portion of allocation site's data (compressed)
+                    << total_uncompressed_heap_size << "," // Total Uncompressed Heap Size
+                    << total_compressed_heap_size << "," // Total Compressed Heap Size
                     << std::endl;
             }
             site_stats_csv.close();
