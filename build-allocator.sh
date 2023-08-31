@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+echo "Building allocator..."
 
 ### DEBUG
     FP="-fno-omit-frame-pointer" # enable for profiling/debugging
@@ -9,7 +10,7 @@
     # LTO="-flto"
     # MARCHTUNE="-march=native -mtune=native"
     # OPT_PASSES=""
-    LEVEL="-O0"
+    LEVEL="-O3"
     # LEVEL="-O0"
 
     OPT="${LEVEL} ${OPT_PASSES} ${MARCHTUNE} ${LTO}"
@@ -34,3 +35,4 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 g++ -fPIC -shared src/zswap_compression.cpp ${FEATURES} -I./include -L$SCRIPT_DIR/libbkmalloc.so -o $SCRIPT_DIR/hook.so -lz -g
 
 
+echo "Done"

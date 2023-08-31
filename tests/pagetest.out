@@ -1,0 +1,306 @@
+Allocated 16 pages
+Wrote to 32768 bytes
+Protecting allocations
+Done protecting allocations
+Size in pages: 1
+0x7feeaaa80000 | PFN: 0x0013c013, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Size in pages: 1
+0x7feeab080000 | PFN: 0x00480610, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Size in pages: 1
+0x7feeab280000 | PFN: 0x00318612, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Size in pages: 1
+0x7fee55480000 | PFN: 0x00319bc1, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Size in pages: 1
+0x7fee55680000 | PFN: 0x00019003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Size in pages: 16
+0x7fee55880000 | PFN: 0x00019771, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55881000 | PFN: 0x00019772, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55882000 | PFN: 0x00019773, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55883000 | PFN: 0x00019774, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55884000 | PFN: 0x00019775, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55885000 | PFN: 0x00019776, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55886000 | PFN: 0x00019777, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55887000 | PFN: 0x00019778, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55888000 | PFN: 0x00019779, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee55889000 | PFN: 0x0001977a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588a000 | PFN: 0x0001977b, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588b000 | PFN: 0x0001977c, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588c000 | PFN: 0x0001977d, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588d000 | PFN: 0x0001977e, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588e000 | PFN: 0x0001977f, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+0x7fee5588f000 | PFN: 0x00019000, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
+Unprotecting allocations
+Done unprotecting allocations
+Done with pass
+Bucket stats:
+Bucket 0 (1 bytes)
+  No entries
+Bucket 1 (2 bytes)
+  No entries
+Bucket 2 (3 bytes)
+  No entries
+Bucket 3 (4 bytes)
+  No entries
+Bucket 4 (5 bytes)
+  No entries
+Bucket 5 (6 bytes)
+  No entries
+Bucket 6 (7 bytes)
+  No entries
+Bucket 7 (8 bytes)
+  No entries
+Bucket 8 (9 bytes)
+  No entries
+Bucket 9 (10 bytes)
+  No entries
+Bucket 10 (16 bytes)
+  No entries
+Bucket 11 (32 bytes)
+  Total compressed size: 41
+  Total uncompressed size: 32
+  Number of entries: 1
+  Compression ratio (lower is better): 1.28125
+  Total portion of heap (uncompressed): 0.000457875
+  Total portion of heap (compressed): 0.00234312
+Bucket 12 (64 bytes)
+  No entries
+Bucket 13 (128 bytes)
+  No entries
+Bucket 14 (256 bytes)
+  Total compressed size: 42
+  Total uncompressed size: 224
+  Number of entries: 1
+  Compression ratio (lower is better): 0.1875
+  Total portion of heap (uncompressed): 0.00320513
+  Total portion of heap (compressed): 0.00240027
+Bucket 15 (512 bytes)
+  No entries
+Bucket 16 (1024 bytes)
+  No entries
+Bucket 17 (2048 bytes)
+  No entries
+Bucket 18 (4096 bytes)
+  Total compressed size: 506
+  Total uncompressed size: 4096
+  Number of entries: 1
+  Compression ratio (lower is better): 0.123535
+  Total portion of heap (uncompressed): 0.0586081
+  Total portion of heap (compressed): 0.0289176
+Bucket 19 (65536 bytes)
+  Total compressed size: 16909
+  Total uncompressed size: 65536
+  Number of entries: 1
+  Compression ratio (lower is better): 0.258011
+  Total portion of heap (uncompressed): 0.937729
+  Total portion of heap (compressed): 0.966339
+Bucket 20 (131072 bytes)
+  No entries
+Bucket 21 (262144 bytes)
+  No entries
+Bucket 22 (524288 bytes)
+  No entries
+Bucket 23 (1048576 bytes)
+  No entries
+Bucket 24 (2097152 bytes)
+  No entries
+Bucket 25 (4194304 bytes)
+  No entries
+Bucket 26 (8388608 bytes)
+  No entries
+Bucket 27 (1073741824 bytes)
+  No entries
+Site stats:
+  Site 370 (./tests/pagetest.exe:0) at address 0x561aa8505342
+    File site_stats___tests_pagetest_exe_561aa8505342.csv does not exist
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      Total compressed size: 41
+      Total uncompressed size: 32
+      Number of entries: 1
+      Compression ratio (lower is better): 1.28125
+      Total portion of allocation site's data (uncompressed): 1
+      Total portion of allocation site's data (compressed): 1
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      No entries
+    Bucket 14 (256 bytes)
+      No entries
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
+    Bucket 19 (65536 bytes)
+      No entries
+    Bucket 20 (131072 bytes)
+      No entries
+    Bucket 21 (262144 bytes)
+      No entries
+    Bucket 22 (524288 bytes)
+      No entries
+    Bucket 23 (1048576 bytes)
+      No entries
+    Bucket 24 (2097152 bytes)
+      No entries
+    Bucket 25 (4194304 bytes)
+      No entries
+    Bucket 26 (8388608 bytes)
+      No entries
+    Bucket 27 (1073741824 bytes)
+      No entries
+  Site 675 (./tests/pagetest.exe:0) at address 0x561aa8505293
+    File site_stats___tests_pagetest_exe_561aa8505293.csv does not exist
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      No entries
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      No entries
+    Bucket 14 (256 bytes)
+      Total compressed size: 42
+      Total uncompressed size: 224
+      Number of entries: 1
+      Compression ratio (lower is better): 0.1875
+      Total portion of allocation site's data (uncompressed): 0.00340633
+      Total portion of allocation site's data (compressed): 0.00247773
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      No entries
+    Bucket 19 (65536 bytes)
+      Total compressed size: 16909
+      Total uncompressed size: 65536
+      Number of entries: 1
+      Compression ratio (lower is better): 0.258011
+      Total portion of allocation site's data (uncompressed): 0.996594
+      Total portion of allocation site's data (compressed): 0.997522
+    Bucket 20 (131072 bytes)
+      No entries
+    Bucket 21 (262144 bytes)
+      No entries
+    Bucket 22 (524288 bytes)
+      No entries
+    Bucket 23 (1048576 bytes)
+      No entries
+    Bucket 24 (2097152 bytes)
+      No entries
+    Bucket 25 (4194304 bytes)
+      No entries
+    Bucket 26 (8388608 bytes)
+      No entries
+    Bucket 27 (1073741824 bytes)
+      No entries
+  Site 708 (./tests/pagetest.exe:0) at address 0x561aa85052f4
+    File site_stats___tests_pagetest_exe_561aa85052f4.csv does not exist
+    Bucket 0 (1 bytes)
+      No entries
+    Bucket 1 (2 bytes)
+      No entries
+    Bucket 2 (3 bytes)
+      No entries
+    Bucket 3 (4 bytes)
+      No entries
+    Bucket 4 (5 bytes)
+      No entries
+    Bucket 5 (6 bytes)
+      No entries
+    Bucket 6 (7 bytes)
+      No entries
+    Bucket 7 (8 bytes)
+      No entries
+    Bucket 8 (9 bytes)
+      No entries
+    Bucket 9 (10 bytes)
+      No entries
+    Bucket 10 (16 bytes)
+      No entries
+    Bucket 11 (32 bytes)
+      No entries
+    Bucket 12 (64 bytes)
+      No entries
+    Bucket 13 (128 bytes)
+      No entries
+    Bucket 14 (256 bytes)
+      No entries
+    Bucket 15 (512 bytes)
+      No entries
+    Bucket 16 (1024 bytes)
+      No entries
+    Bucket 17 (2048 bytes)
+      No entries
+    Bucket 18 (4096 bytes)
+      Total compressed size: 506
+      Total uncompressed size: 4096
+      Number of entries: 1
+      Compression ratio (lower is better): 0.123535
+      Total portion of allocation site's data (uncompressed): 1
+      Total portion of allocation site's data (compressed): 1
+    Bucket 19 (65536 bytes)
+      No entries
+    Bucket 20 (131072 bytes)
+      No entries
+    Bucket 21 (262144 bytes)
+      No entries
+    Bucket 22 (524288 bytes)
+      No entries
+    Bucket 23 (1048576 bytes)
+      No entries
+    Bucket 24 (2097152 bytes)
+      No entries
+    Bucket 25 (4194304 bytes)
+      No entries
+    Bucket 26 (8388608 bytes)
+      No entries
+    Bucket 27 (1073741824 bytes)
+      No entries
