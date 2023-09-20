@@ -1801,10 +1801,11 @@ struct Hooks {
         // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
         // randomize_data(allocation_address, n_bytes);
         // #endif
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
-        IS_PROTECTED = protection;
+
+        // bool protection = IS_PROTECTED;
+        // IS_PROTECTED = true;
+        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        // IS_PROTECTED = protection;
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
     }
@@ -1823,10 +1824,11 @@ struct Hooks {
         randomize_data(aligned_address, n_bytes);
         #endif
 
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
-        IS_PROTECTED = protection;
+        // bool protection = IS_PROTECTED;
+        // IS_PROTECTED = true;
+        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        // IS_PROTECTED = protection;
+        
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
 
