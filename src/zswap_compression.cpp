@@ -333,10 +333,10 @@ u64 count_resident_pages(const std::vector<PageInfo> &pages) {
     u64 n_resident_pages = 0;
     for (PageInfo page : pages) {
         if (!page.is_resident()) {
-            printf("Page not present\n");
+            // printf("Page not present\n");
         } else {
             n_resident_pages++;
-            printf("Resident page\n");
+            // printf("Resident page\n");
         }
     }
 
@@ -1828,7 +1828,7 @@ struct Hooks {
         // IS_PROTECTED = true;
         // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
         // IS_PROTECTED = protection;
-        
+
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
 
