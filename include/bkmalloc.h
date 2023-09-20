@@ -489,6 +489,8 @@ static inline u64 bk_str_hash(bk_str s) {
 }
 
 
+static bool bk_mmap_override_enabled = true;
+
 /******************************* @@platform *******************************/
 #if defined(unix) || defined(__unix__) || defined(__unix) || defined(__linux__) || defined(__APPLE__)
     #define BK_UNIX
@@ -567,10 +569,12 @@ static inline void * bk_get_pages_unix(u64 n_pages) {
     desired_size = n_pages * PAGE_SIZE;
 
     errno = 0;
+    bk_mmap_override_enabled = false;
     pages = mmap(NULL, desired_size,
                  PROT_READ   | PROT_WRITE,
                  MAP_PRIVATE | MAP_ANONYMOUS,
                  -1, (off_t)0);
+    bk_mmap_override_enabled = true;
 
     if (unlikely(pages == MAP_FAILED || pages == NULL)) {
         BK_ASSERT(0,
@@ -589,7 +593,9 @@ static inline void bk_release_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
+    bk_mmap_override_enabled = false;
     err = munmap(addr, n_pages * PAGE_SIZE);
+    bk_mmap_override_enabled = true;
     BK_ASSERT(err == 0,
               "munmap() failed");
 }
@@ -599,7 +605,9 @@ static inline void bk_decommit_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
+    bk_mmap_override_enabled = false;
     err = madvise(addr, n_pages * PAGE_SIZE, MADV_DONTNEED);
+    bk_mmap_override_enabled = true;
 
     BK_ASSERT(err == 0,
               "munmap() failed");
@@ -3924,7 +3932,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
     ret      = syscall(SYS_mmap, addr, length, prot, flags, fd, offset);
     ret_addr = (void*)ret;
 
-    if (ret_addr != MAP_FAILED) {
+    if (ret_addr != MAP_FAILED && bk_mmap_override_enabled) {
         BK_HOOK(post_mmap, addr, length, prot, flags, fd, offset, ret_addr);
     }
 
@@ -3936,7 +3944,7 @@ int munmap(void *addr, size_t length) {
 
     ret = syscall(SYS_munmap, addr, length);
 
-    if (ret == 0) {
+    if (ret == 0 && bk_mmap_override_enabled) {
         BK_HOOK(post_munmap, addr, length);
     }
 

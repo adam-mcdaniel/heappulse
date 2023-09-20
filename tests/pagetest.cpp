@@ -11,13 +11,13 @@
 #define u64 unsigned long long
 
 // #define alloc(x) calloc(x, 1)
-#define alloc(x) malloc(x)
-// #define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
+// #define alloc(x) malloc(x)
+#define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
 
 int main() {
     srand(SEED);
     u64 number_of_pages = 16;
-    while (number_of_pages < (16 << 10)) {
+    while (number_of_pages < (16 << 5)) {
         u64 number_of_bytes = number_of_pages * PAGE_SIZE;
 
         char *ptr = (char*)alloc(number_of_bytes);
@@ -27,29 +27,27 @@ int main() {
             ptr[j] = rand() % 256;
         }
 
-        // for (int j=0; j<number_of_bytes / 2; j++) {
-        //     // printf("%c", ptr[j]);
-        //     if (isalnum(ptr[j])) {
-        //         printf("%c", ptr[j]);
-        //     } else if (ptr[j] == '\n') {
-        //         printf("\n");
-        //     } else if (ptr[j] == '\0') {
-        //         printf(".");
-        //     } else {
-        //         printf("?");
-        //     }
-        // }
+        for (int j=0; j<number_of_bytes / 2; j++) {
+            // printf("%c", ptr[j]);
+            if (isalnum(ptr[j])) {
+                printf("%c", ptr[j]);
+            } else if (ptr[j] == '\0') {
+                printf(".");
+            } else {
+                printf("?");
+            }
+        }
 
         printf("Allocated %llu pages\n", number_of_pages);
         printf("Wrote to %llu bytes\n", number_of_bytes/2);
 
         // Sleep for 10 seconds
         std::this_thread::sleep_for(std::chrono::seconds(11));
-        volatile int *x = (int*)malloc(1);
+        volatile int *x = (int*)malloc(1000);
         *x = 10;
         printf("x = %d\n", *x);
         free((void*)x);
-        free(ptr);
+        // free(ptr);
 
         number_of_pages <<= 1;
     }
