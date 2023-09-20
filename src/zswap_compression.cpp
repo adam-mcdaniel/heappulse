@@ -1904,10 +1904,10 @@ struct Hooks {
             Backtrace backtrace = page_entry.get_backtrace();
 
             if (backtrace.is_from_hook() || backtrace.is_invalid()) {
-                std::cout << "Skipping page from hook" << backtrace << std::endl;
+                // std::cout << "Skipping page from hook" << backtrace << std::endl;
                 continue;
             } else {
-                std::cout << "Page from " << backtrace << std::endl;
+                // std::cout << "Page from " << backtrace << std::endl;
             }
 
             AllocationSiteKey site_key = AllocationSiteKey();
