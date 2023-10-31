@@ -5,3 +5,5 @@ debug.sh
 *.exe
 a.out
 .vscode/
+*.csv
+*.o

@@ -32,7 +32,7 @@ COMPILE="g++ -g -I./include -shared -o libbkmalloc.so -x c++ include/bkmalloc.h 
 ${COMPILE} || exit $?
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-g++ -fPIC -shared src/zswap_compression.cpp ${FEATURES} -I./include -L$SCRIPT_DIR/libbkmalloc.so -o $SCRIPT_DIR/hook.so -lz -g
+g++ -fPIC -shared src/hook.cpp src/stack_map.cpp ${FEATURES} -I./include -I./src/include -L$SCRIPT_DIR/libbkmalloc.so -o $SCRIPT_DIR/hook.so -lz -g
 
 
 echo "Done"
