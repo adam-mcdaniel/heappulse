@@ -10,8 +10,8 @@ echo "Building allocator..."
     # LTO="-flto"
     # MARCHTUNE="-march=native -mtune=native"
     # OPT_PASSES=""
-    # LEVEL="-O3"
-    LEVEL="-O0"
+    LEVEL="-O3"
+    # LEVEL="-O0"
 
     OPT="${LEVEL} ${OPT_PASSES} ${MARCHTUNE} ${LTO}"
 

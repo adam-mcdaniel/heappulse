@@ -1,3 +1,4 @@
+#include <mutex>
 #define BKMALLOC_HOOK
 #include "bkmalloc.h"
 #include <zlib.h>
@@ -17,6 +18,7 @@
 #include <condition_variable>
 #include <dlfcn.h>
 #include <execinfo.h>
+#include <stdint.h>
 
 #define OUTPUT_CSV "bucket_stats.csv"
 #define ALLOCATION_SITE_OUTPUT_CSV "allocation_site_stats.csv"
@@ -62,12 +64,12 @@ void zero_data(void *addr, u64 size_in_bytes) {
 }
 
 void print_page_flags(uint64_t address, uint64_t pfn, uint64_t data, uint64_t flags) {
-    printf("0x%08lx | PFN: 0x%08lx, ", address, pfn);
-    printf("Soft-dirty: %ld, ", (data >> 55) & 1);
-    printf("File/shared: %ld, ", (data >> 61) & 1);
-    printf("Swapped: %ld, ", (data >> 62) & 1);
-    printf("Present: %ld, ", (data >> 63) & 1);
-    printf("Flags: 0x%-16lx ", flags);
+    // printf("0x%08lx | PFN: 0x%08lx, ", address, pfn);
+    // printf("Soft-dirty: %ld, ", (data >> 55) & 1);
+    // printf("File/shared: %ld, ", (data >> 61) & 1);
+    // printf("Swapped: %ld, ", (data >> 62) & 1);
+    // printf("Present: %ld, ", (data >> 63) & 1);
+    // printf("Flags: 0x%-16lx ", flags);
 
     if (flags & (1ULL << 0)) {
         printf("Locked, ");
@@ -281,8 +283,8 @@ std::vector<PageInfo> get_page_info(void *addr, u64 size_in_bytes) {
         }
         
         // Get page frame number
-        uint64_t page_frame_number = data & 0x7FFFFFFFFFFFFFULL;
 
+        uint64_t page_frame_number = data & 0x7FFFFFFFFFFFFFULL;
         uint64_t flags;
         uint64_t kpageflags_index = page_frame_number * sizeof(flags);
 
@@ -292,7 +294,7 @@ std::vector<PageInfo> get_page_info(void *addr, u64 size_in_bytes) {
             break;
         }
 
-        print_page_flags(i, page_frame_number, data, flags);
+        // print_page_flags(i, page_frame_number, data, flags);
 
         // If is the zero page, continue.
         // Zero page flag is in bit 24.
@@ -1774,8 +1776,8 @@ struct Hooks {
             //         Bytef compressed_data[4096];
 
             //         int result = compress2(compressed_data, &entry->compressed_size, (const Bytef*)input_data, input_size, Z_BEST_COMPRESSION);
-            //         if (result == Z_OK) {
             //             printf("Compression successful!\n");
+            //         if (result == Z_OK) {
             //             printf("Original size: %lu bytes\n", input_size);
             //             printf("Compressed size: %lu bytes\n", entry->compressed_size);
             //         } else {
@@ -1797,14 +1799,14 @@ struct Hooks {
             return;
         }
 
-        // #ifdef RANDOMIZE_ALLOCATION_DATA
-        // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
-        // randomize_data(allocation_address, n_bytes);
-        // #endif
+    //     // #ifdef RANDOMIZE_ALLOCATION_DATA
+    //     // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
+    //     // randomize_data(allocation_address, n_bytes);
+    //     // #endif
 
-        // bool protection = IS_PROTECTED;
+    //     // bool protection = IS_PROTECTED;
         // IS_PROTECTED = true;
-        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        // // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
         // IS_PROTECTED = protection;
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
@@ -1814,20 +1816,21 @@ struct Hooks {
         // if (IS_PROTECTED) {
         //     return;
         // }
+        // std::cout << "Alloc" << std::endl;
 
         if (IS_PROTECTED) {
             return;
         }
 
-        #ifdef RANDOMIZE_ALLOCATION_DATA
-        void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
-        randomize_data(aligned_address, n_bytes);
-        #endif
+    //     // #ifdef RANDOMIZE_ALLOCATION_DATA
+    //     // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
+    //     // randomize_data(aligned_address, n_bytes);
+    //     // #endif
 
-        // bool protection = IS_PROTECTED;
-        // IS_PROTECTED = true;
-        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
-        // IS_PROTECTED = protection;
+        bool protection = IS_PROTECTED;
+        IS_PROTECTED = true;
+        std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        IS_PROTECTED = protection;
 
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
@@ -1843,12 +1846,12 @@ struct Hooks {
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
-        // std::cout << "Freeing " << addr << std::endl;
+    //     std::cout << "Freeing " << addr << std::endl;
         
-        // record_free(addr);
-        // compression_test();
+    //     // record_free(addr);
+    //     // compression_test();
 
-        record_free(addr);
+    //     record_free(addr);
         if (IS_PROTECTED) {
             return;
         }
@@ -1866,15 +1869,15 @@ struct Hooks {
         bool protection = IS_PROTECTED;
         IS_PROTECTED = true;
 
-        volatile std::lock_guard<std::mutex> lock1(report_mutex);
-        volatile std::lock_guard<std::mutex> lock2(alloc_map_mutex);
-        volatile std::lock_guard<std::mutex> lock3(sites_mutex);
-        volatile std::lock_guard<std::mutex> lock4(buckets_map_mutex);
-        volatile std::lock_guard<std::mutex> lock5(page_map_mutex);
+        std::lock_guard<std::mutex> lock1(report_mutex);
+        std::lock_guard<std::mutex> lock2(alloc_map_mutex);
+        std::lock_guard<std::mutex> lock3(sites_mutex);
+        std::lock_guard<std::mutex> lock4(buckets_map_mutex);
+        std::lock_guard<std::mutex> lock5(page_map_mutex);
 
 
         n_reports++;
-        // std::cout << "Reporting #" << n_reports << std::endl;
+        std::cout << "Reporting #" << n_reports << std::endl;
 
         std::ofstream page_stats_csv;
         page_stats_csv.open(PAGE_INFO_OUTPUT_CSV, (n_reports == 1? std::ios::trunc : std::ios::app) | std::ios::out);
@@ -1979,10 +1982,10 @@ struct Hooks {
             std::cout << "  Total uncompressed size: " << entry.get_uncompressed_size() << std::endl;
             std::cout << "  Number of entries: " << entry.get_entries() << std::endl;
             std::cout << "  Compression ratio (lower is better): " << (double)entry.get_uncompressed_size() / (double)entry.get_compressed_size() << std::endl;
-            std::cout << "  Total portion of heap (uncompressed): " << (double)entry.get_uncompressed_size() / total_uncompressed_heap_size << std::endl;
             std::cout << "  Total portion of heap (compressed): " << (double)entry.get_compressed_size() / total_compressed_heap_size << std::endl;
             // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
 
+            std::cout << "  Total portion of heap (uncompressed): " << (double)entry.get_uncompressed_size() / total_uncompressed_heap_size << std::endl;
             csv_file << n_reports << "," // Interval #
                      << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
                      << entry.get_entries() << "," // Number of Allocations
@@ -2190,7 +2193,7 @@ struct Hooks {
         }
 
         all_site_stats_csv.close();
-        IS_PROTECTED = protection;
+        // IS_PROTECTED = protection;
     }
 
     void create_stats_csv() {
@@ -2240,20 +2243,30 @@ struct Hooks {
 
 static Hooks hooks;
 
+std::mutex hook_lock;
+
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    // setup_protection_handler();
+    // return;
+    if (!hook_lock.try_lock()) return;
+    // IS_PROTECTED = false;
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
+    hook_lock.unlock();
 }
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    // setup_protection_handler();
+    // return;
+    if (!hook_lock.try_lock()) return;
+    // IS_PROTECTED = false;
     hooks.pre_free(heap, addr);
+    hook_lock.unlock();
 }
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
-    // setup_protection_handler();
+    return;
+    if (!hook_lock.try_lock()) return;
     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    hook_lock.unlock();
 }

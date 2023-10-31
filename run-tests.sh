@@ -3,12 +3,12 @@
 echo "Running tests..."
 echo "================"
 
-# g++ tests/pagetest.cpp -o tests/pagetest.exe -g -O0
-# ./run.sh valgrind ./tests/pagetest.exe tests/pagetest.in > tests/pagetest.out 2> tests/pagetest.err
-# mv bucket_stats.csv tests/pagetest_buckets.csv
-# mv allocation_site_stats.csv tests/pagetest_alloc.csv
-# mv page_info.csv tests/pagetest_page_stats.csv
-# echo "Test #1 done"
+g++ tests/pagetest.cpp -o tests/pagetest.exe -g -O0
+./run.sh valgrind ./tests/pagetest.exe tests/pagetest.in > tests/pagetest.out 2> tests/pagetest.err
+mv bucket_stats.csv tests/pagetest_buckets.csv
+mv allocation_site_stats.csv tests/pagetest_alloc.csv
+mv page_info.csv tests/pagetest_page_stats.csv
+echo "Test #1 done"
 
 g++ tests/test1.cpp -o tests/test1.exe -g -O0
 ./run.sh ./tests/test1.exe tests/test1.in > tests/test1.out 2> tests/test1.err
