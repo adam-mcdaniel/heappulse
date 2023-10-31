@@ -11,4 +11,5 @@ fi
 
 shift
 
-LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so" "$PROGRAM_TO_RUN" "$@" 0<&-
+# LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so" "$PROGRAM_TO_RUN" "$@" 0<&-
+LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN" "$@" 0<&-

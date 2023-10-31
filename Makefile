@@ -27,8 +27,8 @@ WARN_FLAGS=-Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -
 MAX_ERRS=-fmax-errors=3
 TLS_MODEL=-ftls-model=initial-exec
 BKMALLOC_FLAGS=$(TLS_MODEL) $(DEBUG) $(OPT) $(WARN_FLAGS) $(MAX_ERRS) $(FEATURES) -fno-rtti -fPIC -ldl 
-CXX_FLAGS= -I./include -I./src/include -lz -g $(OPT) $(FEATURES)
-HOOK_FLAGS=-fPIC -shared $(FEATURES)
+CXX_FLAGS=-fPIC -I./include -I./src/include -lz -g $(OPT) $(FEATURES)
+HOOK_FLAGS=-shared $(FEATURES)
 
 
 # CFLAGS=-g -O3 -Wall -Wextra -pedantic -Werror -std=c2x -march=rv64gc -mabi=lp64d -ffreestanding -nostdlib -nostartfiles -Iinclude -mcmodel=medany
@@ -51,10 +51,10 @@ hook: bkmalloc $(OBJECTS)
 	$(CXX) $(HOOK_FLAGS) $(CXX_FLAGS) -L$(OBJ_DIR) src/hook.cpp -o $(OBJ_DIR)/hook.so
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp Makefile
-	$(CXX) $(HOOK_FLAGS) $(CXX_FLAGS) -o $@ -c $<
+	$(CXX) $(CXX_FLAGS) -o $@ -c $<
 	
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c Makefile
-	$(CXX) $(HOOK_FLAGS) $(C_FLAGS) -o $@ -c $<
+	$(CXX) $(C_FLAGS) -o $@ -c $<
 	
 .PHONY: clean
 

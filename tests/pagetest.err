@@ -1,0 +1,26 @@
+==29901== Memcheck, a memory error detector
+==29901== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==29901== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==29901== Command: ./tests/pagetest.exe tests/pagetest.in
+==29901== 
+==29901== 
+==29901== Process terminating with default action of signal 2 (SIGINT)
+==29901==    at 0x496F78A: clock_nanosleep@@GLIBC_2.17 (clock_nanosleep.c:78)
+==29901==    by 0x4974676: nanosleep (nanosleep.c:25)
+==29901==    by 0x10974C: void std::this_thread::sleep_for<long, std::ratio<1l, 1l> >(std::chrono::duration<long, std::ratio<1l, 1l> > const&) (this_thread_sleep.h:82)
+==29901==    by 0x109434: main (pagetest.cpp:45)
+==29901== 
+==29901== HEAP SUMMARY:
+==29901==     in use at exit: 77,385 bytes in 29 blocks
+==29901==   total heap usage: 46 allocs, 17 frees, 85,039 bytes allocated
+==29901== 
+==29901== LEAK SUMMARY:
+==29901==    definitely lost: 0 bytes in 0 blocks
+==29901==    indirectly lost: 0 bytes in 0 blocks
+==29901==      possibly lost: 0 bytes in 0 blocks
+==29901==    still reachable: 77,385 bytes in 29 blocks
+==29901==         suppressed: 0 bytes in 0 blocks
+==29901== Rerun with --leak-check=full to see details of leaked memory
+==29901== 
+==29901== For lists of detected and suppressed errors, rerun with: -s
+==29901== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

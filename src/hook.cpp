@@ -1,6 +1,5 @@
 #define BKMALLOC_HOOK
 #include "bkmalloc.h"
-#include <stack_map.hpp>
 #include <zlib.h>
 #include <fstream>
 #include <sstream>
@@ -18,6 +17,8 @@
 #include <condition_variable>
 #include <dlfcn.h>
 #include <execinfo.h>
+#include <stack_vec.hpp>
+#include "stack_map.cpp"
 
 #define OUTPUT_CSV "bucket_stats.csv"
 #define ALLOCATION_SITE_OUTPUT_CSV "allocation_site_stats.csv"
@@ -33,7 +34,6 @@ const int BACKTRACE_DEPTH = 64;
 const int MAX_TRACKED_SITES = 1000;
 const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608};
 
-// const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 1073741824};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
 static bool IS_PROTECTED = false;
 
@@ -1297,15 +1297,15 @@ void protect_allocation_entries()
 
     std::cout << "Protecting allocations" << std::endl;
     for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping " << stack_alloc_map.hashtable[i].value << std::endl;
                 continue;
             }
 
             // std::cout << "Protecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This protects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.get_allocation_address();
+            unsigned long address = (unsigned long)stack_alloc_map[i].value.get_allocation_address();
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect entries");
@@ -1338,16 +1338,16 @@ void unprotect_allocation_entries() {
     long page_size = sysconf(_SC_PAGESIZE);
 
     std::cout << "Unprotecting allocations" << std::endl;
-    for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+    for (size_t i=0; i<stack_alloc_map.size(); i++) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping " << stack_alloc_map.hashtable[i].value << std::endl;
                 continue;
             }
 
             // std::cout << "Unprotecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This unprotects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.get_allocation_address();
+            unsigned long address = (unsigned long)stack_alloc_map[i].value.get_allocation_address();
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_WRITE | PROT_EXEC) == -1) {
                 perror("un-mprotect entries");
@@ -1448,27 +1448,27 @@ void put_into_buckets() {
     // Iterate over all entries in the map and get their sizes and put their compression stats into buckets
     for (int i=0; i<stack_alloc_map.size(); i++) {
         // Is the entry in the bucket map?
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping entry from hook:" << std::endl;
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 continue;
             } else if (stack_alloc_map.num_entries() / 10 > 0 && j % (stack_alloc_map.num_entries() / 10) == 0) {
                 std::cout << "Putting entry into buckets:" << std::endl;
-                void *addr = stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+                void *addr = stack_alloc_map[i].value.get_backtrace().get_allocation_site();
                 // auto loc = SourceLocation(addr);
-                std::cout << stack_alloc_map.hashtable[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
+                std::cout << stack_alloc_map[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
             }
             // Find what bucket the entry belongs to
-            uLong compressed_size = stack_alloc_map.hashtable[i].value.get_compressed_size(),
-                uncompressed_size = stack_alloc_map.hashtable[i].value.get_size_in_bytes();
+            uLong compressed_size = stack_alloc_map[i].value.get_compressed_size(),
+                uncompressed_size = stack_alloc_map[i].value.get_size_in_bytes();
             
             BucketKey bucket_key(uncompressed_size);
             BucketEntry bucket_entry;
             if (buckets_map.has(bucket_key)) {
                 // Update the bucket entry
                 bucket_entry = buckets_map.get(bucket_key);
-                bucket_entry += stack_alloc_map.hashtable[i].value;
+                bucket_entry += stack_alloc_map[i].value;
                 // bucket_entry.total_compressed_sizes += compressed_size;
                 // bucket_entry.total_uncompressed_sizes += uncompressed_size;
                 // bucket_entry.total_virtual_pages += stack_alloc_map.hashtable[i].value.virtual_pages;
@@ -1477,7 +1477,7 @@ void put_into_buckets() {
                 // std::cout << "Updating bucket entry: " << bucket_entry << std::endl;
             } else {
                 // Create a new bucket entry
-                bucket_entry = BucketEntry(stack_alloc_map.hashtable[i].value);
+                bucket_entry = BucketEntry(stack_alloc_map[i].value);
                 // bucket_entry.total_compressed_sizes = compressed_size;
                 // bucket_entry.total_uncompressed_sizes = uncompressed_size;
                 // bucket_entry.total_virtual_pages = stack_alloc_map.hashtable[i].value.virtual_pages;
@@ -1487,7 +1487,7 @@ void put_into_buckets() {
             }
             // Insert the bucket entry into the map
             buckets_map.put(bucket_key, bucket_entry);
-            if (++j == stack_alloc_map.entries) {
+            if (++j == stack_alloc_map.num_entries()) {
                 break;
             }
         }
@@ -1502,18 +1502,18 @@ void track_allocation_sites() {
     // Iterate over the allocation map entries and put them into the sites map according to their return address
     int j = 0;
     for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping entry from hook:" << std::endl;
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 continue;
             } else if (stack_alloc_map.num_entries() / 10 > 0 && j % (stack_alloc_map.num_entries() / 10) == 0) {
                 std::cout << "Putting entry into buckets:" << std::endl;
-                void *addr = stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+                void *addr = stack_alloc_map[i].value.get_backtrace().get_allocation_site();
                 // auto loc = SourceLocation(addr);
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 // std::cout << std::hex << (u64)addr << std::dec << " @ " << loc << std::endl;
-                std::cout << stack_alloc_map.hashtable[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
+                std::cout << stack_alloc_map[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
             }
             // void *return_address = stack_alloc_map.hashtable[i].value.return_address;
             // const char *path_to_file = get_path_to_file_from_code_address(return_address);
@@ -1526,7 +1526,7 @@ void track_allocation_sites() {
             // std::cout << "return_address: " << return_address << std::endl;
             
             // AllocationSiteKey site_key(return_address, path_to_file, line_number);
-            AllocationSiteKey site_key(stack_alloc_map.hashtable[i].value.get_backtrace());
+            AllocationSiteKey site_key(stack_alloc_map[i].value.get_backtrace());
 
             AllocationSiteEntry site_entry;
             if (sites_map.has(site_key)) {
@@ -1534,17 +1534,17 @@ void track_allocation_sites() {
                 site_entry = sites_map.get(site_key);
             }
 
-            stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+            stack_alloc_map[i].value.get_backtrace().get_allocation_site();
 
             // Create a new site entry
-            site_entry.add_compression_entry(stack_alloc_map.hashtable[i].value);
+            site_entry.add_compression_entry(stack_alloc_map[i].value);
 
             // if (i % (stack_alloc_map.size() / 20) == 0) {
             //     std::cout << stack_alloc_map.hashtable[i].value << std::endl;
             // }
             // Insert the site entry into the map
             sites_map.put(site_key, site_entry);
-            if (++j == stack_alloc_map.entries) {
+            if (++j == stack_alloc_map.num_entries()) {
                 break;
             }
         }
@@ -1753,11 +1753,11 @@ struct Hooks {
         }
 
         // Iterate over pages and add their info to the csv
-        for (int i=0; i<MAX_TRACKED_PAGES; i++) {
-            if (!page_map.hashtable[i].occupied) {
+        for (size_t i=0; i<MAX_TRACKED_PAGES; i++) {
+            if (!page_map[i].occupied) {
                 continue;
             }
-            PageEntry page_entry = page_map.hashtable[i].value;
+            PageEntry page_entry = page_map[i].value;
 
             Backtrace backtrace = page_entry.get_backtrace();
 
@@ -1897,11 +1897,11 @@ struct Hooks {
 
         std::ofstream site_stats_csv;
         std::cout << "Site stats:" << std::endl;
-        for (int i=0; i<MAX_TRACKED_SITES; i++) {
-            if (!sites_map.hashtable[i].occupied) {
+        for (size_t i=0; i<MAX_TRACKED_SITES; i++) {
+            if (!sites_map[i].occupied) {
                 continue;
             }
-            AllocationSiteKey site_key = sites_map.hashtable[i].key;
+            AllocationSiteKey site_key = sites_map[i].key;
             std::cout << "  Site " << std::dec << i << " (" << (site_key.path_to_file == NULL? "Null" : site_key.path_to_file) << ":" << site_key.line_number << ") at return address 0x" << std::hex << (long long int)site_key.return_address << std::endl;
             std::stringstream ss;
             ss << "site_stats_" << (site_key.path_to_file == NULL? "" : site_key.path_to_file) << "_" << std::hex << (long long int)site_key.return_address << std::dec;
@@ -1953,7 +1953,7 @@ struct Hooks {
                     << std::endl;
             }
 
-            AllocationSiteEntry site_entry = sites_map.hashtable[i].value;
+            AllocationSiteEntry site_entry = sites_map[i].value;
             auto buckets_map = site_entry.buckets_map;
             
             u64 total_site_resident_pages = 0, total_site_virtual_pages = 0;
