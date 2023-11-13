@@ -3,13 +3,13 @@
 #include <zlib.h>
 
 // Path: src/compression_test.cpp
-const int MAX_COMPRESSED_SIZE = 0x100000;
+const int MAX_COMPRESSED_SIZE = 0x50000;
 const int MAX_PAGES = 0x10000;
 static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
     uint8_t compressed_data[MAX_COMPRESSED_SIZE];
-    CSV<7, 500000> csv;
+    CSV<7, 50000> csv;
     StackFile file;
     size_t interval_count = 0;
 
