@@ -20,10 +20,13 @@ StackMap<KeyType, ValueType, Size>::StackMap() : hashtable() {
 template <typename KeyType, typename ValueType, size_t Size>
 void StackMap<KeyType, ValueType, Size>::put(const KeyType& key, const ValueType& value) {
     std::size_t index = hash(key);
+    uint64_t i = 0;
     while (hashtable[index].occupied) {
         if (hashtable[index].key == key) {
             hashtable[index].value = value;  // Update value if key already exists
             return;
+        } else if (i++ >= Size) {
+            throw std::out_of_range("Hash table full");
         }
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
