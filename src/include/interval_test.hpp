@@ -545,8 +545,48 @@ public:
 
         Allocation allocation = {ptr, size, Backtrace::capture()};
         stack_printf("Allocation: %p, size: %X\n", ptr, size);
-        site.allocations.put(ptr, allocation);
-        allocation_sites.put(return_address, site);
+        try {
+            site.allocations.put(ptr, allocation);
+        } catch (const std::exception& e) {
+            stack_printf("Unable to add allocation to site\n");
+            hook_lock.unlock();
+            return;
+        }
+
+        try {
+            allocation_sites.put(return_address, site);
+        } catch (const std::exception& e) {
+            stack_printf("Unable to add allocation site\n");
+            // Evict the allocation site with the least number of allocations
+            uintptr_t min_return_address = 0;
+            size_t min_num_allocations = SIZE_MAX;
+            StackVec<uintptr_t, TRACKED_ALLOCATIONS_PER_SITE> keys;
+            allocation_sites.keys(keys);
+
+            for (size_t i=0; i<keys.size(); i++) {
+                uintptr_t key = keys[i];
+                AllocationSite site = allocation_sites.get(key);
+                if (site.allocations.size() < min_num_allocations) {
+                    min_return_address = key;
+                    min_num_allocations = site.allocations.size();
+                }
+            }
+
+            if (min_return_address == 0) {
+                stack_printf("Unable to evict allocation site\n");
+                hook_lock.unlock();
+                return;
+            }
+            stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
+            allocation_sites.remove(min_return_address);
+            try {
+                allocation_sites.put(return_address, site);
+            } catch (const std::exception& e) {
+                stack_printf("Unable to add allocation site\n");
+                hook_lock.unlock();
+                return;
+            }
+        }
         stack_printf("Allocation at %X, size: %X\n", ptr, size);
         stack_printf("Return address: %X\n", return_address);
         // Print allocation bookkeeping size

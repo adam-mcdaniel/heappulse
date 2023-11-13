@@ -149,11 +149,11 @@ public:
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
             stack_printf("Post mmap update\n");
         } catch (std::out_of_range& e) {
-            stack_printf("Post mmap out of range\n");
+            stack_printf("Post mmap out of range exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Post mmap runtime error\n");
+            stack_printf("Post mmap runtime error exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (...) {
@@ -196,15 +196,15 @@ public:
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             stack_printf("Post alloc update\n");
         } catch (std::out_of_range& e) {
-            stack_printf("Post alloc out of range\n");
+            stack_printf("Post alloc out of range exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Post alloc runtime error\n");
+            stack_printf("Post alloc runtime error exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (...) {
-            stack_printf("Post alloc unknown exception\n");
+            stack_printf("Post alloc unknown exception exception\n");
         }
         stack_logf("Post alloc update\n");
         // // bool protection = IS_PROTECTED;
@@ -245,11 +245,11 @@ public:
             }
 
         } catch (std::out_of_range& e) {
-            stack_printf("Pre free out of range\n");
+            stack_printf("Pre free out of range exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Pre free runtime error\n");
+            stack_printf("Pre free runtime error exception\n");
             stack_printf(e.what());
             stack_printf("\n");
         } catch (...) {
