@@ -20,6 +20,7 @@ class CompressionTest : public IntervalTest {
         csv.title().add("Interval #");
         csv.title().add("Pointer");
         csv.title().add("Uncompressed Size");
+        csv.title().add("Estimated Compressed Size");
         csv.title().add("Compressed Size");
         csv.title().add("Resident Pages");
         csv.title().add("Zero Pages");
@@ -53,17 +54,17 @@ class CompressionTest : public IntervalTest {
             //     stack_logf("%d ", ((uint8_t*)alloc.ptr)[i]);
             // }
             // stack_logf("\n");
-            size_t compressed_size = compressBound(alloc.size);
+            size_t estimated_compressed_size = compressBound(alloc.size);
+            size_t compressed_size = estimated_compressed_size;
+            if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
+                stack_logf("Skipping: Unable to compress data\n");
+                continue;
+            }
 
-
-            // memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
+            memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
             // alloc.unprotect();
 
             // stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
-            // if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
-            //     stack_logf("Skipping: Unable to compress data\n");
-            //     continue;
-            // }
             // int result = compress(compressed_data, &compressed_size, buffer, alloc.size);
             // stack_logf("result: %d\n", result);
 
@@ -71,7 +72,8 @@ class CompressionTest : public IntervalTest {
             csv.last()[0] = interval_count;
             csv.last()[1] = alloc.ptr;
             csv.last()[2] = alloc.size;
-            csv.last()[3] = compressed_size;
+            csv.last()[3] = estimated_compressed_size;
+            csv.last()[4] = compressed_size;
             StackVec pages = alloc.page_info<MAX_PAGES>();
             uint64_t resident_pages = 0;
             uint64_t zero_pages = 0;
@@ -89,9 +91,9 @@ class CompressionTest : public IntervalTest {
                     dirty_pages++;
                 }
             }
-            csv.last()[4] = resident_pages;
-            csv.last()[5] = zero_pages;
-            csv.last()[6] = dirty_pages;
+            csv.last()[5] = resident_pages;
+            csv.last()[6] = zero_pages;
+            csv.last()[7] = dirty_pages;
 
             stack_printf("Resident pages: %d\n", resident_pages);
             stack_printf("Zero pages: %d\n", zero_pages);
