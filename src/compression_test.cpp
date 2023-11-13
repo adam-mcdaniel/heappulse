@@ -37,8 +37,8 @@ class CompressionTest : public IntervalTest {
         double total_compressed_size = 0;
         stack_logf("copied\n");
         interval_count++;
-
-        for (size_t i=0; i<allocations.size(); i++) {
+        size_t i;
+        for (i=0; i<allocations.size(); i++) {
             Allocation alloc = allocations[i];
             // if (alloc.size > MAX_COMPRESSED_SIZE / 2) {
             //     stack_logf("Skipping: Unable to compress data\n");
@@ -93,9 +93,9 @@ class CompressionTest : public IntervalTest {
             csv.last()[5] = zero_pages;
             csv.last()[6] = dirty_pages;
 
-            stack_logf("Resident pages: %d\n", resident_pages);
-            stack_logf("Zero pages: %d\n", zero_pages);
-            stack_logf("Dirty pages: %d\n", dirty_pages);
+            stack_printf("Resident pages: %d\n", resident_pages);
+            stack_printf("Zero pages: %d\n", zero_pages);
+            stack_printf("Dirty pages: %d\n", dirty_pages);
 
             // if (result != Z_OK) {
             //     stack_logf("Error: Unable to compress data\n");
@@ -104,8 +104,9 @@ class CompressionTest : public IntervalTest {
             //     stack_logf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
             // }
         }
+        stack_printf("Tracked %d allocations\n", i);
         csv.write(file);
 
-        stack_logf("Interval %d done\n", interval_count);
+        stack_printf("Interval %d done\n", interval_count);
     }
 };
