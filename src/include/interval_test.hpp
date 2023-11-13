@@ -522,9 +522,11 @@ public:
     }
 
     void add_test(IntervalTest *test) {
+        hook_lock.lock();
         test->setup();
         tests.push(test);
         assert(tests.size() > 0);
+        hook_lock.unlock();
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
@@ -569,17 +571,17 @@ public:
     }
 
     void invalidate(void *ptr) {
+        hook_lock.lock();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
-                    hook_lock.lock();
                     site.allocations.remove(ptr);
                     allocation_sites.put(site.return_address, site);
-                    hook_lock.unlock();
                 }
             }
         }
+        hook_lock.unlock();
 
         schedule();
     }
