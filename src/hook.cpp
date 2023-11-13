@@ -296,10 +296,12 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
     // return;
     // bk_printf("Entering hook\n");
     // stack_printf("Entering hook\n");
+    bk_lock.lock();
 
     // stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
+    bk_lock.unlock();
 }
 
 extern "C"
@@ -309,10 +311,12 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // if (!bk_lock.try_lock()) return;
     // stack_printf("Entering hook\n");
     // // IS_PROTECTED = false;
+    bk_lock.lock();
 
     // stack_printf("Freeing %\n", addr);
     // hooks.invalidate(addr);
     hooks.pre_free(heap, addr);
+    bk_lock.unlock();
     // stack_printf("Leaving hook\n");
 }
 
@@ -323,7 +327,9 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
 
     // stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
+    bk_lock.lock();
 
     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    bk_lock.unlock();
     // stack_printf("Leaving hook\n");
 }
