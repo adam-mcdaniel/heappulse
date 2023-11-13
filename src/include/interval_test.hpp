@@ -546,11 +546,11 @@ public:
 
         site.allocations.put(ptr, allocation);
         allocation_sites.put(return_address, site);
-        stack_logf("Allocation at %X, size: %X\n", ptr, size);
-        stack_logf("Return address: %X\n", return_address);
+        stack_printf("Allocation at %X, size: %X\n", ptr, size);
+        stack_printf("Return address: %X\n", return_address);
         // Print allocation bookkeeping size
-        stack_logf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-        stack_logf("Allocation-sites: %d\n", allocation_sites.num_entries());
+        stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+        stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
         hook_lock.unlock();
         
         schedule();
