@@ -145,7 +145,13 @@ public:
         // if (IS_PROTECTED) {
         //     return;
         // }
-        its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
+        try {
+            its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
+        } catch (std::exception& e) {
+            stack_logf("Post mmap exception\n");
+            stack_logf(e.what());
+            stack_logf("\n");
+        }
         // // #ifdef RANDOMIZE_ALLOCATION_DATA
         // // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
         // // randomize_data(allocation_address, n_bytes);
@@ -179,7 +185,13 @@ public:
         // #endif
 
         stack_logf("Post alloc pre update\n");
-        its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        try {
+            its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        } catch (std::exception& e) {
+            stack_logf("Post alloc exception\n");
+            stack_logf(e.what());
+            stack_logf("\n");
+        }
         stack_logf("Post alloc update\n");
         // // bool protection = IS_PROTECTED;
         // // IS_PROTECTED = true;
@@ -210,7 +222,13 @@ public:
             // }
             hook_lock.lock();
             stack_logf("Pre free lock\n");
-            its.invalidate(addr);
+            try {
+                its.invalidate(addr);
+            } catch (std::exception& e) {
+                stack_logf("Pre free exception\n");
+                stack_logf(e.what());
+                stack_logf("\n");
+            }
             hook_lock.unlock();
             // compression_test();
             stack_logf("Pre free unlock\n");
@@ -272,7 +290,6 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
     // stack_printf("Freeing %\n", addr);
     // hooks.invalidate(addr);
-
     hooks.pre_free(heap, addr);
     // stack_printf("Leaving hook\n");
 }
