@@ -130,7 +130,7 @@ public:
     Hooks() {
         stack_logf("Hooks constructor\n");
 
-        stack_logf("Adding test...");
+        stack_logf("Adding test...\n");
         its.add_test(&ct);
         stack_logf("Done\n");
     }
@@ -138,8 +138,8 @@ public:
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
         stack_printf("Post mmap\n");
-        if (!hook_lock.try_lock()) return;
-        stack_printf("Post mmap lock\n");
+        // if (!hook_lock.try_lock()) return;
+        // stack_printf("Post mmap lock\n");
         // printf("Post MMAP! %p => %p\n", addr_in, allocation_address);
         // // post_alloc(NULL, n_bytes, PAGE_SIZE, 0, allocation_address);
         // if (IS_PROTECTED) {
@@ -170,14 +170,14 @@ public:
         // // IS_PROTECTED = protection;
         // record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         // compression_test();
-        hook_lock.unlock();
-        stack_printf("Post mmap unlock\n");
+        // hook_lock.unlock();
+        stack_printf("Post mmap done\n");
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
         stack_printf("Post alloc\n");
-        if (!hook_lock.try_lock()) return;
-        stack_printf("Post alloc lock\n");
+        // if (!hook_lock.try_lock()) return;
+        // stack_printf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
         // }
@@ -191,7 +191,7 @@ public:
         // randomize_data(aligned_address, n_bytes);
         // #endif
 
-        stack_logf("Post alloc pre update\n");
+        // stack_logf("Post alloc pre update\n");
         try {
             stack_printf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
@@ -207,7 +207,6 @@ public:
         } catch (...) {
             stack_printf("Post alloc unknown exception exception\n");
         }
-        stack_logf("Post alloc update\n");
         // // bool protection = IS_PROTECTED;
         // // IS_PROTECTED = true;
         // // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
@@ -224,24 +223,24 @@ public:
         // hist[idx] += 1;
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
-        hook_lock.unlock();
-        stack_printf("Post alloc unlock\n");
+        // hook_lock.unlock();
+        stack_printf("Post alloc done\n");
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
         stack_printf("Pre free\n");
-        hook_lock.lock();
+        // hook_lock.lock();
         try {
             if (its.contains(addr)) {
-                stack_logf("Pre free contains\n");
+                // stack_logf("Pre free contains\n");
                 // if (IS_PROTECTED) {
                 //     return;
                 // }
-                stack_logf("Pre free lock\n");
+                // stack_logf("Pre free lock\n");
                 its.invalidate(addr);
-                stack_printf("Pre free invalidate\n");
+                // stack_printf("Pre free invalidate\n");
                 // compression_test();
-                stack_printf("Pre free unlock\n");
+                // stack_printf("Pre free unlock\n");
             }
 
         } catch (std::out_of_range& e) {
@@ -255,8 +254,9 @@ public:
         } catch (...) {
             stack_printf("Pre free unknown exception\n");
         }
+        stack_printf("Pre free done\n");
         // std::cout << "FrTeeing " << addr << std::endl;
-        hook_lock.unlock();
+        // hook_lock.unlock();
         
         // record_free(addr);
         // compression_test();
@@ -281,7 +281,7 @@ public:
     }
 
 private:
-    std::mutex hook_lock;
+    static std::mutex hook_lock;
 
     IntervalTestSuite its;
 };
@@ -290,7 +290,7 @@ private:
 static Hooks hooks;
 // static IntervalTestSuite hooks;
 
-std::mutex bk_lock;
+static std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
