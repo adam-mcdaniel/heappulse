@@ -550,10 +550,10 @@ public:
         stack_logf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
         stack_logf("Allocation-sites: %d\n", allocation_sites.num_entries());
         
-
         schedule();
         
         hook_lock.unlock();
+        stack_printf("Done with update\n");
     }
 
     bool contains(void *ptr) {
@@ -591,6 +591,8 @@ private:
     void schedule() {
         schedule_lock.lock();
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
+            stack_printf("Starting test\n");
+
             stack_logf("Starting interval\n");
             timer.reset();
             stack_logf("Getting allocations\n");
@@ -599,6 +601,7 @@ private:
             interval();
             timer.reset();
             stack_logf("Finished interval\n");
+            stack_printf("Done with test\n");
         }
         schedule_lock.unlock();
     }
