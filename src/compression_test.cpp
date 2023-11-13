@@ -32,6 +32,7 @@ class CompressionTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
+        stack_printf("Interval %d\n", interval_count);
         double total_uncompressed_size = 0;
         double total_compressed_size = 0;
         stack_logf("copied\n");
