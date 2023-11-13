@@ -530,8 +530,9 @@ public:
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
-        stack_logf("IntervalTestSuite::update\n");
+        stack_printf("IntervalTestSuite::update\n");
         if (!hook_lock.try_lock()) {
+            stack_printf("Unable to lock hook\n");
             return;
         }
 
@@ -543,7 +544,7 @@ public:
         }
 
         Allocation allocation = {ptr, size, Backtrace::capture()};
-
+        stack_printf("Allocation: %p, size: %X\n", ptr, size);
         site.allocations.put(ptr, allocation);
         allocation_sites.put(return_address, site);
         stack_printf("Allocation at %X, size: %X\n", ptr, size);
@@ -591,6 +592,7 @@ public:
     }
 private:
     void schedule() {
+        stack_printf("Entering IntervalTestSuite::schedule\n");
         schedule_lock.lock();
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_printf("Starting test\n");
@@ -606,6 +608,7 @@ private:
             stack_printf("Done with test\n");
         }
         schedule_lock.unlock();
+        stack_printf("Leaving IntervalTestSuite::schedule\n");
     }
 
     void interval() {
