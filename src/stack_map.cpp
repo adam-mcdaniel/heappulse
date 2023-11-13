@@ -71,9 +71,12 @@ void StackMap<KeyType, ValueType, Size>::remove(const KeyType& key) {
 template <typename KeyType, typename ValueType, size_t Size>
 bool StackMap<KeyType, ValueType, Size>::has(const KeyType& key) const {
     std::size_t index = hash(key);
+    uint64_t i = 0;
     while (hashtable[index].occupied) {
         if (hashtable[index].key == key) {
             return true;
+        } else if (i++ >= Size) {
+            throw std::out_of_range("Hash table full");
         }
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
