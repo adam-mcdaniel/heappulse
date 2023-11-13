@@ -53,7 +53,7 @@ ValueType StackMap<KeyType, ValueType, Size>::get(const KeyType& key) const {
 template <typename KeyType, typename ValueType, size_t Size>
 void StackMap<KeyType, ValueType, Size>::remove(const KeyType& key) {
     std::size_t index = hash(key);
-    while (hashtable[index].occupied) {
+    for (size_t i=0; i<Size && hashtable[index].occupied; i++) {
         if (hashtable[index].key == key) {
             hashtable[index].occupied = false;
             entries--;
