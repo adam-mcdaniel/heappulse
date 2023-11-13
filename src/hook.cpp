@@ -313,14 +313,11 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // return;
-    stack_printf("Entering hook\n");
     // if (!bk_lock.try_lock()) return;
     // stack_printf("Entering hook\n");
     // // IS_PROTECTED = false;
     bk_lock.lock();
-
-    // stack_printf("Freeing %\n", addr);
-    // hooks.invalidate(addr);
+    stack_printf("Entering hook\n");
     hooks.pre_free(heap, addr);
     stack_printf("Leaving hook\n");
     bk_lock.unlock();
@@ -337,7 +334,6 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         return;
     }
     stack_printf("Entering hook\n");
-
     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_printf("Leaving hook\n");
     bk_lock.unlock();
