@@ -4,7 +4,8 @@
 
 // Path: src/compression_test.cpp
 const int MAX_COMPRESSED_SIZE = 0x1000000;
-const int MAX_PAGES = MAX_COMPRESSED_SIZE / 0x1000;
+const int MAX_PAGES = 0x10000;
+static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
     uint8_t compressed_data[MAX_COMPRESSED_SIZE];
@@ -54,7 +55,6 @@ class CompressionTest : public IntervalTest {
                 continue;
             }
 
-            uint8_t buffer[MAX_COMPRESSED_SIZE];
             memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
             alloc.unprotect();
 
