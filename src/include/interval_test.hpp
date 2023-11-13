@@ -620,6 +620,7 @@ public:
 
     void invalidate(void *ptr) {
         hook_lock.lock();
+        allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
