@@ -513,6 +513,8 @@ public:
 };
 
 
+static bool IS_IN_TEST = false;
+
 class IntervalTestSuite {
     StackVec<IntervalTest*, 10> tests;
 
@@ -530,9 +532,10 @@ public:
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
-        if (IS_PROTECTED) {
+        if (IS_PROTECTED || IS_IN_TEST) {
             return;
         }
+        
         stack_printf("IntervalTestSuite::update\n");
         if (!hook_lock.try_lock()) {
             stack_printf("Unable to lock hook\n");
@@ -647,6 +650,7 @@ public:
 private:
     void schedule() {
         stack_printf("Entering IntervalTestSuite::schedule\n");
+        IS_IN_TEST = true;
         schedule_lock.lock();
         hook_lock.lock();
 
@@ -668,6 +672,7 @@ private:
         schedule_lock.unlock();
         hook_lock.unlock();
         stack_printf("Leaving IntervalTestSuite::schedule\n");
+        IS_IN_TEST = false;
     }
 
     void interval() {
@@ -699,6 +704,7 @@ private:
     }
 
     void get_allocs() {
+        hook_lock.lock();
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
@@ -708,6 +714,7 @@ private:
         allocations.sort_by([](const Allocation& a, const Allocation& b) {
             return (uintptr_t)a.ptr < (uintptr_t)b.ptr;
         });
+        hook_lock.unlock();
     }
 
     Timer timer;
