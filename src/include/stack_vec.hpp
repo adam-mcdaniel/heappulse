@@ -1,5 +1,5 @@
+#pragma once
 #include <array>
-#include <iostream>
 #include <stdint.h>
 #include <functional>
 
@@ -11,10 +11,29 @@ private:
 
 public:
     void push(const ValueType& value) {
-        if (elements == capacity) {
+        if (elements >= capacity) {
             throw std::out_of_range("StackVec is full");
         }
         data[elements++] = value;
+    }
+
+    bool contains(const ValueType& value) const {
+        for (size_t i=0; i<elements; i++) {
+            if (data[i] == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void sort_by(std::function<bool(const ValueType&, const ValueType&)> func) {
+        std::sort(data.begin(), data.begin() + elements, func);
+    }
+
+    void sort() {
+        sort_by([](const ValueType& a, const ValueType& b) {
+            return a < b;
+        });
     }
 
     ValueType pop() {
@@ -51,7 +70,7 @@ public:
     }
 
     bool full() const {
-        return elements == capacity;
+        return elements >= capacity;
     }
 
     void clear() {
@@ -86,19 +105,102 @@ public:
 
     StackVec() : elements(0), capacity(Size) {}
 
-    friend std::ostream& operator<<(std::ostream& os, const StackVec& stack) {
-        os << "[";
-        for (size_t i=0; i<stack.elements; i++) {
-            os << stack.data[i];
-            if (i != stack.elements - 1) {
-                os << ", ";
-            }
-        }
-        os << "]";
-        return os;
-    }
+    // friend std::ostream& operator<<(std::ostream& os, const StackVec& stack) {
+    //     os << "[";
+    //     for (size_t i=0; i<stack.elements; i++) {
+    //         os << stack.data[i];
+    //         if (i != stack.elements - 1) {
+    //             os << ", ";
+    //         }
+    //     }
+    //     os << "]";
+    //     return os;
+    // }
 
     void print() const {
         std::cout << *this << std::endl;
     }
+
+    // Add two stackvecs together
+    template<size_t N>
+    StackVec<ValueType, Size> operator+(const StackVec<ValueType, N>& other) const {
+        StackVec<ValueType, Size> result;
+        for (size_t i=0; i<elements; i++) {
+            result.push(data[i]);
+        }
+        for (size_t i=0; i<other.size(); i++) {
+            result.push(other[i]);
+        }
+        return result;
+    }
+    template<size_t N>
+    StackVec<ValueType, Size> operator+=(const StackVec<ValueType, N>& other) {
+        for (size_t i=0; i<other.size(); i++) {
+            push(other[i]);
+        }
+        return *this;
+    }
+
+    // Get the pointer to the underlying array
+    const ValueType* array_pointer() const {
+        return data.data();
+    }
+
+
+    StackVec<ValueType, Size> slice(size_t start, size_t end=-1ULL) const {
+        StackVec<ValueType, Size> result;
+        for (size_t i=start; i<end && i<capacity && i<elements; i++) {
+            result.push(data[i]);
+        }
+        return result;
+    }
+
+    // Copy constructor
+    template <size_t N>
+    StackVec(const StackVec<ValueType, N>& other) {
+        elements = other.size();
+        capacity = other.max_size();
+        for (size_t i=0; i<elements && i<capacity; i++) {
+            data[i] = other[i];
+        }
+    }
+
+    // Copy assignment operator
+    template <size_t N>
+    StackVec<ValueType, Size>& operator=(const StackVec<ValueType, N>& other) {
+        elements = other.size();
+        capacity = other.max_size();
+        for (size_t i=0; i<elements; i++) {
+            data[i] = other[i];
+        }
+        return *this;
+    }
+    
+    // // Copy constructor
+    // StackVec(const StackVec<ValueType, Size>& other) {
+    //     elements = other.elements;
+    //     capacity = other.capacity;
+    //     for (size_t i=0; i<elements; i++) {
+    //         data[i] = other.data[i];
+    //     }
+    // }
+
+    // // Copy assignment operator
+    // StackVec<ValueType, Size>& operator=(const StackVec<ValueType, Size>& other) {
+    //     elements = other.elements;
+    //     capacity = other.capacity;
+    //     for (size_t i=0; i<elements; i++) {
+    //         data[i] = other.data[i];
+    //     }
+    //     return *this;
+    // }
+
+    // // Move constructor
+    // StackVec(StackVec<ValueType, Size>&& other) {
+    //     elements = other.elements;
+    //     capacity = other.capacity;
+    //     for (size_t i=0; i<elements; i++) {
+    //         data[i] = other.data[i];
+    //     }
+    // }
 };

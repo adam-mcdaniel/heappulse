@@ -1,11 +1,11 @@
-#include <mutex>
 #define BKMALLOC_HOOK
 #include "bkmalloc.h"
 #include <zlib.h>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <stdio.h>
+// #include <stdio.h>
+#include <stack_io.hpp>
 #include <stdlib.h>
 #include <chrono>
 #include <vector>
@@ -18,7 +18,10 @@
 #include <condition_variable>
 #include <dlfcn.h>
 #include <execinfo.h>
-#include <stdint.h>
+#include <timer.hpp>
+#include "stack_map.cpp"
+#include "stack_file.cpp"
+#include <interval_test.hpp>
 
 #define OUTPUT_CSV "bucket_stats.csv"
 #define ALLOCATION_SITE_OUTPUT_CSV "allocation_site_stats.csv"
@@ -30,11 +33,9 @@
 const int INTERVAL_MS = 10000;  // Interval in seconds to track memory usage (in milliseconds)
 // const int INTERVAL_MS = 1000;  // Interval in seconds to track memory usage (in milliseconds)
 const int MAX_TRACKED_ALLOCS = 100000;
-const int BACKTRACE_DEPTH = 64;
 const int MAX_TRACKED_SITES = 1000;
 const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608};
 
-// const u64 BUCKET_SIZES[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 262144, 524288, 1048576, 2097152, 4194304, 8388608, 1073741824};
 const int NUM_BUCKETS = sizeof(BUCKET_SIZES) / sizeof(BUCKET_SIZES[0]);
 static bool IS_PROTECTED = false;
 
@@ -64,12 +65,12 @@ void zero_data(void *addr, u64 size_in_bytes) {
 }
 
 void print_page_flags(uint64_t address, uint64_t pfn, uint64_t data, uint64_t flags) {
-    // printf("0x%08lx | PFN: 0x%08lx, ", address, pfn);
-    // printf("Soft-dirty: %ld, ", (data >> 55) & 1);
-    // printf("File/shared: %ld, ", (data >> 61) & 1);
-    // printf("Swapped: %ld, ", (data >> 62) & 1);
-    // printf("Present: %ld, ", (data >> 63) & 1);
-    // printf("Flags: 0x%-16lx ", flags);
+    printf("0x%08lx | PFN: 0x%08lx, ", address, pfn);
+    printf("Soft-dirty: %ld, ", (data >> 55) & 1);
+    printf("File/shared: %ld, ", (data >> 61) & 1);
+    printf("Swapped: %ld, ", (data >> 62) & 1);
+    printf("Present: %ld, ", (data >> 63) & 1);
+    printf("Flags: 0x%-16lx ", flags);
 
     if (flags & (1ULL << 0)) {
         printf("Locked, ");
@@ -283,8 +284,8 @@ std::vector<PageInfo> get_page_info(void *addr, u64 size_in_bytes) {
         }
         
         // Get page frame number
-
         uint64_t page_frame_number = data & 0x7FFFFFFFFFFFFFULL;
+
         uint64_t flags;
         uint64_t kpageflags_index = page_frame_number * sizeof(flags);
 
@@ -294,7 +295,7 @@ std::vector<PageInfo> get_page_info(void *addr, u64 size_in_bytes) {
             break;
         }
 
-        // print_page_flags(i, page_frame_number, data, flags);
+        print_page_flags(i, page_frame_number, data, flags);
 
         // If is the zero page, continue.
         // Zero page flag is in bit 24.
@@ -499,298 +500,7 @@ private:
 //     // fgets(buf, sizeof(buf), fp);
 // }
 
-struct Timer {
-    std::chrono::steady_clock::time_point start_time;
 
-    Timer() : start_time(std::chrono::steady_clock::now()) { }
-
-    ~Timer() {
-        printf("Elapsed time: %lu microseconds\n", elapsed_microseconds());
-    }
-
-    void start() {
-        this->reset();
-    }
-    
-    void reset() {
-        this->start_time = std::chrono::steady_clock::now();
-    }
-
-    bool has_elapsed(u64 milliseconds) {
-        return this->elapsed_milliseconds() >= milliseconds;
-    }
-
-    u64 elapsed_seconds() {
-        return this->elapsed_milliseconds() / 1000;
-    }
-
-    u64 elapsed_milliseconds() {
-        return this->elapsed_microseconds() / 1000;
-    }
-
-    u64 elapsed_microseconds() {
-        auto end_time = std::chrono::steady_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - this->start_time).count();
-        return duration;
-    }
-};
-
-template <typename KeyType, typename ValueType, std::size_t Size>
-struct StackMap {
-    struct Entry {
-        KeyType key;
-        ValueType value;
-        bool occupied;
-
-        Entry() : occupied(false) {}
-        Entry(const KeyType& key) : key(key), occupied(true) {}
-        Entry(const KeyType& key, const ValueType& value) : key(key), value(value), occupied(true) {}
-    };
-
-    // std::vector<Entry> hashtable;
-    std::array<Entry, Size> hashtable;
-
-    int entries = 0;
-
-    std::size_t hash(const KeyType& key) const {
-        return std::hash<KeyType>{}(key) % Size;
-    }
-
-    StackMap() : hashtable() {
-        clear();
-    }
-
-    void put(const KeyType& key, const ValueType& value) {
-        std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
-            if (hashtable[index].key == key) {
-                hashtable[index].value = value;  // Update value if key already exists
-                return;
-            }
-            index = (index + 1) % Size;  // Linear probing for collision resolution
-        }
-
-        hashtable[index].key = key;
-        hashtable[index].value = value;
-        hashtable[index].occupied = true;
-        entries++;
-    }
-
-    ValueType get(const KeyType& key) const {
-        std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
-            if (hashtable[index].key == key) {
-                return hashtable[index].value;
-            }
-            index = (index + 1) % Size;  // Linear probing for collision resolution
-        }
-        // Key not found
-        throw std::out_of_range("Key not found");
-    }
-
-    void remove(const KeyType& key) {
-        std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
-            if (hashtable[index].key == key) {
-                hashtable[index].occupied = false;
-                entries--;
-                return;
-            }
-            index = (index + 1) % Size;  // Linear probing for collision resolution
-        }
-        // Key not found
-        throw std::out_of_range("Key not found");
-    }
-
-    bool has(const KeyType& key) const {
-        std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
-            if (hashtable[index].key == key) {
-                return true;
-            }
-            index = (index + 1) % Size;  // Linear probing for collision resolution
-        }
-        return false;
-    }
-
-    void clear() {
-        for (u64 i=0; i<Size; i++) {
-            hashtable[i].occupied = false;
-        }
-        entries = 0;
-    }
-
-    int size() const {
-        return Size;
-    }
-
-    int num_entries() const {
-        return entries;
-    }
-
-    bool empty() const {
-        return entries == 0;
-    }
-
-    bool full() const {
-        return entries == Size;
-    }
-
-    void map(void (*func)(KeyType&, ValueType&)) {
-        int j = 0;
-        for (u64 i=0; i<Size; i++) {
-            if (hashtable[i].occupied) {
-                func(hashtable[i].key, hashtable[i].value);
-                if (++j == entries) {
-                    break;
-                }
-            }
-        }
-    }
-
-    void print() const {
-        for (int i=0; i<Size; i++) {
-            if (hashtable[i].occupied) {
-                std::cout << hashtable[i].key << ": " << hashtable[i].value << std::endl;
-            }
-        }
-    }
-
-    void print_stats() const {
-        int num_collisions = 0;
-        int max_collisions = 0;
-        for (int i=0; i<Size; i++) {
-            if (hashtable[i].occupied) {
-                int collisions = 0;
-                int index = i;
-                while (hashtable[index].occupied) {
-                    collisions++;
-                    index = (index + 1) % Size;
-                }
-                num_collisions += collisions;
-                if (collisions > max_collisions) {
-                    max_collisions = collisions;
-                }
-            }
-        }
-        std::cout << "Number of entries: " << entries << std::endl;
-        std::cout << "Number of collisions: " << num_collisions << std::endl;
-        std::cout << "Max collisions for any given key: " << max_collisions << std::endl;
-    }
-};
-
-
-
-class Backtrace {
-public:
-    Backtrace() {}
-
-    static Backtrace capture() {
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        Backtrace bt;
-        bt.backtrace_size = backtrace(bt.backtrace_addrs, BACKTRACE_DEPTH);
-        IS_PROTECTED = protection;
-        return bt;
-    }
-
-    // Get the allocation site from the backtrace
-    void *get_allocation_site() {
-        // Get the first symbol that doesn't have `libbkmalloc` or `hook` in it.
-        // This is the allocation site.
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        for (int i=0; i<backtrace_size; i++) {
-            char **strings = backtrace_symbols(backtrace_addrs + i, 1), *symbol = strings[0];
-
-            if (i == backtrace_size - 1) {
-                from_hook = strstr(symbol, "libstdc") != NULL || strstr(symbol, "libc") != NULL || strstr(symbol, "ld") != NULL || strstr(symbol, "libbkmalloc") != NULL || strstr(symbol, "hook") != NULL;
-            }
-
-            if (strstr(symbol, "libstdc") == NULL && strstr(symbol, "libbkmalloc") == NULL && strstr(symbol, "hook") == NULL && strstr(symbol, "libc") == NULL && strstr(symbol, "ld") == NULL) {
-                free(strings);
-                allocation_site = backtrace_addrs[i];
-                IS_PROTECTED = protection;
-                return allocation_site;
-            }
-            free(strings);
-        }
-        IS_PROTECTED = protection;
-        return NULL;
-    }
-
-    bool contains_allocation_site(void *site) {
-        for (int i=0; i<backtrace_size; i++) {
-            if (backtrace_addrs[i] == site) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Check if this backtrace is obviously invalid.
-    bool is_invalid() const {
-        if (backtrace_size == 0) {
-            return true;
-        }
-
-        if (from_hook == 1) {
-            return true;
-        }
-
-        if (backtrace_size == 1) {
-            return backtrace_addrs[0] == NULL;
-        }
-
-        return false;
-    }
-
-    bool is_from_hook() {
-        if (from_hook == -1) {
-            // If the backtrace starts at `libc` or `ld`, then it's from the hook.
-            bool protection = IS_PROTECTED;
-            IS_PROTECTED = true;
-            char **strings = backtrace_symbols(backtrace_addrs + backtrace_size - 1, 1), *symbol = strings[0];
-            from_hook = strstr(symbol, "libstdc") != NULL || strstr(symbol, "libc") != NULL || strstr(symbol, "ld") != NULL || strstr(symbol, "libbkmalloc") != NULL || strstr(symbol, "hook") != NULL;
-            free(strings);
-            IS_PROTECTED = protection;
-        }
-        return from_hook;
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, Backtrace& bt) {
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        char **strings = backtrace_symbols(bt.backtrace_addrs, bt.backtrace_size);
-
-        bt.get_allocation_site();
-        if (bt.is_from_hook()) {
-            os << "[from hook ";
-            for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
-                os << i + 1 << " " << strings[i];
-            os << " ]";
-        } else {
-            if (strings != NULL) {
-                os << "[allocation site at " << std::hex << (long long int)bt.allocation_site << std::dec << ":";
-                for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
-                    os << i + 1 << " " << strings[i];
-                os << " ]";
-            } else {
-                os << "[error]";
-            }
-        }
-
-        free(strings);
-        IS_PROTECTED = protection;
-        return os;
-    }
-
-private:
-    int from_hook = -1;
-    void *allocation_site = NULL;
-    void *backtrace_addrs[BACKTRACE_DEPTH];
-    int backtrace_size = 0;
-};
 
 
 class CompressionEntry;
@@ -1441,15 +1151,15 @@ void protect_allocation_entries()
 
     std::cout << "Protecting allocations" << std::endl;
     for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping " << stack_alloc_map.hashtable[i].value << std::endl;
                 continue;
             }
 
             // std::cout << "Protecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This protects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.get_allocation_address();
+            unsigned long address = (unsigned long)stack_alloc_map[i].value.get_allocation_address();
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect entries");
@@ -1482,16 +1192,16 @@ void unprotect_allocation_entries() {
     long page_size = sysconf(_SC_PAGESIZE);
 
     std::cout << "Unprotecting allocations" << std::endl;
-    for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+    for (size_t i=0; i<stack_alloc_map.size(); i++) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping " << stack_alloc_map.hashtable[i].value << std::endl;
                 continue;
             }
 
             // std::cout << "Unprotecting " << stack_alloc_map.hashtable[i].value << std::endl;
             // This unprotects the entire page from being written to.
-            unsigned long address = (unsigned long)stack_alloc_map.hashtable[i].value.get_allocation_address();
+            unsigned long address = (unsigned long)stack_alloc_map[i].value.get_allocation_address();
             void* aligned_address = (void*)(address & ~(page_size - 1));
             if (mprotect(aligned_address, page_size, PROT_READ | PROT_WRITE | PROT_EXEC) == -1) {
                 perror("un-mprotect entries");
@@ -1592,27 +1302,27 @@ void put_into_buckets() {
     // Iterate over all entries in the map and get their sizes and put their compression stats into buckets
     for (int i=0; i<stack_alloc_map.size(); i++) {
         // Is the entry in the bucket map?
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping entry from hook:" << std::endl;
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 continue;
             } else if (stack_alloc_map.num_entries() / 10 > 0 && j % (stack_alloc_map.num_entries() / 10) == 0) {
                 std::cout << "Putting entry into buckets:" << std::endl;
-                void *addr = stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+                void *addr = stack_alloc_map[i].value.get_backtrace().get_allocation_site();
                 // auto loc = SourceLocation(addr);
-                std::cout << stack_alloc_map.hashtable[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
+                std::cout << stack_alloc_map[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
             }
             // Find what bucket the entry belongs to
-            uLong compressed_size = stack_alloc_map.hashtable[i].value.get_compressed_size(),
-                uncompressed_size = stack_alloc_map.hashtable[i].value.get_size_in_bytes();
+            uLong compressed_size = stack_alloc_map[i].value.get_compressed_size(),
+                uncompressed_size = stack_alloc_map[i].value.get_size_in_bytes();
             
             BucketKey bucket_key(uncompressed_size);
             BucketEntry bucket_entry;
             if (buckets_map.has(bucket_key)) {
                 // Update the bucket entry
                 bucket_entry = buckets_map.get(bucket_key);
-                bucket_entry += stack_alloc_map.hashtable[i].value;
+                bucket_entry += stack_alloc_map[i].value;
                 // bucket_entry.total_compressed_sizes += compressed_size;
                 // bucket_entry.total_uncompressed_sizes += uncompressed_size;
                 // bucket_entry.total_virtual_pages += stack_alloc_map.hashtable[i].value.virtual_pages;
@@ -1621,7 +1331,7 @@ void put_into_buckets() {
                 // std::cout << "Updating bucket entry: " << bucket_entry << std::endl;
             } else {
                 // Create a new bucket entry
-                bucket_entry = BucketEntry(stack_alloc_map.hashtable[i].value);
+                bucket_entry = BucketEntry(stack_alloc_map[i].value);
                 // bucket_entry.total_compressed_sizes = compressed_size;
                 // bucket_entry.total_uncompressed_sizes = uncompressed_size;
                 // bucket_entry.total_virtual_pages = stack_alloc_map.hashtable[i].value.virtual_pages;
@@ -1631,7 +1341,7 @@ void put_into_buckets() {
             }
             // Insert the bucket entry into the map
             buckets_map.put(bucket_key, bucket_entry);
-            if (++j == stack_alloc_map.entries) {
+            if (++j == stack_alloc_map.num_entries()) {
                 break;
             }
         }
@@ -1646,18 +1356,18 @@ void track_allocation_sites() {
     // Iterate over the allocation map entries and put them into the sites map according to their return address
     int j = 0;
     for (int i=0; i<stack_alloc_map.size(); i++) {
-        if (stack_alloc_map.hashtable[i].occupied) {
-            if (stack_alloc_map.hashtable[i].value.get_backtrace().is_from_hook()) {
+        if (stack_alloc_map[i].occupied) {
+            if (stack_alloc_map[i].value.get_backtrace().is_from_hook()) {
                 // std::cout << "Skipping entry from hook:" << std::endl;
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 continue;
             } else if (stack_alloc_map.num_entries() / 10 > 0 && j % (stack_alloc_map.num_entries() / 10) == 0) {
                 std::cout << "Putting entry into buckets:" << std::endl;
-                void *addr = stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+                void *addr = stack_alloc_map[i].value.get_backtrace().get_allocation_site();
                 // auto loc = SourceLocation(addr);
                 // std::cout << stack_alloc_map.hashtable[i].value.backtrace << std::endl;
                 // std::cout << std::hex << (u64)addr << std::dec << " @ " << loc << std::endl;
-                std::cout << stack_alloc_map.hashtable[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
+                std::cout << stack_alloc_map[i].value.get_backtrace() << std::hex << (u64)addr << std::endl; // << std::dec << " @ " << loc << std::endl;
             }
             // void *return_address = stack_alloc_map.hashtable[i].value.return_address;
             // const char *path_to_file = get_path_to_file_from_code_address(return_address);
@@ -1670,7 +1380,7 @@ void track_allocation_sites() {
             // std::cout << "return_address: " << return_address << std::endl;
             
             // AllocationSiteKey site_key(return_address, path_to_file, line_number);
-            AllocationSiteKey site_key(stack_alloc_map.hashtable[i].value.get_backtrace());
+            AllocationSiteKey site_key(stack_alloc_map[i].value.get_backtrace());
 
             AllocationSiteEntry site_entry;
             if (sites_map.has(site_key)) {
@@ -1678,17 +1388,17 @@ void track_allocation_sites() {
                 site_entry = sites_map.get(site_key);
             }
 
-            stack_alloc_map.hashtable[i].value.get_backtrace().get_allocation_site();
+            stack_alloc_map[i].value.get_backtrace().get_allocation_site();
 
             // Create a new site entry
-            site_entry.add_compression_entry(stack_alloc_map.hashtable[i].value);
+            site_entry.add_compression_entry(stack_alloc_map[i].value);
 
             // if (i % (stack_alloc_map.size() / 20) == 0) {
             //     std::cout << stack_alloc_map.hashtable[i].value << std::endl;
             // }
             // Insert the site entry into the map
             sites_map.put(site_key, site_entry);
-            if (++j == stack_alloc_map.entries) {
+            if (++j == stack_alloc_map.num_entries()) {
                 break;
             }
         }
@@ -1776,8 +1486,8 @@ struct Hooks {
             //         Bytef compressed_data[4096];
 
             //         int result = compress2(compressed_data, &entry->compressed_size, (const Bytef*)input_data, input_size, Z_BEST_COMPRESSION);
-            //             printf("Compression successful!\n");
             //         if (result == Z_OK) {
+            //             printf("Compression successful!\n");
             //             printf("Original size: %lu bytes\n", input_size);
             //             printf("Compressed size: %lu bytes\n", entry->compressed_size);
             //         } else {
@@ -1799,14 +1509,14 @@ struct Hooks {
             return;
         }
 
-    //     // #ifdef RANDOMIZE_ALLOCATION_DATA
-    //     // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
-    //     // randomize_data(allocation_address, n_bytes);
-    //     // #endif
+        // #ifdef RANDOMIZE_ALLOCATION_DATA
+        // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
+        // randomize_data(allocation_address, n_bytes);
+        // #endif
 
-    //     // bool protection = IS_PROTECTED;
+        // bool protection = IS_PROTECTED;
         // IS_PROTECTED = true;
-        // // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
         // IS_PROTECTED = protection;
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
@@ -1816,21 +1526,20 @@ struct Hooks {
         // if (IS_PROTECTED) {
         //     return;
         // }
-        // std::cout << "Alloc" << std::endl;
 
         if (IS_PROTECTED) {
             return;
         }
 
-    //     // #ifdef RANDOMIZE_ALLOCATION_DATA
-    //     // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
-    //     // randomize_data(aligned_address, n_bytes);
-    //     // #endif
+        #ifdef RANDOMIZE_ALLOCATION_DATA
+        void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
+        randomize_data(aligned_address, n_bytes);
+        #endif
 
-        bool protection = IS_PROTECTED;
-        IS_PROTECTED = true;
-        std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
-        IS_PROTECTED = protection;
+        // bool protection = IS_PROTECTED;
+        // IS_PROTECTED = true;
+        // std::cout << "Alloc at " << std::hex << (u64)allocation_address << std::dec << std::endl;
+        // IS_PROTECTED = protection;
 
         record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         compression_test();
@@ -1846,12 +1555,12 @@ struct Hooks {
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
-    //     std::cout << "Freeing " << addr << std::endl;
+        // std::cout << "Freeing " << addr << std::endl;
         
-    //     // record_free(addr);
-    //     // compression_test();
+        // record_free(addr);
+        // compression_test();
 
-    //     record_free(addr);
+        record_free(addr);
         if (IS_PROTECTED) {
             return;
         }
@@ -1869,15 +1578,15 @@ struct Hooks {
         bool protection = IS_PROTECTED;
         IS_PROTECTED = true;
 
-        std::lock_guard<std::mutex> lock1(report_mutex);
-        std::lock_guard<std::mutex> lock2(alloc_map_mutex);
-        std::lock_guard<std::mutex> lock3(sites_mutex);
-        std::lock_guard<std::mutex> lock4(buckets_map_mutex);
-        std::lock_guard<std::mutex> lock5(page_map_mutex);
+        volatile std::lock_guard<std::mutex> lock1(report_mutex);
+        volatile std::lock_guard<std::mutex> lock2(alloc_map_mutex);
+        volatile std::lock_guard<std::mutex> lock3(sites_mutex);
+        volatile std::lock_guard<std::mutex> lock4(buckets_map_mutex);
+        volatile std::lock_guard<std::mutex> lock5(page_map_mutex);
 
 
         n_reports++;
-        std::cout << "Reporting #" << n_reports << std::endl;
+        // std::cout << "Reporting #" << n_reports << std::endl;
 
         std::ofstream page_stats_csv;
         page_stats_csv.open(PAGE_INFO_OUTPUT_CSV, (n_reports == 1? std::ios::trunc : std::ios::app) | std::ios::out);
@@ -1898,11 +1607,11 @@ struct Hooks {
         }
 
         // Iterate over pages and add their info to the csv
-        for (int i=0; i<MAX_TRACKED_PAGES; i++) {
-            if (!page_map.hashtable[i].occupied) {
+        for (size_t i=0; i<MAX_TRACKED_PAGES; i++) {
+            if (!page_map[i].occupied) {
                 continue;
             }
-            PageEntry page_entry = page_map.hashtable[i].value;
+            PageEntry page_entry = page_map[i].value;
 
             Backtrace backtrace = page_entry.get_backtrace();
 
@@ -1982,10 +1691,10 @@ struct Hooks {
             std::cout << "  Total uncompressed size: " << entry.get_uncompressed_size() << std::endl;
             std::cout << "  Number of entries: " << entry.get_entries() << std::endl;
             std::cout << "  Compression ratio (lower is better): " << (double)entry.get_uncompressed_size() / (double)entry.get_compressed_size() << std::endl;
+            std::cout << "  Total portion of heap (uncompressed): " << (double)entry.get_uncompressed_size() / total_uncompressed_heap_size << std::endl;
             std::cout << "  Total portion of heap (compressed): " << (double)entry.get_compressed_size() / total_compressed_heap_size << std::endl;
             // csv_file << n_reports << "," << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," << entry.total_compressed_sizes << "," << entry.total_uncompressed_sizes << "," << entry.n_entries << "," << (double)entry.total_compressed_sizes / (double)entry.total_uncompressed_sizes << std::endl;
 
-            std::cout << "  Total portion of heap (uncompressed): " << (double)entry.get_uncompressed_size() / total_uncompressed_heap_size << std::endl;
             csv_file << n_reports << "," // Interval #
                      << key.lower_bytes_bound << "-" << key.upper_bytes_bound << "," // Bucket Size
                      << entry.get_entries() << "," // Number of Allocations
@@ -2042,11 +1751,11 @@ struct Hooks {
 
         std::ofstream site_stats_csv;
         std::cout << "Site stats:" << std::endl;
-        for (int i=0; i<MAX_TRACKED_SITES; i++) {
-            if (!sites_map.hashtable[i].occupied) {
+        for (size_t i=0; i<MAX_TRACKED_SITES; i++) {
+            if (!sites_map[i].occupied) {
                 continue;
             }
-            AllocationSiteKey site_key = sites_map.hashtable[i].key;
+            AllocationSiteKey site_key = sites_map[i].key;
             std::cout << "  Site " << std::dec << i << " (" << (site_key.path_to_file == NULL? "Null" : site_key.path_to_file) << ":" << site_key.line_number << ") at return address 0x" << std::hex << (long long int)site_key.return_address << std::endl;
             std::stringstream ss;
             ss << "site_stats_" << (site_key.path_to_file == NULL? "" : site_key.path_to_file) << "_" << std::hex << (long long int)site_key.return_address << std::dec;
@@ -2098,7 +1807,7 @@ struct Hooks {
                     << std::endl;
             }
 
-            AllocationSiteEntry site_entry = sites_map.hashtable[i].value;
+            AllocationSiteEntry site_entry = sites_map[i].value;
             auto buckets_map = site_entry.buckets_map;
             
             u64 total_site_resident_pages = 0, total_site_virtual_pages = 0;
@@ -2193,7 +1902,7 @@ struct Hooks {
         }
 
         all_site_stats_csv.close();
-        // IS_PROTECTED = protection;
+        IS_PROTECTED = protection;
     }
 
     void create_stats_csv() {
@@ -2243,14 +1952,57 @@ struct Hooks {
 
 static Hooks hooks;
 
+// extern "C"
+// void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+//     stack_printf("Entering hook\n");
+//     // bk_printf("Test\n");
+//     // StackString fmt = StackString<1024>::format("Allocated %% bytes at % whoa %\n", n_bytes, addr, 5.2);
+//     // // StackString fmt = StackString<1024>("hello world");
+//     // fmt.print();
+//     // // StackString<1024> buf;
+//     StackString<1024> test = "1.2 5 6 testing";
+//     double x, y;
+//     int z = 0xffff;
+//     char s[1024] = {0};
+//     test.scan(x, y, z, s);
+//     stack_printf("Scanned: % % %x\n", x, y, z);
+//     // test.println();
+
+//     // bk_printf("Allocated %d bytes at %X\n", n_bytes, addr);
+//     // std::cout << fmt << std::endl;
+//     // setup_protection_handler();
+//     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
+//     stack_printf("Allocated % bytes at %\n", n_bytes, addr);
+//     stack_printf("Leaving hook\n");
+// }
+
+// extern "C"
+// void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+//     stack_printf("Entering hook\n");
+//     // setup_protection_handler();
+//     hooks.pre_free(heap, addr);
+//     stack_printf("Leaving hook\n");
+// }
+
+// extern "C"
+// void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
+//     stack_printf("Entering hook\n");
+//     // setup_protection_handler();
+//     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+//     stack_printf("Leaving hook\n");
+// }
+
 std::mutex hook_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
     // return;
     if (!hook_lock.try_lock()) return;
-    // IS_PROTECTED = false;
+    stack_printf("Entering hook\n");
+
+    stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
+    stack_printf("Leaving hook\n");
     hook_lock.unlock();
 }
 
@@ -2258,15 +2010,25 @@ extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // return;
     if (!hook_lock.try_lock()) return;
+    stack_printf("Entering hook\n");
     // IS_PROTECTED = false;
+
+    stack_printf("Freeing %\n", addr);
+
     hooks.pre_free(heap, addr);
+    stack_printf("Leaving hook\n");
     hook_lock.unlock();
 }
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
-    return;
+    // return;
     if (!hook_lock.try_lock()) return;
+    stack_printf("Entering hook\n");
+
+    stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
+
     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    stack_printf("Leaving hook\n");
     hook_lock.unlock();
 }

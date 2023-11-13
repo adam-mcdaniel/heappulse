@@ -1,7 +1,10 @@
+#pragma once
+
 #include <array>
 #include <iostream>
 #include <stdint.h>
 #include <functional>
+#include <stack_vec.hpp>
 
 template <typename KeyType, typename ValueType, std::size_t Size>
 class StackMap {
@@ -57,6 +60,13 @@ public:
     const Entry &operator[](size_t index) const {
         return hashtable[index];
     }
+    Entry &nth_entry(size_t index) {
+        return hashtable[index];
+    }
+
+    const Entry &nth_entry(size_t index) const {
+        return hashtable[index];
+    }
 
     ValueType &operator[](const KeyType& key) {
         std::size_t index = hash(key);
@@ -71,6 +81,24 @@ public:
         hashtable[index].occupied = true;
         entries++;
         return hashtable[index].value;
+    }
+
+    template <size_t N>
+    void keys(StackVec<KeyType, N> &keys) const {
+        for (size_t i = 0; i < Size; i++) {
+            if (hashtable[i].occupied) {
+                keys.push(hashtable[i].key);
+            }
+        }
+    }
+
+    template <size_t N>
+    void values(StackVec<ValueType, N> &values) const {
+        for (size_t i = 0; i < Size; i++) {
+            if (hashtable[i].occupied) {
+                values.push(hashtable[i].value);
+            }
+        }
     }
 private:
     std::array<Entry, Size> hashtable;

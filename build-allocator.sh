@@ -26,7 +26,7 @@ WARN_FLAGS="-Wall -Wextra -Wno-missing-field-initializers -Wno-unused-parameter 
 MAX_ERRS="-fmax-errors=3"
 TLS_MODEL="-ftls-model=initial-exec"
 C_FLAGS="-fPIC ${TLS_MODEL} ${DEBUG} ${OPT} ${WARN_FLAGS} ${MAX_ERRS} ${FEATURES} -ldl"
-CPP_FLAGS="-fno-rtti ${C_FLAGS}"
+CPP_FLAGS="-fno-rtti ${C_FLAGS} -lz"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPILE="g++ -g -I./include -shared -o ${SCRIPT_DIR}/libbkmalloc.so -x c++ include/bkmalloc.h  -DBKMALLOC_IMPL -DBK_RETURN_ADDR ${CPP_FLAGS}"
@@ -43,4 +43,4 @@ g++ -fPIC -shared src/hook.cpp ${FEATURES} -I./include -I./src/include -L$SCRIPT
 # make
 # cp objs/libbkmalloc.so .
 # cp objs/hook.so .
-# echo "Done"
+echo "Done"
