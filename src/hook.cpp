@@ -147,6 +147,7 @@ public:
         // }
         try {
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
+            stack_printf("Post mmap update\n");
         } catch (std::out_of_range& e) {
             stack_printf("Post mmap out of range\n");
             stack_printf(e.what());
@@ -193,6 +194,7 @@ public:
         stack_logf("Post alloc pre update\n");
         try {
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+            stack_printf("Post alloc update\n");
         } catch (std::out_of_range& e) {
             stack_printf("Post alloc out of range\n");
             stack_printf(e.what());
@@ -235,7 +237,8 @@ public:
                 // }
                 hook_lock.lock();
                 stack_logf("Pre free lock\n");
-                    its.invalidate(addr);
+                its.invalidate(addr);
+                stack_printf("Pre free invalidate\n");
                 hook_lock.unlock();
                 // compression_test();
                 stack_printf("Pre free unlock\n");
