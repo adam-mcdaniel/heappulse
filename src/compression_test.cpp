@@ -39,6 +39,10 @@ class CompressionTest : public IntervalTest {
 
         for (size_t i=0; i<allocations.size(); i++) {
             Allocation alloc = allocations[i];
+            if (alloc.size > MAX_COMPRESSED_SIZE / 2) {
+                stack_logf("Skipping: Unable to compress data\n");
+                continue;
+            }
             alloc.protect();
 
             alloc.log();
@@ -50,10 +54,6 @@ class CompressionTest : public IntervalTest {
             stack_logf("\n");
             size_t compressed_size = compressBound(alloc.size);
 
-            if (alloc.size > MAX_COMPRESSED_SIZE) {
-                stack_logf("Skipping: Unable to compress data\n");
-                continue;
-            }
 
             memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
             alloc.unprotect();
