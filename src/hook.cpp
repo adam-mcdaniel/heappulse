@@ -137,9 +137,9 @@ public:
 
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
-        stack_logf("Post mmap\n");
+        stack_printf("Post mmap\n");
         if (!hook_lock.try_lock()) return;
-        stack_logf("Post mmap lock\n");
+        stack_printf("Post mmap lock\n");
         // printf("Post MMAP! %p => %p\n", addr_in, allocation_address);
         // // post_alloc(NULL, n_bytes, PAGE_SIZE, 0, allocation_address);
         // if (IS_PROTECTED) {
@@ -170,13 +170,13 @@ public:
         // record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         // compression_test();
         hook_lock.unlock();
-        stack_logf("Post mmap unlock\n");
+        stack_printf("Post mmap unlock\n");
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
-        stack_logf("Post alloc\n");
+        stack_printf("Post alloc\n");
         if (!hook_lock.try_lock()) return;
-        stack_logf("Post alloc lock\n");
+        stack_printf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
         // }
@@ -222,13 +222,13 @@ public:
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
         hook_lock.unlock();
-        stack_logf("Post alloc unlock\n");
+        stack_printf("Post alloc unlock\n");
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
         try {
             if (its.contains(addr)) {
-                stack_logf("Pre free\n");
+                stack_printf("Pre free\n");
                 stack_logf("Pre free contains\n");
                 // if (IS_PROTECTED) {
                 //     return;
@@ -238,7 +238,7 @@ public:
                     its.invalidate(addr);
                 hook_lock.unlock();
                 // compression_test();
-                stack_logf("Pre free unlock\n");
+                stack_printf("Pre free unlock\n");
             }
 
         } catch (std::out_of_range& e) {
