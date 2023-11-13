@@ -297,17 +297,16 @@ extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
     // return;
     // bk_printf("Entering hook\n");
-    if (!bk_lock.try_lock()) {
+    if (bk_lock.try_lock()) {
         // stack_printf("Failed to lock\n");
-        return;
-    }
-    stack_printf("Entering hook\n");
+        stack_printf("Entering hook\n");
 
-    // stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
-    hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
-    // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
-    stack_printf("Leaving hook\n");
-    bk_lock.unlock();
+        // stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
+        hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
+        // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
+        stack_printf("Leaving hook\n");
+        bk_lock.unlock();
+    }
 }
 
 extern "C"
@@ -329,12 +328,10 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
 
     // stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
-    if (!bk_lock.try_lock()) {
-        // stack_printf("Failed to lock\n");
-        return;
+    if (bk_lock.try_lock()) {
+        stack_printf("Entering hook\n");
+        hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+        stack_printf("Leaving hook\n");
+        bk_lock.unlock();
     }
-    stack_printf("Entering hook\n");
-    hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
-    stack_printf("Leaving hook\n");
-    bk_lock.unlock();
 }
