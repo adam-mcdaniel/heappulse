@@ -603,7 +603,7 @@ public:
         
         schedule();
         
-        stack_printf("Done with update\n");
+        stack_printf("Leaving IntervalTestSuite::update\n");
     }
 
     bool contains(void *ptr) {
@@ -619,6 +619,7 @@ public:
     }
 
     void invalidate(void *ptr) {
+        stack_printf("IntervalTestSuite::invalidate\n");
         hook_lock.lock();
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
@@ -633,6 +634,7 @@ public:
         hook_lock.unlock();
 
         schedule();
+        stack_printf("Leaving IntervalTestSuite::invalidate\n");
     }
 
     ~IntervalTestSuite() {
