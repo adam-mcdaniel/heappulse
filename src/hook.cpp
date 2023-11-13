@@ -193,6 +193,7 @@ public:
 
         stack_logf("Post alloc pre update\n");
         try {
+            stack_printf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             stack_printf("Post alloc update\n");
         } catch (std::out_of_range& e) {
