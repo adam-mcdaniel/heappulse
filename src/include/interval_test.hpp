@@ -530,6 +530,9 @@ public:
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
+        if (IS_PROTECTED) {
+            return;
+        }
         stack_printf("IntervalTestSuite::update\n");
         if (!hook_lock.try_lock()) {
             stack_printf("Unable to lock hook\n");
