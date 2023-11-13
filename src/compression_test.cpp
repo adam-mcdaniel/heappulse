@@ -93,6 +93,10 @@ class CompressionTest : public IntervalTest {
             csv.last()[5] = zero_pages;
             csv.last()[6] = dirty_pages;
 
+            stack_logf("Resident pages: %d\n", resident_pages);
+            stack_logf("Zero pages: %d\n", zero_pages);
+            stack_logf("Dirty pages: %d\n", dirty_pages);
+
             // if (result != Z_OK) {
             //     stack_logf("Error: Unable to compress data\n");
             //     exit(1);
