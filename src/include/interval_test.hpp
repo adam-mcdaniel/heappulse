@@ -549,10 +549,10 @@ public:
         // Print allocation bookkeeping size
         stack_logf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
         stack_logf("Allocation-sites: %d\n", allocation_sites.num_entries());
+        hook_lock.unlock();
         
         schedule();
         
-        hook_lock.unlock();
         stack_printf("Done with update\n");
     }
 
