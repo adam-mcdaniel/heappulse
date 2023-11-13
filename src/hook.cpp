@@ -229,6 +229,7 @@ public:
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
+        hook_lock.lock();
         try {
             if (its.contains(addr)) {
                 stack_printf("Pre free\n");
@@ -236,11 +237,9 @@ public:
                 // if (IS_PROTECTED) {
                 //     return;
                 // }
-                hook_lock.lock();
                 stack_logf("Pre free lock\n");
                 its.invalidate(addr);
                 stack_printf("Pre free invalidate\n");
-                hook_lock.unlock();
                 // compression_test();
                 stack_printf("Pre free unlock\n");
             }
@@ -257,6 +256,7 @@ public:
             stack_printf("Pre free unknown exception\n");
         }
         // std::cout << "FrTeeing " << addr << std::endl;
+        hook_lock.unlock();
         
         // record_free(addr);
         // compression_test();
