@@ -204,6 +204,12 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
                                   soft_dirty));
         present_pages.set(j++, present);
         n_resident_pages++;
+        if (j >= Size) {
+            break;
+        }
+        if (n_resident_pages >= size_in_pages) {
+            break;
+        }
         assert(n_resident_pages <= size_in_pages);
         assert(n_resident_pages == present_pages.count());
     }

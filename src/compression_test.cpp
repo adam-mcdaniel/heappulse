@@ -39,32 +39,32 @@ class CompressionTest : public IntervalTest {
 
         for (size_t i=0; i<allocations.size(); i++) {
             Allocation alloc = allocations[i];
-            if (alloc.size > MAX_COMPRESSED_SIZE / 2) {
-                stack_logf("Skipping: Unable to compress data\n");
-                continue;
-            }
-            alloc.protect();
+            // if (alloc.size > MAX_COMPRESSED_SIZE / 2) {
+            //     stack_logf("Skipping: Unable to compress data\n");
+            //     continue;
+            // }
+            // alloc.protect();
 
-            alloc.log();
-            stack_logf("Protected\n");
+            // alloc.log();
+            // stack_logf("Protected\n");
 
-            for (size_t i=0; i<alloc.size; i++) {
-                stack_logf("%d ", ((uint8_t*)alloc.ptr)[i]);
-            }
-            stack_logf("\n");
+            // for (size_t i=0; i<alloc.size; i++) {
+            //     stack_logf("%d ", ((uint8_t*)alloc.ptr)[i]);
+            // }
+            // stack_logf("\n");
             size_t compressed_size = compressBound(alloc.size);
 
 
-            memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
-            alloc.unprotect();
+            // memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
+            // alloc.unprotect();
 
-            stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
-            if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
-                stack_logf("Skipping: Unable to compress data\n");
-                continue;
-            }
-            int result = compress(compressed_data, &compressed_size, buffer, alloc.size);
-            stack_logf("result: %d\n", result);
+            // stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
+            // if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
+            //     stack_logf("Skipping: Unable to compress data\n");
+            //     continue;
+            // }
+            // int result = compress(compressed_data, &compressed_size, buffer, alloc.size);
+            // stack_logf("result: %d\n", result);
 
             csv.new_row();
             csv.last()[0] = interval_count;
@@ -92,12 +92,12 @@ class CompressionTest : public IntervalTest {
             csv.last()[5] = zero_pages;
             csv.last()[6] = dirty_pages;
 
-            if (result != Z_OK) {
-                stack_logf("Error: Unable to compress data\n");
-                exit(1);
-            } else {
-                stack_logf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
-            }
+            // if (result != Z_OK) {
+            //     stack_logf("Error: Unable to compress data\n");
+            //     exit(1);
+            // } else {
+            //     stack_logf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
+            // }
         }
         csv.write(file);
 
