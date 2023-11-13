@@ -620,18 +620,19 @@ public:
 
     void invalidate(void *ptr) {
         stack_printf("IntervalTestSuite::invalidate\n");
-        hook_lock.lock();
+        stack_printf("Invalidating %X\n", ptr);
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
+                    hook_lock.lock();
                     site.allocations.remove(ptr);
                     allocation_sites.put(site.return_address, site);
+                    hook_lock.unlock();
                 }
             }
         }
-        hook_lock.unlock();
 
         schedule();
         stack_printf("Leaving IntervalTestSuite::invalidate\n");
@@ -644,6 +645,8 @@ private:
     void schedule() {
         stack_printf("Entering IntervalTestSuite::schedule\n");
         schedule_lock.lock();
+        hook_lock.lock();
+
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_printf("Starting test\n");
 
@@ -660,6 +663,7 @@ private:
             stack_printf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         schedule_lock.unlock();
+        hook_lock.unlock();
         stack_printf("Leaving IntervalTestSuite::schedule\n");
     }
 
