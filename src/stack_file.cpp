@@ -11,15 +11,15 @@ template<size_t Size>
 StackFile::StackFile(StackString<Size> filename, Mode mode) : filename(filename), position(0) {
     // bk_printf("Opening file %s\n", filename.c_str());
     switch (mode) {
-        case Mode::READ:
-            fd = open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0777);
-            break;
-        case Mode::WRITE:
-            fd = open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0777);
-            break;
-        case Mode::APPEND:
-            fd = open(filename.c_str(), O_RDWR | O_CREAT | O_APPEND, 0777);
-            break;
+    case Mode::READ:
+        fd = open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0777);
+        break;
+    case Mode::WRITE:
+        fd = open(filename.c_str(), O_RDWR | O_CREAT | O_TRUNC, 0777);
+        break;
+    case Mode::APPEND:
+        fd = open(filename.c_str(), O_RDWR | O_CREAT | O_APPEND, 0777);
+        break;
     }
     if (fd == -1) {
         throw std::runtime_error("Could not open file");
@@ -53,6 +53,7 @@ StackString<Size> StackFile::read() {
     }
 
     position += bytes_read;
+    buf[bytes_read] = '\0';
 
     return StackString<Size>(buf);
 }

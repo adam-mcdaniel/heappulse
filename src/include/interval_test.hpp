@@ -114,10 +114,10 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
     uint64_t size_in_pages = count_virtual_pages(addr, size_in_bytes);
     size_in_bytes = size_in_pages * PAGE_SIZE;
     // Align the address to the page size
-    addr = (void*)((uint64_t)addr & ~(PAGE_SIZE - 1));
+    addr = (void*)((uint64_t)addr / PAGE_SIZE * PAGE_SIZE);
     
     char filename[1024] = "";
-    stack_sprintf<256>(filename, "/proc/%d/pagemap", pid);
+    stack_sprintf<128>(filename, "/proc/%d/pagemap", pid);
     stack_logf("Filename: %s\n", filename);
 
     int fd = open(filename, O_RDONLY);
@@ -299,8 +299,8 @@ void setup_protection_handler()
     }
 }
 
-const int TRACKED_ALLOCATIONS_PER_SITE = 10000;
-const int TRACKED_ALLOCATION_SITES = 500;
+const int TRACKED_ALLOCATIONS_PER_SITE = 1000;
+const int TRACKED_ALLOCATION_SITES = 1000;
 const int TOTAL_TRACKED_ALLOCATIONS = TRACKED_ALLOCATIONS_PER_SITE * TRACKED_ALLOCATION_SITES;
 
 static int PKEY = -1;
@@ -486,7 +486,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 10000.0;
+    double period_milliseconds = 2000.0;
 };
 
 class IntervalTest {
@@ -543,8 +543,12 @@ public:
             site = {return_address, StackMap<void*, Allocation, TRACKED_ALLOCATIONS_PER_SITE>()};
         }
 
+        stack_printf("Allocation at %X, size: %d\n", ptr, size);
+        stack_printf("Return address: %X\n", return_address);
+        stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+        stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
+
         Allocation allocation = {ptr, size, Backtrace::capture()};
-        stack_printf("Allocation: %p, size: %X\n", ptr, size);
         try {
             site.allocations.put(ptr, allocation);
         } catch (const std::exception& e) {
@@ -557,6 +561,10 @@ public:
         try {
             allocation_sites.put(return_address, site);
         } catch (const std::exception& e) {
+            // stack_printf("Unable to add allocation site\n");
+            // hook_lock.unlock();
+            // schedule();
+            // return;
             stack_printf("Unable to add allocation site\n");
             // Evict the allocation site with the least number of allocations
             uintptr_t min_return_address = 0;
@@ -579,21 +587,18 @@ public:
                 return;
             }
             stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
-            allocation_sites.remove(min_return_address);
-            try {
-                allocation_sites.put(return_address, site);
-            } catch (const std::exception& e) {
-                stack_printf("Unable to add allocation site\n");
-                hook_lock.unlock();
-                schedule();
-                return;
+            if (allocation_sites.has(min_return_address)) {
+                allocation_sites.remove(min_return_address);
+                try {
+                    allocation_sites.put(return_address, site);
+                } catch (const std::exception& e) {
+                    stack_printf("Unable to add allocation site\n");
+                    hook_lock.unlock();
+                    schedule();
+                    return;
+                }
             }
         }
-        stack_printf("Allocation at %X, size: %X\n", ptr, size);
-        stack_printf("Return address: %X\n", return_address);
-        // Print allocation bookkeeping size
-        stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-        stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
         hook_lock.unlock();
         
         schedule();
@@ -648,6 +653,8 @@ private:
             timer.reset();
             stack_logf("Finished interval\n");
             stack_printf("Done with test\n");
+        } else {
+            stack_printf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         schedule_lock.unlock();
         stack_printf("Leaving IntervalTestSuite::schedule\n");

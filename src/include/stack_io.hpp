@@ -54,12 +54,14 @@ void stack_sprintf(char *buf, const char* format, Args... args) {
 
 void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
-    stack_fprintf(log_file, "%s", str);
+    // stack_fprintf(log_file, "%s", str);
+    stack_printf(str);
 }
 
 
 template <typename... Args>
 void stack_logf(const char* format, Args... args) {
     // StackString<1 << 14>::format(format, args...).print();
-    stack_fprintf(log_file, format, args...);
+    // stack_fprintf(log_file, format, args...);
+    stack_printf(format, args...);
 }

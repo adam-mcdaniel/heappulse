@@ -3,7 +3,7 @@
 #include <zlib.h>
 
 // Path: src/compression_test.cpp
-const int MAX_COMPRESSED_SIZE = 0x50000;
+const int MAX_COMPRESSED_SIZE = 0x100000;
 const int MAX_PAGES = 0x10000;
 static uint8_t buffer[MAX_COMPRESSED_SIZE];
 

@@ -42,8 +42,8 @@ public:
     template <typename T>
     T reduce(std::function<T(const KeyType&, const ValueType&, T)> func, T initial) const;
 
-    void print() const;
-    void print_stats() const;
+    // void print() const;
+    // void print_stats() const;
 
     struct Entry {
         KeyType key;

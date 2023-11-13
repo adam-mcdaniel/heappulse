@@ -40,12 +40,9 @@ void StackMap<KeyType, ValueType, Size>::put(const KeyType& key, const ValueType
 template <typename KeyType, typename ValueType, size_t Size>
 ValueType StackMap<KeyType, ValueType, Size>::get(const KeyType& key) const {
     std::size_t index = hash(key);
-    uint64_t i = 0;
     while (hashtable[index].occupied) {
         if (hashtable[index].key == key) {
             return hashtable[index].value;
-        } else if (i++ >= Size) {
-            throw std::out_of_range("Hash table full");
         }
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
@@ -139,35 +136,36 @@ void StackMap<KeyType, ValueType, Size>::map(std::function<void(const KeyType&, 
     }
 }
 
-template <typename KeyType, typename ValueType, size_t Size>
-void StackMap<KeyType, ValueType, Size>::print() const {
-    for (int i=0; i<Size; i++) {
-        if (hashtable[i].occupied) {
-            std::cout << hashtable[i].key << ": " << hashtable[i].value << std::endl;
-        }
-    }
-}
+// template <typename KeyType, typename ValueType, size_t Size>
+// void StackMap<KeyType, ValueType, Size>::print() const {
+//     for (int i=0; i<Size; i++) {
+//         if (hashtable[i].occupied) {
+//             stack_printf("%s: %s\n", hashtable[i].key.c_str(), hashtable[i].value.c_str());
+//             // std::cout << hashtable[i].key << ": " << hashtable[i].value << std::endl;
+//         }
+//     }
+// }
 
 
-template <typename KeyType, typename ValueType, size_t Size>
-void StackMap<KeyType, ValueType, Size>::print_stats() const {
-    size_t num_collisions = 0;
-    size_t max_collisions = 0;
-    for (size_t i=0; i<Size; i++) {
-        if (hashtable[i].occupied) {
-            size_t collisions = 0;
-            size_t index = i;
-            while (hashtable[index].occupied) {
-                collisions++;
-                index = (index + 1) % Size;
-            }
-            num_collisions += collisions;
-            if (collisions > max_collisions) {
-                max_collisions = collisions;
-            }
-        }
-    }
-    std::cout << "Number of entries: " << entries << std::endl;
-    std::cout << "Number of collisions: " << num_collisions << std::endl;
-    std::cout << "Max collisions for any given key: " << max_collisions << std::endl;
-}
+// template <typename KeyType, typename ValueType, size_t Size>
+// void StackMap<KeyType, ValueType, Size>::print_stats() const {
+//     size_t num_collisions = 0;
+//     size_t max_collisions = 0;
+//     for (size_t i=0; i<Size; i++) {
+//         if (hashtable[i].occupied) {
+//             size_t collisions = 0;
+//             size_t index = i;
+//             while (hashtable[index].occupied) {
+//                 collisions++;
+//                 index = (index + 1) % Size;
+//             }
+//             num_collisions += collisions;
+//             if (collisions > max_collisions) {
+//                 max_collisions = collisions;
+//             }
+//         }
+//     }
+//     std::cout << "Number of entries: " << entries << std::endl;
+//     std::cout << "Number of collisions: " << num_collisions << std::endl;
+//     std::cout << "Max collisions for any given key: " << max_collisions << std::endl;
+// }
