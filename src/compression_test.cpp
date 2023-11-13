@@ -76,16 +76,16 @@ class CompressionTest : public IntervalTest {
             uint64_t resident_pages = 0;
             uint64_t zero_pages = 0;
             uint64_t dirty_pages = 0;
-            for (size_t i=0; i<pages.size(); i++) {
-                if (pages[i].is_zero()) {
+            for (size_t j=0; j<pages.size(); j++) {
+                if (pages[j].is_zero()) {
                     zero_pages++;
                 }
 
-                if (pages[i].is_resident()) {
+                if (pages[j].is_resident()) {
                     resident_pages++;
                 }
 
-                if (pages[i].is_dirty()) {
+                if (pages[j].is_dirty()) {
                     dirty_pages++;
                 }
             }
