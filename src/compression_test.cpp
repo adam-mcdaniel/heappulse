@@ -9,7 +9,7 @@ static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
     uint8_t compressed_data[MAX_COMPRESSED_SIZE];
-    CSV<7, 50000> csv;
+    CSV<8, 50000> csv;
     StackFile file;
     size_t interval_count = 0;
 

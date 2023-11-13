@@ -147,10 +147,16 @@ public:
         // }
         try {
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
-        } catch (std::exception& e) {
-            stack_printf("Post mmap exception\n");
+        } catch (std::out_of_range& e) {
+            stack_printf("Post mmap out of range\n");
             stack_printf(e.what());
             stack_printf("\n");
+        } catch (std::runtime_error& e) {
+            stack_printf("Post mmap runtime error\n");
+            stack_printf(e.what());
+            stack_printf("\n");
+        } catch (...) {
+            stack_printf("Post mmap unknown exception\n");
         }
         // // #ifdef RANDOMIZE_ALLOCATION_DATA
         // // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
@@ -187,10 +193,16 @@ public:
         stack_logf("Post alloc pre update\n");
         try {
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
-        } catch (std::exception& e) {
-            stack_printf("Post alloc exception\n");
+        } catch (std::out_of_range& e) {
+            stack_printf("Post alloc out of range\n");
             stack_printf(e.what());
             stack_printf("\n");
+        } catch (std::runtime_error& e) {
+            stack_printf("Post alloc runtime error\n");
+            stack_printf(e.what());
+            stack_printf("\n");
+        } catch (...) {
+            stack_printf("Post alloc unknown exception\n");
         }
         stack_logf("Post alloc update\n");
         // // bool protection = IS_PROTECTED;
@@ -214,24 +226,31 @@ public:
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
-        if (its.contains(addr)) {
-            stack_logf("Pre free\n");
-            stack_logf("Pre free contains\n");
-            // if (IS_PROTECTED) {
-            //     return;
-            // }
-            hook_lock.lock();
-            stack_logf("Pre free lock\n");
-            try {
-                its.invalidate(addr);
-            } catch (std::exception& e) {
-                stack_printf("Pre free exception\n");
-                stack_printf(e.what());
-                stack_printf("\n");
+        try {
+            if (its.contains(addr)) {
+                stack_logf("Pre free\n");
+                stack_logf("Pre free contains\n");
+                // if (IS_PROTECTED) {
+                //     return;
+                // }
+                hook_lock.lock();
+                stack_logf("Pre free lock\n");
+                    its.invalidate(addr);
+                hook_lock.unlock();
+                // compression_test();
+                stack_logf("Pre free unlock\n");
             }
-            hook_lock.unlock();
-            // compression_test();
-            stack_logf("Pre free unlock\n");
+
+        } catch (std::out_of_range& e) {
+            stack_printf("Pre free out of range\n");
+            stack_printf(e.what());
+            stack_printf("\n");
+        } catch (std::runtime_error& e) {
+            stack_printf("Pre free runtime error\n");
+            stack_printf(e.what());
+            stack_printf("\n");
+        } catch (...) {
+            stack_printf("Pre free unknown exception\n");
         }
         // std::cout << "FrTeeing " << addr << std::endl;
         
