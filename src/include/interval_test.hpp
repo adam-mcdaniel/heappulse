@@ -550,6 +550,7 @@ public:
         } catch (const std::exception& e) {
             stack_printf("Unable to add allocation to site\n");
             hook_lock.unlock();
+            schedule();
             return;
         }
 
@@ -584,6 +585,7 @@ public:
             } catch (const std::exception& e) {
                 stack_printf("Unable to add allocation site\n");
                 hook_lock.unlock();
+                schedule();
                 return;
             }
         }
