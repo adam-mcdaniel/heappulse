@@ -38,6 +38,7 @@ class CompressionTest : public IntervalTest {
 
         for (size_t i=0; i<allocations.size(); i++) {
             Allocation alloc = allocations[i];
+            alloc.protect();
 
             alloc.log();
             stack_logf("Protected\n");
@@ -55,6 +56,7 @@ class CompressionTest : public IntervalTest {
 
             uint8_t buffer[MAX_COMPRESSED_SIZE];
             memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
+            alloc.unprotect();
 
             stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
             if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {

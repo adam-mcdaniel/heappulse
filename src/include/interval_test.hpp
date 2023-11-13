@@ -224,10 +224,12 @@ bool is_working_thread() {
 
 void become_working_thread() {
     WORKING_THREAD_ID = (uint64_t)pthread_self();
+    stack_logf("Became working thread with TID=%d\n", WORKING_THREAD_ID);
     IS_PROTECTED = true;
 }
 
 void no_longer_working_thread() {
+    stack_logf("TID=%d is no longer working thread\n", WORKING_THREAD_ID);
     WORKING_THREAD_ID = 0;
     IS_PROTECTED = false;
 }
@@ -240,7 +242,7 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
     stack_logf("[handler] Got SIGSEGV at address: 0x%X\n", (uint64_t)si->si_addr);
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
-    char buf[1024];
+    // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
     // write(STDOUT_FILENO, buf, strlen(buf));
 
@@ -478,7 +480,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 1000.0;
+    double period_milliseconds = 10000.0;
 };
 
 class IntervalTest {
@@ -581,25 +583,28 @@ public:
     }
 private:
     void schedule() {
-        stack_logf("IntervalTestSuite::schedule\n");
-
         schedule_lock.lock();
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
+            stack_logf("Starting interval\n");
             timer.reset();
             stack_logf("Getting allocations\n");
             get_allocs();
             stack_logf("Starting interval\n");
             interval();
+            timer.reset();
+            stack_logf("Finished interval\n");
         }
         schedule_lock.unlock();
     }
 
     void interval() {
         stack_logf("IntervalTestSuite::interval\n");
+        become_working_thread();
         for (size_t i=0; i<tests.size(); i++) {
             stack_logf("Running interval for test %d\n", i);
             tests[i]->interval(allocation_sites, allocations);
         }
+        no_longer_working_thread();
         stack_logf("Finished interval\n");
     }
 
