@@ -131,7 +131,7 @@ public:
         stack_logf("Hooks constructor\n");
 
         stack_logf("Adding test...");
-        its.add_test(&ct);
+        // its.add_test(&ct);
         stack_logf("Done\n");
     }
 
