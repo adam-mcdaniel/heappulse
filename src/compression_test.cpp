@@ -45,7 +45,6 @@ class CompressionTest : public IntervalTest {
             //     stack_logf("Skipping: Unable to compress data\n");
             //     continue;
             // }
-            // alloc.protect();
 
             // alloc.log();
             // stack_logf("Protected\n");
@@ -61,8 +60,9 @@ class CompressionTest : public IntervalTest {
                 continue;
             }
 
+            alloc.protect();
             memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
-            // alloc.unprotect();
+            alloc.unprotect();
 
             // stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
             // int result = compress(compressed_data, &compressed_size, buffer, alloc.size);

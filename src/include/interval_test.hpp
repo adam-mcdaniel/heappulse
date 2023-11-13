@@ -114,10 +114,10 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
     uint64_t size_in_pages = count_virtual_pages(addr, size_in_bytes);
     size_in_bytes = size_in_pages * PAGE_SIZE;
     // Align the address to the page size
-    addr = (void*)((uint64_t)addr / PAGE_SIZE * PAGE_SIZE);
+    addr = (void*)((uint64_t)addr & ~(PAGE_SIZE - 1));
     
     char filename[1024] = "";
-    stack_sprintf<128>(filename, "/proc/%d/pagemap", pid);
+    stack_sprintf<256>(filename, "/proc/%d/pagemap", pid);
     stack_logf("Filename: %s\n", filename);
 
     int fd = open(filename, O_RDONLY);
