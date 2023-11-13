@@ -229,10 +229,10 @@ public:
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
+        stack_printf("Pre free\n");
         hook_lock.lock();
         try {
             if (its.contains(addr)) {
-                stack_printf("Pre free\n");
                 stack_logf("Pre free contains\n");
                 // if (IS_PROTECTED) {
                 //     return;
