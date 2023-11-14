@@ -315,11 +315,13 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // if (!bk_lock.try_lock()) return;
     // stack_printf("Entering hook\n");
     // // IS_PROTECTED = false;
-    bk_lock.lock();
+    // bk_lock.lock();
+    std::lock_guard<std::mutex> lock(bk_lock);
+
     stack_printf("Entering hook\n");
     hooks.pre_free(heap, addr);
     stack_printf("Leaving hook\n");
-    bk_lock.unlock();
+    // bk_lock.unlock();
 }
 
 extern "C"

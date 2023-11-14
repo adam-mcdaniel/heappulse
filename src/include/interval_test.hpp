@@ -524,11 +524,12 @@ public:
     }
 
     void add_test(IntervalTest *test) {
-        hook_lock.lock();
+        // hook_lock.lock();
+        std::lock_guard<std::mutex> lock(hook_lock);
         test->setup();
         tests.push(test);
         assert(tests.size() > 0);
-        hook_lock.unlock();
+        // hook_lock.unlock();
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
@@ -537,10 +538,12 @@ public:
         }
         
         stack_printf("IntervalTestSuite::update\n");
-        if (!hook_lock.try_lock()) {
-            stack_printf("Unable to lock hook\n");
-            return;
-        }
+        std::lock_guard<std::mutex> lock(hook_lock);
+
+        // if (!hook_lock.try_lock()) {
+        //     stack_printf("Unable to lock hook\n");
+        //     return;
+        // }
 
         AllocationSite site;
         if (allocation_sites.has(return_address)) {
@@ -559,7 +562,7 @@ public:
             site.allocations.put(ptr, allocation);
         } catch (const std::exception& e) {
             stack_printf("Unable to add allocation to site\n");
-            hook_lock.unlock();
+            // hook_lock.unlock();
             schedule();
             return;
         }
@@ -589,7 +592,7 @@ public:
 
             if (min_return_address == 0) {
                 stack_printf("Unable to evict allocation site\n");
-                hook_lock.unlock();
+                // hook_lock.unlock();
                 return;
             }
             stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
@@ -599,13 +602,13 @@ public:
                     allocation_sites.put(return_address, site);
                 } catch (const std::exception& e) {
                     stack_printf("Unable to add allocation site\n");
-                    hook_lock.unlock();
+                    // hook_lock.unlock();
                     schedule();
                     return;
                 }
             }
         }
-        hook_lock.unlock();
+        // hook_lock.unlock();
         
         schedule();
         
@@ -628,6 +631,7 @@ public:
         stack_printf("IntervalTestSuite::invalidate\n");
         stack_printf("Invalidating %X\n", ptr);
         allocations.clear();
+        
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
@@ -651,8 +655,10 @@ private:
     void schedule() {
         stack_printf("Entering IntervalTestSuite::schedule\n");
         IS_IN_TEST = true;
-        schedule_lock.lock();
-        hook_lock.lock();
+        std::lock_guard<std::mutex> lock(schedule_lock);
+        std::lock_guard<std::mutex> lock2(hook_lock);
+        // schedule_lock.lock();
+        // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_printf("Starting test\n");
@@ -669,8 +675,8 @@ private:
         } else {
             stack_printf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
-        schedule_lock.unlock();
-        hook_lock.unlock();
+        // schedule_lock.unlock();
+        // hook_lock.unlock();
         stack_printf("Leaving IntervalTestSuite::schedule\n");
         IS_IN_TEST = false;
     }
@@ -704,7 +710,8 @@ private:
     }
 
     void get_allocs() {
-        hook_lock.lock();
+        const std::lock_guard<std::mutex> lock(hook_lock);
+        // hook_lock.lock();
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
@@ -714,7 +721,7 @@ private:
         allocations.sort_by([](const Allocation& a, const Allocation& b) {
             return (uintptr_t)a.ptr < (uintptr_t)b.ptr;
         });
-        hook_lock.unlock();
+        // hook_lock.unlock();
     }
 
     Timer timer;
@@ -725,8 +732,8 @@ private:
 
 
     // This is used to protect the main thread while we're compressing
-    std::mutex hook_lock;
-    std::mutex schedule_lock;
+    static std::mutex hook_lock;
+    static std::mutex schedule_lock;
 
     bool is_setup = false;
 };
