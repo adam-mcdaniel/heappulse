@@ -5,7 +5,7 @@
 #include <bkmalloc.h>
 
 // Whether to print debug messages
-// #define DEBUG true
+#define DEBUG true
 // The log file to write to
 #define LOG_FILE "log.txt"
 
