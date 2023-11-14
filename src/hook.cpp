@@ -309,17 +309,17 @@ extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // static std::mutex free_lock;
     // std::lock_guard<std::mutex> lock(free_lock);
-    std::lock_guard<std::mutex> lock2(bk_lock);
+    // std::lock_guard<std::mutex> lock2(bk_lock);
 
     // return;
     // if (!bk_lock.try_lock()) return;
     // stack_debugf("Entering hook\n");
     // // IS_PROTECTED = false;
-    // bk_lock.lock();
+    bk_lock.lock();
     stack_infof("Entering hook\n");
     hooks.pre_free(heap, addr);
     stack_infof("Leaving hook\n");
-    // bk_lock.unlock();
+    bk_lock.unlock();
 }
 
 extern "C"
