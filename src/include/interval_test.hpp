@@ -702,15 +702,15 @@ private:
             timer.reset();
             stack_logf("Finished interval\n");
             stack_debugf("Done with test\n");
+            if (IS_IN_TEST) {
+                IS_IN_TEST = false;
+            }
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         // schedule_lock.unlock();
         // hook_lock.unlock();
         stack_debugf("IntervalTestSuite::schedule\n");
-        if (IS_IN_TEST) {
-            IS_IN_TEST = false;
-        }
     }
 
     void interval() {
