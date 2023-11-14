@@ -295,12 +295,15 @@ static std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    static std::mutex alloc_lock;
+    std::lock_guard<std::mutex> lock(alloc_lock);
     // return;
     // bk_printf("Entering hook\n");
     if (!bk_lock.try_lock()) {
         stack_printf("Failed to lock\n");
         return;
     }
+    // bk_lock.lock();
     stack_printf("Entering hook\n");
 
     // stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
@@ -312,23 +315,30 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+    static std::mutex free_lock;
+    std::lock_guard<std::mutex> lock(free_lock);
+    std::lock_guard<std::mutex> lock2(bk_lock);
+
     // return;
     // if (!bk_lock.try_lock()) return;
     // stack_printf("Entering hook\n");
     // // IS_PROTECTED = false;
-    bk_lock.lock();
+    // bk_lock.lock();
     stack_printf("Entering hook\n");
     hooks.pre_free(heap, addr);
     stack_printf("Leaving hook\n");
-    bk_lock.unlock();
+    // bk_lock.unlock();
 }
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
-    // return;
+    static std::mutex alloc_lock;
+    std::lock_guard<std::mutex> lock(alloc_lock);
+
 
     // stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
+    // bk_lock.lock();
     if (!bk_lock.try_lock()) {
         stack_printf("Failed to lock\n");
         return;

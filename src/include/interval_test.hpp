@@ -649,7 +649,7 @@ public:
     }
 private:
     void schedule() {
-        stack_printf("Entering IntervalTestSuite::schedule\n");
+        stack_printf("IntervalTestSuite::schedule\n");
         IS_IN_TEST = true;
         // schedule_lock.lock();
         // hook_lock.lock();
@@ -671,7 +671,7 @@ private:
         }
         // schedule_lock.unlock();
         // hook_lock.unlock();
-        stack_printf("Leaving IntervalTestSuite::schedule\n");
+        stack_printf("IntervalTestSuite::schedule\n");
         IS_IN_TEST = false;
     }
 
