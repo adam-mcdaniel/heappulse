@@ -513,8 +513,6 @@ public:
 };
 
 
-static bool IS_IN_TEST = false;
-
 class IntervalTestSuite {
     StackVec<IntervalTest*, 10> tests;
     void heart_beat() {
@@ -547,7 +545,7 @@ public:
     void update(void *ptr, size_t size, uintptr_t return_address) {
         heart_beat();
 
-        if (IS_PROTECTED || IS_IN_TEST) {
+        if (IS_PROTECTED) {
             return;
         }
         
@@ -693,10 +691,6 @@ private:
         // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
-            if (IS_IN_TEST) {
-                return;
-            }
-            IS_IN_TEST = true;
             stack_warnf("Starting test\n");
 
             stack_logf("Starting interval\n");
@@ -707,10 +701,7 @@ private:
             interval();
             timer.reset();
             stack_logf("Finished interval\n");
-            if (IS_IN_TEST) {
-                stack_warnf("Done with test\n");
-                IS_IN_TEST = false;
-            }
+            stack_warnf("Done with test\n");
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
