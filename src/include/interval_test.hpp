@@ -744,9 +744,11 @@ private:
         std::lock_guard<std::mutex> lock(interval_lock);
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
-            stack_logf("Running interval for test %d\n", i);
             if (!tests[i]->has_quit()) {
+                stack_logf("Running interval for test %d\n", i);
                 tests[i]->interval(allocation_sites, allocations);
+            } else {
+                stack_warnf("Test %d has quit\n", i);
             }
         }
         // hook_lock.unlock();
