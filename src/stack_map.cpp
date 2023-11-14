@@ -26,7 +26,7 @@ void StackMap<KeyType, ValueType, Size>::put(const KeyType& key, const ValueType
             hashtable[index].value = value;  // Update value if key already exists
             return;
         } else if (i++ > Size * 2) {
-            throw std::out_of_range("Hash table full");
+            return;  // Map is full
         }
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
@@ -47,7 +47,8 @@ ValueType StackMap<KeyType, ValueType, Size>::get(const KeyType& key) const {
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
     // Key not found
-    throw std::out_of_range("Key not found");
+    // throw std::out_of_range("Key not found");
+    return ValueType();
 }
 
 template <typename KeyType, typename ValueType, size_t Size>
@@ -62,7 +63,7 @@ void StackMap<KeyType, ValueType, Size>::remove(const KeyType& key) {
         index = (index + 1) % Size;  // Linear probing for collision resolution
     }
     // Key not found
-    throw std::out_of_range("Key not found");
+    // throw std::out_of_range("Key not found");
 }
 
 template <typename KeyType, typename ValueType, size_t Size>

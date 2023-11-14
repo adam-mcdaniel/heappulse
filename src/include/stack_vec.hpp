@@ -12,7 +12,8 @@ private:
 public:
     void push(const ValueType& value) {
         if (elements >= capacity) {
-            throw std::out_of_range("StackVec is full");
+            // throw std::out_of_range("StackVec is full");
+            return;
         }
         data[elements++] = value;
     }
@@ -38,21 +39,24 @@ public:
 
     ValueType pop() {
         if (elements == 0) {
-            throw std::out_of_range("StackVec is empty");
+            // throw std::out_of_range("StackVec is empty");
+            return ValueType();
         }
         return data[--elements];
     }
 
     ValueType& operator[](size_t index) {
         if (index >= elements) {
-            throw std::out_of_range("Key not found");
+            // throw std::out_of_range("Key not found");
+            return data[max_size() - 1];
         }
         return data[index];
     }
 
     const ValueType& operator[](size_t index) const {
         if (index >= elements) {
-            throw std::out_of_range("Key not found");
+            // throw std::out_of_range("Key not found");
+            return ValueType();
         }
         return data[index];
     }
