@@ -706,6 +706,7 @@ private:
                 IS_IN_TEST = false;
             }
         } else {
+            stack_warnf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         // schedule_lock.unlock();
