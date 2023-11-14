@@ -716,10 +716,12 @@ private:
     void interval() {
         stack_logf("IntervalTestSuite::interval\n");
         become_working_thread();
+        hook_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
             stack_logf("Running interval for test %d\n", i);
             tests[i]->interval(allocation_sites, allocations);
         }
+        hook_lock.unlock();
         no_longer_working_thread();
         stack_logf("Finished interval\n");
     }
@@ -763,7 +765,7 @@ private:
 
 
     // This is used to protect the main thread while we're compressing
-    // static std::mutex hook_lock;
+    static std::mutex hook_lock;
     // static std::mutex schedule_lock;
 
     bool is_setup = false;
