@@ -549,6 +549,7 @@ public:
             return;
         }
         
+        schedule();
         stack_debugf("IntervalTestSuite::update\n");
         // if (!hook_lock.try_lock()) {
         //     stack_debugf("Unable to lock hook\n");
@@ -641,9 +642,7 @@ public:
         //     // allocation_sites.put(return_address, site);
         // }
         // hook_lock.unlock();
-        
-        schedule();
-        
+                
         stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
