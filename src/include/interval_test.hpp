@@ -517,6 +517,12 @@ static bool IS_IN_TEST = false;
 
 class IntervalTestSuite {
     StackVec<IntervalTest*, 10> tests;
+    void heart_beat() {
+        if (second_timer.has_elapsed(1000)) {
+            stack_infof("Heart beat (1 second has elapsed)\n");
+            second_timer.reset();
+        }
+    }
 
 public:
     IntervalTestSuite() {
@@ -531,7 +537,10 @@ public:
         // hook_lock.unlock();
     }
 
+
     void update(void *ptr, size_t size, uintptr_t return_address) {
+        heart_beat();
+
         if (IS_PROTECTED || IS_IN_TEST) {
             return;
         }
@@ -647,6 +656,7 @@ public:
     }
 
     void invalidate(void *ptr) {
+        heart_beat();
         stack_debugf("IntervalTestSuite::invalidate\n");
         stack_debugf("Invalidating %X\n", ptr);
         allocations.clear();
@@ -671,6 +681,7 @@ public:
     }
 private:
     void schedule() {
+        heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
         if (IS_IN_TEST) {
             return;
@@ -744,7 +755,7 @@ private:
         // hook_lock.unlock();
     }
 
-    Timer timer;
+    Timer timer, second_timer;
     IntervalTestConfig config;
 
     StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> allocation_sites;
