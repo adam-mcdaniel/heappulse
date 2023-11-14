@@ -683,15 +683,15 @@ private:
     void schedule() {
         heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
-        if (IS_IN_TEST) {
-            return;
-        }
-        IS_IN_TEST = true;
         // schedule_lock.lock();
         // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
-            stack_debugf("Starting test\n");
+            if (IS_IN_TEST) {
+                return;
+            }
+            IS_IN_TEST = true;
+            stack_warnf("Starting test\n");
 
             stack_logf("Starting interval\n");
             timer.reset();
@@ -701,7 +701,7 @@ private:
             interval();
             timer.reset();
             stack_logf("Finished interval\n");
-            stack_debugf("Done with test\n");
+            stack_warnf("Done with test\n");
             if (IS_IN_TEST) {
                 IS_IN_TEST = false;
             }
