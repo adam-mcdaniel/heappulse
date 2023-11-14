@@ -95,9 +95,9 @@ class CompressionTest : public IntervalTest {
             csv.last()[6] = zero_pages;
             csv.last()[7] = dirty_pages;
 
-            stack_debugf("Resident pages: %d\n", resident_pages);
-            stack_debugf("Zero pages: %d\n", zero_pages);
-            stack_debugf("Dirty pages: %d\n", dirty_pages);
+            stack_infof("Resident pages: %d\n", resident_pages);
+            stack_infof("Zero pages: %d\n", zero_pages);
+            stack_infof("Dirty pages: %d\n", dirty_pages);
 
             // if (result != Z_OK) {
             //     stack_debugf("Error: Unable to compress data\n");
@@ -106,9 +106,9 @@ class CompressionTest : public IntervalTest {
             //     stack_debugf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
             // }
         }
-        stack_debugf("Tracked %d allocations\n", i);
+        stack_infof("Tracked %d allocations\n", i);
         csv.write(file);
 
-        stack_debugf("Interval %d done\n", interval_count);
+        stack_infof("Interval %d done\n", interval_count);
     }
 };
