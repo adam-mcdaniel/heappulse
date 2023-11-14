@@ -149,15 +149,15 @@ public:
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
             stack_debugf("Post mmap update\n");
         } catch (std::out_of_range& e) {
-            stack_debugf("Post mmap out of range exception\n");
+            stack_warnf("Post mmap out of range exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_debugf("Post mmap runtime error exception\n");
+            stack_warnf("Post mmap runtime error exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (...) {
-            stack_debugf("Post mmap unknown exception\n");
+            stack_warnf("Post mmap unknown exception\n");
         }
         // // #ifdef RANDOMIZE_ALLOCATION_DATA
         // // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
@@ -197,15 +197,15 @@ public:
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             stack_debugf("Post alloc update\n");
         } catch (std::out_of_range& e) {
-            stack_debugf("Post alloc out of range exception\n");
+            stack_warnf("Post alloc out of range exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_debugf("Post alloc runtime error exception\n");
+            stack_warnf("Post alloc runtime error exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (...) {
-            stack_debugf("Post alloc unknown exception exception\n");
+            stack_warnf("Post alloc unknown exception exception\n");
         }
         // // bool protection = IS_PROTECTED;
         // // IS_PROTECTED = true;
@@ -237,15 +237,15 @@ public:
                 stack_debugf("Pre free does not contain %p\n", addr);
             }
         } catch (std::out_of_range& e) {
-            stack_debugf("Pre free out of range exception\n");
+            stack_warnf("Pre free out of range exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_debugf("Pre free runtime error exception\n");
+            stack_warnf("Pre free runtime error exception\n");
             stack_debugf(e.what());
             stack_debugf("\n");
         } catch (...) {
-            stack_debugf("Pre free unknown exception\n");
+            stack_warnf("Pre free unknown exception\n");
         }
         stack_debugf("Pre free done\n");
         // std::cout << "FrTeeing " << addr << std::endl;

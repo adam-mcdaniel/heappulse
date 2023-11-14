@@ -142,3 +142,38 @@ void stack_infof(const char* format, Args... args) {
     }
 }
 
+
+
+void stack_warnf(const char* str) {
+    if (last_was_newline) {
+        stack_printf("[WARN] ");
+    }
+    stack_printf(str);
+    if (last_was_newline) {
+        stack_logf("[WARN] ");
+    }
+    stack_logf(str);
+    if (str[strlen(str) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
+    }
+}
+
+template <typename... Args>
+void stack_warnf(const char* format, Args... args) {
+    if (last_was_newline) {
+        stack_printf("[WARN] ");
+    }
+    stack_printf(format, args...);
+    if (last_was_newline) {
+        stack_logf("[WARN] ");
+    }
+    stack_logf(format, args...);
+    if (format[strlen(format) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
+    }
+}
+

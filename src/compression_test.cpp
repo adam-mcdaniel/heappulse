@@ -56,7 +56,7 @@ class CompressionTest : public IntervalTest {
             size_t estimated_compressed_size = compressBound(alloc.size);
             size_t compressed_size = estimated_compressed_size;
             if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
-                stack_debugf("Skipping: Unable to compress data\n");
+                stack_warnf("Skipping: Unable to compress data\n");
                 continue;
             }
 
@@ -95,9 +95,9 @@ class CompressionTest : public IntervalTest {
             csv.last()[6] = zero_pages;
             csv.last()[7] = dirty_pages;
 
-            stack_infof("Resident pages: %d\n", resident_pages);
-            stack_infof("Zero pages: %d\n", zero_pages);
-            stack_infof("Dirty pages: %d\n", dirty_pages);
+            stack_debugf("Resident pages: %d\n", resident_pages);
+            stack_debugf("Zero pages: %d\n", zero_pages);
+            stack_debugf("Dirty pages: %d\n", dirty_pages);
 
             // if (result != Z_OK) {
             //     stack_debugf("Error: Unable to compress data\n");
