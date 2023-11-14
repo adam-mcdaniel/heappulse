@@ -563,6 +563,14 @@ public:
             stack_printf("Unable to add allocation to site\n");
             // hook_lock.unlock();
         }
+
+        if (site.allocations.full()) {
+            stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+            stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
+            stack_printf("Unable to add allocation to site\n");
+            // hook_lock.unlock();
+            return;
+        }
         // try {
         //     site.allocations.put(ptr, allocation);
         // } catch (const std::exception& e) {
