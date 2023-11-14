@@ -524,12 +524,11 @@ public:
     }
 
     void add_test(IntervalTest *test) {
-        // hook_lock.lock();
-        std::lock_guard<std::mutex> lock(hook_lock);
+        hook_lock.lock();
         test->setup();
         tests.push(test);
         assert(tests.size() > 0);
-        // hook_lock.unlock();
+        hook_lock.unlock();
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
@@ -538,8 +537,6 @@ public:
         }
         
         stack_printf("IntervalTestSuite::update\n");
-        std::lock_guard<std::mutex> lock(hook_lock);
-
         // if (!hook_lock.try_lock()) {
         //     stack_printf("Unable to lock hook\n");
         //     return;
@@ -631,15 +628,14 @@ public:
         stack_printf("IntervalTestSuite::invalidate\n");
         stack_printf("Invalidating %X\n", ptr);
         allocations.clear();
-        
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
-                    hook_lock.lock();
+                    // hook_lock.lock();
                     site.allocations.remove(ptr);
                     allocation_sites.put(site.return_address, site);
-                    hook_lock.unlock();
+                    // hook_lock.unlock();
                 }
             }
         }
@@ -655,8 +651,6 @@ private:
     void schedule() {
         stack_printf("Entering IntervalTestSuite::schedule\n");
         IS_IN_TEST = true;
-        std::lock_guard<std::mutex> lock(schedule_lock);
-        std::lock_guard<std::mutex> lock2(hook_lock);
         // schedule_lock.lock();
         // hook_lock.lock();
 
