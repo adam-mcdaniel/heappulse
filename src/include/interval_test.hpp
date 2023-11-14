@@ -493,6 +493,8 @@ class IntervalTest {
 private:
     bool is_quitting = false;
 public:
+    IntervalTest() : is_quitting(false) {}
+
     virtual const char *name() const {
         return "Base IntervalTest";
     };

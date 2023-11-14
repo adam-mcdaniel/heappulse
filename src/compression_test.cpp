@@ -37,20 +37,22 @@ class CompressionTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
+        stack_infof("Interval %d starting...\n", ++interval_count);
+
         if (csv.full()) {
             stack_warnf("CSV full, omitting test interval\n");
             quit();
             return;
         }
 
-        stack_infof("Interval %d starting...\n", ++interval_count);
-
+        stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
         // Get the allocation sites from the map
         StackVec<AllocationSite, TRACKED_ALLOCATION_SITES> sites;
         allocation_sites.values(sites);
 
         size_t i;
         for (i=0; i<sites.size(); i++) {
+            stack_debugf("i: %d\n", i);
             if (csv.full()) {
                 stack_warnf("CSV full, omitting test interval\n");
                 quit();
@@ -74,6 +76,7 @@ class CompressionTest : public IntervalTest {
             csv.new_row();
             csv.last()[0] = interval_count;
             csv.last()[1] = site.return_address;
+            stack_debugf("site.return_address: %p\n", site.return_address);
 
             double total_uncompressed_size = 0;
             double total_compressed_dirty_size = 0;
@@ -81,6 +84,8 @@ class CompressionTest : public IntervalTest {
             uint64_t total_resident_pages = 0;
             uint64_t total_zero_pages = 0;
             uint64_t total_dirty_pages = 0;
+
+            stack_debugf("About to iterate over %d allocations\n", site.allocations.size());
 
             // Map a lambda over the allocations counting up the total uncompressed sizes,
             // total compressed dirty sizes, and total compressed resident sizes, etc.
@@ -94,7 +99,7 @@ class CompressionTest : public IntervalTest {
                     stack_warnf("Skipping: Unable to compress data\n");
                     return;
                 }
-
+                stack_debugf("About to compress %d bytes to %d bytes from address %p\n", allocation.size, compressed_size, ptr);
                 total_uncompressed_size += allocation.size;
                 allocation.protect();
                 StackVec<PageInfo, TRACKED_ALLOCATIONS_PER_SITE> pages = allocation.page_info<TRACKED_ALLOCATIONS_PER_SITE>();
