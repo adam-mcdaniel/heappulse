@@ -280,6 +280,10 @@ public:
         // hist[idx] -= 1;
     }
 
+    bool contains(void *addr) const {
+        return its.contains(addr);
+    }
+
     bool is_done() const {
         return its.is_done();
     }
@@ -332,11 +336,14 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     // if (!bk_lock.try_lock()) return;
     // stack_debugf("Entering hook\n");
     // // IS_PROTECTED = false;
-    bk_lock.lock();
-    stack_debugf("Entering hook\n");
-    hooks.pre_free(heap, addr);
-    stack_debugf("Leaving hook\n");
-    bk_lock.unlock();
+    if (hooks.contains(addr)) {
+        stack_debugf("About to block on lock\n");
+        bk_lock.lock();
+        stack_debugf("Entering hook\n");
+        hooks.pre_free(heap, addr);
+        stack_debugf("Leaving hook\n");
+        bk_lock.unlock();
+    }
 }
 
 extern "C"

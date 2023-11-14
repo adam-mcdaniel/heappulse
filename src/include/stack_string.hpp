@@ -222,7 +222,7 @@ public:
         }
         while (number > 0) {
             // Confirm the number is an integer at compile time
-            if constexpr (std::is_same<T, int>::value || std::is_same<T, size_t>::value) {
+            if constexpr (std::is_same<T, int>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value) {
                 if (number % radix < 10) {
                     str.push('0' + (number % radix));
                 } else {

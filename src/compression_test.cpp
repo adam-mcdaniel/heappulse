@@ -39,16 +39,83 @@ class CompressionTest : public IntervalTest {
     ) override {
         stack_infof("Interval %d starting...\n", ++interval_count);
 
-        if (csv.full()) {
-            stack_warnf("CSV full, omitting test interval\n");
-            quit();
-            return;
-        }
+        // if (csv.full()) {
+        //     stack_warnf("CSV full, omitting test interval\n");
+        //     quit();
+        //     return;
+        // }
 
         stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
+
+        allocation_sites.map([&](auto return_address, AllocationSite site) {
+            csv.new_row();
+            csv.last()[0] = interval_count;
+            csv.last()[1] = site.return_address;
+            stack_debugf("site.return_address: %p\n", site.return_address);
+
+            double total_uncompressed_size = 0;
+            double total_compressed_dirty_size = 0;
+            double total_compressed_resident_size = 0;
+            uint64_t total_resident_pages = 0;
+            uint64_t total_zero_pages = 0;
+            uint64_t total_dirty_pages = 0;
+
+            site.allocations.map([&](auto ptr, Allocation allocation) {
+                size_t estimated_compressed_size = compressBound(allocation.size);
+                size_t compressed_size = estimated_compressed_size;
+                if (compressed_size > MAX_COMPRESSED_SIZE
+                    || allocation.size > MAX_COMPRESSED_SIZE
+                    || allocation.size == 0
+                    || ptr == NULL) {
+                    stack_warnf("Skipping: Unable to compress data\n");
+                    return;
+                }
+                // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", allocation.size, compressed_size, ptr);
+                total_uncompressed_size += allocation.size;
+                allocation.protect();
+                stack_debugf("Protected\n");
+                StackVec<PageInfo, TRACKED_ALLOCATIONS_PER_SITE> pages = allocation.page_info<TRACKED_ALLOCATIONS_PER_SITE>();
+                // Copy to buffer
+                stack_debugf("Unprotected\n");
+                memcpy(buffer, (const uint8_t*)ptr, allocation.size);
+                allocation.unprotect();
+                
+                for (size_t j=0; j<pages.size(); j++) {
+                    stack_debugf("j: %d\n", j);
+                    if (pages[j].is_zero()) {
+                        stack_debugf("Zero page\n");
+                        total_zero_pages++;
+                        continue;
+                    }
+
+                    uint64_t estimated_compressed_size = compressBound(PAGE_SIZE);
+                    uint64_t compressed_size = estimated_compressed_size;
+                    
+                    // Compress the page in the buffer
+                    // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", PAGE_SIZE, compressed_size, buffer + j * PAGE_SIZE);
+                    stack_debugf("About to compress %d bytes!\n", compressed_size);
+                    int result = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
+
+                    if (result != Z_OK) {
+                        stack_warnf("Error: Unable to compress data\n");
+                        continue;
+                    }
+
+                    if (pages[j].is_resident()) {
+                        total_resident_pages++;
+                        total_compressed_resident_size += compressed_size;
+                    }
+
+                    if (pages[j].is_dirty()) {
+                        total_dirty_pages++;
+                        total_compressed_dirty_size += compressed_size;
+                    }
+                }
+            });
+        });
+
+        /*
         // Get the allocation sites from the map
-        StackVec<AllocationSite, TRACKED_ALLOCATION_SITES> sites;
-        allocation_sites.values(sites);
 
         size_t i;
         for (i=0; i<sites.size(); i++) {
@@ -142,6 +209,8 @@ class CompressionTest : public IntervalTest {
             csv.last()[6] = total_compressed_dirty_size;
             csv.last()[7] = total_compressed_resident_size;
         }
+
+        */
 
         /*
         size_t i;

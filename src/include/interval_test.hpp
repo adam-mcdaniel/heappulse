@@ -497,7 +497,7 @@ public:
 
     virtual const char *name() const {
         return "Base IntervalTest";
-    };
+    }
 
     // This is called by the test when it no longer needs to be run
     void quit() {
@@ -663,7 +663,7 @@ public:
         stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
-    bool contains(void *ptr) {
+    bool contains(void *ptr) const {
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
@@ -713,13 +713,14 @@ private:
     void schedule() {
         heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
-        schedule_lock.lock();
+        static std::mutex schedule_lock;
+        std::lock_guard<std::mutex> lock(schedule_lock);
+        // schedule_lock.lock();
         // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_warnf("Starting test\n");
 
-            stack_logf("Starting interval\n");
             timer.reset();
             stack_logf("Getting allocations\n");
             get_allocs();
@@ -731,7 +732,7 @@ private:
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
-        schedule_lock.unlock();
+        // schedule_lock.unlock();
         // hook_lock.unlock();
         stack_debugf("IntervalTestSuite::schedule\n");
     }
@@ -796,7 +797,6 @@ private:
 
     // This is used to protect the main thread while we're compressing
     // static std::mutex hook_lock;
-    static std::mutex schedule_lock;
 
     bool is_setup = false;
 };

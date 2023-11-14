@@ -12,6 +12,11 @@
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), StackFile::Mode::WRITE);
 
+void stack_debugf(const char* str);
+template <typename... Args>
+void stack_debugf(const char* format, Args... args);
+
+
 template <typename... Args>
 void stack_printf(const char* format, Args... args) {
     StackString<1 << 14>::format(format, args...).print();
@@ -60,7 +65,7 @@ void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
     #ifdef DEBUG
     if (DEBUG) {
-        stack_printf(str);
+        stack_debugf(str);
     }
     #endif
     stack_fprintf(log_file, "%s", str);
@@ -73,7 +78,7 @@ void stack_logf(const char* format, Args... args) {
     // StackString<1 << 14>::format(format, args...).print();
     #ifdef DEBUG
     if (DEBUG) {
-        stack_printf(format, args...);
+        stack_debugf(format, args...);
     }
     #endif
     stack_fprintf(log_file, format, args...);
