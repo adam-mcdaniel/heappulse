@@ -1,23 +1,23 @@
 #define BKMALLOC_HOOK
 #include "bkmalloc.h"
-#include <zlib.h>
-#include <fstream>
-#include <sstream>
-#include <iostream>
+// #include <zlib.h>
+// #include <fstream>
+// #include <sstream>
+// #include <iostream>
 // #include <stdio.h>
 #include <stack_io.hpp>
-#include <stdlib.h>
-#include <chrono>
-#include <vector>
-#include <signal.h>
-#include <unistd.h>
-#include <csetjmp>
-#include <thread>
-#include <sys/mman.h>
-#include <cassert>
-#include <condition_variable>
-#include <dlfcn.h>
-#include <execinfo.h>
+// #include <stdlib.h>
+// #include <chrono>
+// #include <vector>
+// #include <signal.h>
+// #include <unistd.h>
+// #include <csetjmp>
+// #include <thread>
+// #include <sys/mman.h>
+// #include <cassert>
+// #include <condition_variable>
+// #include <dlfcn.h>
+// #include <execinfo.h>
 #include <timer.hpp>
 #include "stack_map.cpp"
 #include "stack_file.cpp"
@@ -138,7 +138,7 @@ public:
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
         stack_printf("Post mmap\n");
-        if (!hook_lock.try_lock()) return;
+        // if (!hook_lock.try_lock()) return;
         // stack_printf("Post mmap lock\n");
         // printf("Post MMAP! %p => %p\n", addr_in, allocation_address);
         // // post_alloc(NULL, n_bytes, PAGE_SIZE, 0, allocation_address);
@@ -170,13 +170,13 @@ public:
         // // IS_PROTECTED = protection;
         // record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         // compression_test();
-        hook_lock.unlock();
+        // hook_lock.unlock();
         stack_printf("Post mmap done\n");
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
         stack_printf("Post alloc\n");
-        if (!hook_lock.try_lock()) return;
+        // if (!hook_lock.try_lock()) return;
         // stack_printf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
@@ -223,13 +223,13 @@ public:
         // hist[idx] += 1;
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
-        hook_lock.unlock();
+        // hook_lock.unlock();
         stack_printf("Post alloc done\n");
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
         stack_printf("Pre free\n");
-        hook_lock.lock();
+        // hook_lock.lock();
         try {
             if (its.contains(addr)) {
                 // stack_logf("Pre free contains\n");
@@ -257,7 +257,7 @@ public:
         }
         stack_printf("Pre free done\n");
         // std::cout << "FrTeeing " << addr << std::endl;
-        hook_lock.unlock();
+        // hook_lock.unlock();
         
         // record_free(addr);
         // compression_test();
@@ -298,7 +298,7 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
     // return;
     // bk_printf("Entering hook\n");
     if (!bk_lock.try_lock()) {
-        // stack_printf("Failed to lock\n");
+        stack_printf("Failed to lock\n");
         return;
     }
     stack_printf("Entering hook\n");
@@ -330,7 +330,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
     // stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
     if (!bk_lock.try_lock()) {
-        // stack_printf("Failed to lock\n");
+        stack_printf("Failed to lock\n");
         return;
     }
     stack_printf("Entering hook\n");

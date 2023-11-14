@@ -118,7 +118,7 @@ public:
     // }
 
     void print() const {
-        std::cout << *this << std::endl;
+        // std::cout << *this << std::endl;
     }
 
     // Add two stackvecs together

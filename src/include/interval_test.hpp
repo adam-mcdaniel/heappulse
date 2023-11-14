@@ -524,11 +524,11 @@ public:
     }
 
     void add_test(IntervalTest *test) {
-        hook_lock.lock();
+        // hook_lock.lock();
         test->setup();
         tests.push(test);
         assert(tests.size() > 0);
-        hook_lock.unlock();
+        // hook_lock.unlock();
     }
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
@@ -725,8 +725,8 @@ private:
 
 
     // This is used to protect the main thread while we're compressing
-    static std::mutex hook_lock;
-    static std::mutex schedule_lock;
+    // static std::mutex hook_lock;
+    // static std::mutex schedule_lock;
 
     bool is_setup = false;
 };
