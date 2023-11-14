@@ -490,7 +490,22 @@ struct IntervalTestConfig {
 };
 
 class IntervalTest {
+private:
+    bool is_quitting = false;
 public:
+    virtual const char *name() const {
+        return "Base IntervalTest";
+    };
+
+    // This is called by the test when it no longer needs to be run
+    void quit() {
+        stack_infof("Quitting %s\n", name());
+        is_quitting = true;
+    }
+
+    bool has_quit() const {
+        return is_quitting;
+    }
 
     // A virtual method for setting up the test
     // This is run once on startup. Do your initialization here
@@ -679,6 +694,16 @@ public:
         stack_debugf("Leaving IntervalTestSuite::invalidate\n");
     }
 
+    bool is_done() const {
+        // Are all the tests done?
+        for (size_t i=0; i<tests.size(); i++) {
+            if (!tests[i]->has_quit()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     ~IntervalTestSuite() {
         cleanup();
     }
@@ -718,7 +743,9 @@ private:
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
             stack_logf("Running interval for test %d\n", i);
-            tests[i]->interval(allocation_sites, allocations);
+            if (!tests[i]->has_quit()) {
+                tests[i]->interval(allocation_sites, allocations);
+            }
         }
         // hook_lock.unlock();
         no_longer_working_thread();

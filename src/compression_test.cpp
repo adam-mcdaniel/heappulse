@@ -13,6 +13,10 @@ class CompressionTest : public IntervalTest {
     StackFile file;
     size_t interval_count = 0;
 
+    const char *name() const override {
+        return "Compression Test";
+    }
+
     void setup() override {
         stack_debugf("Setup\n");
         file = StackFile(StackString<256>("compression.csv"), StackFile::Mode::WRITE);
@@ -35,6 +39,7 @@ class CompressionTest : public IntervalTest {
     ) override {
         if (csv.full()) {
             stack_warnf("CSV full, omitting test interval\n");
+            quit();
             return;
         }
 
@@ -48,6 +53,7 @@ class CompressionTest : public IntervalTest {
         for (i=0; i<sites.size(); i++) {
             if (csv.full()) {
                 stack_warnf("CSV full, omitting test interval\n");
+                quit();
                 return;
             }
 
@@ -78,7 +84,7 @@ class CompressionTest : public IntervalTest {
 
             // Map a lambda over the allocations counting up the total uncompressed sizes,
             // total compressed dirty sizes, and total compressed resident sizes, etc.
-            site.allocations.map([&](auto ptr, auto allocation) {
+            site.allocations.map([&](auto ptr, Allocation allocation) {
                 size_t estimated_compressed_size = compressBound(allocation.size);
                 size_t compressed_size = estimated_compressed_size;
                 if (compressed_size > MAX_COMPRESSED_SIZE
@@ -91,7 +97,7 @@ class CompressionTest : public IntervalTest {
 
                 total_uncompressed_size += allocation.size;
                 allocation.protect();
-                StackVec pages = allocation.page_info<TRACKED_ALLOCATIONS_PER_SITE>();
+                StackVec<PageInfo, TRACKED_ALLOCATIONS_PER_SITE> pages = allocation.page_info<TRACKED_ALLOCATIONS_PER_SITE>();
                 // Copy to buffer
                 memcpy(buffer, (const uint8_t*)ptr, allocation.size);
                 allocation.unprotect();

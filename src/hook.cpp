@@ -137,6 +137,10 @@ public:
 
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
+        if (its.is_done()) {
+            stack_debugf("Test finished, not updating\n");
+            return;
+        }
         stack_debugf("Post mmap\n");
         // if (!hook_lock.try_lock()) return;
         // stack_debugf("Post mmap lock\n");
@@ -175,6 +179,10 @@ public:
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
+        if (its.is_done()) {
+            stack_debugf("Test finished, not updating\n");
+            return;
+        }
         stack_debugf("Post alloc\n");
         // if (!hook_lock.try_lock()) return;
         // stack_debugf("Post alloc lock\n");
@@ -228,6 +236,10 @@ public:
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
+        if (its.is_done()) {
+            stack_debugf("Test finished, not updating\n");
+            return;
+        }
         stack_debugf("Pre free\n");
         try {
             if (its.contains(addr)) {
@@ -268,6 +280,9 @@ public:
         // hist[idx] -= 1;
     }
 
+    bool is_done() const {
+        return its.is_done();
+    }
 
     ~Hooks() {
         stack_logf("Hooks destructor\n");
@@ -287,6 +302,7 @@ static std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    if (hooks.is_done()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
     // return;
@@ -307,6 +323,7 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+    if (hooks.is_done()) return;
     // static std::mutex free_lock;
     // std::lock_guard<std::mutex> lock(free_lock);
     // std::lock_guard<std::mutex> lock2(bk_lock);
@@ -324,6 +341,7 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
+    if (hooks.is_done()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
 
