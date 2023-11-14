@@ -560,50 +560,46 @@ public:
         } catch (const std::exception& e) {
             stack_printf("Unable to add allocation to site\n");
             // hook_lock.unlock();
-            schedule();
             return;
         }
 
         try {
             allocation_sites.put(return_address, site);
         } catch (const std::exception& e) {
-            // stack_printf("Unable to add allocation site\n");
+            stack_printf("Unable to add allocation site\n");
             // hook_lock.unlock();
             // schedule();
-            // return;
-            stack_printf("Unable to add allocation site\n");
-            // Evict the allocation site with the least number of allocations
-            uintptr_t min_return_address = 0;
-            size_t min_num_allocations = SIZE_MAX;
-            StackVec<uintptr_t, TRACKED_ALLOCATIONS_PER_SITE> keys;
-            allocation_sites.keys(keys);
+            return;
+            // stack_printf("Unable to add allocation site\n");
+            // // Evict the allocation site with the least number of allocations
+            // uintptr_t min_return_address = 0;
+            // size_t min_num_allocations = SIZE_MAX;
+            // StackVec<uintptr_t, TRACKED_ALLOCATION_SITES> keys;
+            // allocation_sites.keys(keys);
 
-            for (size_t i=0; i<keys.size(); i++) {
-                uintptr_t key = keys[i];
-                AllocationSite site = allocation_sites.get(key);
-                if (site.allocations.size() < min_num_allocations) {
-                    min_return_address = key;
-                    min_num_allocations = site.allocations.size();
-                }
-            }
+            // for (size_t i=0; i<keys.size() && i <TRACKED_ALLOCATION_SITES; i++) {
+            //     uintptr_t key = keys[i];
+            //     if (!allocation_sites.has(key)) {
+            //         continue;
+            //     }
+            //     AllocationSite site = allocation_sites.get(key);
+            //     if (site.allocations.size() < min_num_allocations) {
+            //         min_return_address = key;
+            //         min_num_allocations = site.allocations.size();
+            //     }
+            // }
 
-            if (min_return_address == 0) {
-                stack_printf("Unable to evict allocation site\n");
-                // hook_lock.unlock();
-                return;
-            }
-            stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
-            if (allocation_sites.has(min_return_address)) {
-                allocation_sites.remove(min_return_address);
-                try {
-                    allocation_sites.put(return_address, site);
-                } catch (const std::exception& e) {
-                    stack_printf("Unable to add allocation site\n");
-                    // hook_lock.unlock();
-                    schedule();
-                    return;
-                }
-            }
+            // if (min_return_address == 0) {
+            //     stack_printf("Unable to evict allocation site\n");
+            //     // hook_lock.unlock();
+            //     return;
+            // }
+
+            // stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
+            // if (allocation_sites.has(min_return_address)) {
+            //     allocation_sites.remove(min_return_address);
+            // }
+            // allocation_sites.put(return_address, site);
         }
         // hook_lock.unlock();
         
