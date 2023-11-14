@@ -710,7 +710,6 @@ private:
     }
 
     void get_allocs() {
-        const std::lock_guard<std::mutex> lock(hook_lock);
         // hook_lock.lock();
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
