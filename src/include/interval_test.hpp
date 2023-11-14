@@ -650,6 +650,9 @@ public:
 private:
     void schedule() {
         stack_printf("IntervalTestSuite::schedule\n");
+        if (IS_IN_TEST) {
+            return;
+        }
         IS_IN_TEST = true;
         // schedule_lock.lock();
         // hook_lock.lock();
@@ -672,7 +675,9 @@ private:
         // schedule_lock.unlock();
         // hook_lock.unlock();
         stack_printf("IntervalTestSuite::schedule\n");
-        IS_IN_TEST = false;
+        if (IS_IN_TEST) {
+            IS_IN_TEST = false;
+        }
     }
 
     void interval() {
