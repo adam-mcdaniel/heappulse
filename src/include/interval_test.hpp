@@ -486,7 +486,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 2000.0;
+    double period_milliseconds = 10000.0;
 };
 
 class IntervalTest {
@@ -536,9 +536,9 @@ public:
             return;
         }
         
-        stack_printf("IntervalTestSuite::update\n");
+        stack_debugf("IntervalTestSuite::update\n");
         // if (!hook_lock.try_lock()) {
-        //     stack_printf("Unable to lock hook\n");
+        //     stack_debugf("Unable to lock hook\n");
         //     return;
         // }
 
@@ -549,10 +549,10 @@ public:
             site = {return_address, StackMap<void*, Allocation, TRACKED_ALLOCATIONS_PER_SITE>()};
         }
 
-        stack_printf("Allocation at %X, size: %d\n", ptr, size);
-        stack_printf("Return address: %X\n", return_address);
-        stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-        stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
+        stack_debugf("Allocation at %X, size: %d\n", ptr, size);
+        stack_debugf("Return address: %X\n", return_address);
+        stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+        stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
 
         Allocation allocation = {ptr, size, Backtrace::capture()};
         if (site.allocations.has(ptr)) {
@@ -560,21 +560,21 @@ public:
         } else if (!site.allocations.full()) {
             site.allocations.put(ptr, allocation);
         } else {
-            stack_printf("Unable to add allocation to site\n");
+            stack_debugf("Unable to add allocation to site\n");
             // hook_lock.unlock();
         }
 
         if (site.allocations.full()) {
-            stack_printf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-            stack_printf("Allocation-sites: %d\n", allocation_sites.num_entries());
-            stack_printf("Unable to add allocation to site\n");
+            stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+            stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
+            stack_debugf("Unable to add allocation to site\n");
             // hook_lock.unlock();
             return;
         }
         // try {
         //     site.allocations.put(ptr, allocation);
         // } catch (const std::exception& e) {
-        //     stack_printf("Unable to add allocation to site\n");
+        //     stack_debugf("Unable to add allocation to site\n");
         //     // hook_lock.unlock();
         //     return;
         // }
@@ -584,19 +584,19 @@ public:
         } else if (!allocation_sites.full()) {
             allocation_sites.put(return_address, site);
         } else {
-            // stack_printf("Unable to add allocation to site\n");
-            stack_printf("Unable to add allocation site\n");
+            // stack_debugf("Unable to add allocation to site\n");
+            stack_debugf("Unable to add allocation site\n");
             // hook_lock.unlock();
         }
 
         // try {
         //     allocation_sites.put(return_address, site);
         // } catch (const std::exception& e) {
-        //     stack_printf("Unable to add allocation site\n");
+        //     stack_debugf("Unable to add allocation site\n");
         //     // hook_lock.unlock();
         //     // schedule();
         //     return;
-        //     // stack_printf("Unable to add allocation site\n");
+        //     // stack_debugf("Unable to add allocation site\n");
         //     // // Evict the allocation site with the least number of allocations
         //     // uintptr_t min_return_address = 0;
         //     // size_t min_num_allocations = SIZE_MAX;
@@ -616,12 +616,12 @@ public:
         //     // }
 
         //     // if (min_return_address == 0) {
-        //     //     stack_printf("Unable to evict allocation site\n");
+        //     //     stack_debugf("Unable to evict allocation site\n");
         //     //     // hook_lock.unlock();
         //     //     return;
         //     // }
 
-        //     // stack_printf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
+        //     // stack_debugf("Evicting allocation site: %X, which tracked %d allocations\n", min_return_address, min_num_allocations);
         //     // if (allocation_sites.has(min_return_address)) {
         //     //     allocation_sites.remove(min_return_address);
         //     // }
@@ -631,7 +631,7 @@ public:
         
         schedule();
         
-        stack_printf("Leaving IntervalTestSuite::update\n");
+        stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
     bool contains(void *ptr) {
@@ -647,8 +647,8 @@ public:
     }
 
     void invalidate(void *ptr) {
-        stack_printf("IntervalTestSuite::invalidate\n");
-        stack_printf("Invalidating %X\n", ptr);
+        stack_debugf("IntervalTestSuite::invalidate\n");
+        stack_debugf("Invalidating %X\n", ptr);
         allocations.clear();
         for (size_t i=0; i<allocation_sites.size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
@@ -663,7 +663,7 @@ public:
         }
 
         schedule();
-        stack_printf("Leaving IntervalTestSuite::invalidate\n");
+        stack_debugf("Leaving IntervalTestSuite::invalidate\n");
     }
 
     ~IntervalTestSuite() {
@@ -671,7 +671,7 @@ public:
     }
 private:
     void schedule() {
-        stack_printf("IntervalTestSuite::schedule\n");
+        stack_debugf("IntervalTestSuite::schedule\n");
         if (IS_IN_TEST) {
             return;
         }
@@ -680,7 +680,7 @@ private:
         // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
-            stack_printf("Starting test\n");
+            stack_debugf("Starting test\n");
 
             stack_logf("Starting interval\n");
             timer.reset();
@@ -690,13 +690,13 @@ private:
             interval();
             timer.reset();
             stack_logf("Finished interval\n");
-            stack_printf("Done with test\n");
+            stack_debugf("Done with test\n");
         } else {
-            stack_printf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
+            stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         // schedule_lock.unlock();
         // hook_lock.unlock();
-        stack_printf("IntervalTestSuite::schedule\n");
+        stack_debugf("IntervalTestSuite::schedule\n");
         if (IS_IN_TEST) {
             IS_IN_TEST = false;
         }

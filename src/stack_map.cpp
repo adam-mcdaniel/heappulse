@@ -25,7 +25,7 @@ void StackMap<KeyType, ValueType, Size>::put(const KeyType& key, const ValueType
         if (hashtable[index].key == key) {
             hashtable[index].value = value;  // Update value if key already exists
             return;
-        } else if (i++ >= Size) {
+        } else if (i++ > Size * 2) {
             throw std::out_of_range("Hash table full");
         }
         index = (index + 1) % Size;  // Linear probing for collision resolution

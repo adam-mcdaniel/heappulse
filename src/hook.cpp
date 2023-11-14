@@ -128,18 +128,18 @@ static CompressionTest ct;
 class Hooks {
 public:
     Hooks() {
-        stack_logf("Hooks constructor\n");
+        stack_debugf("Hooks constructor\n");
 
-        stack_logf("Adding test...\n");
+        stack_debugf("Adding test...\n");
         its.add_test(&ct);
-        stack_logf("Done\n");
+        stack_debugf("Done\n");
     }
 
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
-        stack_printf("Post mmap\n");
+        stack_debugf("Post mmap\n");
         // if (!hook_lock.try_lock()) return;
-        // stack_printf("Post mmap lock\n");
+        // stack_debugf("Post mmap lock\n");
         // printf("Post MMAP! %p => %p\n", addr_in, allocation_address);
         // // post_alloc(NULL, n_bytes, PAGE_SIZE, 0, allocation_address);
         // if (IS_PROTECTED) {
@@ -147,17 +147,17 @@ public:
         // }
         try {
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
-            stack_printf("Post mmap update\n");
+            stack_debugf("Post mmap update\n");
         } catch (std::out_of_range& e) {
-            stack_printf("Post mmap out of range exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Post mmap out of range exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Post mmap runtime error exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Post mmap runtime error exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (...) {
-            stack_printf("Post mmap unknown exception\n");
+            stack_debugf("Post mmap unknown exception\n");
         }
         // // #ifdef RANDOMIZE_ALLOCATION_DATA
         // // void *aligned_address = (void*)((u64)allocation_address - (u64)allocation_address % alignment);
@@ -171,13 +171,13 @@ public:
         // record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         // compression_test();
         // hook_lock.unlock();
-        stack_printf("Post mmap done\n");
+        stack_debugf("Post mmap done\n");
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
-        stack_printf("Post alloc\n");
+        stack_debugf("Post alloc\n");
         // if (!hook_lock.try_lock()) return;
-        // stack_printf("Post alloc lock\n");
+        // stack_debugf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
         // }
@@ -193,19 +193,19 @@ public:
 
         // stack_logf("Post alloc pre update\n");
         try {
-            stack_printf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+            stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
-            stack_printf("Post alloc update\n");
+            stack_debugf("Post alloc update\n");
         } catch (std::out_of_range& e) {
-            stack_printf("Post alloc out of range exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Post alloc out of range exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Post alloc runtime error exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Post alloc runtime error exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (...) {
-            stack_printf("Post alloc unknown exception exception\n");
+            stack_debugf("Post alloc unknown exception exception\n");
         }
         // // bool protection = IS_PROTECTED;
         // // IS_PROTECTED = true;
@@ -224,38 +224,30 @@ public:
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
         // hook_lock.unlock();
-        stack_printf("Post alloc done\n");
+        stack_debugf("Post alloc done\n");
     }
 
     void pre_free(bk_Heap *heap, void *addr) {
-        stack_printf("Pre free\n");
-        // hook_lock.lock();
+        stack_debugf("Pre free\n");
         try {
             if (its.contains(addr)) {
-                // stack_logf("Pre free contains\n");
-                // if (IS_PROTECTED) {
-                //     return;
-                // }
-                // stack_logf("Pre free lock\n");
+                stack_debugf("About to invalidate %p\n", addr);
                 its.invalidate(addr);
-                // stack_printf("Pre free invalidate\n");
-                // compression_test();
-                // stack_printf("Pre free unlock\n");
             } else {
-                stack_printf("Pre free does not contain\n");
+                stack_debugf("Pre free does not contain %p\n", addr);
             }
         } catch (std::out_of_range& e) {
-            stack_printf("Pre free out of range exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Pre free out of range exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (std::runtime_error& e) {
-            stack_printf("Pre free runtime error exception\n");
-            stack_printf(e.what());
-            stack_printf("\n");
+            stack_debugf("Pre free runtime error exception\n");
+            stack_debugf(e.what());
+            stack_debugf("\n");
         } catch (...) {
-            stack_printf("Pre free unknown exception\n");
+            stack_debugf("Pre free unknown exception\n");
         }
-        stack_printf("Pre free done\n");
+        stack_debugf("Pre free done\n");
         // std::cout << "FrTeeing " << addr << std::endl;
         // hook_lock.unlock();
         
@@ -300,16 +292,16 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
     // return;
     // bk_printf("Entering hook\n");
     if (!bk_lock.try_lock()) {
-        stack_printf("Failed to lock\n");
+        stack_debugf("Failed to lock\n");
         return;
     }
     // bk_lock.lock();
-    stack_printf("Entering hook\n");
+    stack_debugf("Entering hook\n");
 
-    // stack_printf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
+    // stack_debugf("Allocated %d (0x%x) bytes at %p\n", n_bytes, n_bytes, addr);
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
-    stack_printf("Leaving hook\n");
+    stack_debugf("Leaving hook\n");
     bk_lock.unlock();
 }
 
@@ -321,12 +313,12 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
     // return;
     // if (!bk_lock.try_lock()) return;
-    // stack_printf("Entering hook\n");
+    // stack_debugf("Entering hook\n");
     // // IS_PROTECTED = false;
     // bk_lock.lock();
-    stack_printf("Entering hook\n");
+    stack_debugf("Entering hook\n");
     hooks.pre_free(heap, addr);
-    stack_printf("Leaving hook\n");
+    stack_debugf("Leaving hook\n");
     // bk_lock.unlock();
 }
 
@@ -336,15 +328,15 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
     std::lock_guard<std::mutex> lock(alloc_lock);
 
 
-    // stack_printf("MMAP'd % bytes at %\n", n_bytes, addr);
+    // stack_debugf("MMAP'd % bytes at %\n", n_bytes, addr);
     // // hooks.update(addr, n_bytes, (uintptr_t)BK_GET_RA());
     // bk_lock.lock();
     if (!bk_lock.try_lock()) {
-        stack_printf("Failed to lock\n");
+        stack_debugf("Failed to lock\n");
         return;
     }
-    stack_printf("Entering hook\n");
+    stack_debugf("Entering hook\n");
     hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
-    stack_printf("Leaving hook\n");
+    stack_debugf("Leaving hook\n");
     bk_lock.unlock();
 }

@@ -14,7 +14,7 @@ class CompressionTest : public IntervalTest {
     size_t interval_count = 0;
 
     void setup() override {
-        stack_logf("Setup\n");
+        stack_debugf("Setup\n");
         file = StackFile(StackString<256>("compression.csv"), StackFile::Mode::WRITE);
         // CSVRow<4> &row = 
         csv.title().add("Interval #");
@@ -33,30 +33,30 @@ class CompressionTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
-        stack_printf("Interval %d\n", interval_count);
+        stack_debugf("Interval %d\n", interval_count);
         double total_uncompressed_size = 0;
         double total_compressed_size = 0;
-        stack_logf("copied\n");
+        stack_debugf("copied\n");
         interval_count++;
         size_t i;
         for (i=0; i<allocations.size(); i++) {
             Allocation alloc = allocations[i];
             // if (alloc.size > MAX_COMPRESSED_SIZE / 2) {
-            //     stack_logf("Skipping: Unable to compress data\n");
+            //     stack_debugf("Skipping: Unable to compress data\n");
             //     continue;
             // }
 
             // alloc.log();
-            // stack_logf("Protected\n");
+            // stack_debugf("Protected\n");
 
             // for (size_t i=0; i<alloc.size; i++) {
-            //     stack_logf("%d ", ((uint8_t*)alloc.ptr)[i]);
+            //     stack_debugf("%d ", ((uint8_t*)alloc.ptr)[i]);
             // }
-            // stack_logf("\n");
+            // stack_debugf("\n");
             size_t estimated_compressed_size = compressBound(alloc.size);
             size_t compressed_size = estimated_compressed_size;
             if (compressed_size > MAX_COMPRESSED_SIZE || alloc.size > MAX_COMPRESSED_SIZE || alloc.size == 0 || alloc.ptr == NULL) {
-                stack_logf("Skipping: Unable to compress data\n");
+                stack_debugf("Skipping: Unable to compress data\n");
                 continue;
             }
 
@@ -64,9 +64,9 @@ class CompressionTest : public IntervalTest {
             memcpy(buffer, (const uint8_t*)alloc.ptr, alloc.size);
             alloc.unprotect();
 
-            // stack_logf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
+            // stack_debugf("About to compress %d bytes to %d bytes\n", alloc.size, compressed_size);
             // int result = compress(compressed_data, &compressed_size, buffer, alloc.size);
-            // stack_logf("result: %d\n", result);
+            // stack_debugf("result: %d\n", result);
 
             csv.new_row();
             csv.last()[0] = interval_count;
@@ -95,20 +95,20 @@ class CompressionTest : public IntervalTest {
             csv.last()[6] = zero_pages;
             csv.last()[7] = dirty_pages;
 
-            stack_printf("Resident pages: %d\n", resident_pages);
-            stack_printf("Zero pages: %d\n", zero_pages);
-            stack_printf("Dirty pages: %d\n", dirty_pages);
+            stack_debugf("Resident pages: %d\n", resident_pages);
+            stack_debugf("Zero pages: %d\n", zero_pages);
+            stack_debugf("Dirty pages: %d\n", dirty_pages);
 
             // if (result != Z_OK) {
-            //     stack_logf("Error: Unable to compress data\n");
+            //     stack_debugf("Error: Unable to compress data\n");
             //     exit(1);
             // } else {
-            //     stack_logf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
+            //     stack_debugf("Compressed %d bytes to %d bytes\n", alloc.size, compressed_size);
             // }
         }
-        stack_printf("Tracked %d allocations\n", i);
+        stack_debugf("Tracked %d allocations\n", i);
         csv.write(file);
 
-        stack_printf("Interval %d done\n", interval_count);
+        stack_debugf("Interval %d done\n", interval_count);
     }
 };

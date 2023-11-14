@@ -4,7 +4,11 @@
 #include <stack_file.hpp>
 #include <bkmalloc.h>
 
+// Whether to print debug messages
+#define DEBUG true
+// The log file to write to
 #define LOG_FILE "log.txt"
+
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), StackFile::Mode::WRITE);
 
@@ -54,14 +58,50 @@ void stack_sprintf(char *buf, const char* format, Args... args) {
 
 void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
-    // stack_fprintf(log_file, "%s", str);
-    stack_printf(str);
+    stack_fprintf(log_file, "%s", str);
+    // stack_printf(str);
 }
 
 
 template <typename... Args>
 void stack_logf(const char* format, Args... args) {
     // StackString<1 << 14>::format(format, args...).print();
-    // stack_fprintf(log_file, format, args...);
-    stack_printf(format, args...);
+    stack_fprintf(log_file, format, args...);
+    // stack_printf(format, args...);
+}
+
+
+static bool last_was_newline = true;
+void stack_debugf(const char* str) {
+    #ifdef DEBUG
+    if (DEBUG) {
+        if (last_was_newline) {
+            stack_printf("[DEBUG] ");
+        }
+        stack_printf(str);
+        if (str[strlen(str) - 1] == '\n') {
+            last_was_newline = true;
+        } else {
+            last_was_newline = false;
+        }
+    }
+    #endif
+}
+
+
+template <typename... Args>
+void stack_debugf(const char* format, Args... args) {
+    #ifdef DEBUG
+    if (DEBUG) {
+        if (last_was_newline) {
+            stack_printf("[DEBUG] ");
+        }
+        stack_printf(format, args...);
+        if (format[strlen(format) - 1] == '\n') {
+            last_was_newline = true;
+        } else {
+            last_was_newline = false;
+        }
+    }
+    #endif
 }
