@@ -275,6 +275,10 @@ public:
         }
     }
 
+    bool full() const {
+        return rows.size() >= Length;
+    }
+
     CSVRow<Width> &new_row() {
         rows.push(CSVRow<Width>());
         return last();
