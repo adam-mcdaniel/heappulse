@@ -486,7 +486,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 10000.0;
+    double period_milliseconds = 5000.0;
 };
 
 class IntervalTest {
@@ -707,8 +707,8 @@ private:
             interval();
             timer.reset();
             stack_logf("Finished interval\n");
-            stack_warnf("Done with test\n");
             if (IS_IN_TEST) {
+                stack_warnf("Done with test\n");
                 IS_IN_TEST = false;
             }
         } else {
