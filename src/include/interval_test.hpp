@@ -713,7 +713,7 @@ private:
     void schedule() {
         heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
-        // schedule_lock.lock();
+        schedule_lock.lock();
         // hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
@@ -731,7 +731,7 @@ private:
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
-        // schedule_lock.unlock();
+        schedule_lock.unlock();
         // hook_lock.unlock();
         stack_debugf("IntervalTestSuite::schedule\n");
     }
@@ -794,7 +794,7 @@ private:
 
     // This is used to protect the main thread while we're compressing
     // static std::mutex hook_lock;
-    // static std::mutex schedule_lock;
+    static std::mutex schedule_lock;
 
     bool is_setup = false;
 };
