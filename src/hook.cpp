@@ -150,12 +150,12 @@ public:
             stack_debugf("Post mmap update\n");
         } catch (std::out_of_range& e) {
             stack_warnf("Post mmap out of range exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (std::runtime_error& e) {
             stack_warnf("Post mmap runtime error exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (...) {
             stack_warnf("Post mmap unknown exception\n");
         }
@@ -198,12 +198,12 @@ public:
             stack_debugf("Post alloc update\n");
         } catch (std::out_of_range& e) {
             stack_warnf("Post alloc out of range exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (std::runtime_error& e) {
             stack_warnf("Post alloc runtime error exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (...) {
             stack_warnf("Post alloc unknown exception exception\n");
         }
@@ -238,12 +238,12 @@ public:
             }
         } catch (std::out_of_range& e) {
             stack_warnf("Pre free out of range exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (std::runtime_error& e) {
             stack_warnf("Pre free runtime error exception\n");
-            stack_debugf(e.what());
-            stack_debugf("\n");
+            stack_warnf(e.what());
+            stack_warnf("\n");
         } catch (...) {
             stack_warnf("Pre free unknown exception\n");
         }
