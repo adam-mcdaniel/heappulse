@@ -520,6 +520,12 @@ class IntervalTestSuite {
     void heart_beat() {
         if (second_timer.has_elapsed(1000)) {
             stack_infof("Heart beat (1 second has elapsed)\n");
+            if (timer.elapsed_milliseconds() >= config.period_milliseconds) {
+                stack_infof("Interval timer is at %dms, test is ready!\n", timer.elapsed_milliseconds());
+            } else {
+                stack_infof("Interval timer is at %dms, test is not ready\n", timer.elapsed_milliseconds());
+            }
+
             second_timer.reset();
         }
     }
@@ -706,7 +712,6 @@ private:
                 IS_IN_TEST = false;
             }
         } else {
-            stack_warnf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         // schedule_lock.unlock();
