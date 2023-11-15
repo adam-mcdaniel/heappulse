@@ -9,6 +9,9 @@
 // The log file to write to
 #define LOG_FILE "log.txt"
 
+#ifndef DEBUG
+#define stack_debugf(...)
+#endif
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), StackFile::Mode::WRITE);
 
