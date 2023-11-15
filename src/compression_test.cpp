@@ -125,6 +125,9 @@ class CompressionTest : public IntervalTest {
                     }
                 }
             });
+            if (total_uncompressed_dirty_size > total_uncompressed_resident_size) {
+                total_uncompressed_dirty_size = total_uncompressed_resident_size;
+            }
 
             if (total_uncompressed_resident_size == 0) {
                 stack_warnf("Skipping: No uncompressed data\n");
