@@ -123,11 +123,12 @@ class CompressionTest : public IntervalTest {
                     // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", PAGE_SIZE, compressed_size, buffer + j * PAGE_SIZE);
                     stack_debugf("About to compress %d bytes!\n", compressed_size);
                     // Dont read past end of buffer
+                    uint64_t len = PAGE_SIZE;
                     if (j * PAGE_SIZE + PAGE_SIZE > size) {
                         stack_warnf("Truncating page size of %d to %d bytes\n", (uint64_t)PAGE_SIZE, (uint64_t)(size - j * PAGE_SIZE));
-                        compressed_size = (uint64_t)(size - j * PAGE_SIZE);
+                        len = size - j * PAGE_SIZE;
                     }
-                    int result = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
+                    int result = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, len);
 
                     if (result != Z_OK) {
                         stack_warnf("Error: Unable to compress data\n");
