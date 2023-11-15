@@ -51,6 +51,8 @@ class CompressionTest : public IntervalTest {
         stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
         uint64_t i = 0;
 
+        uint64_t tracked_allocations = 0;
+        double tracked_allocation_size = 0;
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             stack_debugf("site.return_address: %p\n", site.return_address);
 
@@ -149,7 +151,10 @@ class CompressionTest : public IntervalTest {
                         total_compressed_dirty_size += compressed_size;
                     }
                 }
+                tracked_allocations++;
+                tracked_allocation_size += allocation.size;
             });
+            
             if (total_uncompressed_dirty_size > total_uncompressed_resident_size) {
                 total_uncompressed_dirty_size = total_uncompressed_resident_size;
             }
@@ -174,7 +179,7 @@ class CompressionTest : public IntervalTest {
         });
 
         csv.write(file);
-
+        stack_infof("Tracked %d allocations with total size %f\n", tracked_allocations, tracked_allocation_size);
         stack_infof("Interval %d done\n", interval_count);
     }
 };
