@@ -85,7 +85,7 @@ class CompressionTest : public IntervalTest {
                 }
                 // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", allocation.size, compressed_size, ptr);
                 total_uncompressed_resident_size += allocation.size;
-                size_t size = allocation.size;
+                uint64_t size = allocation.size;
                 if (size > MAX_COMPRESSED_SIZE) {
                     size = MAX_COMPRESSED_SIZE;
                     stack_warnf("Truncating allocation size of %d to %d bytes\n", (uint64_t)allocation.size, (uint64_t)size);
@@ -109,6 +109,9 @@ class CompressionTest : public IntervalTest {
                 }
 
                 for (size_t j=0; j<pages.size(); j++) {
+                    if (j * PAGE_SIZE >= size) {
+                        break;
+                    }
                     stack_debugf("j: %d\n", j);
                     if (pages[j].is_zero()) {
                         stack_debugf("Zero page\n");
@@ -152,7 +155,7 @@ class CompressionTest : public IntervalTest {
             }
 
             if (total_uncompressed_resident_size == 0) {
-                stack_warnf("Skipping: No uncompressed data\n");
+                stack_warnf("Skipping no uncompressed data\n");
                 return;
             }
 
