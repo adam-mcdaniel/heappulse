@@ -49,6 +49,7 @@ class CompressionTest : public IntervalTest {
         // }
 
         stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
+        uint64_t i = 0;
 
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             stack_debugf("site.return_address: %p\n", site.return_address);
@@ -62,7 +63,18 @@ class CompressionTest : public IntervalTest {
             uint64_t total_dirty_pages = 0;
             double total_zero_bytes = 0;
             double total_non_zero_bytes = 0;
-
+            i++;
+            if (i == allocation_sites.size() - 1) {
+                stack_infof("Last one\n");
+            } else if (i == allocation_sites.size() * 3 / 4) {
+                stack_infof("3/4 done\n");
+            } else if (i == allocation_sites.size() / 2) {
+                stack_infof("1/2 done\n");
+            } else if (i == allocation_sites.size() / 4) {
+                stack_infof("1/4 done\n");
+            } else if (i == 1) {
+                stack_infof("First one\n");
+            }
             site.allocations.map([&](auto ptr, Allocation allocation) {
                 if (ptr == NULL) {
                     stack_warnf("Skipping NULL allocation\n");
@@ -76,7 +88,7 @@ class CompressionTest : public IntervalTest {
                 size_t size = allocation.size;
                 if (size > MAX_COMPRESSED_SIZE) {
                     size = MAX_COMPRESSED_SIZE;
-                    stack_warnf("Truncating allocation size of %d to %d bytes\n", allocation.size, size);
+                    stack_warnf("Truncating allocation size of %d to %d bytes\n", (uint64_t)allocation.size, (uint64_t)size);
                 }
 
                 allocation.protect();
@@ -110,6 +122,13 @@ class CompressionTest : public IntervalTest {
                     // Compress the page in the buffer
                     // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", PAGE_SIZE, compressed_size, buffer + j * PAGE_SIZE);
                     stack_debugf("About to compress %d bytes!\n", compressed_size);
+                    // Dont read past end of buffer
+                    if (j * PAGE_SIZE + PAGE_SIZE > size) {
+                        stack_warnf("Truncating page size of %d to %d bytes\n", (uint64_t)PAGE_SIZE, (uint64_t)(size - j * PAGE_SIZE));
+                        compressed_size = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, size - j * PAGE_SIZE);
+                    } else {
+                        compressed_size = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
+                    }
                     int result = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
 
                     if (result != Z_OK) {
