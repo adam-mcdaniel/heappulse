@@ -9,7 +9,7 @@ static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
     uint8_t compressed_data[MAX_COMPRESSED_SIZE];
-    CSV<14, 10000> csv;
+    CSV<15, 10000> csv;
     StackFile file;
     size_t interval_count = 0;
 
@@ -26,12 +26,15 @@ class CompressionTest : public IntervalTest {
         csv.title().add("Resident Pages");
         csv.title().add("Zero Pages");
         csv.title().add("Dirty Pages");
+        csv.title().add("Clean Pages");
         csv.title().add("Non-Zero Byte Count");
         csv.title().add("Zero Byte Count");
         csv.title().add("Total Uncompressed Resident Size");
         csv.title().add("Total Uncompressed Dirty Size");
+        csv.title().add("Total Uncompressed Clean Size");
         csv.title().add("Total Compressed Resident Size");
         csv.title().add("Total Compressed Dirty Size");
+        csv.title().add("Total Compressed Clean Size");
         csv.write(file);
         interval_count = 0;
     }
@@ -58,11 +61,17 @@ class CompressionTest : public IntervalTest {
 
             double total_uncompressed_resident_size = 0;
             double total_uncompressed_dirty_size = 0;
+            double total_uncompressed_clean_size = 0;
+
             double total_compressed_dirty_size = 0;
             double total_compressed_resident_size = 0;
+            double total_compressed_clean_size = 0;
+
             uint64_t total_resident_pages = 0;
             uint64_t total_zero_pages = 0;
             uint64_t total_dirty_pages = 0;
+            uint64_t total_clean_pages = 0;
+
             double total_zero_bytes = 0;
             double total_non_zero_bytes = 0;
             i++;
@@ -149,6 +158,10 @@ class CompressionTest : public IntervalTest {
                         total_dirty_pages++;
                         total_uncompressed_dirty_size += len;
                         total_compressed_dirty_size += compressed_size;
+                    } else {
+                        total_clean_pages++;
+                        total_uncompressed_clean_size += len;
+                        total_compressed_clean_size += compressed_size;
                     }
                 }
                 tracked_allocations++;
@@ -165,19 +178,38 @@ class CompressionTest : public IntervalTest {
             }
 
             csv.new_row();
+            // csv.title().add("Interval #");
             csv.last()[0] = interval_count;
+            // csv.title().add("Allocation Site");
             csv.last()[1] = StackString<CSV_STR_SIZE>::format("%X", site.return_address);
+            // csv.title().add("Resident Pages");
             csv.last()[2] = total_resident_pages;
+            // csv.title().add("Zero Pages");
             csv.last()[3] = total_zero_pages;
+            // csv.title().add("Dirty Pages");
             csv.last()[4] = total_dirty_pages;
-            csv.last()[5] = total_non_zero_bytes;
-            csv.last()[6] = total_zero_bytes;
-            csv.last()[7] = total_uncompressed_resident_size;
-            csv.last()[8] = total_uncompressed_dirty_size;
-            csv.last()[9] = total_compressed_resident_size;
-            csv.last()[10] = total_compressed_dirty_size;
-            stack_infof("Found %d resident pages, %d zero pages, and %d dirty pages\n",
-                total_resident_pages, total_zero_pages, total_dirty_pages);
+            // csv.title().add("Clean Pages");
+            csv.last()[5] = total_clean_pages;
+            // csv.title().add("Non-Zero Byte Count");
+            csv.last()[6] = total_non_zero_bytes;
+            // csv.title().add("Zero Byte Count");
+            csv.last()[7] = total_zero_bytes;
+            // csv.title().add("Total Uncompressed Resident Size");
+            csv.last()[8] = total_uncompressed_resident_size;
+            // csv.title().add("Total Uncompressed Dirty Size");
+            csv.last()[9] = total_uncompressed_dirty_size;
+            // csv.title().add("Total Uncompressed Clean Size");
+            csv.last()[10] = total_uncompressed_clean_size;
+            // csv.title().add("Total Compressed Resident Size");
+            csv.last()[11] = total_compressed_resident_size;
+            // csv.title().add("Total Compressed Dirty Size");
+            csv.last()[12] = total_compressed_dirty_size;
+            // csv.title().add("Total Compressed Clean Size");
+            csv.last()[13] = total_compressed_clean_size;
+            
+
+            stack_infof("Found %d resident pages, %d zero pages, %d dirty pages, and %d clean pages\n",
+                total_resident_pages, total_zero_pages, total_dirty_pages, total_clean_pages);
         });
 
         csv.write(file);
