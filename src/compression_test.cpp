@@ -145,7 +145,7 @@ class CompressionTest : public IntervalTest {
 
                     if (pages[j].is_dirty()) {
                         total_dirty_pages++;
-                        total_uncompressed_dirty_size += PAGE_SIZE;
+                        total_uncompressed_dirty_size += len;
                         total_compressed_dirty_size += compressed_size;
                     }
                 }
