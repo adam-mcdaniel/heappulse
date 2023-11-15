@@ -124,6 +124,7 @@
 
 
 static CompressionTest ct;
+static IntervalTestSuite its;
 
 class Hooks {
 public:
@@ -137,7 +138,7 @@ public:
 
     // void post_mmap(void*, size_t, int, int, int, off_t, void*); /* ARGS: addr in, length in, prot in, flags in, fd in, offset in, ret_addr in */
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
-        if (its.is_done()) {
+        if (its.is_done() || !its.can_update()) {
             stack_debugf("Test finished, not updating\n");
             return;
         }
@@ -179,7 +180,7 @@ public:
     }
 
     void post_alloc(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *allocation_address) {
-        if (its.is_done()) {
+        if (its.is_done() || !its.can_update()) {
             stack_debugf("Test finished, not updating\n");
             return;
         }
@@ -300,8 +301,6 @@ public:
 
 private:
     std::mutex hook_lock;
-
-    IntervalTestSuite its;
 };
 
 

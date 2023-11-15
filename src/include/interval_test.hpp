@@ -537,7 +537,7 @@ public:
     }
 
     bool can_update() const {
-        return !IS_PROTECTED && !is_done();
+        return !IS_PROTECTED && !is_done() && !is_in_interval;
     }
 
     void add_test(IntervalTest *test) {
@@ -552,7 +552,7 @@ public:
         stack_debugf("IntervalTestSuite::update\n");
         heart_beat();
 
-        if (IS_PROTECTED) {
+        if (IS_PROTECTED || !can_update()) {
             return;
         }
 
