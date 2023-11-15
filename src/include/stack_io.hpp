@@ -15,10 +15,6 @@
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), StackFile::Mode::WRITE);
 
-void stack_debugf(const char* str);
-template <typename... Args>
-void stack_debugf(const char* format, Args... args);
-
 
 template <typename... Args>
 void stack_printf(const char* format, Args... args) {
@@ -91,6 +87,11 @@ void stack_logf(const char* format, Args... args) {
 
 static bool last_was_newline = true;
 
+#ifdef DEBUG
+void stack_debugf(const char* str);
+template <typename... Args>
+void stack_debugf(const char* format, Args... args);
+
 void stack_debugf(const char* str) {
     #ifdef DEBUG
     if (DEBUG) {
@@ -124,6 +125,7 @@ void stack_debugf(const char* format, Args... args) {
     #endif
 }
 
+#endif
 
 void stack_infof(const char* str) {
     if (last_was_newline) {
