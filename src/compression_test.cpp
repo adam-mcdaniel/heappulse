@@ -125,9 +125,7 @@ class CompressionTest : public IntervalTest {
                     // Dont read past end of buffer
                     if (j * PAGE_SIZE + PAGE_SIZE > size) {
                         stack_warnf("Truncating page size of %d to %d bytes\n", (uint64_t)PAGE_SIZE, (uint64_t)(size - j * PAGE_SIZE));
-                        compressed_size = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, size - j * PAGE_SIZE);
-                    } else {
-                        compressed_size = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
+                        compressed_size = (uint64_t)(size - j * PAGE_SIZE);
                     }
                     int result = compress(compressed_data, &compressed_size, buffer + j * PAGE_SIZE, PAGE_SIZE);
 
