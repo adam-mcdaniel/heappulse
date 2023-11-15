@@ -142,7 +142,7 @@ public:
             return;
         }
         stack_debugf("Post mmap\n");
-        // if (!hook_lock.try_lock()) return;
+        if (!hook_lock.try_lock()) return;
         // stack_debugf("Post mmap lock\n");
         // printf("Post MMAP! %p => %p\n", addr_in, allocation_address);
         // // post_alloc(NULL, n_bytes, PAGE_SIZE, 0, allocation_address);
@@ -174,7 +174,7 @@ public:
         // // IS_PROTECTED = protection;
         // record_alloc(allocation_address, CompressionEntry(allocation_address, n_bytes));
         // compression_test();
-        // hook_lock.unlock();
+        hook_lock.unlock();
         stack_debugf("Post mmap done\n");
     }
 
@@ -184,7 +184,7 @@ public:
             return;
         }
         stack_debugf("Post alloc\n");
-        // if (!hook_lock.try_lock()) return;
+        if (!hook_lock.try_lock()) return;
         // stack_debugf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
@@ -231,7 +231,7 @@ public:
         // hist[idx] += 1;
         // if (alloc_entry_idx < sizeof(alloc_arr) / sizeof(alloc_arr[0]))
         //     alloc_arr[alloc_entry_idx++] = { addr, n_bytes, 0 };
-        // hook_lock.unlock();
+        hook_lock.unlock();
         stack_debugf("Post alloc done\n");
     }
 
@@ -244,7 +244,9 @@ public:
         try {
             if (its.contains(addr)) {
                 stack_debugf("About to invalidate %p\n", addr);
+                hook_lock.lock();
                 its.invalidate(addr);
+                hook_lock.unlock();
             } else {
                 stack_debugf("Pre free does not contain %p\n", addr);
             }
@@ -293,7 +295,7 @@ public:
     }
 
 private:
-    static std::mutex hook_lock;
+    std::mutex hook_lock;
 
     IntervalTestSuite its;
 };
@@ -302,10 +304,18 @@ private:
 static Hooks hooks;
 // static IntervalTestSuite hooks;
 
-static std::mutex bk_lock;
+std::mutex bk_lock;
+
+
+// Thread local bool for whether or not we setup the protection handler
+static thread_local bool protection_handler_setup = false;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    if (!protection_handler_setup) {
+        setup_protection_handler();
+        protection_handler_setup = true;
+    }
     if (hooks.is_done()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
@@ -327,6 +337,10 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+    if (!protection_handler_setup) {
+        setup_protection_handler();
+        protection_handler_setup = true;
+    }
     if (hooks.is_done()) return;
     // static std::mutex free_lock;
     // std::lock_guard<std::mutex> lock(free_lock);
@@ -348,6 +362,10 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
+    if (!protection_handler_setup) {
+        setup_protection_handler();
+        protection_handler_setup = true;
+    }
     if (hooks.is_done()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
