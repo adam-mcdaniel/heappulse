@@ -531,19 +531,6 @@ public:
 
 
 class IntervalTestSuite {
-    StackVec<IntervalTest*, 10> tests;
-    void heart_beat() {
-        if (second_timer.has_elapsed(1000)) {
-            stack_infof("Heart beat (1 second has elapsed)\n");
-            if (timer.elapsed_milliseconds() >= config.period_milliseconds) {
-                stack_infof("Interval timer is at %dms, test is ready!\n", timer.elapsed_milliseconds());
-            } else {
-                stack_infof("Interval timer is at %dms, test is not ready\n", timer.elapsed_milliseconds());
-            }
-
-            second_timer.reset();
-        }
-    }
 
 public:
     IntervalTestSuite() {
@@ -560,18 +547,20 @@ public:
 
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
+        stack_debugf("IntervalTestSuite::update\n");
         heart_beat();
 
         if (IS_PROTECTED) {
             return;
         }
-        
+
         schedule();
-        stack_debugf("IntervalTestSuite::update\n");
-        // if (!hook_lock.try_lock()) {
-        //     stack_debugf("Unable to lock hook\n");
-        //     return;
-        // }
+        if (!hook_lock.try_lock()) {
+            stack_debugf("Unable to lock hook\n");
+            return;
+        } else {
+            stack_debugf("Locked hook\n");
+        }
 
         AllocationSite site;
         if (allocation_sites.has(return_address)) {
@@ -599,7 +588,8 @@ public:
             stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
             stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
             stack_debugf("Unable to add allocation to site\n");
-            // hook_lock.unlock();
+            stack_debugf("Releasing lock\n");
+            hook_lock.unlock();
             return;
         }
         // try {
@@ -658,7 +648,8 @@ public:
         //     // }
         //     // allocation_sites.put(return_address, site);
         // }
-        // hook_lock.unlock();
+        stack_debugf("Releasing lock\n");
+        hook_lock.unlock();
                 
         stack_debugf("Leaving IntervalTestSuite::update\n");
     }
@@ -677,6 +668,7 @@ public:
 
     void invalidate(void *ptr) {
         heart_beat();
+        // std::lock_guard<std::mutex> lock(hook_lock);
         stack_debugf("IntervalTestSuite::invalidate\n");
         stack_debugf("Invalidating %X\n", ptr);
         allocations.clear();
@@ -684,10 +676,13 @@ public:
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
-                    // hook_lock.lock();
+                    stack_debugf("Waiting for hook lock to invalidate\n");
+                    hook_lock.lock();
+                    stack_debugf("Invalidating %X\n", ptr);
                     site.allocations.remove(ptr);
                     allocation_sites.put(site.return_address, site);
-                    // hook_lock.unlock();
+                    stack_debugf("Done invalidating %X\n", ptr);
+                    hook_lock.unlock();
                 }
             }
         }
@@ -710,6 +705,18 @@ public:
         cleanup();
     }
 private:
+    void heart_beat() {
+        if (second_timer.has_elapsed(1000)) {
+            stack_infof("Heart beat (1 second has elapsed)\n");
+            if (timer.elapsed_milliseconds() >= config.period_milliseconds) {
+                stack_infof("Interval timer is at %dms, test is ready!\n", timer.elapsed_milliseconds());
+            } else {
+                stack_infof("Interval timer is at %dms, test is not ready\n", timer.elapsed_milliseconds());
+            }
+
+            second_timer.reset();
+        }
+    }
     void schedule() {
         heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
@@ -720,6 +727,7 @@ private:
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_warnf("Starting test\n");
+            std::lock_guard<std::mutex> lock2(hook_lock);
 
             timer.reset();
             stack_logf("Getting allocations\n");
@@ -743,6 +751,7 @@ private:
 
         static std::mutex interval_lock;
         std::lock_guard<std::mutex> lock(interval_lock);
+        stack_logf("Running interval\n");
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
             if (!tests[i]->has_quit()) {
@@ -788,6 +797,7 @@ private:
         // hook_lock.unlock();
     }
 
+    StackVec<IntervalTest*, 10> tests;
     Timer timer, second_timer;
     IntervalTestConfig config;
 
@@ -796,7 +806,7 @@ private:
 
 
     // This is used to protect the main thread while we're compressing
-    // static std::mutex hook_lock;
+    std::mutex hook_lock;
 
     bool is_setup = false;
 };

@@ -183,8 +183,8 @@ public:
             stack_debugf("Test finished, not updating\n");
             return;
         }
-        stack_debugf("Post alloc\n");
         if (!hook_lock.try_lock()) return;
+        stack_debugf("Post alloc\n");
         // stack_debugf("Post alloc lock\n");
         // if (IS_PROTECTED) {
         //     return;
