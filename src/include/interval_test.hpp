@@ -486,7 +486,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 5000.0;
+    double period_milliseconds = 10000.0;
 };
 
 class IntervalTest {
