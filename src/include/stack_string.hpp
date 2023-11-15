@@ -198,7 +198,7 @@ public:
     template <typename T>
     static StackString<Size> from_number(T number, size_t radix=10) {
         if (radix == 10) {
-            if constexpr (std::is_same<T, int>::value || std::is_same<T, size_t>::value) {
+            if constexpr (std::is_same<T, int64_t>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value || std::is_same<T, int64_t>::value) {
                 char buf[Size];
                 ftoa((double)number, buf, 0);
                 buf[Size - 1] = '\0';
@@ -222,7 +222,7 @@ public:
         }
         while (number > 0) {
             // Confirm the number is an integer at compile time
-            if constexpr (std::is_same<T, int>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value) {
+            if constexpr (std::is_same<T, int64_t>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value || std::is_same<T, int64_t>::value) {
                 if (number % radix < 10) {
                     str.push('0' + (number % radix));
                 } else {
@@ -261,7 +261,7 @@ public:
         T number = 0;
         if constexpr (std::is_same<T, double>::value) {
             return atof(buf);
-        } else if constexpr (std::is_same<T, int>::value) {
+        } else if constexpr (std::is_same<T, int64_t>::value) {
             return atoi(buf);
         } else if constexpr (std::is_same<T, size_t>::value) {
             return atoi(buf);
@@ -331,13 +331,21 @@ public:
         return str;
     }
 
-    static StackString<Size> from(int number) {
+    // static StackString<Size> from(int64_t number) {
+    //     return from_number(number);
+    // }
+
+    static StackString<Size> from(int64_t number) {
         return from_number(number);
     }
 
-    static StackString<Size> from(size_t number) {
+    static StackString<Size> from(uint64_t number) {
         return from_number(number);
     }
+
+    // static StackString<Size> from(size_t number) {
+    //     return from_number(number);
+    // }
 
     static StackString<Size> from(double number) {
         return from_number(number);
@@ -383,8 +391,8 @@ public:
 
     template <typename Arg>
     void scan(Arg &arg) {
-        if constexpr (std::is_same<Arg, int>::value) {
-            arg = to_number<int>(*this);
+        if constexpr (std::is_same<Arg, int64_t>::value) {
+            arg = to_number<int64_t>(*this);
         } else if constexpr (std::is_same<Arg, size_t>::value) {
             arg = to_number<size_t>(*this);
         } else if constexpr (std::is_same<Arg, double>::value) {
@@ -397,7 +405,7 @@ public:
             } else if (*this == "false") {
                 arg = false;
             } else {
-                arg = to_number<int>(*this);
+                arg = to_number<int64_t>(*this);
             }
         } else if constexpr (std::is_same<Arg, StackString<Size>>::value) {
             arg = *this;
@@ -460,23 +468,27 @@ private:
                     return;
                 } else if (fmt[i + 1] == 'd') {
                     // Check if the cast can be done safely
-                    if constexpr (std::is_same<Arg, int>::value) {
-                        format_append_impl((int)arg);
+                    if constexpr (std::is_same<Arg, int64_t>::value || std::is_same<Arg, int>::value) {
+                        format_append_impl((int64_t)arg);
                     } else if constexpr (std::is_same<Arg, size_t>::value) {
-                        format_append_impl((size_t)arg);
+                        format_append_impl((int64_t)arg);
                     } else {
                         format_append_impl(arg);
                     }
                 } else if (fmt[i + 1] == 'x' || fmt[i + 1] == 'X') {
-                    if constexpr (std::is_same<Arg, int>::value) {
-                        format_append_impl(StackString<Size>::from_number((size_t)arg, 16));
+                    if constexpr (std::is_same<Arg, int64_t>::value || std::is_same<Arg, int>::value) {
+                        format_append_impl(StackString<Size>::from_number((int64_t)arg, 16));
                     } else if constexpr (std::is_same<Arg, size_t>::value) {
-                        format_append_impl(StackString<Size>::from_number((size_t)arg, 16));
+                        format_append_impl(StackString<Size>::from_number((int64_t)arg, 16));
                     } else {
                         format_append_impl(arg);
                     }
                 } else if (fmt[i + 1] == 's') {
-                    format_append_impl(StackString::from(arg));
+                    if constexpr (std::is_same<Arg, char*>::value) {
+                        format_append_impl(StackString::from((const char *)arg));
+                    } else {
+                        format_append_impl(arg);
+                    }
                 } else if (fmt[i + 1] == 'p') {
                     if constexpr (std::is_pointer<Arg>::value) {
                         format_append_impl((void*)arg);
@@ -484,7 +496,7 @@ private:
                         format_append_impl(arg);
                     }
                 } else if (fmt[i + 1] == 'f') {
-                    if constexpr (std::is_same<Arg, int>::value) {
+                    if constexpr (std::is_same<Arg, int64_t>::value || std::is_same<Arg, int>::value) {
                         format_append_impl((double)arg);
                     } else if constexpr (std::is_same<Arg, size_t>::value) {
                         format_append_impl((double)arg);
@@ -523,15 +535,18 @@ private:
     }
 
     // Format a string and append it to this string
+    void format_append_impl(int64_t number) {
+        format_append_impl(StackString<Size>::from_number(number));
+    }
+
+    void format_append_impl(uint64_t number) {
+        format_append_impl(StackString<Size>::from_number(number));
+    }
+
     void format_append_impl(int number) {
-        format_append_impl(StackString<Size>::from_number(number));
+        format_append_impl(StackString<Size>::from_number((int64_t)number));
     }
-
-    // Format a string and append it to this string
-    void format_append_impl(size_t number) {
-        format_append_impl(StackString<Size>::from_number(number));
-    }
-
+    
     // Format a string and append it to this string
     void format_append_impl(double number) {
         format_append_impl(StackString<Size>::from_number(number));

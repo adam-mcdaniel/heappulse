@@ -48,9 +48,6 @@ class CompressionTest : public IntervalTest {
         stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
 
         allocation_sites.map([&](auto return_address, AllocationSite site) {
-            csv.new_row();
-            csv.last()[0] = interval_count;
-            csv.last()[1] = site.return_address;
             stack_debugf("site.return_address: %p\n", site.return_address);
 
             double total_uncompressed_size = 0;
@@ -112,6 +109,22 @@ class CompressionTest : public IntervalTest {
                     }
                 }
             });
+
+            if (total_uncompressed_size == 0) {
+                stack_warnf("Skipping: No uncompressed data\n");
+                return;
+            }
+
+            csv.new_row();
+            csv.last()[0] = interval_count;
+            csv.last()[1] = StackString<CSV_STR_SIZE>::format("%X", site.return_address);
+            csv.last()[2] = total_resident_pages;
+            csv.last()[3] = total_zero_pages;
+            csv.last()[4] = total_dirty_pages;
+            csv.last()[5] = total_uncompressed_size;
+            csv.last()[6] = total_compressed_dirty_size;
+            csv.last()[7] = total_compressed_resident_size;
+            
         });
 
         /*

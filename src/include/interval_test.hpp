@@ -89,8 +89,8 @@ private:
     uint64_t page_frame_number;
     void* start_address, *end_address;
     bool read, write, exec;
-    bool is_zero_page;
     bool present;
+    bool is_zero_page;
     bool dirty, soft_dirty;
 };
 
@@ -395,12 +395,12 @@ struct Allocation {
             }
             PKEY_INITIALIZED = true;
         }
-        long page_size = sysconf(_SC_PAGESIZE);
-        uintptr_t address = (uintptr_t)ptr;
-        void* aligned_address = (void*)(address & ~(page_size - 1));
+        // long page_size = sysconf(_SC_PAGESIZE);
+        // uintptr_t address = (uintptr_t)ptr;
+        // void* aligned_address = (void*)(address & ~(page_size - 1));
 
-        // Align the size to the page boundary
-        size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
+        // // Align the size to the page boundary
+        // size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
 
         if (pkey_set(PKEY, PKEY_DISABLE_ACCESS) == -1) {
             perror("pkey_set");
@@ -417,12 +417,12 @@ struct Allocation {
             }
             PKEY_INITIALIZED = true;
         }
-        long page_size = sysconf(_SC_PAGESIZE);
-        uintptr_t address = (uintptr_t)ptr;
-        void* aligned_address = (void*)(address & ~(page_size - 1));
+        // long page_size = sysconf(_SC_PAGESIZE);
+        // uintptr_t address = (uintptr_t)ptr;
+        // void* aligned_address = (void*)(address & ~(page_size - 1));
 
-        // Align the size to the page boundary
-        size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
+        // // Align the size to the page boundary
+        // size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
 
         if (pkey_set(PKEY, 0) == -1) {
             perror("pkey_set");
@@ -478,7 +478,7 @@ struct AllocationSite {
 
     void log() const {
         stack_logf("AllocationSite: %p\n", return_address);
-        for (int i=0; i<allocations.size(); i++) {
+        for (size_t i=0; i<allocations.size(); i++) {
             stack_logf("   ");
             allocations.nth_entry(i).value.log();
         }
@@ -580,7 +580,7 @@ public:
             site = {return_address, StackMap<void*, Allocation, TRACKED_ALLOCATIONS_PER_SITE>()};
         }
 
-        stack_debugf("Allocation at %X, size: %d\n", ptr, size);
+        stack_debugf("Allocation at %X, size: %d\n", (uintptr_t)ptr, size);
         stack_debugf("Return address: %X\n", return_address);
         stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
         stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());

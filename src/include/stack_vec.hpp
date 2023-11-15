@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <functional>
 
+void stack_warnf(const char* format);
+
 template <typename ValueType, size_t Size>
 class StackVec {
 private:
@@ -13,6 +15,7 @@ public:
     void push(const ValueType& value) {
         if (elements >= capacity) {
             // throw std::out_of_range("StackVec is full");
+            stack_warnf("StackVec is full\n");
             return;
         }
         data[elements++] = value;
@@ -40,7 +43,9 @@ public:
     ValueType pop() {
         if (elements == 0) {
             // throw std::out_of_range("StackVec is empty");
-            return ValueType();
+            stack_warnf("StackVec is empty\n");
+            return data[0];
+            // return ValueType();
         }
         return data[--elements];
     }
@@ -48,6 +53,7 @@ public:
     ValueType& operator[](size_t index) {
         if (index >= elements) {
             // throw std::out_of_range("Key not found");
+            stack_warnf("Key not found\n");
             return data[max_size() - 1];
         }
         return data[index];
@@ -56,7 +62,8 @@ public:
     const ValueType& operator[](size_t index) const {
         if (index >= elements) {
             // throw std::out_of_range("Key not found");
-            return ValueType();
+            stack_warnf("Key not found\n");
+            return data[max_size() - 1];
         }
         return data[index];
     }

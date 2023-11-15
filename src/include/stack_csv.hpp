@@ -20,14 +20,14 @@ struct CSVCell {
 
     union {
         StackString<CSV_STR_SIZE> string;
-        int integer;
+        int64_t integer;
         double floating_point;
         void *pointer;
         bool boolean;
     };
 
     CSVCell(StackString<CSV_STR_SIZE> string) : type(Type::STRING), string(string) {}
-    CSVCell(int integer) : type(Type::INTEGER), integer(integer) {}
+    CSVCell(int64_t integer) : type(Type::INTEGER), integer(integer) {}
     CSVCell(float floating_point) : type(Type::FLOAT), floating_point(floating_point) {}
     CSVCell(bool boolean) : type(Type::BOOLEAN), boolean(boolean) {}
     CSVCell(void *pointer) : type(Type::POINTER), pointer(pointer) {}
@@ -95,7 +95,7 @@ struct CSVCell {
         }
     }
 
-    CSVCell& operator=(int n) {
+    CSVCell& operator=(int64_t n) {
         type = Type::INTEGER;
         integer = n;
         return *this;
@@ -130,6 +130,12 @@ struct CSVCell {
         this->string = string;
         return *this;
     }
+    // template <size_t Size>
+    // CSVCell& operator=(const StackString<Size> &string) {
+    //     type = Type::STRING;
+    //     this->string = string;
+    //     return *this;
+    // }
     
     CSVCell& operator=(const char *string) {
         type = Type::STRING;
@@ -176,7 +182,7 @@ public:
     void add(T t) {
         if constexpr (std::is_same<T, StackString<CSV_STR_SIZE>>::value) {
             add_string(t);
-        } else if constexpr (std::is_same<T, int>::value) {
+        } else if constexpr (std::is_same<T, int64_t>::value) {
             add_integer(t);
         } else if constexpr (std::is_same<T, double>::value) {
             add_float(t);
@@ -193,7 +199,7 @@ public:
         cells.push(CSVCell(string));
     }
 
-    void add_integer(int integer) {
+    void add_integer(int64_t integer) {
         cells.push(CSVCell(integer));
     }
 
