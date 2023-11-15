@@ -246,7 +246,7 @@ void no_longer_working_thread() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
-    stack_logf("[handler] Got SIGSEGV at address: 0x%X\n", (uint64_t)si->si_addr);
+    stack_warnf("PROTECTION HANDLER: Got SIGSEGV at address: 0x%X\n", (uint64_t)si->si_addr);
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
     // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
@@ -260,19 +260,20 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
         long page_size = sysconf(_SC_PAGESIZE);
         void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
         mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
-        stack_logf("[handler] Giving back access to 0x%X\n", (uint64_t)si->si_addr);
+        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
     } else {
         if (!IS_PROTECTED) {
             // sprintf(buf, "[FAULT] Dereferenced address 0x%lx when unprotected, halting program\n", (long) si->si_addr);
             // write(STDOUT_FILENO, buf, strlen(buf));
-            stack_logf("[FAULT] Dereferenced address 0x%X when unprotected, halting program\n", (uint64_t)si->si_addr);
+            // stack_warnf("[FAULT] Dereferenced address 0x%X when unprotected, halting program\n", (uint64_t)si->si_addr);
+            stack_warnf("PROTECTION HANDLER: Caught access of unprotected memory (possibly a fault) 0x%X, sleeping for 0.25 seconds\n", (uint64_t)si->si_addr);
             usleep(250000);
         }
-        stack_logf("[INFO] Caught access of temporarily protected memory: 0x%X\n", (uint64_t)si->si_addr);
+        stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
         // sprintf(buf, "[INFO] Caught access of temporarily protected memory: 0x%lx\n", (long) si->si_addr);
         // write(STDOUT_FILENO, buf, strlen(buf));
         while (IS_PROTECTED) {}
-        stack_logf("[handler] Giving back access to 0x%X\n", (uint64_t)si->si_addr);
+        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
 
         // sprintf(buf, "[INFO] Resuming after protection ended: 0x%lx\n", (long) si->si_addr);
         // write(STDOUT_FILENO, buf, strlen(buf));
