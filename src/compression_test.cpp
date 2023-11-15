@@ -176,6 +176,8 @@ class CompressionTest : public IntervalTest {
             csv.last()[8] = total_uncompressed_dirty_size;
             csv.last()[9] = total_compressed_resident_size;
             csv.last()[10] = total_compressed_dirty_size;
+            stack_infof("Found %d resident pages, %d zero pages, and %d dirty pages\n",
+                total_resident_pages, total_zero_pages, total_dirty_pages);
         });
 
         csv.write(file);
