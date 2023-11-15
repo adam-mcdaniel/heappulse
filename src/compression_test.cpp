@@ -9,7 +9,7 @@ static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
     uint8_t compressed_data[MAX_COMPRESSED_SIZE];
-    CSV<12, 50000> csv;
+    CSV<14, 10000> csv;
     StackFile file;
     size_t interval_count = 0;
 
@@ -26,9 +26,12 @@ class CompressionTest : public IntervalTest {
         csv.title().add("Resident Pages");
         csv.title().add("Zero Pages");
         csv.title().add("Dirty Pages");
-        csv.title().add("Total Uncompressed Size");
-        csv.title().add("Total Compressed Dirty Size");
+        csv.title().add("Non-Zero Byte Count");
+        csv.title().add("Zero Byte Count");
+        csv.title().add("Total Uncompressed Resident Size");
+        csv.title().add("Total Uncompressed Dirty Size");
         csv.title().add("Total Compressed Resident Size");
+        csv.title().add("Total Compressed Dirty Size");
         csv.write(file);
         interval_count = 0;
     }
@@ -50,12 +53,15 @@ class CompressionTest : public IntervalTest {
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             stack_debugf("site.return_address: %p\n", site.return_address);
 
-            double total_uncompressed_size = 0;
+            double total_uncompressed_resident_size = 0;
+            double total_uncompressed_dirty_size = 0;
             double total_compressed_dirty_size = 0;
             double total_compressed_resident_size = 0;
             uint64_t total_resident_pages = 0;
             uint64_t total_zero_pages = 0;
             uint64_t total_dirty_pages = 0;
+            double total_zero_bytes = 0;
+            double total_non_zero_bytes = 0;
 
             site.allocations.map([&](auto ptr, Allocation allocation) {
                 size_t estimated_compressed_size = compressBound(allocation.size);
@@ -68,7 +74,7 @@ class CompressionTest : public IntervalTest {
                     return;
                 }
                 // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", allocation.size, compressed_size, ptr);
-                total_uncompressed_size += allocation.size;
+                total_uncompressed_resident_size += allocation.size;
                 allocation.protect();
                 stack_debugf("Protected\n");
                 StackVec<PageInfo, TRACKED_ALLOCATIONS_PER_SITE> pages = allocation.page_info<TRACKED_ALLOCATIONS_PER_SITE>();
@@ -76,7 +82,16 @@ class CompressionTest : public IntervalTest {
                 stack_debugf("Unprotected\n");
                 memcpy(buffer, (const uint8_t*)ptr, allocation.size);
                 allocation.unprotect();
-                
+                // Count the zero and non-zero bytes
+                for (size_t i=0; i<allocation.size; i++) {
+                    if (buffer[i] == 0) {
+                        total_zero_bytes++;
+                    } else {
+                        total_non_zero_bytes++;
+                    }
+                }
+
+
                 for (size_t j=0; j<pages.size(); j++) {
                     stack_debugf("j: %d\n", j);
                     if (pages[j].is_zero()) {
@@ -105,12 +120,13 @@ class CompressionTest : public IntervalTest {
 
                     if (pages[j].is_dirty()) {
                         total_dirty_pages++;
+                        total_uncompressed_dirty_size += PAGE_SIZE;
                         total_compressed_dirty_size += compressed_size;
                     }
                 }
             });
 
-            if (total_uncompressed_size == 0) {
+            if (total_uncompressed_resident_size == 0) {
                 stack_warnf("Skipping: No uncompressed data\n");
                 return;
             }
@@ -121,9 +137,33 @@ class CompressionTest : public IntervalTest {
             csv.last()[2] = total_resident_pages;
             csv.last()[3] = total_zero_pages;
             csv.last()[4] = total_dirty_pages;
-            csv.last()[5] = total_uncompressed_size;
-            csv.last()[6] = total_compressed_dirty_size;
-            csv.last()[7] = total_compressed_resident_size;
+            csv.last()[5] = total_non_zero_bytes;
+            csv.last()[6] = total_zero_bytes;
+            csv.last()[7] = total_uncompressed_resident_size;
+            csv.last()[8] = total_uncompressed_dirty_size;
+            csv.last()[9] = total_compressed_resident_size;
+            csv.last()[10] = total_compressed_dirty_size;
+
+            // csv.title().add("Interval #");
+            // csv.title().add("Allocation Site");
+            // csv.title().add("Resident Pages");
+            // csv.title().add("Zero Pages");
+            // csv.title().add("Dirty Pages");
+            // csv.title().add("Number of Non-Zero Bytes");
+            // csv.title().add("Number of Zero Bytes");
+            // csv.title().add("Total Uncompressed Resident Size");
+            // csv.title().add("Total Uncompressed Dirty Size");
+            // csv.title().add("Total Compressed Resident Size");
+            // csv.title().add("Total Compressed Dirty Size");
+
+            // csv.last()[0] = interval_count;
+            // csv.last()[1] = StackString<CSV_STR_SIZE>::format("%X", site.return_address);
+            // csv.last()[2] = total_resident_pages;
+            // csv.last()[3] = total_zero_pages;
+            // csv.last()[4] = total_dirty_pages;
+            // csv.last()[5] = total_uncompressed_resident_size;
+            // csv.last()[6] = total_compressed_dirty_size;
+            // csv.last()[7] = total_compressed_resident_size;
             
         });
 
