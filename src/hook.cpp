@@ -282,6 +282,10 @@ public:
         // hist[idx] -= 1;
     }
 
+    bool can_update() const {
+        return its.can_update();
+    }
+
     bool contains(void *addr) const {
         return its.contains(addr);
     }
@@ -316,7 +320,7 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
         setup_protection_handler();
         protection_handler_setup = true;
     }
-    if (hooks.is_done()) return;
+    if (hooks.is_done() || !hooks.can_update()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
     // return;
@@ -366,7 +370,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         setup_protection_handler();
         protection_handler_setup = true;
     }
-    if (hooks.is_done()) return;
+    if (hooks.is_done() || !hooks.can_update()) return;
     // static std::mutex alloc_lock;
     // std::lock_guard<std::mutex> lock(alloc_lock);
 

@@ -531,10 +531,13 @@ public:
 
 
 class IntervalTestSuite {
-
 public:
     IntervalTestSuite() {
         setup_protection_handler();
+    }
+
+    bool can_update() const {
+        return !IS_PROTECTED && !is_done();
     }
 
     void add_test(IntervalTest *test) {
@@ -544,7 +547,6 @@ public:
         assert(tests.size() > 0);
         // hook_lock.unlock();
     }
-
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
         stack_debugf("IntervalTestSuite::update\n");
@@ -727,14 +729,10 @@ private:
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             stack_warnf("Starting test\n");
-            std::lock_guard<std::mutex> lock2(hook_lock);
-
-            timer.reset();
             stack_logf("Getting allocations\n");
             get_allocs();
             stack_logf("Starting interval\n");
             interval();
-            timer.reset();
             stack_logf("Finished interval\n");
             stack_warnf("Done with test\n");
         } else {
@@ -747,10 +745,13 @@ private:
 
     void interval() {
         stack_logf("IntervalTestSuite::interval\n");
-        become_working_thread();
-
         static std::mutex interval_lock;
         std::lock_guard<std::mutex> lock(interval_lock);
+        std::lock_guard<std::mutex> lock2(hook_lock);
+        is_in_interval = true;
+        become_working_thread();
+        timer.reset();
+
         stack_logf("Running interval\n");
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
@@ -761,8 +762,10 @@ private:
                 stack_warnf("Test %d has quit\n", i);
             }
         }
+        timer.reset();
         // hook_lock.unlock();
         no_longer_working_thread();
+        is_in_interval = false;
         stack_logf("Finished interval\n");
     }
 
@@ -807,6 +810,8 @@ private:
 
     // This is used to protect the main thread while we're compressing
     std::mutex hook_lock;
+
+    bool is_in_interval = false;
 
     bool is_setup = false;
 };
