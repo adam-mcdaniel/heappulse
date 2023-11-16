@@ -34,7 +34,8 @@ Here is a program `tests/pagetest.exe` being called with the allocation tracker.
 I recommend creating a script, like [run.sh](./run.sh) to call the tracker on your executables.
 
 ```bash
-$ # `sudo` permissions are required to open the pagemap for the process, this part of the tracker can be disabled internally
+$ # `sudo` permissions are required to open the pagemap for the process,
+$ # this part of the tracker can be disabled internally
 $ sudo LD_PRELOAD=./libbkmalloc.so BKMALLOC_OPTS="--hooks-file=./hook.so" tests/pagetest.exe
 ```
 
@@ -56,7 +57,8 @@ public:
         stack_debugf("Hooks constructor\n");
 
         stack_debugf("Adding test...\n");
-        // (Add your test to the hook in the constructor by calling `add_test` with a pointer to your interval test!)
+        // (Add your test to the hook in the constructor by calling
+        // `add_test` with a pointer to your interval test!)
         its.add_test(&ct);
         stack_debugf("Done\n");
     }
