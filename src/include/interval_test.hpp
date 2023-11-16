@@ -496,10 +496,6 @@ private:
 public:
     IntervalTest() : is_quitting(false) {}
 
-    virtual const char *name() const {
-        return "Base IntervalTest";
-    }
-
     // This is called by the test when it no longer needs to be run
     void quit() {
         stack_infof("Quitting %s\n", name());
@@ -508,6 +504,10 @@ public:
 
     bool has_quit() const {
         return is_quitting;
+    }
+
+    virtual const char *name() const {
+        return "Base IntervalTest";
     }
 
     // A virtual method for setting up the test
