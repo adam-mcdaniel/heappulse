@@ -1,5 +1,11 @@
 # allocation-compressibility-tracker
 
+This is a tool for tracking the compressibility of heap allocations on timed intervals for various executables by dynamically linking in `malloc`, `free`, and `mmap` hooks.
+
+## Results
+
+[Here's a Jupyter Notebook with some analysis from this tool.](./results.ipynb)
+
 ## Usage
 
 #### Compiling
