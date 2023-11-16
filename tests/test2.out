@@ -1,0 +1,176 @@
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7694ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8696ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9706ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10710ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11715ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12718ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13719ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14721ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 1 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 3456.000000
+[INFO] Interval 1 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 663ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1665ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2669ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3670ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4676ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5680ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6683ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7723ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8726ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9751ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10766ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11768ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12796ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13827ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14839ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 2 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 5920.000000
+[INFO] Interval 2 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 810ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1819ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2820ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3866ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4877ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5916ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6922ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7929ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8948ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9968ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10995ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11998ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13035ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14038ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 3 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 8352.000000
+[INFO] Interval 3 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 0ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1047ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2049ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3069ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4100ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5101ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6109ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7111ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8113ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9117ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10164ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11176ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12211ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13219ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14259ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 4 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 10784.000000
+[INFO] Interval 4 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 229ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1242ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2245ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3258ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4258ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5259ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6270ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7284ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8308ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9310ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10345ms, test is not ready
+Elapsed time: 381960 microseconds
+Elapsed time: 10734512 microseconds

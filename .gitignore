@@ -3,7 +3,9 @@
 debug.sh
 *.txt
 *.exe
-a.out
+*.out
 .vscode/
-*.csv
+/*.csv
+/tests/*.csv
 *.o
+deprecated/

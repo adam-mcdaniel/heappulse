@@ -1,0 +1,4 @@
+Interval #,Allocation Site,Resident Pages,Zero Pages,Dirty Pages,Clean Pages,Non-Zero Byte Count,Zero Byte Count,Total Uncompressed Resident Size,Total Uncompressed Dirty Size,Total Uncompressed Clean Size,Total Compressed Resident Size,Total Compressed Dirty Size,Total Compressed Clean Size
+1,7FBBCEB598E1,1,0,0,1,94.000000,2.000000,96.000000,0.000000,96.000000,93.000000,0.000000,93.000000
+1,7FBBCEB36ADC,257,0,0,257,1000477.000000,52195.000000,214404096.000000,0.000000,1052672.000000,18531.000000,0.000000,18531.000000
+1,7FBBCE877D7C,1,0,0,1,28.000000,196.000000,224.000000,0.000000,224.000000,45.000000,0.000000,45.000000
