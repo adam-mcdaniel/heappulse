@@ -9,3 +9,4 @@ debug.sh
 /tests/*.csv
 *.o
 deprecated/
+Makefile
