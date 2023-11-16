@@ -1,1514 +1,592 @@
-Protecting allocations
-Done protecting allocations
-Size in pages: 1
-0x7f3acd880000 | PFN: 0x0023cbd9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3acde80000 | PFN: 0x0022a0ac, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3ace080000 | PFN: 0x001a01c0, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Unprotecting allocations
-Done unprotecting allocations
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x10e) [0x7f3acea9210e]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x10e) [0x7f3acea9210e]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Done with pass
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (a bytes)
-  No entries
-Bucket a (10 bytes)
-  No entries
-Bucket b (20 bytes)
-  Total compressed size: 4215
-  Total uncompressed size: 3232
-  Number of entries: 101
-  Compression ratio (lower is better): 1.30415
-  Total portion of heap (uncompressed): 0.935185
-  Total portion of heap (compressed): 0.990367
-Bucket c (40 bytes)
-  No entries
-Bucket d (80 bytes)
-  No entries
-Bucket e (100 bytes)
-  Total compressed size: 41
-  Total uncompressed size: 224
-  Number of entries: 1
-  Compression ratio (lower is better): 0.183036
-  Total portion of heap (uncompressed): 0.0648148
-  Total portion of heap (compressed): 0.00963346
-Bucket f (200 bytes)
-  No entries
-Bucket 10 (400 bytes)
-  No entries
-Bucket 11 (800 bytes)
-  No entries
-Bucket 12 (1000 bytes)
-  No entries
-Bucket 13 (10000 bytes)
-  No entries
-Bucket 14 (20000 bytes)
-  No entries
-Bucket 15 (40000 bytes)
-  No entries
-Bucket 16 (80000 bytes)
-  No entries
-Bucket 17 (100000 bytes)
-  No entries
-Bucket 18 (200000 bytes)
-  No entries
-Bucket 19 (400000 bytes)
-  No entries
-Bucket 1a (800000 bytes)
-  No entries
-Bucket 1b (40000000 bytes)
-  No entries
-Site stats:
-  Site 259 (./tests/test1.exe:0) at address 0x556ae5d491f7
-    File site_stats___tests_test1_exe_556ae5d491f7.csv does not exist
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      Total compressed size: 4215
-      Total uncompressed size: 3232
-      Number of entries: 101
-      Compression ratio (lower is better): 1.30415
-      Total portion of allocation site's data (uncompressed): 0.935185
-      Total portion of allocation site's data (compressed): 0.990367
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 41
-      Total uncompressed size: 224
-      Number of entries: 1
-      Compression ratio (lower is better): 0.183036
-      Total portion of allocation site's data (uncompressed): 0.0648148
-      Total portion of allocation site's data (compressed): 0.00963346
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
-Protecting allocations
-Done protecting allocations
-Size in pages: 1
-0x7f3acd880000 | PFN: 0x0023cbd9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3acde80000 | PFN: 0x0022a0ac, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3ace080000 | PFN: 0x001a01c0, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78680000 | PFN: 0x00140f6a, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005838        Up-to-date, Dirty, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f3a78681000 | PFN: 0x003397c9, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Unprotecting allocations
-Done unprotecting allocations
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x10e) [0x7f3acea9210e]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x10e) [0x7f3acea9210e]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Putting entry into buckets:
-Start Trace @ 0x556ae5d491f7
-1. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN9Backtrace7captureEv+0x42) [0x7f3a78a0a8a5]
-2. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN16CompressionEntry17capture_backtraceEv+0x34) [0x7f3a78a0af16]
-3. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(_ZN5Hooks10post_allocEP7bk_HeapmmiPv+0xdc) [0x7f3a78a0b832]
-4. /home/adam/Documentos/c++/allocation-compressibility-tracker/hook.so(bk_post_alloc_hook+0x4a) [0x7f3a78a0a236]
-5. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(+0x4f0f) [0x7f3acea8ef0f]
-6. /home/adam/Documentos/c++/allocation-compressibility-tracker/libbkmalloc.so(malloc+0x62) [0x7f3acea92062]
-7. ./tests/test1.exe(+0x11f7) [0x556ae5d491f7]
-8. /lib/x86_64-linux-gnu/libc.so.6(+0x29d90) [0x7f3ace829d90]
-9. /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x80) [0x7f3ace829e40]
-10. ./tests/test1.exe(+0x1105) [0x556ae5d49105]
-End Trace
-556ae5d491f7
-Done with pass
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (a bytes)
-  No entries
-Bucket a (10 bytes)
-  No entries
-Bucket b (20 bytes)
-  Total compressed size: 12606
-  Total uncompressed size: 9664
-  Number of entries: 302
-  Compression ratio (lower is better): 1.30443
-  Total portion of heap (uncompressed): 0.955696
-  Total portion of heap (compressed): 0.991974
-Bucket c (40 bytes)
-  No entries
-Bucket d (80 bytes)
-  No entries
-Bucket e (100 bytes)
-  Total compressed size: 102
-  Total uncompressed size: 448
-  Number of entries: 2
-  Compression ratio (lower is better): 0.227679
-  Total portion of heap (uncompressed): 0.0443038
-  Total portion of heap (compressed): 0.00802644
-Bucket f (200 bytes)
-  No entries
-Bucket 10 (400 bytes)
-  No entries
-Bucket 11 (800 bytes)
-  No entries
-Bucket 12 (1000 bytes)
-  No entries
-Bucket 13 (10000 bytes)
-  No entries
-Bucket 14 (20000 bytes)
-  No entries
-Bucket 15 (40000 bytes)
-  No entries
-Bucket 16 (80000 bytes)
-  No entries
-Bucket 17 (100000 bytes)
-  No entries
-Bucket 18 (200000 bytes)
-  No entries
-Bucket 19 (400000 bytes)
-  No entries
-Bucket 1a (800000 bytes)
-  No entries
-Bucket 1b (40000000 bytes)
-  No entries
-Site stats:
-  Site 259 (./tests/test1.exe:0) at address 0x556ae5d491f7
-    File site_stats___tests_test1_exe_556ae5d491f7.csv already exists
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      Total compressed size: 12606
-      Total uncompressed size: 9664
-      Number of entries: 302
-      Compression ratio (lower is better): 1.30443
-      Total portion of allocation site's data (uncompressed): 0.955696
-      Total portion of allocation site's data (compressed): 0.991974
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 102
-      Total uncompressed size: 448
-      Number of entries: 2
-      Compression ratio (lower is better): 0.227679
-      Total portion of allocation site's data (uncompressed): 0.0443038
-      Total portion of allocation site's data (compressed): 0.00802644
-    Bucket 15 (512 bytes)
-      No entries
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9930ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10983ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12001ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13026ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14049ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15066ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 1 starting...
+[INFO] First one
+[INFO] Found 6 resident pages, 0 zero pages, 0 dirty pages, and 6 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 11 allocations with total size 82592.000000
+[INFO] Interval 1 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1009ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2033ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3058ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4081ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5102ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6127ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7148ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8172ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9193ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10214ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11227ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12247ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13259ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14280ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15293ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 2 starting...
+[INFO] First one
+[INFO] Found 22 resident pages, 15 zero pages, 0 dirty pages, and 22 clean pages
+[INFO] Found 2 resident pages, 1 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 26 allocations with total size 216768.000000
+[INFO] Interval 2 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1013ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2035ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3051ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4072ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5100ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6128ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7151ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8176ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9185ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10212ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11236ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12258ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13283ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14305ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15326ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 3 starting...
+[INFO] First one
+[INFO] Found 45 resident pages, 38 zero pages, 0 dirty pages, and 45 clean pages
+[INFO] Found 2 resident pages, 1 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 48 allocations with total size 393088.000000
+[INFO] Interval 3 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1017ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2037ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3063ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4085ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5110ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6128ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7137ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8165ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9190ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10215ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11238ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12262ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13284ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14317ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15346ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 4 starting...
+[INFO] First one
+[INFO] Found 62 resident pages, 69 zero pages, 0 dirty pages, and 62 clean pages
+[INFO] Found 2 resident pages, 1 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 64 allocations with total size 521344.000000
+[INFO] Interval 4 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1014ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2036ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3062ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4085ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5100ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6124ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7146ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8168ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9185ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10211ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11237ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12263ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13291ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14313ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15339ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 5 starting...
+[INFO] First one
+[INFO] Found 78 resident pages, 92 zero pages, 0 dirty pages, and 78 clean pages
+[INFO] Found 3 resident pages, 1 zero pages, 0 dirty pages, and 3 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 80 allocations with total size 675584.000000
+[INFO] Interval 5 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1014ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2040ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3065ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4092ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5115ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6140ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7156ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8173ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9188ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10204ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11214ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12231ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13257ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14265ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15282ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 6 starting...
+[INFO] First one
+[INFO] Found 94 resident pages, 119 zero pages, 0 dirty pages, and 94 clean pages
+[INFO] Found 3 resident pages, 3 zero pages, 0 dirty pages, and 3 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 95 allocations with total size 820800.000000
+[INFO] Interval 6 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1014ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2026ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3041ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4052ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5075ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6092ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7110ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8126ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9142ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10165ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11183ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12192ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13214ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14231ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15248ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 7 starting...
+[INFO] First one
+[INFO] Found 109 resident pages, 146 zero pages, 0 dirty pages, and 109 clean pages
+[INFO] Found 3 resident pages, 3 zero pages, 0 dirty pages, and 3 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 109 allocations with total size 963904.000000
+[INFO] Interval 7 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1016ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2041ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3063ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4082ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5104ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6124ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7152ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8175ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9188ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10207ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11232ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12253ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13276ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14295ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 15314ms, test is ready!
+[WARN] Starting test
+[INFO] Interval 8 starting...
+[INFO] First one
+[INFO] Found 125 resident pages, 170 zero pages, 0 dirty pages, and 125 clean pages
+[INFO] Found 4 resident pages, 3 zero pages, 0 dirty pages, and 4 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 125 allocations with total size 1120160.000000
+[INFO] Interval 8 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1014ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2034ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3055ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4076ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5083ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6106ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7127ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8147ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9167ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10189ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11214ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12236ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13259ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14282ms, test is not ready
+Hello World!
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Tick
+Tock
+Hello World!
+Elapsed time: 1019562 microseconds
+Elapsed time: 15302921 microseconds

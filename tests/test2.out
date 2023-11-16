@@ -1,615 +1,176 @@
-Protecting allocations
-Done protecting allocations
-[INFO] Caught access of temporarily protected memory: 0x7f6e3a2800c7
-Size in pages: 1
-0x7f6e90c80000 | PFN: 0x002a5dab, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90e80000 | PFN: 0x0015aad3, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a080000 | PFN: 0x001548e7, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a280000 | PFN: 0x00143e09, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Unprotecting allocations
-Done unprotecting allocations
-[INFO] Resuming after protection ended: 0x7f6e3a2800c7
-Done with pass
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (10 bytes)
-  No entries
-Bucket 10 (16 bytes)
-  No entries
-Bucket 11 (32 bytes)
-  No entries
-Bucket 12 (64 bytes)
-  No entries
-Bucket 13 (128 bytes)
-  No entries
-Bucket 14 (256 bytes)
-  Total compressed size: 33
-  Total uncompressed size: 224
-  Number of entries: 1
-  Compression ratio (lower is better): 0.147321
-  Total portion of heap (uncompressed): 0.259259
-  Total portion of heap (compressed): 0.0543657
-Bucket 15 (512 bytes)
-  Total compressed size: 574
-  Total uncompressed size: 640
-  Number of entries: 2
-  Compression ratio (lower is better): 0.896875
-  Total portion of heap (uncompressed): 0.740741
-  Total portion of heap (compressed): 0.945634
-Bucket 16 (1024 bytes)
-  No entries
-Bucket 17 (2048 bytes)
-  No entries
-Bucket 18 (4096 bytes)
-  No entries
-Bucket 19 (65536 bytes)
-  No entries
-Bucket 20 (131072 bytes)
-  No entries
-Bucket 21 (262144 bytes)
-  No entries
-Bucket 22 (524288 bytes)
-  No entries
-Bucket 23 (1048576 bytes)
-  No entries
-Bucket 24 (2097152 bytes)
-  No entries
-Bucket 25 (4194304 bytes)
-  No entries
-Bucket 26 (8388608 bytes)
-  No entries
-Bucket 27 (1073741824 bytes)
-  No entries
-Site stats:
-  Site 809 (./tests/test2.exe:0) at address 0x5609b6da2435
-    File site_stats___tests_test2_exe_5609b6da2435.csv does not exist
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 33
-      Total uncompressed size: 224
-      Number of entries: 1
-      Compression ratio (lower is better): 0.147321
-      Total portion of allocation site's data (uncompressed): 0.259259
-      Total portion of allocation site's data (compressed): 0.0543657
-    Bucket 15 (512 bytes)
-      Total compressed size: 574
-      Total uncompressed size: 640
-      Number of entries: 2
-      Compression ratio (lower is better): 0.896875
-      Total portion of allocation site's data (uncompressed): 0.740741
-      Total portion of allocation site's data (compressed): 0.945634
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
-Protecting allocations
-Done protecting allocations
-Size in pages: 1
-0x7f6e90c80000 | PFN: 0x002a5dab, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e38080000 | PFN: 0x003edc88, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90e80000 | PFN: 0x0015aad3, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a080000 | PFN: 0x001548e7, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a280000 | PFN: 0x00143e09, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Unprotecting allocations
-Done unprotecting allocations
-Done with pass
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (10 bytes)
-  No entries
-Bucket 10 (16 bytes)
-  No entries
-Bucket 11 (32 bytes)
-  No entries
-Bucket 12 (64 bytes)
-  No entries
-Bucket 13 (128 bytes)
-  No entries
-Bucket 14 (256 bytes)
-  Total compressed size: 66
-  Total uncompressed size: 448
-  Number of entries: 2
-  Compression ratio (lower is better): 0.147321
-  Total portion of heap (uncompressed): 0.259259
-  Total portion of heap (compressed): 0.0543657
-Bucket 15 (512 bytes)
-  Total compressed size: 1148
-  Total uncompressed size: 1280
-  Number of entries: 4
-  Compression ratio (lower is better): 0.896875
-  Total portion of heap (uncompressed): 0.740741
-  Total portion of heap (compressed): 0.945634
-Bucket 16 (1024 bytes)
-  No entries
-Bucket 17 (2048 bytes)
-  No entries
-Bucket 18 (4096 bytes)
-  No entries
-Bucket 19 (65536 bytes)
-  No entries
-Bucket 20 (131072 bytes)
-  No entries
-Bucket 21 (262144 bytes)
-  No entries
-Bucket 22 (524288 bytes)
-  No entries
-Bucket 23 (1048576 bytes)
-  No entries
-Bucket 24 (2097152 bytes)
-  No entries
-Bucket 25 (4194304 bytes)
-  No entries
-Bucket 26 (8388608 bytes)
-  No entries
-Bucket 27 (1073741824 bytes)
-  No entries
-Site stats:
-  Site 809 (./tests/test2.exe:0) at address 0x5609b6da2435
-    File site_stats___tests_test2_exe_5609b6da2435.csv already exists
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 66
-      Total uncompressed size: 448
-      Number of entries: 2
-      Compression ratio (lower is better): 0.147321
-      Total portion of allocation site's data (uncompressed): 0.259259
-      Total portion of allocation site's data (compressed): 0.0543657
-    Bucket 15 (512 bytes)
-      Total compressed size: 1148
-      Total uncompressed size: 1280
-      Number of entries: 4
-      Compression ratio (lower is better): 0.896875
-      Total portion of allocation site's data (uncompressed): 0.740741
-      Total portion of allocation site's data (compressed): 0.945634
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
-Protecting allocations
-Done protecting allocations
-Size in pages: 2
-0x7f6e37e80000 | PFN: 0x0014159b, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-0x7f6e37e81000 | PFN: 0x0015e3fa, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90c80000 | PFN: 0x002a5dab, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90e80000 | PFN: 0x0015aad3, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3ac80000 | PFN: 0x0014ad80, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a080000 | PFN: 0x001548e7, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e3a280000 | PFN: 0x00143e09, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Size in pages: 1
-0x7f6e90680000 | PFN: 0x0015b003, Soft-dirty: 1, File/shared: 0, Swapped: 0, Present: 1, Flags: 0x400005828        Up-to-date, LRU, MMAP, Anon, Swap Backed, 
-Unprotecting allocations
-Done unprotecting allocations
-Done with pass
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (10 bytes)
-  No entries
-Bucket 10 (16 bytes)
-  No entries
-Bucket 11 (32 bytes)
-  No entries
-Bucket 12 (64 bytes)
-  No entries
-Bucket 13 (128 bytes)
-  No entries
-Bucket 14 (256 bytes)
-  Total compressed size: 99
-  Total uncompressed size: 672
-  Number of entries: 3
-  Compression ratio (lower is better): 0.147321
-  Total portion of heap (uncompressed): 0.259259
-  Total portion of heap (compressed): 0.0543657
-Bucket 15 (512 bytes)
-  Total compressed size: 1722
-  Total uncompressed size: 1920
-  Number of entries: 6
-  Compression ratio (lower is better): 0.896875
-  Total portion of heap (uncompressed): 0.740741
-  Total portion of heap (compressed): 0.945634
-Bucket 16 (1024 bytes)
-  No entries
-Bucket 17 (2048 bytes)
-  No entries
-Bucket 18 (4096 bytes)
-  No entries
-Bucket 19 (65536 bytes)
-  No entries
-Bucket 20 (131072 bytes)
-  No entries
-Bucket 21 (262144 bytes)
-  No entries
-Bucket 22 (524288 bytes)
-  No entries
-Bucket 23 (1048576 bytes)
-  No entries
-Bucket 24 (2097152 bytes)
-  No entries
-Bucket 25 (4194304 bytes)
-  No entries
-Bucket 26 (8388608 bytes)
-  No entries
-Bucket 27 (1073741824 bytes)
-  No entries
-Site stats:
-  Site 809 (./tests/test2.exe:0) at address 0x5609b6da2435
-    File site_stats___tests_test2_exe_5609b6da2435.csv already exists
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 99
-      Total uncompressed size: 672
-      Number of entries: 3
-      Compression ratio (lower is better): 0.147321
-      Total portion of allocation site's data (uncompressed): 0.259259
-      Total portion of allocation site's data (compressed): 0.0543657
-    Bucket 15 (512 bytes)
-      Total compressed size: 1722
-      Total uncompressed size: 1920
-      Number of entries: 6
-      Compression ratio (lower is better): 0.896875
-      Total portion of allocation site's data (uncompressed): 0.740741
-      Total portion of allocation site's data (compressed): 0.945634
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
-Bucket stats:
-Bucket 0 (1 bytes)
-  No entries
-Bucket 1 (2 bytes)
-  No entries
-Bucket 2 (3 bytes)
-  No entries
-Bucket 3 (4 bytes)
-  No entries
-Bucket 4 (5 bytes)
-  No entries
-Bucket 5 (6 bytes)
-  No entries
-Bucket 6 (7 bytes)
-  No entries
-Bucket 7 (8 bytes)
-  No entries
-Bucket 8 (9 bytes)
-  No entries
-Bucket 9 (10 bytes)
-  No entries
-Bucket 10 (16 bytes)
-  No entries
-Bucket 11 (32 bytes)
-  No entries
-Bucket 12 (64 bytes)
-  No entries
-Bucket 13 (128 bytes)
-  No entries
-Bucket 14 (256 bytes)
-  Total compressed size: 99
-  Total uncompressed size: 672
-  Number of entries: 3
-  Compression ratio (lower is better): 0.147321
-  Total portion of heap (uncompressed): 0.259259
-  Total portion of heap (compressed): 0.0543657
-Bucket 15 (512 bytes)
-  Total compressed size: 1722
-  Total uncompressed size: 1920
-  Number of entries: 6
-  Compression ratio (lower is better): 0.896875
-  Total portion of heap (uncompressed): 0.740741
-  Total portion of heap (compressed): 0.945634
-Bucket 16 (1024 bytes)
-  No entries
-Bucket 17 (2048 bytes)
-  No entries
-Bucket 18 (4096 bytes)
-  No entries
-Bucket 19 (65536 bytes)
-  No entries
-Bucket 20 (131072 bytes)
-  No entries
-Bucket 21 (262144 bytes)
-  No entries
-Bucket 22 (524288 bytes)
-  No entries
-Bucket 23 (1048576 bytes)
-  No entries
-Bucket 24 (2097152 bytes)
-  No entries
-Bucket 25 (4194304 bytes)
-  No entries
-Bucket 26 (8388608 bytes)
-  No entries
-Bucket 27 (1073741824 bytes)
-  No entries
-Site stats:
-  Site 809 (./tests/test2.exe:0) at address 0x5609b6da2435
-    File site_stats___tests_test2_exe_5609b6da2435.csv already exists
-    Bucket 0 (1 bytes)
-      No entries
-    Bucket 1 (2 bytes)
-      No entries
-    Bucket 2 (3 bytes)
-      No entries
-    Bucket 3 (4 bytes)
-      No entries
-    Bucket 4 (5 bytes)
-      No entries
-    Bucket 5 (6 bytes)
-      No entries
-    Bucket 6 (7 bytes)
-      No entries
-    Bucket 7 (8 bytes)
-      No entries
-    Bucket 8 (9 bytes)
-      No entries
-    Bucket 9 (10 bytes)
-      No entries
-    Bucket 10 (16 bytes)
-      No entries
-    Bucket 11 (32 bytes)
-      No entries
-    Bucket 12 (64 bytes)
-      No entries
-    Bucket 13 (128 bytes)
-      No entries
-    Bucket 14 (256 bytes)
-      Total compressed size: 99
-      Total uncompressed size: 672
-      Number of entries: 3
-      Compression ratio (lower is better): 0.147321
-      Total portion of allocation site's data (uncompressed): 0.259259
-      Total portion of allocation site's data (compressed): 0.0543657
-    Bucket 15 (512 bytes)
-      Total compressed size: 1722
-      Total uncompressed size: 1920
-      Number of entries: 6
-      Compression ratio (lower is better): 0.896875
-      Total portion of allocation site's data (uncompressed): 0.740741
-      Total portion of allocation site's data (compressed): 0.945634
-    Bucket 16 (1024 bytes)
-      No entries
-    Bucket 17 (2048 bytes)
-      No entries
-    Bucket 18 (4096 bytes)
-      No entries
-    Bucket 19 (65536 bytes)
-      No entries
-    Bucket 20 (131072 bytes)
-      No entries
-    Bucket 21 (262144 bytes)
-      No entries
-    Bucket 22 (524288 bytes)
-      No entries
-    Bucket 23 (1048576 bytes)
-      No entries
-    Bucket 24 (2097152 bytes)
-      No entries
-    Bucket 25 (4194304 bytes)
-      No entries
-    Bucket 26 (8388608 bytes)
-      No entries
-    Bucket 27 (1073741824 bytes)
-      No entries
-Elapsed time: 21639702 microseconds
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7694ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8696ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9706ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10710ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11715ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12718ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13719ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14721ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 1 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 3456.000000
+[INFO] Interval 1 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 663ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1665ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2669ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3670ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4676ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5680ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6683ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7723ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8726ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9751ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10766ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11768ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12796ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13827ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14839ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 2 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 5920.000000
+[INFO] Interval 2 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 810ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1819ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2820ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3866ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4877ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5916ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6922ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7929ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8948ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9968ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10995ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11998ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13035ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14038ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 3 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 8352.000000
+[INFO] Interval 3 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 0ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1047ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2049ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3069ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4100ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5101ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6109ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7111ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8113ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9117ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10164ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11176ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12211ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13219ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14259ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 4 starting...
+[INFO] First one
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
+[INFO] Tracked 8 allocations with total size 10784.000000
+[INFO] Interval 4 done
+[WARN] Done with test
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 229ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1242ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2245ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3258ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4258ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5259ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6270ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7284ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8308ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9310ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10345ms, test is not ready
+Elapsed time: 381960 microseconds
+Elapsed time: 10734512 microseconds

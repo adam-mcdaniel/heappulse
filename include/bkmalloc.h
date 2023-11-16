@@ -489,6 +489,8 @@ static inline u64 bk_str_hash(bk_str s) {
 }
 
 
+static bool bk_mmap_override_enabled = true;
+
 /******************************* @@platform *******************************/
 #if defined(unix) || defined(__unix__) || defined(__unix) || defined(__linux__) || defined(__APPLE__)
     #define BK_UNIX
@@ -567,10 +569,12 @@ static inline void * bk_get_pages_unix(u64 n_pages) {
     desired_size = n_pages * PAGE_SIZE;
 
     errno = 0;
+    bk_mmap_override_enabled = false;
     pages = mmap(NULL, desired_size,
                  PROT_READ   | PROT_WRITE,
                  MAP_PRIVATE | MAP_ANONYMOUS,
                  -1, (off_t)0);
+    bk_mmap_override_enabled = true;
 
     if (unlikely(pages == MAP_FAILED || pages == NULL)) {
         BK_ASSERT(0,
@@ -589,7 +593,9 @@ static inline void bk_release_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
+    bk_mmap_override_enabled = false;
     err = munmap(addr, n_pages * PAGE_SIZE);
+    bk_mmap_override_enabled = true;
     BK_ASSERT(err == 0,
               "munmap() failed");
 }
@@ -599,7 +605,9 @@ static inline void bk_decommit_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
+    bk_mmap_override_enabled = false;
     err = madvise(addr, n_pages * PAGE_SIZE, MADV_DONTNEED);
+    bk_mmap_override_enabled = true;
 
     BK_ASSERT(err == 0,
               "munmap() failed");
@@ -761,6 +769,115 @@ do {                       \
 
 static void bk_puts(int fd, const char *s) {
     while (*s) { BK_PUTC(fd, *s); s += 1; }
+}
+
+#define MAX_PRECISION	(10)
+static const double rounders[MAX_PRECISION + 1] =
+{
+	0.5,				// 0
+	0.05,				// 1
+	0.005,				// 2
+	0.0005,				// 3
+	0.00005,			// 4
+	0.000005,			// 5
+	0.0000005,			// 6
+	0.00000005,			// 7
+	0.000000005,		// 8
+	0.0000000005,		// 9
+	0.00000000005		// 10
+};
+
+char *ftoa(double f, char * buf, int precision)
+{
+	char * ptr = buf;
+	char * p = ptr;
+	char * p1;
+	char c;
+	long intPart;
+
+	// check precision bounds
+	if (precision > MAX_PRECISION)
+		precision = MAX_PRECISION;
+
+	// sign stuff
+	if (f < 0)
+	{
+		f = -f;
+		*ptr++ = '-';
+	}
+
+	if (precision < 0)  // negative precision == automatic precision guess
+	{
+		if (f < 1.0) precision = 6;
+		else if (f < 10.0) precision = 5;
+		else if (f < 100.0) precision = 4;
+		else if (f < 1000.0) precision = 3;
+		else if (f < 10000.0) precision = 2;
+		else if (f < 100000.0) precision = 1;
+		else precision = 0;
+	}
+
+	// round value according the precision
+	if (precision)
+		f += rounders[precision];
+
+	// integer part...
+	intPart = f;
+	f -= intPart;
+
+	if (!intPart)
+		*ptr++ = '0';
+	else
+	{
+		// save start pointer
+		p = ptr;
+
+		// convert (reverse order)
+		while (intPart)
+		{
+			*p++ = '0' + intPart % 10;
+			intPart /= 10;
+		}
+
+		// save end pos
+		p1 = p;
+
+		// reverse result
+		while (p > ptr)
+		{
+			c = *--p;
+			*p = *ptr;
+			*ptr++ = c;
+		}
+
+		// restore end pos
+		ptr = p1;
+	}
+
+	// decimal part
+	if (precision)
+	{
+		// place decimal point
+		*ptr++ = '.';
+
+		// convert
+		while (precision--)
+		{
+			f *= 10.0;
+			c = f;
+			*ptr++ = '0' + c;
+			f -= c;
+		}
+	}
+
+	// terminating zero
+	*ptr = 0;
+
+	return buf;
+}
+
+static char *bk_ftos(char *p, double n) {
+    return ftoa(n, p, 6);
 }
 
 static char * bk_atos(char *p, char c) {
@@ -941,6 +1058,7 @@ void bk_vprintf(int fd, const char *fmt, va_list _args) {
                 case 'R': p = BK_PR_BG_RED;                      break;
                 case 'Y': p = BK_PR_BG_YELLOW;                   break;
                 case 'M': p = BK_PR_BG_MAGENTA;                  break;
+                case 'f': p = bk_ftos(buff, va_arg(args, double));  break;
                 case 'a': p = bk_atos(buff, va_arg(args, s32));  break;
                 case 'd': p = bk_dtos(buff, va_arg(args, s32));  break;
                 case 'D': p = bk_Dtos(buff, va_arg(args, s64));  break;
@@ -3924,7 +4042,7 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
     ret      = syscall(SYS_mmap, addr, length, prot, flags, fd, offset);
     ret_addr = (void*)ret;
 
-    if (ret_addr != MAP_FAILED) {
+    if (ret_addr != MAP_FAILED && bk_mmap_override_enabled) {
         BK_HOOK(post_mmap, addr, length, prot, flags, fd, offset, ret_addr);
     }
 
@@ -3936,7 +4054,7 @@ int munmap(void *addr, size_t length) {
 
     ret = syscall(SYS_munmap, addr, length);
 
-    if (ret == 0) {
+    if (ret == 0 && bk_mmap_override_enabled) {
         BK_HOOK(post_munmap, addr, length);
     }
 

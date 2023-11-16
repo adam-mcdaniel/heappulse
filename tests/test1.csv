@@ -1,4 +1,0 @@
-Interval # (10000 ms), Bucket Size, Number of Allocations, Buckets's Compression Efficiency (uncompressed/compressed), Bucket's Uncompressed Portion of Heap, Bucket's Compressed Portion of Heap, Bucket's Uncompressed Size, Bucket's Compressed Size, Total Uncompressed Heap Size, Total Compressed Heap Size, Total Bucket Resident Pages, Total Bucket Virtual Pages, Total Heap Resident Pages, Total Heap Virtual Pages, 
-1,16-32,101,0.766422,1,1,3232,4217,3232,4217,101,101,101,101,
-2,16-32,302,0.766497,1,1,9664,12608,9664,12608,302,302,302,302,
-3,16-32,302,0.766497,1,1,9664,12608,9664,12608,302,302,302,302,

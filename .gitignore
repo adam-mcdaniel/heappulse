@@ -3,5 +3,10 @@
 debug.sh
 *.txt
 *.exe
-a.out
+*.out
 .vscode/
+/*.csv
+/tests/*.csv
+*.o
+deprecated/
+Makefile
