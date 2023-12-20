@@ -189,7 +189,7 @@ void stack_warnf(const char* format, Args... args) {
 }
 
 
-#define OPTIMIZE
+// #define OPTIMIZE
 #ifdef OPTIMIZE
 #define stack_printf(...)
 #define stack_logf(...)
