@@ -173,13 +173,15 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
 
         kpageflags_fd = open("/proc/kpageflags", O_RDONLY);
         pagemap_fd = open(filename, O_RDONLY);
+
+        is_open = true;
     }
 
     if(pagemap_fd < 0) {
         perror("open pagemap");
         return false;
     }
-    
+
     if(kpageflags_fd < 0) {
         perror("open kflags");
         return false;
