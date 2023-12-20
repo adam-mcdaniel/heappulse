@@ -9,6 +9,7 @@
 // The log file to write to
 #define LOG_FILE "log.txt"
 
+
 #ifndef DEBUG
 #define stack_debugf(...)
 #endif
@@ -187,3 +188,12 @@ void stack_warnf(const char* format, Args... args) {
     }
 }
 
+
+#define OPTIMIZE
+#ifdef OPTIMIZE
+#define stack_printf(...)
+#define stack_logf(...)
+#define stack_infof(...)
+#define stack_warnf(...)
+#define stack_debugf(...)
+#endif
