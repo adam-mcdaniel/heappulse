@@ -32,9 +32,11 @@ class CompressionTest : public IntervalTest {
         csv.title().add("Total Uncompressed Resident Size");
         csv.title().add("Total Uncompressed Dirty Size");
         csv.title().add("Total Uncompressed Clean Size");
+        csv.title().add("Total Uncompressed File Mapped Size");
         csv.title().add("Total Compressed Resident Size");
         csv.title().add("Total Compressed Dirty Size");
         csv.title().add("Total Compressed Clean Size");
+        csv.title().add("Total Compressed File Mapped Size");
         csv.write(file);
         interval_count = 0;
     }
@@ -62,10 +64,12 @@ class CompressionTest : public IntervalTest {
             double total_uncompressed_resident_size = 0;
             double total_uncompressed_dirty_size = 0;
             double total_uncompressed_clean_size = 0;
+            double total_uncompressed_file_mapped_size = 0;
 
             double total_compressed_dirty_size = 0;
             double total_compressed_resident_size = 0;
             double total_compressed_clean_size = 0;
+            double total_compressed_file_mapped_size = 0;
 
             uint64_t total_resident_pages = 0;
             uint64_t total_zero_pages = 0;
@@ -151,6 +155,12 @@ class CompressionTest : public IntervalTest {
                         continue;
                     }
 
+                    if (pages[j].is_file_mapped()) {
+                        total_uncompressed_file_mapped_size += len;
+                        total_compressed_file_mapped_size += compressed_size;
+                        continue;
+                    }
+
                     if (pages[j].is_resident()) {
                         total_resident_pages++;
                         total_compressed_resident_size += compressed_size;
@@ -202,12 +212,16 @@ class CompressionTest : public IntervalTest {
             csv.last()[9] = total_uncompressed_dirty_size;
             // csv.title().add("Total Uncompressed Clean Size");
             csv.last()[10] = total_uncompressed_clean_size;
+            // csv.title().add("Total Uncompressed File Mapped Size");
+            csv.last()[11] = total_uncompressed_file_mapped_size;
             // csv.title().add("Total Compressed Resident Size");
-            csv.last()[11] = total_compressed_resident_size;
+            csv.last()[12] = total_compressed_resident_size;
             // csv.title().add("Total Compressed Dirty Size");
-            csv.last()[12] = total_compressed_dirty_size;
+            csv.last()[13] = total_compressed_dirty_size;
             // csv.title().add("Total Compressed Clean Size");
-            csv.last()[13] = total_compressed_clean_size;
+            csv.last()[14] = total_compressed_clean_size;
+            // csv.title().add("Total Compressed File Mapped Size");
+            csv.last()[15] = total_compressed_file_mapped_size;
             
 
             stack_infof("Found %d resident pages, %d zero pages, %d dirty pages, and %d clean pages\n",

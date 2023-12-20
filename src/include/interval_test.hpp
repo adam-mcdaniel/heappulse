@@ -131,7 +131,7 @@ public:
     }
 
     bool is_file_mapped() const {
-        return is_file_mapped;
+        return file_mapped;
     }
 private:
     uint64_t page_frame_number;
@@ -306,7 +306,8 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
                                   is_zero_page,
                                   present,
                                   dirty,
-                                  soft_dirty));
+                                  soft_dirty,
+                                  is_file_mapped));
         present_pages.set(j++, present);
         n_resident_pages++;
         if (j >= Size) {
