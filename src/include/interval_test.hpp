@@ -106,12 +106,20 @@ void clear_soft_dirty_bits() {
     bool protection = IS_PROTECTED;
     IS_PROTECTED = true;
 
-    int pid = getpid();
-    char filename[1024] = "";
-    stack_sprintf<128>(filename, "/proc/%d/clear_refs", pid);
+    static bool is_open = false;
+    static int fd = -1;
+    if (!is_open) {
 
-    // Open the clear_refs file
-    int fd = open(filename, O_WRONLY);
+        int pid = getpid();
+        char filename[1024] = "";
+        stack_sprintf<128>(filename, "/proc/%d/clear_refs", pid);
+
+        // Open the clear_refs file
+        // Only open it ONCE statically
+        fd = open(filename, O_WRONLY);
+        is_open = true;
+    }
+
     if(fd < 0) {
         perror("open clear_refs");
         return;
@@ -123,7 +131,19 @@ void clear_soft_dirty_bits() {
         return;
     }
 
-    close(fd);
+    // int fd = open(filename, O_WRONLY);
+    // if(fd < 0) {
+    //     perror("open clear_refs");
+    //     return;
+    // }
+
+    // // Write `4` to the clear_refs file to clear the soft dirty bits
+    // if(write(fd, "4", 1) != 1) {
+    //     perror("write clear_refs");
+    //     return;
+    // }
+
+    // close(fd);
     IS_PROTECTED = protection;
 }
 
@@ -141,18 +161,25 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
     size_in_bytes = size_in_pages * PAGE_SIZE;
     // Align the address to the page size
     addr = (void*)((uint64_t)addr / PAGE_SIZE * PAGE_SIZE);
-    
-    char filename[1024] = "";
-    stack_sprintf<128>(filename, "/proc/%d/pagemap", pid);
-    stack_logf("Filename: %s\n", filename);
 
-    int fd = open(filename, O_RDONLY);
-    if(fd < 0) {
+    static bool is_open = false;
+    static int pagemap_fd = -1;
+    static int kpageflags_fd = -1;
+    
+    if (!is_open) {
+        char filename[1024] = "";
+        stack_sprintf<128>(filename, "/proc/%d/pagemap", pid);
+        stack_logf("Filename: %s\n", filename);
+
+        kpageflags_fd = open("/proc/kpageflags", O_RDONLY);
+        pagemap_fd = open(filename, O_RDONLY);
+    }
+
+    if(pagemap_fd < 0) {
         perror("open pagemap");
         return false;
     }
-
-    int kpageflags_fd = open("/proc/kpageflags", O_RDONLY);
+    
     if(kpageflags_fd < 0) {
         perror("open kflags");
         return false;
@@ -170,7 +197,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
         uint64_t data;
         uint64_t index = (i / PAGE_SIZE) * sizeof(data);
 
-        if(pread(fd, &data, sizeof(data), index) != sizeof(data)) {
+        if(pread(pagemap_fd, &data, sizeof(data), index) != sizeof(data)) {
             perror("pread");
             break;
         }
@@ -240,8 +267,8 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
         assert(n_resident_pages == present_pages.count());
     }
 
-    close(fd);
-    close(kpageflags_fd);
+    // close(pagemap_fd);
+    // close(kpageflags_fd);
     stack_logf("Done with count_resident_pages\n");
 
     IS_PROTECTED = protection;
