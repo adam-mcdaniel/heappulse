@@ -75,6 +75,7 @@ class CompressionTest : public IntervalTest {
             uint64_t total_zero_pages = 0;
             uint64_t total_dirty_pages = 0;
             uint64_t total_clean_pages = 0;
+            uint64_t total_file_mapped_pages = 0;
 
             double total_zero_bytes = 0;
             double total_non_zero_bytes = 0;
@@ -156,6 +157,7 @@ class CompressionTest : public IntervalTest {
                     }
 
                     if (pages[j].is_file_mapped()) {
+                        total_file_mapped_pages++;
                         total_uncompressed_file_mapped_size += len;
                         total_compressed_file_mapped_size += compressed_size;
                         continue;
@@ -224,8 +226,8 @@ class CompressionTest : public IntervalTest {
             csv.last()[15] = total_compressed_file_mapped_size;
             
 
-            stack_infof("Found %d resident pages, %d zero pages, %d dirty pages, and %d clean pages\n",
-                total_resident_pages, total_zero_pages, total_dirty_pages, total_clean_pages);
+            stack_infof("Found %d resident pages, %d zero pages, %d dirty pages, %d clean pages, and %d file mapped pages\n",
+                total_resident_pages, total_zero_pages, total_dirty_pages, total_clean_pages, total_file_mapped_pages);
         });
 
         csv.write(file);
