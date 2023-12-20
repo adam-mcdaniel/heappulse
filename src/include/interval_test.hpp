@@ -101,6 +101,32 @@ uint64_t count_virtual_pages(void *addr, uint64_t size_in_bytes) {
 static bool IS_PROTECTED = false;
 // std::condition_variable protect_cv;
 
+/// Clear the soft dirty bits for the program's pages.
+void clear_soft_dirty_bits() {
+    bool protection = IS_PROTECTED;
+    IS_PROTECTED = true;
+
+    int pid = getpid();
+    char filename[1024] = "";
+    stack_sprintf<128>(filename, "/proc/%d/clear_refs", pid);
+
+    // Open the clear_refs file
+    int fd = open(filename, O_WRONLY);
+    if(fd < 0) {
+        perror("open clear_refs");
+        return;
+    }
+
+    // Write `4` to the clear_refs file to clear the soft dirty bits
+    if(write(fd, "4", 1) != 1) {
+        perror("write clear_refs");
+        return;
+    }
+
+    close(fd);
+    IS_PROTECTED = protection;
+}
+
 template<size_t Size>
 bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> &page_info, BitVec<Size> &present_pages) {
     bool protection = IS_PROTECTED;
@@ -488,6 +514,7 @@ struct AllocationSite {
 
 struct IntervalTestConfig {
     double period_milliseconds = 15000.0;
+    bool clear_soft_dirty_bits = true;
 };
 
 class IntervalTest {
@@ -535,6 +562,10 @@ class IntervalTestSuite {
 public:
     IntervalTestSuite() {
         setup_protection_handler();
+        if (config.clear_soft_dirty_bits) {
+            stack_warnf("Clearing soft dirty bits\n");
+            clear_soft_dirty_bits();
+        }
     }
 
     bool can_update() const {
@@ -736,6 +767,11 @@ private:
             interval();
             stack_logf("Finished interval\n");
             stack_warnf("Done with test\n");
+            // If the test is done, clear the soft dirty bits
+            if (config.clear_soft_dirty_bits) {
+                stack_warnf("Clearing soft dirty bits\n");
+                clear_soft_dirty_bits();
+            }
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
