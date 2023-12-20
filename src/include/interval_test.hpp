@@ -36,7 +36,51 @@
 class PageInfo {
 public:
     PageInfo() : page_frame_number(0), start_address(NULL), end_address(NULL), read(false), write(false), exec(false), present(false), is_zero_page(false), dirty(false), soft_dirty(false) {}
-    PageInfo(uint64_t page_frame_number, void* start_address, void* end_address, bool read, bool write, bool exec, bool is_zero_page, bool present, bool dirty, bool soft_dirty) : page_frame_number(page_frame_number), start_address(start_address), end_address(end_address), read(read), write(write), exec(exec), present(present), is_zero_page(is_zero_page), dirty(dirty), soft_dirty(soft_dirty) {}
+    PageInfo(uint64_t page_frame_number, void* start_address, void* end_address, bool read, bool write, bool exec, bool is_zero_page, bool present, bool dirty, bool soft_dirty, bool file_mapped) : page_frame_number(page_frame_number), start_address(start_address), end_address(end_address), read(read), write(write), exec(exec), present(present), is_zero_page(is_zero_page), dirty(dirty), soft_dirty(soft_dirty), file_mapped(file_mapped) {}
+
+    void set_page_frame_number(uint64_t page_frame_number) {
+        this->page_frame_number = page_frame_number;
+    }
+
+    void set_start_address(void* start_address) {
+        this->start_address = start_address;
+    }
+
+    void set_end_address(void* end_address) {
+        this->end_address = end_address;
+    }
+
+    void set_read(bool read) {
+        this->read = read;
+    }
+
+    void set_write(bool write) {
+        this->write = write;
+    }
+
+    void set_exec(bool exec) {
+        this->exec = exec;
+    }
+
+    void set_present(bool present) {
+        this->present = present;
+    }
+
+    void set_is_zero_page(bool is_zero_page) {
+        this->is_zero_page = is_zero_page;
+    }
+
+    void set_dirty(bool dirty) {
+        this->dirty = dirty;
+    }
+
+    void set_soft_dirty(bool soft_dirty) {
+        this->soft_dirty = soft_dirty;
+    }
+
+    void set_is_file_mapped(bool is_file_mapped) {
+        this->file_mapped = is_file_mapped;
+    }
 
     bool is_resident() const {
         return present && !is_zero_page;
@@ -85,6 +129,10 @@ public:
     bool is_soft_dirty() const {
         return soft_dirty;
     }
+
+    bool is_file_mapped() const {
+        return is_file_mapped;
+    }
 private:
     uint64_t page_frame_number;
     void* start_address, *end_address;
@@ -92,6 +140,7 @@ private:
     bool present;
     bool is_zero_page;
     bool dirty, soft_dirty;
+    bool file_mapped;
 };
 
 uint64_t count_virtual_pages(void *addr, uint64_t size_in_bytes) {
@@ -242,6 +291,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
         bool read = data & (1 << 2);
         bool write = data & (1 << 4);
         bool exec = data & (1 << 5);
+        bool is_file_mapped = data & (1ULL << 61);
         bool present = data & (1ULL << 63);
         bool soft_dirty = data & (1ULL << 55);
         bool is_zero_page = flags & (1 << 24);
