@@ -52,7 +52,7 @@ class CompressionTest : public IntervalTest {
         // }
 
         stack_debugf("About to iterate over %d allocation sites\n", allocation_sites.num_entries());
-        uint64_t i = 0;
+        uint64_t allocation_sites_tracked = 0;
 
         uint64_t tracked_allocations = 0;
         double tracked_allocation_size = 0;
@@ -74,18 +74,20 @@ class CompressionTest : public IntervalTest {
 
             double total_zero_bytes = 0;
             double total_non_zero_bytes = 0;
-            i++;
-            if (i == allocation_sites.size() - 1) {
+            if (allocation_sites_tracked == allocation_sites.size() - 1) {
                 stack_infof("Last one\n");
-            } else if (i == allocation_sites.size() * 3 / 4) {
+            } else if (allocation_sites_tracked == allocation_sites.size() * 3 / 4) {
                 stack_infof("3/4 done\n");
-            } else if (i == allocation_sites.size() / 2) {
+            } else if (allocation_sites_tracked == allocation_sites.size() / 2) {
                 stack_infof("1/2 done\n");
-            } else if (i == allocation_sites.size() / 4) {
+            } else if (allocation_sites_tracked == allocation_sites.size() / 4) {
                 stack_infof("1/4 done\n");
-            } else if (i == 1) {
+            } else if (allocation_sites_tracked == 0) {
                 stack_infof("First one\n");
+            } else {
+                stack_infof("About %d%% done\n", (int)(allocation_sites_tracked * 100 / allocation_sites.size()));
             }
+            allocation_sites_tracked++;
             site.allocations.map([&](auto ptr, Allocation allocation) {
                 if (ptr == NULL) {
                     stack_warnf("Skipping NULL allocation\n");
