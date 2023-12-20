@@ -74,18 +74,18 @@ class CompressionTest : public IntervalTest {
 
             double total_zero_bytes = 0;
             double total_non_zero_bytes = 0;
-            if (allocation_sites_tracked == allocation_sites.size() - 1) {
+            if (allocation_sites_tracked == allocation_sites.num_entries() - 1) {
                 stack_infof("Last one\n");
-            } else if (allocation_sites_tracked == allocation_sites.size() * 3 / 4) {
+            } else if (allocation_sites_tracked == allocation_sites.num_entries() * 3 / 4) {
                 stack_infof("3/4 done\n");
-            } else if (allocation_sites_tracked == allocation_sites.size() / 2) {
+            } else if (allocation_sites_tracked == allocation_sites.num_entries() / 2) {
                 stack_infof("1/2 done\n");
-            } else if (allocation_sites_tracked == allocation_sites.size() / 4) {
+            } else if (allocation_sites_tracked == allocation_sites.num_entries() / 4) {
                 stack_infof("1/4 done\n");
             } else if (allocation_sites_tracked == 0) {
                 stack_infof("First one\n");
             } else {
-                stack_infof("About %d%% done\n", (int)(allocation_sites_tracked * 100 / allocation_sites.size()));
+                stack_infof("About %d percent done\n", (int)(allocation_sites_tracked * 100 / allocation_sites.num_entries()));
             }
             allocation_sites_tracked++;
             site.allocations.map([&](auto ptr, Allocation allocation) {
