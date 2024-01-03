@@ -61,30 +61,6 @@ void stack_sprintf(char *buf, const char* format, Args... args) {
 }
 
 
-void stack_logf(const char* str) {
-    // StackString<1 << 14>(str).print();
-    #ifdef DEBUG
-    if (DEBUG) {
-        stack_debugf(str);
-    }
-    #endif
-    stack_fprintf(log_file, "%s", str);
-    // stack_printf(str);
-}
-
-
-template <typename... Args>
-void stack_logf(const char* format, Args... args) {
-    // StackString<1 << 14>::format(format, args...).print();
-    #ifdef DEBUG
-    if (DEBUG) {
-        stack_debugf(format, args...);
-    }
-    #endif
-    stack_fprintf(log_file, format, args...);
-    // stack_printf(format, args...);
-}
-
 
 static bool last_was_newline = true;
 
@@ -127,6 +103,31 @@ void stack_debugf(const char* format, Args... args) {
 }
 
 #endif
+
+void stack_logf(const char* str) {
+    // StackString<1 << 14>(str).print();
+    #ifdef DEBUG
+    if (DEBUG) {
+        stack_debugf(str);
+    }
+    #endif
+    stack_fprintf(log_file, "%s", str);
+    // stack_printf(str);
+}
+
+
+template <typename... Args>
+void stack_logf(const char* format, Args... args) {
+    // StackString<1 << 14>::format(format, args...).print();
+    #ifdef DEBUG
+    if (DEBUG) {
+        stack_debugf(format, args...);
+    }
+    #endif
+    stack_fprintf(log_file, format, args...);
+    // stack_printf(format, args...);
+}
+
 
 void stack_infof(const char* str) {
     if (last_was_newline) {

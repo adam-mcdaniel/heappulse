@@ -41,3 +41,6 @@ public:
     template <size_t Size>
     void write(const StackString<Size>& data);
 };
+
+
+

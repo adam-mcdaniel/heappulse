@@ -12,6 +12,164 @@
 static CompressionTest ct;
 static IntervalTestSuite its;
 
+
+static void parse_origin(int pid, u64 origin_inst_addr, char *func_name, char *file_name, u64 *line_number) {
+    FILE *f;
+    char  buff[4096] = {0};
+    char *s;
+    char cur[4096] = {0};
+    u64   cur_start;
+    u64   start;
+    u64   end;
+    char  cur_copy[4096] = {0};
+    FILE *p;
+
+    memset(buff, 0, sizeof(buff));
+    memset(cur, 0, sizeof(cur));
+    memset(cur_copy, 0, sizeof(cur_copy));
+
+    // origin->func_name   = "???";
+    // origin->file_name   = "???";
+    // origin->line_number = 0;
+    strcpy(func_name, "???");
+    strcpy(file_name, "???");
+    *line_number = 0;
+
+    // Clear buffer
+
+    stack_sprintf<256>(buff, "/proc/%d/maps", pid);
+    // snprintf(buff, sizeof(buff), "/proc/%d/maps", pid);
+    f = fopen(buff, "r");
+
+    if (f == NULL) {
+        stack_warnf("Failed to open %s\n", buff);
+        return;
+    }
+
+    strcpy(cur, "");
+    cur_start = 0;
+
+    while (fgets(buff, sizeof(buff), f)) {
+        if (buff[strlen(buff) - 1] == '\n') { buff[strlen(buff) - 1] = 0; }
+
+        if (*buff == 0) {
+            stack_warnf("Empty line\n");
+            continue;
+        }
+
+        /* range */
+        if ((s = strtok(buff, " ")) == NULL) {
+            stack_warnf("Skipping range\n");
+            continue;
+        }
+        sscanf(s, "%lx-%lx", &start, &end);
+
+        /* perms */
+        if ((s = strtok(NULL, " ")) == NULL) {
+            stack_warnf("Skipping perms\n");
+            continue;
+        }
+        /* offset */
+        if ((s = strtok(NULL, " ")) == NULL) {
+            stack_warnf("Skipping offset\n");
+            continue;
+        }
+        /* dev */
+        if ((s = strtok(NULL, " ")) == NULL) {
+            stack_warnf("Skipping dev\n");
+            continue;
+        }
+        /* inode */
+        if ((s = strtok(NULL, " ")) == NULL) {
+            stack_warnf("Skipping inode\n");
+            continue;
+        }
+        /* path */
+        if ((s = strtok(NULL, " ")) == NULL) {
+            stack_warnf("Skipping path\n");
+            continue;
+        }
+        if (*s != '/') {
+            stack_warnf("Skipping path\n");
+            continue;
+        }
+
+        if (cur == NULL || strcmp(cur, s)) {
+            stack_debugf("cur: %s\n", cur);
+            // if (cur != NULL) { free(cur); }
+            // cur       = strdup(s);
+            strcpy(cur, s);
+            cur_start = start;
+        }
+
+        if (origin_inst_addr >= cur_start
+        &&  origin_inst_addr <  end) {
+            stack_debugf("Found %s\n", cur);
+
+            snprintf(cur_copy, sizeof(cur_copy), "%s", cur);
+            strcpy(file_name, basename(cur_copy));
+
+            // snprintf(buff, sizeof(buff),
+            //         "addr2line -f -e %s %lx", cur, origin_inst_addr - cur_start);
+            memset(buff, 0, sizeof(buff));
+            stack_sprintf<1024>(buff, "bash -c 'env -i addr2line -f -e %s %x'", cur, origin_inst_addr - cur_start);
+            stack_debugf("Executing `%s`\n", buff);
+
+            p = popen(buff, "r");
+
+            if (p != NULL) {
+                memset(buff, 0, sizeof(buff));
+                fread(buff, 1, sizeof(buff) - 1, p);
+
+                stack_debugf("Output: %s\n", buff);
+
+                s = buff;
+
+                while (*s && *s != '\n') {
+                    stack_debugf("Skipping %x = '%s'\n", (int)*s, s);
+                    s += 1;
+                }
+
+                if (*s) {
+                    *s  = 0;
+                    s  += 1;
+                }
+
+                stack_debugf("Function name: %s\n", buff);
+                strcpy(func_name, buff);
+
+                if (*s != '?') {
+                    if (s[strlen(s) - 1] == '\n') {
+                        stack_debugf("Removing newline\n");
+                        s[strlen(s) - 1] = 0;
+                    }
+                    if ((s = strtok(s, ":")) != NULL) {
+                        stack_debugf("File name: %s\n", s);
+                        // free(origin->file_name);
+                        strcpy(file_name, basename(s));
+
+
+                        if ((s = strtok(NULL, ":")) != NULL) {
+                            stack_debugf("Line number: %s\n", s);
+                            sscanf(s, "%lu", line_number);
+                        }
+                    }
+                }
+
+                pclose(p);
+            }
+
+            break;
+        } else {
+            stack_debugf("Skipping %s\n", cur);
+        }
+    }
+
+    // if (cur != NULL) { free(cur); }
+
+    fclose(f);
+}
+
 class Hooks {
 public:
     Hooks() {
@@ -57,6 +215,13 @@ public:
         stack_debugf("Post alloc\n");
         try {
             stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+
+            char func_name[1024] = "???";
+            char file_name[1024] = "???";
+            u64 line_number = 0;
+            parse_origin(getpid(), (uintptr_t)BK_GET_RA(), func_name, file_name, &line_number);
+            stack_debugf("Origin: %s:%s:%d\n", func_name, file_name, line_number);
+
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             stack_debugf("Post alloc update\n");
         } catch (std::out_of_range& e) {
@@ -177,7 +342,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         return;
     }
     stack_debugf("Entering hook\n");
-    hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    // hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
 }
