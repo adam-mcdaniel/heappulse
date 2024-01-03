@@ -816,6 +816,7 @@ public:
     }
 
     ~IntervalTestSuite() {
+        interval();
         cleanup();
     }
 private:
