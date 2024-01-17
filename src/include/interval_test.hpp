@@ -367,7 +367,7 @@ void clear_page_faults() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
-    stack_warnf("PROTECTION HANDLER: Got SIGSEGV");
+    stack_warnf("PROTECTION HANDLER: Got SIGSEGV\n");
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
     // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
@@ -377,7 +377,7 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
     page_faults.insert(aligned_address);
     mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
-    stack_warnf("PROTECTION HANDLER: Giving back access");
+    stack_warnf("PROTECTION HANDLER: Giving back access\n");
     /*
     // Is this thread the main?
     if (is_working_thread()) {
