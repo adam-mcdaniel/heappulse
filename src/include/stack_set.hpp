@@ -11,26 +11,36 @@ public:
     StackSet() {}
 
     void insert(T key) {
-        map.insert(key, nullptr);
+        map.put(key, 0);
     }
 
-    void remove(T key) {
-        map.remove(key);
-    }
-
-    bool contains(T key) {
-        return map.contains(key);
-    }
-
-    size_t size() {
-        return map.size();
+    void put(T key) {
+        map.put(key, 0);
     }
 
     void clear() {
         map.clear();
     }
 
-    StackVec<T, N> items() {
-        return map.keys();
+    void remove(T key) {
+        map.remove(key);
+    }
+
+    bool contains(T key) const {
+        return map.contains(key);
+    }
+
+    size_t num_entries() const {
+        return map.num_entries();
+    }
+
+    size_t size() const {
+        return map.size();
+    }
+
+    StackVec<T, N> items() const {
+        StackVec<T, N> result;
+        map.keys(result);
+        return result;
     }
 };

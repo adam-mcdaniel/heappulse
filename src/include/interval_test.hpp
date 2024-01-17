@@ -346,6 +346,21 @@ void no_longer_working_thread() {
     IS_PROTECTED = false;
 }
 
+
+/// A map to track pages that incur a page fault.
+/// This is used to track which pages incur a write between intervals.
+static StackSet<void*, 1000> page_faults;
+
+StackVec<void*, 1000> get_page_faults() {
+    StackVec<void*, 1000> result = page_faults.items();
+    page_faults.clear();
+    return result;
+}
+
+void clear_page_faults() {
+    page_faults.clear();
+}
+
 // This is the handler for SIGSEGV. It's called when we try to access
 // a protected page. This will put the thread to sleep until we finish
 // compressing the page. This thread will then be woken up when we
@@ -358,22 +373,31 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
     // write(STDOUT_FILENO, buf, strlen(buf));
 
+    long page_size = sysconf(_SC_PAGESIZE);
+    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
+    page_faults.insert(aligned_address);
+    mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
+    /*
     // Is this thread the main?
     if (is_working_thread()) {
         // sprintf(buf, "[FAULT] Working thread, giving back access: 0x%lx\n", (long) si->si_addr);
         // write(STDOUT_FILENO, buf, strlen(buf));
 
-        long page_size = sysconf(_SC_PAGESIZE);
-        void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
         mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
         stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
     } else {
+        // Add the page to the page faults set
+        page_faults.insert(aligned_address);
+        mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+        
+
         if (!IS_PROTECTED) {
             // sprintf(buf, "[FAULT] Dereferenced address 0x%lx when unprotected, halting program\n", (long) si->si_addr);
             // write(STDOUT_FILENO, buf, strlen(buf));
             // stack_warnf("[FAULT] Dereferenced address 0x%X when unprotected, halting program\n", (uint64_t)si->si_addr);
             stack_warnf("PROTECTION HANDLER: Caught access of unprotected memory (possibly a fault) 0x%X, sleeping for 0.25 seconds\n", (uint64_t)si->si_addr);
-            usleep(250000);
+            // usleep(250000);
         }
         stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
         // sprintf(buf, "[INFO] Caught access of temporarily protected memory: 0x%lx\n", (long) si->si_addr);
@@ -384,6 +408,7 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
         // sprintf(buf, "[INFO] Resuming after protection ended: 0x%lx\n", (long) si->si_addr);
         // write(STDOUT_FILENO, buf, strlen(buf));
     }
+    */
 }
 
 // This sets the SEGV signal handler to be the protection handler.

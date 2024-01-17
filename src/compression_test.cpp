@@ -47,6 +47,12 @@ class CompressionTest : public IntervalTest {
     ) override {
         stack_infof("Interval %d starting...\n", ++interval_count);
 
+        stack_infof("Page faults:\n");
+        auto result = get_page_faults();
+        for (size_t i=0; i<result.size(); i++) {
+            stack_infof("  Caught write to: 0x%X\n", (uintptr_t)result[i]);
+        }
+
         // if (csv.full()) {
         //     stack_warnf("CSV full, omitting test interval\n");
         //     quit();
@@ -102,12 +108,12 @@ class CompressionTest : public IntervalTest {
                     return;
                 }
                 // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", allocation.size, compressed_size, ptr);
-                total_uncompressed_resident_size += allocation.size;
                 uint64_t size = allocation.size;
                 if (size > MAX_COMPRESSED_SIZE) {
                     size = MAX_COMPRESSED_SIZE;
                     stack_warnf("Truncating allocation size of %d to %d bytes\n", (uint64_t)allocation.size, (uint64_t)size);
                 }
+                total_uncompressed_resident_size += size;
 
                 allocation.protect();
                 stack_debugf("Protected\n");
@@ -116,7 +122,7 @@ class CompressionTest : public IntervalTest {
                 stack_debugf("Unprotected\n");
 
                 memcpy(buffer, (const uint8_t*)ptr, size);
-                allocation.unprotect();
+                // allocation.unprotect();
                 // Count the zero and non-zero bytes
                 for (size_t i=0; i<size; i++) {
                     if (buffer[i] == 0) {
@@ -139,7 +145,7 @@ class CompressionTest : public IntervalTest {
 
                     uint64_t estimated_compressed_size = compressBound(PAGE_SIZE);
                     uint64_t compressed_size = estimated_compressed_size;
-                    
+
                     // Compress the page in the buffer
                     // stack_debugf("About to compress %d bytes to %d bytes from address %p\n", PAGE_SIZE, compressed_size, buffer + j * PAGE_SIZE);
                     stack_debugf("About to compress %d bytes!\n", compressed_size);
@@ -231,6 +237,7 @@ class CompressionTest : public IntervalTest {
         });
 
         csv.write(file);
+        clear_page_faults();
         stack_infof("Tracked %d allocations with total size %f\n", tracked_allocations, tracked_allocation_size);
         stack_infof("Interval %d done\n", interval_count);
     }
