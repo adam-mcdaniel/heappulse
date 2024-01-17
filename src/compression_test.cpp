@@ -47,7 +47,7 @@ class CompressionTest : public IntervalTest {
     ) override {
         stack_infof("Interval %d starting...\n", ++interval_count);
 
-        stack_infof("Page faults:\n");
+        stack_infof("Page %d faults:\n", result.size());
         auto result = get_page_faults();
         for (size_t i=0; i<result.size(); i++) {
             stack_infof("  Caught write to: 0x%X\n", (uintptr_t)result[i]);
