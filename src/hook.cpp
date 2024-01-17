@@ -133,10 +133,10 @@ static thread_local bool protection_handler_setup = false;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    if (!protection_handler_setup) {
-        setup_protection_handler();
-        protection_handler_setup = true;
-    }
+    // if (!protection_handler_setup) {
+    //     protection_handler_setup = true;
+    // }
+    setup_protection_handler();
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
@@ -150,10 +150,11 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    if (!protection_handler_setup) {
-        setup_protection_handler();
-        protection_handler_setup = true;
-    }
+    // if (!protection_handler_setup) {
+    //     setup_protection_handler();
+    //     protection_handler_setup = true;
+    // }
+    setup_protection_handler();
     if (hooks.is_done()) return;
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
@@ -167,10 +168,10 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
-    if (!protection_handler_setup) {
-        setup_protection_handler();
-        protection_handler_setup = true;
-    }
+    // if (!protection_handler_setup) {
+    //     protection_handler_setup = true;
+    // }
+    setup_protection_handler();
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
