@@ -705,7 +705,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 5000.0;
+    double period_milliseconds = 15000.0;
     bool clear_soft_dirty_bits = true;
 };
 
