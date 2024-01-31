@@ -89,7 +89,6 @@
 
 #ifndef __BKMALLOC_H__
 #define __BKMALLOC_H__
-
 #include <stddef.h> /* size_t */
 
 
@@ -3954,19 +3953,34 @@ size_t malloc_size(void *addr) BK_THROW                                         
 size_t malloc_usable_size(void *addr) BK_THROW                                                  { return 0;                                                                         }
 
 #ifdef BK_MMAP_OVERRIDE
+void *(*real_mmap)(void*, size_t, int, int, int, loff_t) = NULL;
+// typedef void *(*mmap_t)(void*, size_t, int, int, int, off_t);
+typedef void *(*mmap_ptr_t)(void *, size_t, int, int, int, loff_t); 
+
 void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset) {
     long  ret;
     void *ret_addr;
+
+    if (!_bk_internal_mmap) { bk_printf("Calling mmap hooks\n"); }
+    else { bk_printf("Calling internal mmap\n"); }
 
     if (!_bk_internal_mmap) { BK_STORE_RA(); }
 
     ret      = syscall(SYS_mmap, addr, length, prot, flags, fd, offset);
     ret_addr = (void*)ret;
 
+    // if (!real_mmap) {
+    //     bk_printf("Calling underlying mmap\n");
+    //     bk_printf("real_mmap: %p\n", real_mmap);
+    //     // bk_assert(real_mmap != NULL, "failed to find real mmap");
+    // }
+    // real_mmap = (mmap_ptr_t)dlsym(RTLD_NEXT, "mmap");
+    // ret_addr = real_mmap(addr, length, prot, flags, fd, offset);
     if (!_bk_internal_mmap && ret_addr != MAP_FAILED) {
         BK_HOOK(post_mmap, addr, length, prot, flags, fd, offset, ret_addr);
+        bk_printf("Returned from hook\n");
     }
-
+    // bk_printf("Returning: %x\n", ret_addr);
     return ret_addr;
 }
 

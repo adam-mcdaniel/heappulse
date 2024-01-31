@@ -121,7 +121,7 @@ public:
 
     ~Hooks() {
         its.finish();
-        stack_infof("Elapsed time: %lld ms\n", hook_timer.elapsed_microseconds());
+        stack_infof("Elapsed time: % ms\n", hook_timer.elapsed_microseconds());
         stack_logf("Hooks destructor\n");
     }
 
@@ -141,7 +141,7 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
-    setup_protection_handler();
+    // setup_protection_handler();
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
@@ -159,7 +159,7 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     //     setup_protection_handler();
     //     protection_handler_setup = true;
     // }
-    setup_protection_handler();
+    // setup_protection_handler();
     if (hooks.is_done()) return;
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
@@ -176,14 +176,44 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
-    setup_protection_handler();
+    // setup_protection_handler();
+    // stack_infof("Got mmap\n");
+    // bk_printf("Got mmap(%x, %d, %d, %d, %d, %d, %x)\n", addr, n_bytes, prot, flags, fd, offset, ret_addr);
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
         return;
     }
     stack_debugf("Entering hook\n");
-    // hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
+}
+
+extern "C"
+void bk_post_munmap_hook(void *addr, size_t n_bytes) {
+    // if (!protection_handler_setup) {
+    //     protection_handler_setup = true;
+    // }
+    // setup_protection_handler();
+    // stack_infof("Got munmap\n");
+
+    if (hooks.is_done()) return;
+    if (hooks.contains(addr)) {
+        stack_debugf("About to block on lock\n");
+        bk_lock.lock();
+        stack_debugf("Entering hook\n");
+        hooks.pre_free(NULL, addr);
+        stack_debugf("Leaving hook\n");
+        bk_lock.unlock();
+    }
+    // if (hooks.is_done() || !hooks.can_update()) return;
+    // if (!bk_lock.try_lock()) {
+    //     stack_debugf("Failed to lock\n");
+    //     return;
+    // }
+    // stack_debugf("Entering hook\n");
+    // // hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    // stack_debugf("Leaving hook\n");
+    // bk_lock.unlock();
 }

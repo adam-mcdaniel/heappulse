@@ -43,7 +43,7 @@ class LivenessTest : public IntervalTest {
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
         stack_infof("Interval %d starting...\n", ++interval_count);
-
+        return;
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 csv.new_row();
@@ -87,12 +87,12 @@ class LivenessTest : public IntervalTest {
                 uint64_t compressed_size = estimated_compressed_size;
                 
                 // Compress the pages
-                allocation.protect();
+                // allocation.protect();
                 stack_debugf("Protected\n");
 
                 // Copy to buffer
                 memcpy(uncompressed_buffer, (const uint8_t*)ptr, original_physical_size);
-                allocation.unprotect();
+                // allocation.unprotect();
                 stack_debugf("Unprotected\n");
 
                 // Print the uncompressed bytes

@@ -11,8 +11,9 @@
 #define u64 unsigned long long
 
 // #define alloc(x) calloc(x, 1)
-#define alloc(x) malloc(x)
-// #define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
+// #define alloc(x) malloc(x)
+#define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
+#define free(x) munmap(x, 0)
 
 int main() {
     srand(SEED);
