@@ -774,7 +774,7 @@ public:
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
         stack_debugf("IntervalTestSuite::update\n");
-        stack_infof("Got pointer: %p\n", ptr);
+        stack_debugf("Got pointer: %p\n", ptr);
         heart_beat();
 
         if (IS_PROTECTED || !can_update()) {
