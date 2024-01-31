@@ -23,18 +23,19 @@ int main() {
         char *ptr = (char*)alloc(number_of_bytes);
         // volatile char *ptr = (char*)mmap(NULL, number_of_bytes, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
         // Use half of the allocated memory
+        printf("Writing to %08llX (size=%lld)\n", (u64)ptr, number_of_bytes);
         for (int j=0; j<number_of_bytes / 4; j++) {
             ptr[j] = rand() % 256;
         }
-
+        
         for (int j=0; j<number_of_bytes / 2; j++) {
             // printf("%c", ptr[j]);
             if (isalnum(ptr[j])) {
-                printf("%c", ptr[j]);
+                printf("%X ", ptr[j]);
             } else if (ptr[j] == '\0') {
-                printf(".");
+                printf(". ");
             } else {
-                printf("?");
+                printf("? ");
             }
         }
 
@@ -42,8 +43,8 @@ int main() {
         printf("Wrote to %llu bytes\n", number_of_bytes/2);
 
         // Sleep for 10 seconds
-        std::this_thread::sleep_for(std::chrono::seconds(11));
-        volatile int *x = (int*)malloc(1000);
+        std::this_thread::sleep_for(std::chrono::seconds(6));
+        volatile int *x = (int*)alloc(1000);
         *x = 10;
         printf("x = %d\n", *x);
         free((void*)x);

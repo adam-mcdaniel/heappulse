@@ -61,6 +61,13 @@ void stack_sprintf(char *buf, const char* format, Args... args) {
 }
 
 
+#ifdef DEBUG
+void stack_debugf(const char* str);
+template <typename... Args>
+void stack_debugf(const char* format, Args... args);
+#endif
+
+
 void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
     #ifdef DEBUG
@@ -179,6 +186,40 @@ void stack_warnf(const char* format, Args... args) {
     stack_printf(format, args...);
     if (last_was_newline) {
         stack_logf("[WARN] ");
+    }
+    stack_logf(format, args...);
+    if (format[strlen(format) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
+    }
+}
+
+
+void stack_errorf(const char* str) {
+    if (last_was_newline) {
+        stack_printf("[ERROR] ");
+    }
+    stack_printf(str);
+    if (last_was_newline) {
+        stack_logf("[ERROR] ");
+    }
+    stack_logf(str);
+    if (str[strlen(str) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
+    }
+}
+
+template <typename... Args>
+void stack_errorf(const char* format, Args... args) {
+    if (last_was_newline) {
+        stack_printf("[ERROR] ");
+    }
+    stack_printf(format, args...);
+    if (last_was_newline) {
+        stack_logf("[ERROR] ");
     }
     stack_logf(format, args...);
     if (format[strlen(format) - 1] == '\n') {

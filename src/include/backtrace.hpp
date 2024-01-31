@@ -74,28 +74,51 @@ public:
         return from_hook;
     }
 
-    friend std::ostream& operator<<(std::ostream& os, Backtrace& bt) {
-        char **strings = backtrace_symbols(bt.backtrace_addrs, bt.backtrace_size);
+    // friend std::ostream& operator<<(std::ostream& os, Backtrace& bt) {
+    //     char **strings = backtrace_symbols(bt.backtrace_addrs, bt.backtrace_size);
 
-        bt.get_allocation_site();
-        if (bt.is_from_hook()) {
-            os << "[from hook ";
-            for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
-                os << i + 1 << " " << strings[i];
-            os << " ]";
+    //     bt.get_allocation_site();
+    //     if (bt.is_from_hook()) {
+    //         os << "[from hook ";
+    //         for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
+    //             os << i + 1 << " " << strings[i];
+    //         os << " ]";
+    //     } else {
+    //         if (strings != NULL) {
+    //             os << "[allocation site at " << std::hex << (long long int)bt.allocation_site << std::dec << ":";
+    //             for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
+    //                 os << i + 1 << " " << strings[i];
+    //             os << " ]";
+    //         } else {
+    //             os << "[error]";
+    //         }
+    //     }
+
+    //     free(strings);
+    //     return os;
+    // }
+
+    void print() {
+        char **strings = backtrace_symbols(backtrace_addrs, backtrace_size);
+
+        get_allocation_site();
+        if (is_from_hook()) {
+            stack_printf("[from hook ");
+            for (int i = 0; i < backtrace_size && strings[i] != NULL; i++)
+                stack_printf("%d %s\n", i + 1, strings[i]);
+            stack_printf(" ]\n");
         } else {
             if (strings != NULL) {
-                os << "[allocation site at " << std::hex << (long long int)bt.allocation_site << std::dec << ":";
-                for (int i = 0; i < bt.backtrace_size && strings[i] != NULL; i++)
-                    os << i + 1 << " " << strings[i];
-                os << " ]";
+                stack_printf("[allocation site at %p:", allocation_site);
+                for (int i = 0; i < backtrace_size && strings[i] != NULL; i++)
+                    stack_printf("%d %s\n", i + 1, strings[i]);
+                stack_printf(" ]\n");
             } else {
-                os << "[error]";
+                stack_printf("[error]\n");
             }
         }
 
         free(strings);
-        return os;
     }
 
 private:

@@ -87,7 +87,7 @@ void StackMap<KeyType, ValueType, Size>::clear() {
 }
 
 template <typename KeyType, typename ValueType, size_t Size>
-size_t StackMap<KeyType, ValueType, Size>::size() const {
+size_t StackMap<KeyType, ValueType, Size>::max_size() const {
     return Size;
 }
 

@@ -5,6 +5,8 @@
 
 const size_t CSV_STR_SIZE = 512;
 
+typedef StackString<CSV_STR_SIZE> CSVString;
+
 struct CSVCell {
     CSVCell() : type(Type::EMPTY), string() {}
 

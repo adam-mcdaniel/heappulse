@@ -7,9 +7,11 @@
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
 #include "compression_test.cpp"
+#include "liveness_test.cpp"
 
 
 static CompressionTest ct;
+static LivenessTest lt;
 static IntervalTestSuite its;
 
 class Hooks {
@@ -18,7 +20,9 @@ public:
         stack_debugf("Hooks constructor\n");
 
         stack_debugf("Adding test...\n");
+        hook_timer.start();
         its.add_test(&ct);
+        its.add_test(&lt);
         stack_debugf("Done\n");
     }
 
@@ -116,11 +120,14 @@ public:
     }
 
     ~Hooks() {
+        its.finish();
+        stack_infof("Elapsed time: %lld ms\n", hook_timer.elapsed_microseconds());
         stack_logf("Hooks destructor\n");
     }
 
 private:
     std::mutex hook_lock;
+    Timer hook_timer;
 };
 
 
@@ -128,8 +135,6 @@ static Hooks hooks;
 
 std::mutex bk_lock;
 
-
-static thread_local bool protection_handler_setup = false;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {

@@ -1,176 +1,2538 @@
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F91CD480500
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7694ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8696ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9706ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10710ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11715ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12718ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13719ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14721ms, test is not ready
+[INFO] Interval timer is at 9680ms, test is ready!
 [WARN] Starting test
 [INFO] Interval 1 starting...
-[INFO] First one
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Tracked 8 allocations with total size 3456.000000
+[INFO] Tracked 0 allocations with total size 0.000000
 [INFO] Interval 1 done
+[INFO] Interval 1 starting...
 [WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F91CD6807E0
+[INFO] Got pointer: 7F91CD280800
+[INFO] Got pointer: 7F91CD280A00
+[INFO] Got pointer: 7F91CCE80200
+[INFO] Got pointer: 7F9159A80000
+[INFO] Got pointer: 7F9159880000
+[INFO] Got pointer: 7F9159C80000
+[INFO] Got pointer: 7F9159880000
+[INFO] Got pointer: 7F9159C80000
+[INFO] Got pointer: 7F9159880000
+[INFO] Got pointer: 7F9159C80000
+[INFO] Got pointer: 7F9159880000
+[INFO] Got pointer: 7F9159680000
+[INFO] Got pointer: 7F9159480000
+[INFO] Got pointer: 7F9159680000
+[INFO] Got pointer: 7F9159480000
+[INFO] Got pointer: 7F9159680000
+[INFO] Got pointer: 7F9159480000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9159280000
+[INFO] Got pointer: 7F9159080000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 663ms, test is not ready
+[INFO] Interval timer is at 1022ms, test is not ready
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158E80000
+[INFO] Got pointer: 7F9158C80000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1665ms, test is not ready
+[INFO] Interval timer is at 2024ms, test is not ready
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
+[INFO] Got pointer: 7F9158A80000
+[INFO] Got pointer: 7F9158880000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2669ms, test is not ready
+[INFO] Interval timer is at 3041ms, test is not ready
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3670ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4676ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5680ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6683ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7723ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8726ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9751ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10766ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11768ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12796ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13827ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14839ms, test is not ready
+[INFO] Interval timer is at 4055ms, test is not ready
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
 [WARN] Starting test
 [INFO] Interval 2 starting...
 [INFO] First one
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Tracked 8 allocations with total size 5920.000000
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 1 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 1 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 864
+[INFO] Found 1 resident pages, 0 zero pages, 1 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 2880.000000
 [INFO] Interval 2 done
+[INFO] Interval 2 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 63 bytes
+[INFO] Compressed from 4096 bytes to 32 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 4096 bytes to 26 bytes
 [WARN] Done with test
+[WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 810ms, test is not ready
+[INFO] Interval timer is at 12ms, test is not ready
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9159E80400
+[INFO] Got pointer: 7F9159A80400
+[INFO] Got pointer: 7F9158280000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1819ms, test is not ready
+[INFO] Interval timer is at 1020ms, test is not ready
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2820ms, test is not ready
+[INFO] Interval timer is at 2040ms, test is not ready
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3866ms, test is not ready
+[INFO] Interval timer is at 3065ms, test is not ready
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4877ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5916ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6922ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7929ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8948ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9968ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10995ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11998ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13035ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14038ms, test is not ready
+[INFO] Interval timer is at 4090ms, test is not ready
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
 [WARN] Starting test
 [INFO] Interval 3 starting...
 [INFO] First one
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Tracked 8 allocations with total size 8352.000000
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 1728
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 3744.000000
 [INFO] Interval 3 done
+[INFO] Interval 3 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 66 bytes
+[INFO] Compressed from 4096 bytes to 31 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 0 bytes to 8 bytes
 [WARN] Done with test
+[WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 0ms, test is not ready
+[INFO] Interval timer is at 15ms, test is not ready
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1047ms, test is not ready
+[INFO] Interval timer is at 1035ms, test is not ready
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9158280000
+[INFO] Got pointer: 7F9158080000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2049ms, test is not ready
+[INFO] Interval timer is at 2074ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3069ms, test is not ready
+[INFO] Interval timer is at 3079ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4100ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5101ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6109ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7111ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8113ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9117ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10164ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11176ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12211ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13219ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14259ms, test is not ready
+[INFO] Interval timer is at 4107ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [WARN] Starting test
 [INFO] Interval 4 starting...
 [INFO] First one
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, and 2 clean pages
-[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, and 0 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, and 1 clean pages
-[INFO] Tracked 8 allocations with total size 10784.000000
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 2624
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 4640.000000
 [INFO] Interval 4 done
+[INFO] Interval 4 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 76 bytes
+[INFO] Compressed from 4096 bytes to 28 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 0 bytes to 8 bytes
 [WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 229ms, test is not ready
+[INFO] Interval timer is at 66ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1242ms, test is not ready
+[INFO] Interval timer is at 1108ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2245ms, test is not ready
+[INFO] Interval timer is at 2117ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3258ms, test is not ready
+[INFO] Interval timer is at 3137ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4258ms, test is not ready
+[INFO] Interval timer is at 4140ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[WARN] Starting test
+[INFO] Interval 5 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 3488
+[INFO] Found 0 resident pages, 1 zero pages, 0 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 5504.000000
+[INFO] Interval 5 done
+[INFO] Interval 5 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 77 bytes
+[INFO] Compressed from 4096 bytes to 32 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 0 bytes to 8 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5259ms, test is not ready
+[INFO] Interval timer is at 68ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6270ms, test is not ready
+[INFO] Interval timer is at 1091ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7284ms, test is not ready
+[INFO] Interval timer is at 2125ms, test is not ready
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8308ms, test is not ready
+[INFO] Interval timer is at 3136ms, test is not ready
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9157E80000
+[INFO] Got pointer: 7F9157C80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9310ms, test is not ready
+[INFO] Interval timer is at 4142ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[WARN] Starting test
+[INFO] Interval 6 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 4352
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 6368.000000
+[INFO] Interval 6 done
+[INFO] Interval 6 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 75 bytes
+[INFO] Compressed from 4096 bytes to 31 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 8192 bytes to 474 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10345ms, test is not ready
-Elapsed time: 381960 microseconds
-Elapsed time: 10734512 microseconds
+[INFO] Interval timer is at 27ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1064ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2067ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3097ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4103ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[WARN] Starting test
+[INFO] Interval 7 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 5216
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 7232.000000
+[INFO] Interval 7 done
+[INFO] Interval 7 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 76 bytes
+[INFO] Compressed from 4096 bytes to 30 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 8192 bytes to 481 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 17ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1023ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2037ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3051ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4054ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[WARN] Starting test
+[INFO] Interval 8 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 6112
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 8128.000000
+[INFO] Interval 8 done
+[INFO] Interval 8 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 75 bytes
+[INFO] Compressed from 4096 bytes to 32 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 8192 bytes to 481 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1044ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2050ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3056ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4059ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[WARN] Starting test
+[INFO] Interval 9 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 6944
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 8960.000000
+[INFO] Interval 9 done
+[INFO] Interval 9 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 76 bytes
+[INFO] Compressed from 4096 bytes to 31 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 8192 bytes to 481 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1015ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2022ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3045ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4069ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[WARN] Starting test
+[INFO] Interval 10 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 7808
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 9824.000000
+[INFO] Interval 10 done
+[INFO] Interval 10 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 77 bytes
+[INFO] Compressed from 4096 bytes to 30 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 8192 bytes to 481 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1020ms, test is not ready
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2030ms, test is not ready
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9158680000
+[INFO] Got pointer: 7F9157A80000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3035ms, test is not ready
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4051ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[WARN] Starting test
+[INFO] Interval 11 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 8640
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 10656.000000
+[INFO] Interval 11 done
+[INFO] Interval 11 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 78 bytes
+[INFO] Compressed from 4096 bytes to 32 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 0 bytes to 8 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 18ms, test is not ready
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1023ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2028ms, test is not ready
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3045ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4046ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[WARN] Starting test
+[INFO] Interval 12 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Allocation size: 1024
+[INFO] Found 2 resident pages, 0 zero pages, 2 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[INFO] Allocation size: 9536
+[INFO] Found 0 resident pages, 0 zero pages, 0 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] Tracked 7 allocations with total size 11552.000000
+[INFO] Interval 12 done
+[INFO] Interval 12 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 79 bytes
+[INFO] Compressed from 4096 bytes to 31 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Compressed from 0 bytes to 8 bytes
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1023ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2060ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3068ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4080ms, test is not ready
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157680000
+[INFO] Got pointer: 7F9157480000
+[INFO] Got pointer: 7F9157480000
+[INFO] Interval 13 starting...
+[INFO] First one
+[INFO] Allocation size: 320
+[INFO] Allocation size: 320
+[INFO] Found 2 resident pages, 0 zero pages, 0 dirty pages, 2 clean pages, and 0 file mapped pages
+[INFO] 1/4 done
+[INFO] Allocation size: 96
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] 1/2 done
+[INFO] Allocation size: 224
+[INFO] Found 1 resident pages, 0 zero pages, 1 dirty pages, 0 clean pages, and 0 file mapped pages
+[INFO] 3/4 done
+[INFO] Allocation size: 32
+[INFO] Found 1 resident pages, 0 zero pages, 0 dirty pages, 1 clean pages, and 0 file mapped pages
+[INFO] Last one
+[WARN] Skipping no uncompressed data
+[INFO] Tracked 5 allocations with total size 992.000000
+[INFO] Interval 13 done
+[INFO] Interval 13 starting...
+[INFO] Compressed from 4096 bytes to 65 bytes
+[INFO] Compressed from 4096 bytes to 49 bytes
+[INFO] Compressed from 4096 bytes to 107 bytes
+[INFO] Compressed from 4096 bytes to 139 bytes
+[INFO] Compressed from 4096 bytes to 47 bytes
+[INFO] Got pointer: 7F915B082000
+Elapsed time: 351010 microseconds
+Elapsed time: 9417 microseconds

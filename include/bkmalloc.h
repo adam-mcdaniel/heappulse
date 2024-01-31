@@ -109,11 +109,11 @@ extern "C" {
 
 extern BK_THREAD_LOCAL void *_bk_return_addr;
 
-#define BK_STORE_RA()                                   \
-(_bk_return_addr =                                      \
-    (__builtin_frame_address(0) == 0                    \
-        ? NULL                                          \
-        : __builtin_return_address(0)))
+#define BK_STORE_RA()                                                  \
+(_bk_return_addr =                                                     \
+    (__builtin_frame_address(0) == 0                                   \
+        ? NULL                                                         \
+        : __builtin_extract_return_addr(__builtin_return_address(0))))
 
 #define BK_GET_RA() (_bk_return_addr)
 
@@ -140,6 +140,8 @@ void   bk_free(void *addr);
 int    bk_posix_memalign(struct bk_Heap *heap, void **memptr, size_t alignment, size_t n_bytes);
 void * bk_aligned_alloc(struct bk_Heap *heap, size_t alignment, size_t size);
 size_t bk_malloc_size(void *addr);
+
+void * _bk_new(size_t n_bytes) BK_THROW;
 
 void * malloc(size_t n_bytes) BK_THROW;
 void * calloc(size_t count, size_t n_bytes) BK_THROW;
@@ -220,7 +222,7 @@ bk_handle_OOM(std::size_t size, bool nothrow) {
             break;
         }
 
-        ptr = malloc(size);
+        ptr = _bk_new(size);
     }
 
     if (ptr == nullptr && !nothrow) { std::__throw_bad_alloc(); }
@@ -233,7 +235,7 @@ static inline void *
 bk_new_impl(std::size_t size) noexcept(is_no_except) {
     void *ptr;
 
-    ptr = malloc(size);
+    ptr = _bk_new(size);
     if (__builtin_expect(ptr != nullptr, 1)) { return ptr; }
 
     return bk_handle_OOM(size, is_no_except);
@@ -322,10 +324,10 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 #include <string.h> /* memcpy(), memset() */
 #include <threads.h>
 #include <time.h>
-
+#include <stdlib.h>
 /* Stuff from stdlib.h, but I don't want to include stdlib.h */
-char *getenv(const char *name);
-void  exit(int status);
+// char *getenv(const char *name);
+// void  exit(int status);
 
 /* #define BK_MIN_ALIGN                            (16ULL) */
 #define BK_MIN_ALIGN                            (32ULL)
@@ -423,6 +425,7 @@ static inline int bk_is_space(int c) {
 }
 
 static void bk_fdprintf(int fd, const char *fmt, ...);
+static void bk_sprintf(char *buff, const char *fmt, ...);
 
 #define bk_printf(...) (bk_fdprintf(1, __VA_ARGS__))
 #define bk_logf(...)                                 \
@@ -482,14 +485,13 @@ static inline u64 bk_str_hash(bk_str s) {
     unsigned long hash = 5381;
     int c;
 
-    while ((c = *s++))
-    hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    while ((c = *s++)) {
+        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+    }
 
     return hash;
 }
 
-
-static bool bk_mmap_override_enabled = true;
 
 /******************************* @@platform *******************************/
 #if defined(unix) || defined(__unix__) || defined(__unix) || defined(__linux__) || defined(__APPLE__)
@@ -562,19 +564,25 @@ static inline void *bk_library_symbol_unix(void *lib_handle, const char *name) {
 #endif
 
 #if defined(BK_UNIX)
+
+static BK_THREAD_LOCAL int _bk_internal_mmap;
+static BK_THREAD_LOCAL int _bk_internal_munmap;
+
 static inline void * bk_get_pages_unix(u64 n_pages) {
     u64   desired_size;
     void *pages;
 
     desired_size = n_pages * PAGE_SIZE;
 
+    _bk_internal_mmap = 1;
+
     errno = 0;
-    bk_mmap_override_enabled = false;
     pages = mmap(NULL, desired_size,
                  PROT_READ   | PROT_WRITE,
                  MAP_PRIVATE | MAP_ANONYMOUS,
                  -1, (off_t)0);
-    bk_mmap_override_enabled = true;
+
+    _bk_internal_mmap = 0;
 
     if (unlikely(pages == MAP_FAILED || pages == NULL)) {
         BK_ASSERT(0,
@@ -593,9 +601,10 @@ static inline void bk_release_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
-    bk_mmap_override_enabled = false;
+    _bk_internal_munmap = 1;
     err = munmap(addr, n_pages * PAGE_SIZE);
-    bk_mmap_override_enabled = true;
+    _bk_internal_munmap = 0;
+
     BK_ASSERT(err == 0,
               "munmap() failed");
 }
@@ -605,9 +614,7 @@ static inline void bk_decommit_pages_unix(void *addr, u64 n_pages) {
 
     (void)err;
 
-    bk_mmap_override_enabled = false;
     err = madvise(addr, n_pages * PAGE_SIZE, MADV_DONTNEED);
-    bk_mmap_override_enabled = true;
 
     BK_ASSERT(err == 0,
               "munmap() failed");
@@ -771,115 +778,6 @@ static void bk_puts(int fd, const char *s) {
     while (*s) { BK_PUTC(fd, *s); s += 1; }
 }
 
-#define MAX_PRECISION	(10)
-static const double rounders[MAX_PRECISION + 1] =
-{
-	0.5,				// 0
-	0.05,				// 1
-	0.005,				// 2
-	0.0005,				// 3
-	0.00005,			// 4
-	0.000005,			// 5
-	0.0000005,			// 6
-	0.00000005,			// 7
-	0.000000005,		// 8
-	0.0000000005,		// 9
-	0.00000000005		// 10
-};
-
-char *ftoa(double f, char * buf, int precision)
-{
-	char * ptr = buf;
-	char * p = ptr;
-	char * p1;
-	char c;
-	long intPart;
-
-	// check precision bounds
-	if (precision > MAX_PRECISION)
-		precision = MAX_PRECISION;
-
-	// sign stuff
-	if (f < 0)
-	{
-		f = -f;
-		*ptr++ = '-';
-	}
-
-	if (precision < 0)  // negative precision == automatic precision guess
-	{
-		if (f < 1.0) precision = 6;
-		else if (f < 10.0) precision = 5;
-		else if (f < 100.0) precision = 4;
-		else if (f < 1000.0) precision = 3;
-		else if (f < 10000.0) precision = 2;
-		else if (f < 100000.0) precision = 1;
-		else precision = 0;
-	}
-
-	// round value according the precision
-	if (precision)
-		f += rounders[precision];
-
-	// integer part...
-	intPart = f;
-	f -= intPart;
-
-	if (!intPart)
-		*ptr++ = '0';
-	else
-	{
-		// save start pointer
-		p = ptr;
-
-		// convert (reverse order)
-		while (intPart)
-		{
-			*p++ = '0' + intPart % 10;
-			intPart /= 10;
-		}
-
-		// save end pos
-		p1 = p;
-
-		// reverse result
-		while (p > ptr)
-		{
-			c = *--p;
-			*p = *ptr;
-			*ptr++ = c;
-		}
-
-		// restore end pos
-		ptr = p1;
-	}
-
-	// decimal part
-	if (precision)
-	{
-		// place decimal point
-		*ptr++ = '.';
-
-		// convert
-		while (precision--)
-		{
-			f *= 10.0;
-			c = f;
-			*ptr++ = '0' + c;
-			f -= c;
-		}
-	}
-
-	// terminating zero
-	*ptr = 0;
-
-	return buf;
-}
-
-static char *bk_ftos(char *p, double n) {
-    return ftoa(n, p, 6);
-}
-
 static char * bk_atos(char *p, char c) {
     p[0] = c;
     p[1] = 0;
@@ -1010,7 +908,7 @@ static const char * bk_eat_pad(const char *s, int *pad, va_list *argsp) {
 
 static bk_Spinlock bk_printf_lock;
 
-void bk_vprintf(int fd, const char *fmt, va_list _args) {
+void bk_vprintf(char *out_buff, int fd, const char *fmt, va_list _args) {
     va_list     args;
     int         last_was_perc;
     char        c;
@@ -1019,12 +917,15 @@ void bk_vprintf(int fd, const char *fmt, va_list _args) {
     char        buff[64];
     const char *p;
     int         p_len;
+    int         len;
 
     bk_spin_lock(&bk_printf_lock);
 
     va_copy(args, _args);
 
     last_was_perc = 0;
+
+    if (out_buff != NULL) { out_buff[0] = 0; }
 
     while ((c = *fmt)) {
         if (c == '%' && !last_was_perc) {
@@ -1058,7 +959,6 @@ void bk_vprintf(int fd, const char *fmt, va_list _args) {
                 case 'R': p = BK_PR_BG_RED;                      break;
                 case 'Y': p = BK_PR_BG_YELLOW;                   break;
                 case 'M': p = BK_PR_BG_MAGENTA;                  break;
-                case 'f': p = bk_ftos(buff, va_arg(args, double));  break;
                 case 'a': p = bk_atos(buff, va_arg(args, s32));  break;
                 case 'd': p = bk_dtos(buff, va_arg(args, s32));  break;
                 case 'D': p = bk_Dtos(buff, va_arg(args, s64));  break;
@@ -1075,14 +975,24 @@ void bk_vprintf(int fd, const char *fmt, va_list _args) {
 
             for (; pad - p_len > 0; pad -= 1) { BK_PUTC(fd, padz ? '0' : ' '); }
 
-            bk_puts(fd, p);
+            if (out_buff != NULL) {
+                strcat(out_buff, p);
+            } else {
+                bk_puts(fd, p);
+            }
 
             for (; pad + p_len < 0; pad += 1) { BK_PUTC(fd, padz ? '0' : ' '); }
 
 noprint:;
             last_was_perc = 0;
         } else {
-            BK_PUTC(fd, *fmt);
+            if (out_buff != NULL) {
+                len               = strlen(out_buff);
+                out_buff[len]     = *fmt;
+                out_buff[len + 1] = 0;
+            } else {
+                BK_PUTC(fd, *fmt);
+            }
         }
 
 next:;
@@ -1098,7 +1008,15 @@ static void bk_fdprintf(int fd, const char *fmt, ...) {
     va_list args;
 
     va_start(args, fmt);
-    bk_vprintf(fd, fmt, args);
+    bk_vprintf(NULL, fd, fmt, args);
+    va_end(args);
+}
+
+static void bk_sprintf(char *buff, const char *fmt, ...) {
+    va_list args;
+
+    va_start(args, fmt);
+    bk_vprintf(buff, -1, fmt, args);
     va_end(args);
 }
 
@@ -4019,6 +3937,9 @@ int    bk_posix_memalign(struct bk_Heap *heap, void **memptr, size_t alignment, 
 void * bk_aligned_alloc(struct bk_Heap *heap, size_t alignment, size_t size)                    { BK_STORE_RA(); return _bk_aligned_alloc(heap, alignment, size);                   }
 size_t bk_malloc_size(void *addr)                                                               { return _bk_malloc_size(addr);                                                     }
 
+/* This helper does not BK_STORE_RA() since that is done higher up in the new wrappers. */
+void * _bk_new(size_t n_bytes) BK_THROW                                                         { return _bk_malloc(BK_GET_HEAP(), n_bytes);                                        }
+
 void * malloc(size_t n_bytes) BK_THROW                                                          { BK_STORE_RA(); return _bk_malloc(BK_GET_HEAP(), n_bytes);                         }
 void * calloc(size_t count, size_t n_bytes) BK_THROW                                            { BK_STORE_RA(); return _bk_calloc(BK_GET_HEAP(), count, n_bytes);                  }
 void * realloc(void *addr, size_t n_bytes) BK_THROW                                             { BK_STORE_RA(); return _bk_realloc(BK_GET_HEAP(), addr, n_bytes);                  }
@@ -4028,7 +3949,7 @@ void * pvalloc(size_t n_bytes) BK_THROW                                         
 void   free(void *addr) BK_THROW                                                                { _bk_free(addr);                                                                   }
 int    posix_memalign(void **memptr, size_t alignment, size_t size) BK_THROW                    { BK_STORE_RA(); return _bk_posix_memalign(BK_GET_HEAP(), memptr, alignment, size); }
 void * aligned_alloc(size_t alignment, size_t size) BK_THROW                                    { BK_STORE_RA(); return _bk_aligned_alloc(BK_GET_HEAP(), alignment, size);          }
-void * memalign(size_t alignment, size_t size) BK_THROW                                         { BK_STORE_RA(); return _bk_aligned_alloc(BK_GET_HEAP(), alignment, size);;         }
+void * memalign(size_t alignment, size_t size) BK_THROW                                         { BK_STORE_RA(); return _bk_aligned_alloc(BK_GET_HEAP(), alignment, size);          }
 size_t malloc_size(void *addr) BK_THROW                                                         { return _bk_malloc_size(addr);                                                     }
 size_t malloc_usable_size(void *addr) BK_THROW                                                  { return 0;                                                                         }
 
@@ -4037,12 +3958,12 @@ void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
     long  ret;
     void *ret_addr;
 
-    BK_STORE_RA();
+    if (!_bk_internal_mmap) { BK_STORE_RA(); }
 
     ret      = syscall(SYS_mmap, addr, length, prot, flags, fd, offset);
     ret_addr = (void*)ret;
 
-    if (ret_addr != MAP_FAILED && bk_mmap_override_enabled) {
+    if (!_bk_internal_mmap && ret_addr != MAP_FAILED) {
         BK_HOOK(post_mmap, addr, length, prot, flags, fd, offset, ret_addr);
     }
 
@@ -4054,7 +3975,7 @@ int munmap(void *addr, size_t length) {
 
     ret = syscall(SYS_munmap, addr, length);
 
-    if (ret == 0 && bk_mmap_override_enabled) {
+    if (!_bk_internal_munmap && ret == 0) {
         BK_HOOK(post_munmap, addr, length);
     }
 

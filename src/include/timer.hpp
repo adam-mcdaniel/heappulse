@@ -6,9 +6,7 @@ private:
 public:
     Timer() : start_time(std::chrono::steady_clock::now()) { }
 
-    ~Timer() {
-        printf("Elapsed time: %lu microseconds\n", elapsed_microseconds());
-    }
+    ~Timer() {}
 
     void start() {
         this->reset();

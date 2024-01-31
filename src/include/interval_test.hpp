@@ -38,6 +38,12 @@ public:
     PageInfo() : page_frame_number(0), start_address(NULL), end_address(NULL), read(false), write(false), exec(false), present(false), is_zero_page(false), dirty(false), soft_dirty(false) {}
     PageInfo(uint64_t page_frame_number, void* start_address, void* end_address, bool read, bool write, bool exec, bool is_zero_page, bool present, bool dirty, bool soft_dirty, bool file_mapped) : page_frame_number(page_frame_number), start_address(start_address), end_address(end_address), read(read), write(write), exec(exec), present(present), is_zero_page(is_zero_page), dirty(dirty), soft_dirty(soft_dirty), file_mapped(file_mapped) {}
 
+    /// @brief Get the size of the page in bytes
+    /// @return The size of the page in bytes
+    size_t size() const {
+        return PAGE_SIZE;
+    }
+
     void set_page_frame_number(uint64_t page_frame_number) {
         this->page_frame_number = page_frame_number;
     }
@@ -123,7 +129,7 @@ public:
     }
 
     bool is_dirty() const {
-        return dirty;
+        return dirty || soft_dirty;
     }
 
     bool is_soft_dirty() const {
@@ -438,9 +444,66 @@ static int PKEY = -1;
 static bool PKEY_INITIALIZED = false;
 
 struct Allocation {
+    /// @brief The pointer to the allocation
     void *ptr;
+    /// @brief The size of the allocation
     size_t size;
+    /// @brief The backtrace of the call stack that made the allocation
     Backtrace backtrace;
+    /// @brief The time the allocation was made
+    std::chrono::steady_clock::time_point allocation_time;
+    /// @brief The age of the allocation in intervals
+    size_t age = 0;
+
+    Allocation() : ptr(NULL), size(0), backtrace(Backtrace()) {
+        allocation_time = std::chrono::steady_clock::now();
+    }
+
+    Allocation(void *ptr, size_t size) : ptr(ptr), size(size), backtrace(Backtrace()) {
+        allocation_time = std::chrono::steady_clock::now();
+    }
+
+    /// @brief Check if the allocation is new (allocated in the current interval)
+    /// @return True if the allocation is new, false otherwise
+    bool is_new() const {
+        return age == 0;
+    }
+
+    /// @brief Get the age of the pointer in intervals
+    /// @return The age of the pointer in intervals
+    size_t get_age() const {
+        return age;
+    }
+
+    /// @brief Tick the age of the allocation by one interval
+    void tick_age() {
+        age++;
+    }
+
+    /// @brief Check if the allocation has any dirty pages
+    /// @return True if the allocation has any dirty pages, false otherwise
+    bool is_dirty() {
+        // Get the page info
+        auto pages = page_info<10000>();
+        for (size_t i=0; i<pages.size(); i++) {
+            if (pages[i].is_dirty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// @brief Get the time the allocation was made
+    /// @return The time the allocation was made
+    std::chrono::steady_clock::time_point get_time_allocated() const {
+        return allocation_time;
+    }
+    
+    /// @brief Get the time the allocation was made in milliseconds (since epoch)
+    /// @return The time the allocation was made in milliseconds (since epoch)
+    uint64_t get_time_allocated_ms() const {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(allocation_time.time_since_epoch()).count();
+    }
 
     void log() const {
         stack_logf("Allocation: %p, size: %x\n", ptr, size);
@@ -585,7 +648,7 @@ struct Allocation {
         if (get_page_info<Size>(ptr, size, page_info, present_pages)) {
             return present_pages;
         } else {
-            stack_logf("Unable to get page info\n");
+            stack_errorf("Unable to get page info\n");
             exit(1);
         }
     }
@@ -598,7 +661,26 @@ struct Allocation {
         if (get_page_info<Size>(ptr, size, page_info, present_pages)) {
             return page_info;
         } else {
-            stack_logf("Unable to get page info\n");
+            stack_errorf("Unable to get page info\n");
+            exit(1);
+        }
+    }
+
+    template<size_t Size>
+    StackVec<PageInfo, Size> physical_pages() {
+        BitVec<Size> present_pages;
+        StackVec<PageInfo, Size> page_info;
+
+        if (get_page_info<Size>(ptr, size, page_info, present_pages)) {
+            StackVec<PageInfo, Size> physical_pages;
+            for (size_t i=0; i<page_info.size(); i++) {
+                if (present_pages[i]) {
+                    physical_pages.push(page_info[i]);
+                }
+            }
+            return physical_pages;
+        } else {
+            stack_errorf("Unable to get page info\n");
             exit(1);
         }
     }
@@ -609,15 +691,21 @@ struct AllocationSite {
 
     void log() const {
         stack_logf("AllocationSite: %p\n", return_address);
-        for (size_t i=0; i<allocations.size(); i++) {
+        for (size_t i=0; i<allocations.max_size(); i++) {
             stack_logf("   ");
             allocations.nth_entry(i).value.log();
+        }
+    }
+
+    void tick_age() {
+        for (size_t i=0; i<allocations.max_size(); i++) {
+            allocations.nth_entry(i).value.tick_age();
         }
     }
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 15000.0;
+    double period_milliseconds = 5000.0;
     bool clear_soft_dirty_bits = true;
 };
 
@@ -686,6 +774,7 @@ public:
 
     void update(void *ptr, size_t size, uintptr_t return_address) {
         stack_debugf("IntervalTestSuite::update\n");
+        stack_infof("Got pointer: %p\n", ptr);
         heart_beat();
 
         if (IS_PROTECTED || !can_update()) {
@@ -712,7 +801,7 @@ public:
         stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
         stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
 
-        Allocation allocation = {ptr, size, Backtrace::capture()};
+        Allocation allocation = Allocation(ptr, size);
         if (site.allocations.has(ptr)) {
             site.allocations.put(ptr, allocation);
         } else if (!site.allocations.full()) {
@@ -793,7 +882,7 @@ public:
     }
 
     bool contains(void *ptr) const {
-        for (size_t i=0; i<allocation_sites.size(); i++) {
+        for (size_t i=0; i<allocation_sites.max_size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
@@ -810,7 +899,7 @@ public:
         stack_debugf("IntervalTestSuite::invalidate\n");
         stack_debugf("Invalidating %X\n", ptr);
         allocations.clear();
-        for (size_t i=0; i<allocation_sites.size(); i++) {
+        for (size_t i=0; i<allocation_sites.max_size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
                 if (site.allocations.has(ptr)) {
@@ -839,9 +928,19 @@ public:
         return true;
     }
 
-    ~IntervalTestSuite() {
+    void finish() {
+        static bool is_finished = false;
+        if (is_finished) {
+            return;
+        }
+        stack_debugf("IntervalTestSuite::finish\n");
         interval();
         cleanup();
+        is_finished = true;
+    }
+
+    ~IntervalTestSuite() {
+        finish();
     }
 private:
     void heart_beat() {
@@ -856,6 +955,8 @@ private:
             second_timer.reset();
         }
     }
+
+    /// @brief Attempt to schedule a test interval, but bail if the timer hasn't elapsed enough time
     void schedule() {
         heart_beat();
         stack_debugf("IntervalTestSuite::schedule\n");
@@ -885,6 +986,7 @@ private:
         stack_debugf("IntervalTestSuite::schedule\n");
     }
 
+    /// @brief Run the interval for all the tests
     void interval() {
         stack_logf("IntervalTestSuite::interval\n");
         static std::mutex interval_lock;
@@ -905,7 +1007,13 @@ private:
             }
         }
         timer.reset();
-        // hook_lock.unlock();
+        // Tick the age of all the allocations
+        allocation_sites.map([](uintptr_t key, AllocationSite &site) {
+            site.tick_age();
+        });
+        for (size_t i=0; i<allocations.size(); i++) {
+            allocations[i].tick_age();
+        }
         no_longer_working_thread();
         is_in_interval = false;
         stack_logf("Finished interval\n");
@@ -923,15 +1031,21 @@ private:
     // }
 
     void cleanup() {
+        static bool is_cleaned = false;
+        if (is_cleaned) {
+            return;
+        }
+        stack_debugf("IntervalTestSuite::cleanup\n");
         for (size_t i=0; i<tests.size(); i++) {
             tests[i]->cleanup();
         }
+        is_cleaned = true;
     }
 
     void get_allocs() {
         // hook_lock.lock();
         allocations.clear();
-        for (size_t i=0; i<allocation_sites.size(); i++) {
+        for (size_t i=0; i<allocation_sites.max_size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 allocation_sites.nth_entry(i).value.allocations.values(allocations);
             }
