@@ -108,7 +108,7 @@ class CompressionTest : public IntervalTest {
                     size = MAX_COMPRESSED_SIZE;
                     stack_warnf("Truncating allocation size of %d to %d bytes\n", (uint64_t)allocation.size, (uint64_t)size);
                 } else {
-                    stack_infof("Allocation size: %d\n", size);
+                    stack_debugf("Allocation size: %d\n", size);
                     // allocation.backtrace.print();
                 }
 
