@@ -11,8 +11,8 @@
 #define u64 unsigned long long
 
 // #define alloc(x) calloc(x, 1)
-// #define alloc(x) malloc(x)
-#define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
+#define alloc(x) malloc(x)
+// #define alloc(x) mmap(NULL, x, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)
 
 int main() {
     srand(SEED);
@@ -43,7 +43,7 @@ int main() {
         printf("Wrote to %llu bytes\n", number_of_bytes/2);
 
         // Sleep for 10 seconds
-        std::this_thread::sleep_for(std::chrono::seconds(6));
+        std::this_thread::sleep_for(std::chrono::seconds(15));
         volatile int *x = (int*)alloc(1000);
         *x = 10;
         printf("x = %d\n", *x);

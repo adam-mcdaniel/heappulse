@@ -3,7 +3,7 @@
 #include <stack_string.hpp>
 #include <stack_file.hpp>
 
-const size_t CSV_STR_SIZE = 512;
+const size_t CSV_STR_SIZE = 128;
 
 typedef StackString<CSV_STR_SIZE> CSVString;
 

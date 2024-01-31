@@ -183,7 +183,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         return;
     }
     stack_debugf("Entering hook\n");
-    hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
+    // hooks.post_mmap(addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
 }
