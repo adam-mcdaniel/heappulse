@@ -62,7 +62,7 @@ class LivenessTest : public IntervalTest {
                 size_t original_physical_size = pages.reduce<size_t>([&](auto page, auto acc) {
                     // stack_infof("Found physical page at 0x%x (virtual=0x%x, dirty=%, zero=%)\n", page.get_physical_address(), page.get_virtual_address(), page.is_dirty(), page.is_zero());
                     if (uncompressed_buffer + acc + page.size() > uncompressed_buffer + MAX_COMPRESSED_SIZE) {
-                        stack_warnf("Original size %d too large, truncating to %d\n", original_physical_size, MAX_COMPRESSED_SIZE);
+                        stack_debugf("Original size %d too large, truncating to %d\n", original_physical_size, MAX_COMPRESSED_SIZE);
                         return acc;  // Stop if we're going to overflow the buffer
                     }
                     if (page.is_zero()) {
@@ -122,7 +122,7 @@ class LivenessTest : public IntervalTest {
                     exit(1);
                 }
 
-                stack_infof("Compressed from %d bytes to %d bytes\n", original_physical_size, compressed_size);
+                stack_debugf("Compressed from %d bytes to %d bytes\n", original_physical_size, compressed_size);
 
                 csv.last()[8] = allocation.size;
                 csv.last()[9] = original_physical_size;
