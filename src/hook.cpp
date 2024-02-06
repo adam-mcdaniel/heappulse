@@ -14,6 +14,13 @@ static CompressionTest ct;
 static LivenessTest lt;
 static IntervalTestSuite its;
 
+static uint64_t malloc_count = 0;
+static uint64_t free_count = 0;
+static uint64_t mmap_count = 0;
+static uint64_t munmap_count = 0;
+
+const uint64_t STATS_INTERVAL_MS = 5000;
+
 class Hooks {
 public:
     Hooks() {
@@ -119,14 +126,32 @@ public:
         return its.is_done();
     }
 
+    void print_stats() {
+        stack_infof("Elapsed time: % ms\n", hook_timer.elapsed_milliseconds());
+        stack_infof("Malloc count: %\n", malloc_count);
+        stack_infof("Free count: %\n", free_count);
+        stack_infof("Mmap count: %\n", mmap_count);
+        stack_infof("Munmap count: %\n", munmap_count);
+        stack_infof("Total allocations: %\n", malloc_count + mmap_count);
+        stack_infof("Total frees: %\n", free_count + munmap_count);
+    }
+
+    void report_stats() {
+        if (stats_timer.has_elapsed(STATS_INTERVAL_MS)) {
+            print_stats();
+            stats_timer.reset();
+        }
+    }
+
     ~Hooks() {
         its.finish();
-        stack_infof("Elapsed time: % ms\n", hook_timer.elapsed_microseconds());
+        print_stats();
         stack_logf("Hooks destructor\n");
     }
 
 private:
     std::mutex hook_lock;
+    Timer stats_timer;
     Timer hook_timer;
 };
 
@@ -138,6 +163,8 @@ std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
+    malloc_count++;
+    hooks.report_stats();
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
@@ -155,6 +182,8 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
+    free_count++;
+    hooks.report_stats();
     // if (!protection_handler_setup) {
     //     setup_protection_handler();
     //     protection_handler_setup = true;
@@ -173,6 +202,9 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
+    mmap_count++;
+    hooks.report_stats();
+
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
@@ -192,6 +224,9 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
 
 extern "C"
 void bk_post_munmap_hook(void *addr, size_t n_bytes) {
+    munmap_count++;
+    hooks.report_stats();
+
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
