@@ -19,7 +19,7 @@ class CompressionTest : public IntervalTest {
 
     void setup() override {
         stack_debugf("Setup\n");
-        file = StackFile(StackString<256>("compression.csv"), StackFile::Mode::WRITE);
+        file = StackFile(StackString<256>("compression.csv"), Mode::WRITE);
         // CSVRow<4> &row = 
         csv.title().add("Interval #");
         csv.title().add("Allocation Site");
@@ -119,7 +119,7 @@ class CompressionTest : public IntervalTest {
                 stack_debugf("Unprotected\n");
 
                 memcpy(buffer, (const uint8_t*)ptr, size);
-                // allocation.unprotect();
+                allocation.unprotect();
                 // Count the zero and non-zero bytes
                 for (size_t i=0; i<size; i++) {
                     if (buffer[i] == 0) {

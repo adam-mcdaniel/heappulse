@@ -1,1 +1,0 @@
-./run.sh: línea 15: 94358 Violación de segmento  (`core' generado) LD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN" "$@" 0>&-

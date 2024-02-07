@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stack_string.hpp>
-#include <stack_file.hpp>
+#include "stack_file.hpp"
 #include <bkmalloc.h>
 
 // Whether to print debug messages
@@ -14,7 +14,7 @@
 #define stack_debugf(...)
 #endif
 
-static StackFile log_file(StackString<256>::from(LOG_FILE), StackFile::Mode::WRITE);
+static StackFile log_file(StackString<256>::from(LOG_FILE), Mode::WRITE);
 
 
 template <typename... Args>

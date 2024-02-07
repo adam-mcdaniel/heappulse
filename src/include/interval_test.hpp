@@ -129,7 +129,7 @@ public:
     }
 
     bool is_dirty() const {
-        return dirty || soft_dirty;
+        return soft_dirty;
     }
 
     bool is_soft_dirty() const {
@@ -1000,7 +1000,7 @@ private:
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
             if (!tests[i]->has_quit()) {
-                stack_logf("Running interval for test %d\n", i);
+                stack_logf("Running interval for test %d: %\n", i, tests[i]->name());
                 tests[i]->interval(allocation_sites, allocations);
             } else {
                 stack_warnf("Test %d has quit\n", i);

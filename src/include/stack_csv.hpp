@@ -258,6 +258,7 @@ class CSV {
 private:
     CSVRow<Width> title_row;
     StackVec<CSVRow<Width>, Length> rows;
+    bool is_first_write = true;
 
 public:
     void log() {
@@ -272,14 +273,42 @@ public:
     }
 
     void write(StackFile &file) {
-        file.clear();
-        title_row.write(file);
-        if (title_row.size() > 0) {
-            stack_fprintf(file, "\n");
-        }
-        for (size_t i=0; i<rows.size(); i++) {
-            rows[i].write(file);
-            stack_fprintf(file, "\n");
+        // stack_debugf("Writing to % with descriptor %\n", file.get_filename(), file.get_descriptor());
+        // if (file.get_mode() == Mode::WRITE) {
+        switch (file.get_mode()) {
+        case Mode::WRITE:
+            // stack_debugf("Writing to %\n", file.get_filename());
+            if (is_first_write) {
+                file.clear();
+                title_row.write(file);
+                if (title_row.size() > 0) {
+                    stack_fprintf(file, "\n");
+                }
+                is_first_write = false;
+            }
+            for (size_t i=0; i<rows.size(); i++) {
+                rows[i].write(file);
+                stack_fprintf(file, "\n");
+            }
+            break;
+        // } else if (file.get_mode() == Mode::APPEND) {
+        case Mode::APPEND:
+            // stack_debugf("Appending to %\n", file.get_filename());
+            if (is_first_write) {
+                title_row.write(file);
+                if (title_row.size() > 0) {
+                    stack_fprintf(file, "\n");
+                }
+                is_first_write = false;
+            }
+            for (size_t i=0; i<rows.size(); i++) {
+                rows[i].write(file);
+                stack_fprintf(file, "\n");
+            }
+            break;
+        default:
+            stack_errorf("Not writing to % because it is not open for writing\n", file.get_filename());
+            throw std::runtime_error("File not open for writing");
         }
     }
 

@@ -3,15 +3,17 @@
 #include <stack_io.hpp>
 #include <timer.hpp>
 #include "stack_map.cpp"
-#include "stack_file.cpp"
+// #include "stack_file.cpp"
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
 #include "compression_test.cpp"
-#include "liveness_test.cpp"
+#include "object_liveness_test.cpp"
+#include "page_liveness_test.cpp"
 
 
 static CompressionTest ct;
-static LivenessTest lt;
+static ObjectLivenessTest olt;
+static PageLivenessTest plt;
 static IntervalTestSuite its;
 
 static uint64_t malloc_count = 0;
@@ -29,7 +31,8 @@ public:
         stack_debugf("Adding test...\n");
         hook_timer.start();
         its.add_test(&ct);
-        its.add_test(&lt);
+        its.add_test(&olt);
+        its.add_test(&plt);
         stack_debugf("Done\n");
     }
 
