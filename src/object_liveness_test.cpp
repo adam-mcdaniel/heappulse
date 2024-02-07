@@ -46,6 +46,7 @@ class ObjectLivenessTest : public IntervalTest {
     ) override {
         stack_infof("Interval %d object liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
+            stack_infof("Site 0x%x\n", return_address);
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 csv.new_row();
                 csv.last()[0] = interval_count;
@@ -130,6 +131,7 @@ class ObjectLivenessTest : public IntervalTest {
                 // Calculate the savings
                 csv.last()[10] = original_physical_size - compressed_size;
             });
+            stack_infof("Site 0x%x complete\n", return_address);
         });
 
         csv.write(file);

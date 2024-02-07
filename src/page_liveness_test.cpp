@@ -45,6 +45,7 @@ class PageLivenessTest : public IntervalTest {
     ) override {
         stack_infof("Interval %d page liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
+            stack_infof("Site 0x%x\n", return_address);
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 auto pages = allocation.physical_pages<10000>();
                 pages.map([&](auto page) {
@@ -79,6 +80,7 @@ class PageLivenessTest : public IntervalTest {
                     csv.last()[10] = original_physical_size - compressed_size;
                 });
             });
+            stack_infof("Site 0x%x complete\n", return_address);
         });
 
         csv.write(file);
