@@ -5,7 +5,7 @@
 
 // Path: src/compression_test.cpp
 class PageLivenessTest : public IntervalTest {
-    CSV<16, 10000> csv;
+    CSV<16, 80000> csv;
     StackFile file;
     size_t interval_count = 0;
     std::chrono::steady_clock::time_point test_start_time;

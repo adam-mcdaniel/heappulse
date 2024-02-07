@@ -6,7 +6,7 @@ uint8_t uncompressed_buffer[MAX_COMPRESSED_SIZE], compressed_buffer[MAX_COMPRESS
 
 // Path: src/compression_test.cpp
 class ObjectLivenessTest : public IntervalTest {
-    CSV<16, 10000> csv;
+    CSV<16, 80000> csv;
     StackFile file;
     size_t interval_count = 0;
     std::chrono::steady_clock::time_point test_start_time;
