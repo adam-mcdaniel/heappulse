@@ -166,12 +166,12 @@ std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    malloc_count++;
-    hooks.report_stats();
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
-    // setup_protection_handler();
+    setup_protection_handler();
+    malloc_count++;
+    hooks.report_stats();
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
@@ -185,13 +185,13 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    free_count++;
-    hooks.report_stats();
     // if (!protection_handler_setup) {
     //     setup_protection_handler();
     //     protection_handler_setup = true;
     // }
-    // setup_protection_handler();
+    setup_protection_handler();
+    free_count++;
+    hooks.report_stats();
     if (hooks.is_done()) return;
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
@@ -211,7 +211,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
-    // setup_protection_handler();
+    setup_protection_handler();
     // stack_infof("Got mmap\n");
     // bk_printf("Got mmap(%x, %d, %d, %d, %d, %d, %x)\n", addr, n_bytes, prot, flags, fd, offset, ret_addr);
     if (hooks.is_done() || !hooks.can_update()) return;
@@ -233,7 +233,7 @@ void bk_post_munmap_hook(void *addr, size_t n_bytes) {
     // if (!protection_handler_setup) {
     //     protection_handler_setup = true;
     // }
-    // setup_protection_handler();
+    setup_protection_handler();
     // stack_infof("Got munmap\n");
 
     if (hooks.is_done()) return;
