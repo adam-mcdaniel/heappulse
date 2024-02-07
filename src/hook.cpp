@@ -11,7 +11,7 @@
 #include "page_liveness_test.cpp"
 
 
-static CompressionTest ct;
+// static CompressionTest ct;
 static ObjectLivenessTest olt;
 static PageLivenessTest plt;
 static IntervalTestSuite its;
@@ -30,7 +30,7 @@ public:
 
         stack_debugf("Adding test...\n");
         hook_timer.start();
-        its.add_test(&ct);
+        // its.add_test(&ct);
         its.add_test(&olt);
         its.add_test(&plt);
         stack_debugf("Done\n");

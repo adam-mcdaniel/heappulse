@@ -113,7 +113,7 @@ void StackMap<KeyType, ValueType, Size>::map(std::function<void(KeyType&, ValueT
         return;
     }
     size_t j = 0;
-    for (uint64_t i=0; i<Size; i++) {
+    for (uint64_t i=0; i<Size && j < num_entries(); i++) {
         if (hashtable[i].occupied) {
             func(hashtable[i].key, hashtable[i].value);
             if (++j >= entries) {
@@ -130,7 +130,7 @@ void StackMap<KeyType, ValueType, Size>::map(std::function<void(const KeyType&, 
         return;
     }
     size_t j = 0;
-    for (uint64_t i=0; i<Size; i++) {
+    for (uint64_t i=0; i<Size && j < num_entries(); i++) {
         if (hashtable[i].occupied) {
             func(hashtable[i].key, hashtable[i].value);
             if (++j >= entries) {
