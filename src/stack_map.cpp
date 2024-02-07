@@ -109,6 +109,9 @@ bool StackMap<KeyType, ValueType, Size>::full() const {
 
 template <typename KeyType, typename ValueType, size_t Size>
 void StackMap<KeyType, ValueType, Size>::map(std::function<void(KeyType&, ValueType&)> func) {
+    if (entries == 0) {
+        return;
+    }
     size_t j = 0;
     for (uint64_t i=0; i<Size; i++) {
         if (hashtable[i].occupied) {
@@ -123,6 +126,9 @@ void StackMap<KeyType, ValueType, Size>::map(std::function<void(KeyType&, ValueT
 
 template <typename KeyType, typename ValueType, size_t Size>
 void StackMap<KeyType, ValueType, Size>::map(std::function<void(const KeyType&, const ValueType&)> func) const {
+    if (entries == 0) {
+        return;
+    }
     size_t j = 0;
     for (uint64_t i=0; i<Size; i++) {
         if (hashtable[i].occupied) {
