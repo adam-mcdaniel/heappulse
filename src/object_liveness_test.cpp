@@ -44,7 +44,7 @@ class ObjectLivenessTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
-        stack_infof("Interval %d starting...\n", ++interval_count);
+        stack_infof("Interval %d object liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 csv.new_row();
@@ -134,6 +134,7 @@ class ObjectLivenessTest : public IntervalTest {
 
         csv.write(file);
         csv.clear();
+        stack_infof("Interval %d complete for object liveness\n", interval_count);
     }
 
     void cleanup() override {

@@ -43,7 +43,7 @@ class PageLivenessTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
         const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
-        stack_infof("Interval %d starting...\n", ++interval_count);
+        stack_infof("Interval %d page liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 auto pages = allocation.physical_pages<10000>();
@@ -83,5 +83,6 @@ class PageLivenessTest : public IntervalTest {
 
         csv.write(file);
         csv.clear();
+        stack_infof("Interval %d complete for page liveness\n", interval_count);
     }
 };

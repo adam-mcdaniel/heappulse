@@ -1016,6 +1016,7 @@ private:
         }
         no_longer_working_thread();
         is_in_interval = false;
+        stack_infof("IntervalTestSuite::interval -- Interval done\n");
         stack_logf("Finished interval\n");
     }
 
