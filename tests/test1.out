@@ -1,569 +1,515 @@
 [WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8801ms, test is not ready
+[INFO] Interval timer is at 7713ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9817ms, test is not ready
+[INFO] Interval timer is at 8730ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10831ms, test is not ready
+[INFO] Interval timer is at 9735ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11846ms, test is not ready
+[INFO] Interval timer is at 10741ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12860ms, test is not ready
-[INFO] Elapsed time: 5073 ms
-[INFO] Malloc count: 11
+[INFO] Interval timer is at 11745ms, test is not ready
+[INFO] Elapsed time: 5040 ms
+[INFO] Malloc count: 12
 [INFO] Free count: 3
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 11
+[INFO] Total allocations: 12
 [INFO] Total frees: 3
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13875ms, test is not ready
+[INFO] Interval timer is at 12753ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14893ms, test is not ready
+[INFO] Interval timer is at 13758ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14763ms, test is not ready
 [WARN] Starting test
-[INFO] Interval 1 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 1 complete for object liveness
 [INFO] Interval 1 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
 [INFO] Interval 1 complete for page liveness
 [INFO] IntervalTestSuite::interval -- Interval done
 [WARN] Done with test
 [WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 514ms, test is not ready
+[INFO] Interval timer is at 513ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1522ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2533ms, test is not ready
-[INFO] Elapsed time: 10165 ms
-[INFO] Malloc count: 21
+[INFO] Interval timer is at 1518ms, test is not ready
+[INFO] Elapsed time: 10091 ms
+[INFO] Malloc count: 22
 [INFO] Free count: 8
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 21
+[INFO] Total allocations: 22
 [INFO] Total frees: 8
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3546ms, test is not ready
+[INFO] Interval timer is at 2524ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4565ms, test is not ready
+[INFO] Interval timer is at 3528ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5578ms, test is not ready
+[INFO] Interval timer is at 4534ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6588ms, test is not ready
+[INFO] Interval timer is at 5540ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7598ms, test is not ready
-[INFO] Elapsed time: 15225 ms
-[INFO] Malloc count: 31
+[INFO] Interval timer is at 6550ms, test is not ready
+[INFO] Elapsed time: 15123 ms
+[INFO] Malloc count: 32
 [INFO] Free count: 12
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 31
+[INFO] Total allocations: 32
 [INFO] Total frees: 12
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8605ms, test is not ready
+[INFO] Interval timer is at 7556ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9613ms, test is not ready
+[INFO] Interval timer is at 8562ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10629ms, test is not ready
+[INFO] Interval timer is at 9570ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11644ms, test is not ready
+[INFO] Interval timer is at 10576ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12658ms, test is not ready
-[INFO] Elapsed time: 20296 ms
-[INFO] Malloc count: 41
+[INFO] Interval timer is at 11581ms, test is not ready
+[INFO] Elapsed time: 20155 ms
+[INFO] Malloc count: 42
 [INFO] Free count: 18
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 41
+[INFO] Total allocations: 42
 [INFO] Total frees: 18
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13677ms, test is not ready
+[INFO] Interval timer is at 12587ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14692ms, test is not ready
+[INFO] Interval timer is at 13592ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14596ms, test is not ready
 [WARN] Starting test
-[INFO] Interval 2 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 2 complete for object liveness
 [INFO] Interval 2 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
 [INFO] Interval 2 complete for page liveness
 [INFO] IntervalTestSuite::interval -- Interval done
 [WARN] Done with test
 [WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 515ms, test is not ready
+[INFO] Interval timer is at 513ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1525ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2539ms, test is not ready
-[INFO] Elapsed time: 25464 ms
-[INFO] Malloc count: 51
+[INFO] Interval timer is at 1518ms, test is not ready
+[INFO] Elapsed time: 25215 ms
+[INFO] Malloc count: 52
 [INFO] Free count: 20
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 51
+[INFO] Total allocations: 52
 [INFO] Total frees: 20
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3555ms, test is not ready
+[INFO] Interval timer is at 2524ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4569ms, test is not ready
+[INFO] Interval timer is at 3528ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5580ms, test is not ready
+[INFO] Interval timer is at 4534ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6596ms, test is not ready
+[INFO] Interval timer is at 5539ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7612ms, test is not ready
-[INFO] Elapsed time: 30543 ms
-[INFO] Malloc count: 61
+[INFO] Interval timer is at 6544ms, test is not ready
+[INFO] Elapsed time: 30241 ms
+[INFO] Malloc count: 62
 [INFO] Free count: 24
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 61
+[INFO] Total allocations: 62
 [INFO] Total frees: 24
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8634ms, test is not ready
+[INFO] Interval timer is at 7550ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9650ms, test is not ready
+[INFO] Interval timer is at 8555ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10663ms, test is not ready
+[INFO] Interval timer is at 9560ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11680ms, test is not ready
+[INFO] Interval timer is at 10566ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12691ms, test is not ready
-[INFO] Elapsed time: 35619 ms
-[INFO] Malloc count: 71
+[INFO] Interval timer is at 11571ms, test is not ready
+[INFO] Elapsed time: 35267 ms
+[INFO] Malloc count: 72
 [INFO] Free count: 26
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 71
+[INFO] Total allocations: 72
 [INFO] Total frees: 26
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13710ms, test is not ready
+[INFO] Interval timer is at 12577ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14729ms, test is not ready
+[INFO] Interval timer is at 13583ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14588ms, test is not ready
 [WARN] Starting test
-[INFO] Interval 3 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 3 complete for object liveness
 [INFO] Interval 3 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
 [INFO] Interval 3 complete for page liveness
-[INFO] IntervalTestSuite::interval -- Interval done
-[WARN] Done with test
-[WARN] Clearing soft dirty bits
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 515ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1533ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2550ms, test is not ready
-[INFO] Elapsed time: 40874 ms
-[INFO] Malloc count: 81
-[INFO] Free count: 31
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 81
-[INFO] Total frees: 31
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3571ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4586ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5605ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6622ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7633ms, test is not ready
-[INFO] Elapsed time: 45947 ms
-[INFO] Malloc count: 92
-[INFO] Free count: 37
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 92
-[INFO] Total frees: 37
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8645ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9664ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10679ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11698ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12706ms, test is not ready
-[INFO] Elapsed time: 51023 ms
-[INFO] Malloc count: 102
-[INFO] Free count: 40
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 102
-[INFO] Total frees: 40
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13720ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14734ms, test is not ready
-[WARN] Starting test
-[INFO] Interval 4 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 4 complete for object liveness
-[INFO] Interval 4 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 4 complete for page liveness
-[INFO] IntervalTestSuite::interval -- Interval done
-[WARN] Done with test
-[WARN] Clearing soft dirty bits
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 516ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1536ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2554ms, test is not ready
-[INFO] Elapsed time: 56271 ms
-[INFO] Malloc count: 112
-[INFO] Free count: 44
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 112
-[INFO] Total frees: 44
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3571ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4585ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5603ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6624ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7637ms, test is not ready
-[INFO] Elapsed time: 61355 ms
-[INFO] Malloc count: 122
-[INFO] Free count: 48
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 122
-[INFO] Total frees: 48
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8654ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9668ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10685ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11692ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12701ms, test is not ready
-[INFO] Elapsed time: 66411 ms
-[INFO] Malloc count: 131
-[INFO] Free count: 54
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 131
-[INFO] Total frees: 54
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13710ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14724ms, test is not ready
-[WARN] Starting test
-[INFO] Interval 5 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 5 complete for object liveness
-[INFO] Interval 5 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 5 complete for page liveness
-[INFO] IntervalTestSuite::interval -- Interval done
-[WARN] Done with test
-[WARN] Clearing soft dirty bits
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 517ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1525ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2534ms, test is not ready
-[INFO] Elapsed time: 71679 ms
-[INFO] Malloc count: 142
-[INFO] Free count: 61
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 142
-[INFO] Total frees: 61
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3545ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4552ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5558ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6566ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7579ms, test is not ready
-[INFO] Elapsed time: 76725 ms
-[INFO] Malloc count: 151
-[INFO] Free count: 66
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 151
-[INFO] Total frees: 66
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8591ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9598ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10607ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11617ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12626ms, test is not ready
-[INFO] Elapsed time: 81766 ms
-[INFO] Malloc count: 161
-[INFO] Free count: 69
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 161
-[INFO] Total frees: 69
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13633ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14643ms, test is not ready
-[WARN] Starting test
-[INFO] Interval 6 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 6 complete for object liveness
-[INFO] Interval 6 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 6 complete for page liveness
-[INFO] IntervalTestSuite::interval -- Interval done
-[WARN] Done with test
-[WARN] Clearing soft dirty bits
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 516ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1521ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2533ms, test is not ready
-[INFO] Elapsed time: 87088 ms
-[INFO] Malloc count: 172
-[INFO] Free count: 72
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 172
-[INFO] Total frees: 72
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3553ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4570ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5589ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6606ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7620ms, test is not ready
-[INFO] Elapsed time: 92175 ms
-[INFO] Malloc count: 181
-[INFO] Free count: 80
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 181
-[INFO] Total frees: 80
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8640ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9659ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10686ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11706ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12725ms, test is not ready
-[INFO] Elapsed time: 97269 ms
-[INFO] Malloc count: 192
-[INFO] Free count: 85
-[INFO] Mmap count: 0
-[INFO] Munmap count: 0
-[INFO] Total allocations: 192
-[INFO] Total frees: 85
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13735ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14767ms, test is not ready
-[WARN] Starting test
-[INFO] Interval 7 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 7 complete for object liveness
-[INFO] Interval 7 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 7 complete for page liveness
 [INFO] IntervalTestSuite::interval -- Interval done
 [WARN] Done with test
 [WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
 [INFO] Interval timer is at 518ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1532ms, test is not ready
+[INFO] Interval timer is at 1526ms, test is not ready
+[INFO] Elapsed time: 40367 ms
+[INFO] Malloc count: 82
+[INFO] Free count: 31
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 82
+[INFO] Total frees: 31
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2551ms, test is not ready
-[INFO] Elapsed time: 102620 ms
-[INFO] Malloc count: 202
+[INFO] Interval timer is at 2536ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3545ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4559ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5564ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6571ms, test is not ready
+[INFO] Elapsed time: 45409 ms
+[INFO] Malloc count: 93
+[INFO] Free count: 37
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 93
+[INFO] Total frees: 37
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7577ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8584ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9591ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10595ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11608ms, test is not ready
+[INFO] Elapsed time: 50447 ms
+[INFO] Malloc count: 103
+[INFO] Free count: 40
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 103
+[INFO] Total frees: 40
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12616ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13621ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14630ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 4 page liveness starting...
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
+[INFO] Interval 4 complete for page liveness
+[INFO] IntervalTestSuite::interval -- Interval done
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 513ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1518ms, test is not ready
+[INFO] Elapsed time: 55543 ms
+[INFO] Malloc count: 113
+[INFO] Free count: 44
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 113
+[INFO] Total frees: 44
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2526ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3532ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4536ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5542ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6549ms, test is not ready
+[INFO] Elapsed time: 60575 ms
+[INFO] Malloc count: 123
+[INFO] Free count: 48
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 123
+[INFO] Total frees: 48
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7558ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8563ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9570ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10575ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11585ms, test is not ready
+[INFO] Elapsed time: 65616 ms
+[INFO] Malloc count: 132
+[INFO] Free count: 54
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 132
+[INFO] Total frees: 54
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12600ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13607ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14615ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 5 page liveness starting...
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
+[INFO] Interval 5 complete for page liveness
+[INFO] IntervalTestSuite::interval -- Interval done
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 514ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1521ms, test is not ready
+[INFO] Elapsed time: 70706 ms
+[INFO] Malloc count: 143
+[INFO] Free count: 61
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 143
+[INFO] Total frees: 61
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2527ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3536ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4541ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5546ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6551ms, test is not ready
+[INFO] Elapsed time: 75736 ms
+[INFO] Malloc count: 152
+[INFO] Free count: 66
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 152
+[INFO] Total frees: 66
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7557ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8568ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9576ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10583ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11594ms, test is not ready
+[INFO] Elapsed time: 80780 ms
+[INFO] Malloc count: 162
+[INFO] Free count: 69
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 162
+[INFO] Total frees: 69
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12600ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13608ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14615ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 6 page liveness starting...
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
+[INFO] Interval 6 complete for page liveness
+[INFO] IntervalTestSuite::interval -- Interval done
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 518ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1523ms, test is not ready
+[INFO] Elapsed time: 85923 ms
+[INFO] Malloc count: 173
+[INFO] Free count: 72
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 173
+[INFO] Total frees: 72
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 2529ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 3535ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 4544ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 5550ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 6555ms, test is not ready
+[INFO] Elapsed time: 90955 ms
+[INFO] Malloc count: 182
+[INFO] Free count: 80
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 182
+[INFO] Total frees: 80
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 7562ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 8569ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 9575ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 10580ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 11587ms, test is not ready
+[INFO] Elapsed time: 95987 ms
+[INFO] Malloc count: 193
+[INFO] Free count: 85
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 193
+[INFO] Total frees: 85
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 12594ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 13600ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14605ms, test is not ready
+[WARN] Starting test
+[INFO] Interval 7 page liveness starting...
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
+[INFO] Interval 7 complete for page liveness
+[INFO] IntervalTestSuite::interval -- Interval done
+[WARN] Done with test
+[WARN] Clearing soft dirty bits
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 513ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 1522ms, test is not ready
+[INFO] Elapsed time: 101089 ms
+[INFO] Malloc count: 203
 [INFO] Free count: 89
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 202
+[INFO] Total allocations: 203
 [INFO] Total frees: 89
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3566ms, test is not ready
+[INFO] Interval timer is at 2530ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4580ms, test is not ready
+[INFO] Interval timer is at 3535ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5597ms, test is not ready
+[INFO] Interval timer is at 4545ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6610ms, test is not ready
+[INFO] Interval timer is at 5553ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7629ms, test is not ready
-[INFO] Elapsed time: 107701 ms
-[INFO] Malloc count: 211
+[INFO] Interval timer is at 6561ms, test is not ready
+[INFO] Elapsed time: 106126 ms
+[INFO] Malloc count: 212
 [INFO] Free count: 95
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 211
+[INFO] Total allocations: 212
 [INFO] Total frees: 95
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8648ms, test is not ready
+[INFO] Interval timer is at 7568ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9667ms, test is not ready
+[INFO] Interval timer is at 8573ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10681ms, test is not ready
+[INFO] Interval timer is at 9580ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11699ms, test is not ready
+[INFO] Interval timer is at 10585ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12717ms, test is not ready
-[INFO] Elapsed time: 112789 ms
-[INFO] Malloc count: 222
+[INFO] Interval timer is at 11590ms, test is not ready
+[INFO] Elapsed time: 111154 ms
+[INFO] Malloc count: 223
 [INFO] Free count: 99
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 222
+[INFO] Total allocations: 223
 [INFO] Total frees: 99
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 13736ms, test is not ready
+[INFO] Interval timer is at 12596ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 14754ms, test is not ready
+[INFO] Interval timer is at 13601ms, test is not ready
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 14611ms, test is not ready
 [WARN] Starting test
-[INFO] Interval 8 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 8 complete for object liveness
 [INFO] Interval 8 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
 [INFO] Interval 8 complete for page liveness
 [INFO] IntervalTestSuite::interval -- Interval done
 [WARN] Done with test
 [WARN] Clearing soft dirty bits
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 516ms, test is not ready
+[INFO] Interval timer is at 514ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 1525ms, test is not ready
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 2543ms, test is not ready
-[INFO] Elapsed time: 118218 ms
-[INFO] Malloc count: 232
+[INFO] Interval timer is at 1523ms, test is not ready
+[INFO] Elapsed time: 116309 ms
+[INFO] Malloc count: 233
 [INFO] Free count: 105
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 232
+[INFO] Total allocations: 233
 [INFO] Total frees: 105
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 3570ms, test is not ready
+[INFO] Interval timer is at 2529ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 4600ms, test is not ready
+[INFO] Interval timer is at 3534ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 5617ms, test is not ready
+[INFO] Interval timer is at 4540ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 6634ms, test is not ready
+[INFO] Interval timer is at 5545ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 7651ms, test is not ready
-[INFO] Elapsed time: 123319 ms
-[INFO] Malloc count: 241
+[INFO] Interval timer is at 6552ms, test is not ready
+[INFO] Elapsed time: 121341 ms
+[INFO] Malloc count: 242
 [INFO] Free count: 109
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 241
+[INFO] Total allocations: 242
 [INFO] Total frees: 109
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 8671ms, test is not ready
+[INFO] Interval timer is at 7562ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 9689ms, test is not ready
+[INFO] Interval timer is at 8574ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 10708ms, test is not ready
+[INFO] Interval timer is at 9583ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 11728ms, test is not ready
+[INFO] Interval timer is at 10595ms, test is not ready
 [INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 12747ms, test is not ready
-[INFO] Interval 9 object liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
-[INFO] Interval 9 complete for object liveness
+[INFO] Interval timer is at 11603ms, test is not ready
 [INFO] Interval 9 page liveness starting...
-[INFO] Site 0x55EE51AD92DB
-[INFO] Site 0x55EE51AD92DB complete
-[INFO] Site 0x7F5658A80D3D
-[INFO] Site 0x7F5658A80D3D complete
+[INFO] Site 0x7F8E7B080D3D
+[INFO] Site 0x7F8E7B080D3D complete
+[INFO] Site 0x55DE7BCB12DB
+[INFO] Site 0x55DE7BCB12DB complete
 [INFO] Interval 9 complete for page liveness
 [INFO] IntervalTestSuite::interval -- Interval done
-[INFO] Elapsed time: 128766 ms
-[INFO] Malloc count: 251
+[INFO] Elapsed time: 126542 ms
+[INFO] Malloc count: 252
 [INFO] Free count: 113
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 251
+[INFO] Total allocations: 252
 [INFO] Total frees: 113
 Hello World!
 Tick

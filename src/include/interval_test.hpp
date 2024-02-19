@@ -988,6 +988,7 @@ private:
 
     /// @brief Run the interval for all the tests
     void interval() {
+        setup_protection_handler();
         stack_logf("IntervalTestSuite::interval\n");
         static std::mutex interval_lock;
         std::lock_guard<std::mutex> lock(interval_lock);

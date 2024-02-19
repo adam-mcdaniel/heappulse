@@ -2,18 +2,19 @@
 #include <bkmalloc.h>
 #include <stack_io.hpp>
 #include <timer.hpp>
-#include "stack_map.cpp"
 // #include "stack_file.cpp"
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
 #include "compression_test.cpp"
 #include "object_liveness_test.cpp"
 #include "page_liveness_test.cpp"
+#include "page_tracking.cpp"
 
 
 // static CompressionTest ct;
-static ObjectLivenessTest olt;
-static PageLivenessTest plt;
+// static ObjectLivenessTest olt;
+// static PageLivenessTest plt;
+static PageTrackingTest ptt;
 static IntervalTestSuite its;
 
 static uint64_t malloc_count = 0;
@@ -31,8 +32,9 @@ public:
         stack_debugf("Adding test...\n");
         hook_timer.start();
         // its.add_test(&ct);
-        its.add_test(&olt);
-        its.add_test(&plt);
+        // its.add_test(&olt);
+        // its.add_test(&plt);
+        its.add_test(&ptt);
         stack_debugf("Done\n");
     }
 
@@ -174,7 +176,6 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
         stack_debugf("Failed to lock\n");
         return;
     }
-    setup_protection_handler();
     malloc_count++;
     hooks.report_stats();
     stack_debugf("Entering hook\n");
@@ -193,7 +194,6 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
-        setup_protection_handler();
         free_count++;
         hooks.report_stats();
         stack_debugf("Entering hook\n");
@@ -216,7 +216,6 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         stack_debugf("Failed to lock\n");
         return;
     }
-    setup_protection_handler();
     mmap_count++;
     hooks.report_stats()
     stack_debugf("Entering hook\n");
@@ -237,7 +236,6 @@ void bk_post_munmap_hook(void *addr, size_t n_bytes) {
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
-        setup_protection_handler();
         munmap_count++;
         hooks.report_stats();
         stack_debugf("Entering hook\n");

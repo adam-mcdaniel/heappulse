@@ -38,7 +38,7 @@ void StackMap<KeyType, ValueType, Size>::put(const KeyType& key, const ValueType
 }
 
 template <typename KeyType, typename ValueType, size_t Size>
-ValueType StackMap<KeyType, ValueType, Size>::get(const KeyType& key) const {
+ValueType &StackMap<KeyType, ValueType, Size>::get(const KeyType& key) {
     std::size_t index = hash(key);
     while (hashtable[index].occupied) {
         if (hashtable[index].key == key) {
@@ -48,7 +48,8 @@ ValueType StackMap<KeyType, ValueType, Size>::get(const KeyType& key) const {
     }
     // Key not found
     // throw std::out_of_range("Key not found");
-    return ValueType();
+    // return ValueType();
+    return hashtable[0].value;
 }
 
 template <typename KeyType, typename ValueType, size_t Size>
