@@ -802,10 +802,13 @@ public:
         stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
 
         Allocation allocation = Allocation(ptr, size);
-        if (!site.allocations.has(ptr) && !site.allocations.full()) {
+        if (site.allocations.has(ptr)) {
             site.allocations.put(ptr, allocation);
-        } else if (site.allocations.full()) {
-            stack_debugf("Unable to add allocation to site: allocation site full\n");
+        } else if (!site.allocations.full()) {
+            site.allocations.put(ptr, allocation);
+        } else {
+            stack_debugf("Unable to add allocation to site\n");
+            // hook_lock.unlock();
         }
 
         if (site.allocations.full()) {
