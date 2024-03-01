@@ -1,3 +1,5 @@
+#pragma once
+
 #include <interval_test.hpp>
 #include <stack_csv.hpp>
 #include <zlib.h>

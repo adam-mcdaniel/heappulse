@@ -6,6 +6,7 @@
 #include <functional>
 #include <stack_vec.hpp>
 
+
 template <typename KeyType, typename ValueType, std::size_t Size>
 class StackMap {
 public:
@@ -126,12 +127,6 @@ public:
         }
     }
 
-    // Map into a new StackMap with the same size
-    // template <typename NewKeyType, typename NewValueType>
-    // StackMap<NewKeyType, NewValueType, Size> map(std::function<std::pair<NewKeyType, NewValueType>(const KeyType&, const ValueType&)> func) const {
-
-    // }
-
     // Reduce
     template <typename T>
     T reduce(std::function<T(const KeyType&, const ValueType&, T)> func, T initial) const {
@@ -144,9 +139,6 @@ public:
         return result;
     }
 
-    // void print() const;
-    // void print_stats() const;
-
     struct Entry {
         KeyType key;
         ValueType value;
@@ -155,6 +147,7 @@ public:
         Entry() : occupied(false) {}
         Entry(const KeyType& key, const ValueType& value) : key(key), value(value), occupied(true) {}
     };
+
     Entry &operator[](size_t index) {
         return hashtable[index];
     }

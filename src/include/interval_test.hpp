@@ -1,4 +1,5 @@
 #pragma once
+
 #include <stack_set.hpp>
 #include <stack_vec.hpp>
 #include <timer.hpp>

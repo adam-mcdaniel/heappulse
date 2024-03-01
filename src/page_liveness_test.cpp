@@ -1,7 +1,8 @@
+#pragma once
+
 #include <interval_test.hpp>
 #include <stack_csv.hpp>
 #include <zlib.h>
-
 
 // Path: src/compression_test.cpp
 class PageLivenessTest : public IntervalTest {

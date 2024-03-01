@@ -1,9 +1,10 @@
+#pragma once
+
 #include <interval_test.hpp>
 #include <stack_csv.hpp>
 #include <zlib.h>
 #include <stack_map.hpp>
 #include <stack_vec.hpp>
-
 
 struct PageTracking {
     bool read_only_after_initial_write = true;

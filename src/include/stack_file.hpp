@@ -1,9 +1,13 @@
 #pragma once
+
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdexcept>
+#include "stack_io.hpp"
+#include "stack_string.hpp"
+
 // A file object that only uses stack memory
 class StackFile;
 enum class Mode {
@@ -11,9 +15,6 @@ enum class Mode {
     WRITE = 2,
     APPEND = 3
 };
-#include "stack_io.hpp"
-#include "stack_string.hpp"
-
 
 
 class StackFile {
@@ -29,6 +30,7 @@ private:
 
     // The mode
     Mode mode;
+
 public:
     StackFile() : fd(-1), position(0) {
         memset(filename, 0, 256);

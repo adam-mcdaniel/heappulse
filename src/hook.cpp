@@ -2,19 +2,30 @@
 #include <bkmalloc.h>
 #include <stack_io.hpp>
 #include <timer.hpp>
-// #include "stack_file.cpp"
+
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
+
+#ifdef COMPRESSION_TEST
 #include "compression_test.cpp"
+static CompressionTest ct;
+#endif
+
+#ifdef OBJECT_LIVENESS_TEST
 #include "object_liveness_test.cpp"
+static ObjectLivenessTest olt;
+#endif
+
+#ifdef PAGE_LIVENESS_TEST
 #include "page_liveness_test.cpp"
+static PageLivenessTest plt;
+#endif
+
+#ifdef PAGE_TRACKING_TEST
 #include "page_tracking.cpp"
-
-
-// static CompressionTest ct;
-// static ObjectLivenessTest olt;
-// static PageLivenessTest plt;
 static PageTrackingTest ptt;
+#endif
+
 static IntervalTestSuite its;
 
 static uint64_t malloc_count = 0;
@@ -31,10 +42,18 @@ public:
 
         stack_debugf("Adding test...\n");
         hook_timer.start();
-        // its.add_test(&ct);
-        // its.add_test(&olt);
-        // its.add_test(&plt);
+        #ifdef COMPRESSION_TEST
+        its.add_test(&ct);
+        #endif
+        #ifdef OBJECT_LIVENESS_TEST
+        its.add_test(&olt);
+        #endif
+        #ifdef PAGE_LIVENESS_TEST
+        its.add_test(&plt);
+        #endif
+        #ifdef PAGE_TRACKING_TEST
         its.add_test(&ptt);
+        #endif
         stack_debugf("Done\n");
     }
 
@@ -168,9 +187,6 @@ std::mutex bk_lock;
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
@@ -186,10 +202,6 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    // if (!protection_handler_setup) {
-    //     setup_protection_handler();
-    //     protection_handler_setup = true;
-    // }
     if (hooks.is_done()) return;
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
@@ -205,12 +217,6 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {;
-
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
-    // stack_infof("Got mmap\n");
-    // bk_printf("Got mmap(%x, %d, %d, %d, %d, %d, %x)\n", addr, n_bytes, prot, flags, fd, offset, ret_addr);
     if (hooks.is_done() || !hooks.can_update()) return;
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
@@ -226,12 +232,6 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
 
 extern "C"
 void bk_post_munmap_hook(void *addr, size_t n_bytes) {
-
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
-    // stack_infof("Got munmap\n");
-
     if (hooks.is_done()) return;
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
@@ -243,13 +243,4 @@ void bk_post_munmap_hook(void *addr, size_t n_bytes) {
         stack_debugf("Leaving hook\n");
         bk_lock.unlock();
     }
-    // if (hooks.is_done() || !hooks.can_update()) return;
-    // if (!bk_lock.try_lock()) {
-    //     stack_debugf("Failed to lock\n");
-    //     return;
-    // }
-    // stack_debugf("Entering hook\n");
-    // // hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
-    // stack_debugf("Leaving hook\n");
-    // bk_lock.unlock();
 }
