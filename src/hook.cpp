@@ -1,28 +1,28 @@
 #define BKMALLOC_HOOK
 #include <bkmalloc.h>
-#include <stack_io.hpp>
-#include <timer.hpp>
 
+#include <timer.hpp>
+#include <stack_io.hpp>
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
 
 #ifdef COMPRESSION_TEST
-#include "compression_test.cpp"
+#include "intervals/compression_test.cpp"
 static CompressionTest ct;
 #endif
 
 #ifdef OBJECT_LIVENESS_TEST
-#include "object_liveness_test.cpp"
+#include "intervals/object_liveness_test.cpp"
 static ObjectLivenessTest olt;
 #endif
 
 #ifdef PAGE_LIVENESS_TEST
-#include "page_liveness_test.cpp"
+#include "intervals/page_liveness_test.cpp"
 static PageLivenessTest plt;
 #endif
 
 #ifdef PAGE_TRACKING_TEST
-#include "page_tracking.cpp"
+#include "intervals/page_tracking.cpp"
 static PageTrackingTest ptt;
 #endif
 
@@ -42,6 +42,7 @@ public:
 
         stack_debugf("Adding test...\n");
         hook_timer.start();
+
         #ifdef COMPRESSION_TEST
         its.add_test(&ct);
         #endif
@@ -54,6 +55,7 @@ public:
         #ifdef PAGE_TRACKING_TEST
         its.add_test(&ptt);
         #endif
+        
         stack_debugf("Done\n");
     }
 
@@ -223,7 +225,7 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
         return;
     }
     mmap_count++;
-    hooks.report_stats()
+    hooks.report_stats();
     stack_debugf("Entering hook\n");
     hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");

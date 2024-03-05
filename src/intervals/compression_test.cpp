@@ -5,8 +5,9 @@
 #include <zlib.h>
 
 // Path: src/compression_test.cpp
-const int MAX_COMPRESSED_SIZE = 0x100000;
-const int MAX_PAGES = 0x10000;
+#define MAX_COMPRESSED_SIZE 0x100000
+#define MAX_PAGES 0x10000
+
 static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
 class CompressionTest : public IntervalTest {
@@ -44,8 +45,8 @@ class CompressionTest : public IntervalTest {
     }
 
     void interval(
-        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
-        const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
+        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
+        // const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
         stack_infof("Interval %d starting...\n", ++interval_count);
 

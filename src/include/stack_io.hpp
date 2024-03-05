@@ -15,7 +15,6 @@
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), Mode::WRITE);
 
-
 template <typename... Args>
 void stack_printf(const char* format, Args... args) {
     StackString<1 << 14>::format(format, args...).print();
@@ -112,16 +111,14 @@ void stack_debugf(const char* str) {
 template <typename... Args>
 void stack_debugf(const char* format, Args... args) {
     #ifdef DEBUG
-    if (DEBUG) {
-        if (last_was_newline) {
-            stack_printf("[DEBUG] ");
-        }
-        stack_printf(format, args...);
-        if (format[strlen(format) - 1] == '\n') {
-            last_was_newline = true;
-        } else {
-            last_was_newline = false;
-        }
+    if (last_was_newline) {
+        stack_printf("[DEBUG] ");
+    }
+    stack_printf(format, args...);
+    if (format[strlen(format) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
     }
     #endif
 }

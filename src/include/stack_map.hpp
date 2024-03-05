@@ -25,7 +25,7 @@ public:
             if (hashtable[index].key == key) {
                 hashtable[index].value = value;  // Update value if key already exists
                 return;
-            } else if (i++ > Size * 2) {
+            } else if (i++ > Size) {
                 return;  // Map is full
             }
             index = (index + 1) % Size;  // Linear probing for collision resolution
@@ -180,6 +180,7 @@ public:
 
     template <size_t N>
     void keys(StackVec<KeyType, N> &keys) const {
+        keys.clear();
         for (size_t i = 0; i < Size; i++) {
             if (hashtable[i].occupied) {
                 keys.push(hashtable[i].key);
@@ -189,6 +190,7 @@ public:
 
     template <size_t N>
     void values(StackVec<ValueType, N> &values) const {
+        values.clear();
         for (size_t i = 0; i < Size; i++) {
             if (hashtable[i].occupied) {
                 values.push(hashtable[i].value);

@@ -4,6 +4,9 @@
 #include <stack_csv.hpp>
 #include <zlib.h>
 
+#define MAX_COMPRESSED_SIZE 0x100000
+#define MAX_PAGES 0x10000
+
 uint8_t uncompressed_buffer[MAX_COMPRESSED_SIZE], compressed_buffer[MAX_COMPRESSED_SIZE];
 
 // Path: src/compression_test.cpp
@@ -43,8 +46,8 @@ class ObjectLivenessTest : public IntervalTest {
     }
 
     void interval(
-        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
-        const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
+        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
+        // const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
         stack_infof("Interval %d object liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {

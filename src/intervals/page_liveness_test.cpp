@@ -41,8 +41,8 @@ class PageLivenessTest : public IntervalTest {
     }
 
     void interval(
-        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
-        const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
+        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
+        // const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
         stack_infof("Interval %d page liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {

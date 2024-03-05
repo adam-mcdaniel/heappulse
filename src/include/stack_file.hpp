@@ -16,7 +16,6 @@ enum class Mode {
     APPEND = 3
 };
 
-
 class StackFile {
 private:
     // The file descriptor
@@ -84,7 +83,7 @@ public:
         return fd;
     }
 
-    // // Close the file
+    // Close the file
     // ~StackFile() {
     //     close(fd);
     // }
