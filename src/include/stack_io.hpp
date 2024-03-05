@@ -55,7 +55,7 @@ void stack_sprintf(StackString<Size> &buf, const char* format, Args... args) {
 template <size_t Size, typename... Args>
 void stack_sprintf(char *buf, const char* format, Args... args) {
     StackString<Size> buf2 = StackString<Size>::format(format, args...);
-    strncpy(buf, buf2.c_str(), buf2.size());
+    buf2.c_str(buf);
 }
 
 

@@ -129,19 +129,23 @@ public:
         data.push(c);
     }
 
-    const char *c_str() const {
-        return data.array_pointer();
+    void c_str(char *str) const {
+        memcpy(str, data.array_pointer(), data.size());
+        // strncpy(str, data.array_pointer(), data.size());
+        str[data.size()] = '\0';
     }
 
     void print() const {
-        const char *arr = data.array_pointer();
-        char buf[Size + 1];
-        size_t i;
-        for (i=0; i<data.size() && i < Size; i++) {
-            buf[i] = arr[i];
-        }
-        buf[i] = '\0';
+        // const char *arr = data.array_pointer();
+        char buf[Size + 1] = {0};
+        c_str(buf);
         bk_printf("%s", buf);
+        // size_t i;
+        // for (i=0; i<data.size() && i < Size; i++) {
+        //     buf[i] = arr[i];
+        // }
+        // buf[i] = '\0';
+        // bk_printf("%s", buf);
     }
 
     void println() const {
