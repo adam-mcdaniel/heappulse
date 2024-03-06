@@ -201,7 +201,7 @@ void clear_soft_dirty_bits() {
 }
 
 template<size_t Size>
-bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> &page_info, BitVec<Size> &present_pages) {
+bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> &page_info, BitVec<Size> &present_pages, std::function<bool(const PageInfo&)> filter) {
     bool protection = IS_PROTECTED;
     IS_PROTECTED = true;
 
@@ -300,8 +300,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
         bool soft_dirty = data & (1ULL << 55);
         bool is_zero_page = flags & (1 << 24);
         bool dirty = flags & (1 << 4);
-
-        page_info.push(PageInfo(page_frame_number,
+        PageInfo page = PageInfo(page_frame_number,
                                   (void*)i,
                                   (void*)(i + PAGE_SIZE),
                                   read,
@@ -311,8 +310,11 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
                                   present,
                                   dirty,
                                   soft_dirty,
-                                  is_file_mapped));
-        present_pages.set(j++, present);
+                                  is_file_mapped);
+        if (filter(page)) {
+            page_info.push(page);
+            present_pages.set(j++, present);
+        }
         n_resident_pages++;
         if (j >= Size) {
             break;
@@ -321,7 +323,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
             break;
         }
         assert(n_resident_pages <= size_in_pages);
-        assert(n_resident_pages == present_pages.count());
+        // assert(n_resident_pages == present_pages.count());
     }
 
     // close(pagemap_fd);
@@ -371,7 +373,7 @@ void clear_page_faults() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
-    // stack_warnf("PROTECTION HANDLER: Got SIGSEGV at %x, recording and giving back access\n", si->si_addr);
+    stack_warnf("PROTECTION HANDLER: Got SIGSEGV at %x, recording and giving back access\n", si->si_addr);
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
     // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
@@ -446,18 +448,20 @@ struct Allocation {
     void *ptr;
     /// @brief The size of the allocation
     size_t size;
+    #ifdef COLLECT_BACKTRACE
     /// @brief The backtrace of the call stack that made the allocation
     Backtrace backtrace;
+    #endif
     /// @brief The time the allocation was made
     std::chrono::steady_clock::time_point allocation_time;
     /// @brief The age of the allocation in intervals
     size_t age = 0;
 
-    Allocation() : ptr(NULL), size(0), backtrace(Backtrace()) {
+    Allocation() : ptr(NULL), size(0) {
         allocation_time = std::chrono::steady_clock::now();
     }
 
-    Allocation(void *ptr, size_t size) : ptr(ptr), size(size), backtrace(Backtrace()) {
+    Allocation(void *ptr, size_t size) : ptr(ptr), size(size) {
         allocation_time = std::chrono::steady_clock::now();
     }
 
@@ -482,7 +486,7 @@ struct Allocation {
     /// @return True if the allocation has any dirty pages, false otherwise
     bool is_dirty() {
         // Get the page info
-        auto pages = page_info<10000>();
+        auto pages = physical_pages<10000>();
         for (size_t i=0; i<pages.size(); i++) {
             if (pages[i].is_dirty()) {
                 return true;
@@ -639,13 +643,32 @@ struct Allocation {
         }
     }
 
-    template<size_t Size>
-    StackVec<PageInfo, Size> page_info() {
-        BitVec<Size> present_pages;
-        StackVec<PageInfo, Size> page_info;
+    // template<size_t Size>
+    // StackVec<PageInfo, Size> page_info() {
+    //     BitVec<Size> present_pages;
+    //     StackVec<PageInfo, Size> page_info;
 
-        if (get_page_info<Size>(ptr, size, page_info, present_pages)) {
-            return page_info;
+    //     if (get_page_info<Size>(ptr, size, page_info, present_pages, [](const PageInfo& page) { return page.is_resident(); })) {
+    //         return page_info;
+    //     } else {
+    //         stack_errorf("Unable to get page info\n");
+    //         exit(1);
+    //     }
+    // }
+
+    template<size_t Size>
+    StackVec<PageInfo, Size> physical_pages(bool non_zero=true) {
+        BitVec<Size> present_pages;
+        StackVec<PageInfo, Size> physical_pages;
+
+        if (get_page_info<Size>(ptr, size, physical_pages, present_pages, [&](const PageInfo& page) { return page.is_resident() && (!non_zero || !page.is_zero()); })) {
+            // StackVec<PageInfo, Size> physical_pages;
+            // for (size_t i=0; i<page_info.size(); i++) {
+            //     if (present_pages[i]) {
+            //         physical_pages.push(page_info[i]);
+            //     }
+            // }
+            return physical_pages;
         } else {
             stack_errorf("Unable to get page info\n");
             exit(1);
@@ -653,17 +676,17 @@ struct Allocation {
     }
 
     template<size_t Size>
-    StackVec<PageInfo, Size> physical_pages() {
+    StackVec<PageInfo, Size> physical_pages(std::function<bool(const PageInfo&)> filter) {
         BitVec<Size> present_pages;
-        StackVec<PageInfo, Size> page_info;
+        StackVec<PageInfo, Size> physical_pages;
 
-        if (get_page_info<Size>(ptr, size, page_info, present_pages)) {
-            StackVec<PageInfo, Size> physical_pages;
-            for (size_t i=0; i<page_info.size(); i++) {
-                if (present_pages[i]) {
-                    physical_pages.push(page_info[i]);
-                }
-            }
+        if (get_page_info<Size>(ptr, size, physical_pages, present_pages, filter)) {
+            // StackVec<PageInfo, Size> physical_pages;
+            // for (size_t i=0; i<page_info.size(); i++) {
+            //     if (present_pages[i]) {
+            //         physical_pages.push(page_info[i]);
+            //     }
+            // }
             return physical_pages;
         } else {
             stack_errorf("Unable to get page info\n");
@@ -677,16 +700,23 @@ struct AllocationSite {
 
     void log() const {
         stack_logf("AllocationSite: %p\n", return_address);
-        for (size_t i=0; i<allocations.max_size(); i++) {
+        // for (size_t i=0; i<allocations.max_size(); i++) {
+        //     stack_logf("   ");
+        //     allocations.nth_entry(i).value.log();
+        // }
+        allocations.map([](auto key, Allocation const &allocation) {
             stack_logf("   ");
-            allocations.nth_entry(i).value.log();
-        }
+            allocation.log();
+        });
     }
 
     void tick_age() {
-        for (size_t i=0; i<allocations.max_size(); i++) {
-            allocations.nth_entry(i).value.tick_age();
-        }
+        // for (size_t i=0; i<allocations.max_size(); i++) {
+        //     allocations.nth_entry(i).value.tick_age();
+        // }
+        allocations.map([](void *key, Allocation &allocation) {
+            allocation.tick_age();
+        });
     }
 };
 
@@ -738,6 +768,15 @@ public:
 class IntervalTestSuite {
 public:
     IntervalTestSuite() {
+        setup_protection_handler();
+        if (config.clear_soft_dirty_bits) {
+            stack_warnf("Clearing soft dirty bits\n");
+            clear_soft_dirty_bits();
+        }
+    }
+
+    IntervalTestSuite(IntervalTestConfig config) {
+        this->config = config;
         setup_protection_handler();
         if (config.clear_soft_dirty_bits) {
             stack_warnf("Clearing soft dirty bits\n");
@@ -798,7 +837,7 @@ public:
             stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
             stack_debugf("Unable to add allocation to site\n");
             stack_debugf("Releasing lock\n");
-            // hook_lock.unlock();
+            hook_lock.unlock();
             return;
         }
 
@@ -810,28 +849,52 @@ public:
             stack_debugf("Unable to add allocation site\n");
         }
         stack_debugf("Releasing lock\n");
-        // hook_lock.unlock();
+        hook_lock.unlock();
                 
         stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
-    bool contains(void *ptr) const {
-        for (size_t i=0; i<allocation_sites.max_size(); i++) {
-            if (allocation_sites.nth_entry(i).occupied) {
-                AllocationSite site = allocation_sites.nth_entry(i).value;
-                if (site.allocations.has(ptr)) {
-                    return true;
-                }
+    bool contains(void *ptr) {
+        return allocation_sites.reduce<bool>([&](auto _, AllocationSite const &site, bool acc) {
+            if (acc || site.allocations.has(ptr)) {
+                return true;
             }
-        }
+            return acc;
+        }, false);
+        /*
+        // for (size_t i=0; i<allocation_sites.max_size(); i++) {
+        //     if (allocation_sites.nth_entry(i).occupied) {
+        //         AllocationSite site = allocation_sites.nth_entry(i).value;
+        //         if (site.allocations.has(ptr)) {
+        //             return true;
+        //         }
+        //     }
+        // }
+        */
         return false;
     }
 
     void invalidate(void *ptr) {
-        heart_beat();
         // std::lock_guard<std::mutex> lock(hook_lock);
         stack_debugf("IntervalTestSuite::invalidate\n");
         stack_debugf("Invalidating %X\n", ptr);
+
+        // allocation_sites.map([&](uintptr_t key, AllocationSite &site) {
+        //     if (site.allocations.has(ptr)) {
+        //         site.allocations.remove(ptr);
+        //     }
+        // });
+        hook_lock.lock();
+        assert(allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
+            if (!found && site.allocations.has(ptr)) {
+                site.allocations.remove(ptr);
+                allocation_sites.put(site.return_address, site);
+                return true;
+            }
+            return found;
+        }, false));
+        hook_lock.unlock();
+        /*
         for (size_t i=0; i<allocation_sites.max_size(); i++) {
             if (allocation_sites.nth_entry(i).occupied) {
                 AllocationSite site = allocation_sites.nth_entry(i).value;
@@ -846,6 +909,7 @@ public:
                 }
             }
         }
+        */
 
         schedule();
         stack_debugf("Leaving IntervalTestSuite::invalidate\n");
@@ -897,20 +961,15 @@ private:
         // static std::mutex schedule_lock;
         // std::lock_guard<std::mutex> lock(schedule_lock);
         // schedule_lock.lock();
-        // hook_lock.lock();
+        hook_lock.lock();
 
         if (timer.elapsed_milliseconds() > config.period_milliseconds) {
             interval();
-            // If the test is done, clear the soft dirty bits
-            if (config.clear_soft_dirty_bits) {
-                stack_warnf("Clearing soft dirty bits\n");
-                clear_soft_dirty_bits();
-            }
         } else {
             stack_debugf("Only %fms have elapsed, not yet at %fms interval\n", timer.elapsed_milliseconds(), config.period_milliseconds);
         }
         // schedule_lock.unlock();
-        // hook_lock.unlock();
+        hook_lock.unlock();
         stack_debugf("IntervalTestSuite::schedule\n");
     }
 
@@ -939,6 +998,12 @@ private:
                 stack_warnf("Test %d has quit\n", i);
             }
         }
+        // If the test is done, clear the soft dirty bits
+        if (config.clear_soft_dirty_bits) {
+            stack_warnf("Clearing soft dirty bits\n");
+            clear_soft_dirty_bits();
+        }
+        
         timer.reset();
         // Tick the age of all the allocations
         allocation_sites.map([](uintptr_t key, AllocationSite &site) {
@@ -950,7 +1015,7 @@ private:
         stack_infof("IntervalTestSuite::interval -- Interval done\n");
         // End time
         uint64_t time_taken = interval_timer.elapsed_milliseconds();
-        stack_logf("Finished interval in %d milliseconds\n", time_taken);
+        stack_infof("Finished interval in %d milliseconds\n", time_taken);
     }
 
     void cleanup() {

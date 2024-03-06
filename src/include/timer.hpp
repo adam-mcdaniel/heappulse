@@ -35,3 +35,40 @@ public:
     }
 };
 
+class Stopwatch {
+private:
+    // The total time
+    uint64_t total_microseconds = 0;
+    Timer timer;
+public:
+    Stopwatch() {}
+
+    void start() {
+        timer = Timer();
+        timer.start();
+    }
+
+    void stop() {
+        total_microseconds += timer.elapsed_microseconds();
+    }
+
+    uint64_t elapsed_microseconds() const {
+        return total_microseconds;
+    }
+
+    uint64_t elapsed_milliseconds() const {
+        return total_microseconds / 1000;
+    }
+
+    uint64_t elapsed_seconds() const {
+        return total_microseconds / 1000000;
+    }
+
+    bool has_elapsed(uint64_t milliseconds) const {
+        return total_microseconds >= milliseconds * 1000;
+    }
+
+    void reset() {
+        total_microseconds = 0;
+    }
+};

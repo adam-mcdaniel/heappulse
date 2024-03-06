@@ -26,8 +26,8 @@ public:
         map.remove(key);
     }
 
-    bool contains(T key) const {
-        return map.contains(key);
+    bool has(T key) const {
+        return map.has(key);
     }
 
     size_t num_entries() const {
@@ -35,7 +35,7 @@ public:
     }
 
     size_t size() const {
-        return map.size();
+        return map.num_entries();
     }
 
     StackVec<T, N> items() const {

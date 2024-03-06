@@ -1,10 +1,16 @@
 #define BKMALLOC_HOOK
 #include <bkmalloc.h>
 
+#include <config.hpp>
 #include <timer.hpp>
 #include <stack_io.hpp>
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
+
+#ifdef DUMMY_TEST
+#include "intervals/dummy_test.cpp"
+static DummyTest dt;
+#endif
 
 #ifdef COMPRESSION_TEST
 #include "intervals/compression_test.cpp"
@@ -26,7 +32,9 @@ static PageLivenessTest plt;
 static PageTrackingTest ptt;
 #endif
 
-static IntervalTestSuite its;
+
+IntervalTestConfig config = {.period_milliseconds = 15000};
+static IntervalTestSuite its(config);
 
 static uint64_t malloc_count = 0;
 static uint64_t free_count = 0;
@@ -34,6 +42,7 @@ static uint64_t mmap_count = 0;
 static uint64_t munmap_count = 0;
 
 const uint64_t STATS_INTERVAL_MS = 5000;
+Stopwatch overhead_sw, update_sw, invalidate_sw;
 
 class Hooks {
 public:
@@ -43,6 +52,9 @@ public:
         stack_debugf("Adding test...\n");
         hook_timer.start();
 
+        #ifdef DUMMY_TEST
+        its.add_test(&dt);
+        #endif
         #ifdef COMPRESSION_TEST
         its.add_test(&ct);
         #endif
@@ -65,6 +77,11 @@ public:
             return;
         }
         stack_debugf("Post mmap\n");
+        update_sw.start();
+        its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.stop();
+        stack_debugf("Post mmap update\n");
+        /*
         if (!hook_lock.try_lock()) return;
         try {
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
@@ -80,6 +97,7 @@ public:
         } catch (...) {
             stack_warnf("Post mmap unknown exception\n");
         }
+        */
 
         hook_lock.unlock();
         stack_debugf("Post mmap done\n");
@@ -90,8 +108,14 @@ public:
             stack_debugf("Test finished, not updating\n");
             return;
         }
-        if (!hook_lock.try_lock()) return;
+        // if (!hook_lock.try_lock()) return;
         stack_debugf("Post alloc\n");
+        stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.start();
+        its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.stop();
+        stack_debugf("Post alloc update\n");
+        /*
         try {
             stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
@@ -107,7 +131,8 @@ public:
         } catch (...) {
             stack_warnf("Post alloc unknown exception exception\n");
         }
-        hook_lock.unlock();
+        */
+        // hook_lock.unlock();
         stack_debugf("Post alloc done\n");
     }
 
@@ -117,6 +142,17 @@ public:
             return;
         }
         stack_debugf("Pre free\n");
+        if (its.contains(addr)) {
+            stack_debugf("About to invalidate %p\n", addr);
+            hook_lock.lock();
+            invalidate_sw.start();
+            its.invalidate(addr);
+            invalidate_sw.stop();
+            hook_lock.unlock();
+        } else {
+            stack_debugf("Pre free does not contain %p\n", addr);
+        }
+        /*
         try {
             if (its.contains(addr)) {
                 stack_debugf("About to invalidate %p\n", addr);
@@ -137,6 +173,7 @@ public:
         } catch (...) {
             stack_warnf("Pre free unknown exception\n");
         }
+        */
         stack_debugf("Pre free done\n");
     }
 
@@ -154,6 +191,9 @@ public:
 
     void print_stats() {
         stack_infof("Elapsed time: % ms\n", hook_timer.elapsed_milliseconds());
+        stack_infof("Total overhead: % ms\n", overhead_sw.elapsed_milliseconds());
+        stack_infof("  Update overhead:     % ms\n", update_sw.elapsed_milliseconds());
+        stack_infof("  Invalidate overhead: % ms\n", invalidate_sw.elapsed_milliseconds());
         stack_infof("Malloc count: %\n", malloc_count);
         stack_infof("Free count: %\n", free_count);
         stack_infof("Mmap count: %\n", mmap_count);
@@ -181,17 +221,19 @@ private:
     Timer hook_timer;
 };
 
-
 static Hooks hooks;
-
 std::mutex bk_lock;
-
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    if (hooks.is_done() || !hooks.can_update()) return;
+    overhead_sw.start();
+    if (hooks.is_done() || !hooks.can_update()) {
+        overhead_sw.stop();
+        return;
+    }
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
+        overhead_sw.stop();
         return;
     }
     malloc_count++;
@@ -200,11 +242,16 @@ void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem,
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
+    overhead_sw.stop();
 }
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    if (hooks.is_done()) return;
+    overhead_sw.start();
+    if (hooks.is_done()) {
+        overhead_sw.stop();
+        return;
+    }
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
@@ -215,13 +262,19 @@ void bk_pre_free_hook(bk_Heap *heap, void *addr) {
         stack_debugf("Leaving hook\n");
         bk_lock.unlock();
     }
+    overhead_sw.stop();
 }
 
 extern "C"
 void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {;
-    if (hooks.is_done() || !hooks.can_update()) return;
+    overhead_sw.start();
+    if (hooks.is_done() || !hooks.can_update()) {
+        overhead_sw.stop();
+        return;
+    }
     if (!bk_lock.try_lock()) {
         stack_debugf("Failed to lock\n");
+        overhead_sw.stop();
         return;
     }
     mmap_count++;
@@ -230,11 +283,16 @@ void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, 
     hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
+    overhead_sw.stop();
 }
 
 extern "C"
 void bk_post_munmap_hook(void *addr, size_t n_bytes) {
-    if (hooks.is_done()) return;
+    overhead_sw.start();
+    if (hooks.is_done()) {
+        overhead_sw.stop();
+        return;
+    }
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
@@ -245,4 +303,5 @@ void bk_post_munmap_hook(void *addr, size_t n_bytes) {
         stack_debugf("Leaving hook\n");
         bk_lock.unlock();
     }
+    overhead_sw.stop();
 }

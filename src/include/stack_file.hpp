@@ -16,6 +16,8 @@ enum class Mode {
     APPEND = 3
 };
 
+// std::mutex mutex;
+
 class StackFile {
 private:
     // The file descriptor
@@ -47,7 +49,7 @@ public:
     template<size_t Size>
     StackFile(StackString<Size> name, Mode mode) {
         name.c_str(filename);
-        bk_printf("Opening file \"%s\"\n", filename);
+        // bk_printf("Opening file \"%s\"\n", filename);
 
         switch (mode) {
         case Mode::READ:
@@ -125,7 +127,7 @@ public:
     void write(const StackString<Size>& data) {
         char buf[Size + 1] = {0};
         data.c_str(buf);
-        ssize_t bytes = ::write(fd, buf, data.size());
+        ssize_t bytes = ::write(fd, buf, strlen(buf));
         if (bytes == -1) {
             throw std::runtime_error("Could not write to file");
         }

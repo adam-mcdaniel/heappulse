@@ -93,12 +93,14 @@ class PageTrackingTest : public IntervalTest {
         stack_infof("Interval %d page liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             stack_infof("Site 0x%x\n", return_address);
+            int page_count = 0;
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 auto pages = allocation.physical_pages<20000>();
                 pages.map([&](auto page) {
                     if (page.is_zero()) {
                         return;
                     }
+                    page_count++;
                     csv.new_row();
                     csv.last()[0] = interval_count;
                     csv.last()[1] = CSVString::format("0x%x", site.return_address);
@@ -126,7 +128,7 @@ class PageTrackingTest : public IntervalTest {
                     csv.last()[10] = get_interval_since_last_write(page.get_physical_address());
                 });
             });
-            stack_infof("Site 0x%x complete\n", return_address);
+            stack_infof("Site 0x%x complete, tracked %d pages\n", return_address, page_count);
         });
 
         age_all_pages();
@@ -134,6 +136,63 @@ class PageTrackingTest : public IntervalTest {
         csv.write(file);
         csv.clear();
         stack_infof("Interval %d complete for page liveness\n", interval_count);
+        /*
+        stack_infof("Interval %d page tracking starting...\n", ++interval_count);
+        StackSet<void*, 10000> tracked_physical_pages, tracked_virtual_pages;
+        allocation_sites.map([&](auto return_address, AllocationSite const &site) {
+            if (site.allocations.num_entries() == 0) return;
+            int page_count = 0;
+            site.allocations.map([&](void *ptr, Allocation allocation) {
+                if (allocation.size <= PAGE_SIZE && tracked_virtual_pages.has((void*)((uint64_t)ptr / PAGE_SIZE * PAGE_SIZE))) {
+                    return;
+                }
+
+                auto pages = allocation.physical_pages<10000>([&](auto page) {
+                    return !page.is_zero() && !tracked_physical_pages.has(page.get_physical_address()) && !tracked_virtual_pages.has(page.get_virtual_address());
+                });
+
+                pages.map([&](auto page) {
+                    tracked_physical_pages.insert(page.get_physical_address());
+                    tracked_virtual_pages.insert(page.get_virtual_address());
+
+                    page_count++;
+
+                    csv.new_row();
+                    csv.last()[0] = interval_count;
+                    csv.last()[1] = CSVString::format("0x%x", site.return_address);
+                    csv.last()[3] = is_page_new(page.get_physical_address());
+
+                    add_page(page.get_physical_address(), page.get_virtual_address(), interval_count);
+                    
+                    csv.last()[2] = get_age_in_intervals(page.get_physical_address());
+                    if (page.is_dirty()) {
+                        write(page.get_physical_address());
+                    } else {
+                        no_write(page.get_physical_address());
+                    }
+
+                    csv.last()[4] = CSVString::format("0x%x", page.get_virtual_address());
+                    csv.last()[5] = CSVString::format("0x%x", page.get_physical_address());
+
+                    csv.last()[6] = was_modified_this_interval(page.get_physical_address());
+                    csv.last()[7] = was_modified_last_interval(page.get_physical_address());
+                    if (allocation.is_new()) {
+                        add_new_objects(page.get_physical_address());
+                    }
+                    csv.last()[8] = has_new_objects(page.get_physical_address());
+                    csv.last()[9] = get_write_count(page.get_physical_address());
+                    csv.last()[10] = get_interval_since_last_write(page.get_physical_address());
+                });
+            });
+            stack_infof("Site 0x%x complete, tracked %d pages\n", return_address, page_count);
+        });
+
+        age_all_pages();
+
+        csv.write(file);
+        csv.clear();
+        stack_infof("Interval %d complete for page tracking, tracked %d total pages\n", interval_count, tracked_physical_pages.size());
+        */
     }
     
     int get_first_interval_for_page(void* physical_address) {
@@ -176,6 +235,7 @@ class PageTrackingTest : public IntervalTest {
 
     void write(void *physical_address) {
         if (tracking.has(physical_address)) {
+            stack_debugf("Wrote to page 0x%x\n", physical_address);
             tracking.get(physical_address).write();
         }
     }

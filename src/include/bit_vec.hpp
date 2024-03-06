@@ -4,13 +4,11 @@
 
 template <size_t Bits>
 class BitVec {
-    uint8_t data[Bits / 8 + 1];
-    size_t len;
+    uint8_t data[Bits / 8 + 1] = {0};
+    size_t len = 0;
     
 public:
-    BitVec() {
-        clear();
-    }
+    BitVec() {}
 
     void set(size_t index, bool value) {
         size_t byte = index / 8;
@@ -79,9 +77,11 @@ public:
     }
 
     void clear() {
-        for (size_t i=0; i<Bits / 8 + 1; i++) {
-            data[i] = 0;
-        }
+        // for (size_t i=0; i<Bits / 8 + 1; i++) {
+        //     data[i] = 0;
+        // }
+        memset(data, 0, Bits / 8 + 1);
+        len = 0;
     }
 
     void push(bool value) {

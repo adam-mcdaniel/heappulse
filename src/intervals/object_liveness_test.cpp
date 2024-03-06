@@ -5,9 +5,10 @@
 #include <zlib.h>
 
 #define MAX_COMPRESSED_SIZE 0x100000
-#define MAX_PAGES 0x10000
+#define MAX_PAGES (MAX_COMPRESSED_SIZE / PAGE_SIZE)
 
 uint8_t uncompressed_buffer[MAX_COMPRESSED_SIZE], compressed_buffer[MAX_COMPRESSED_SIZE];
+
 
 // Path: src/compression_test.cpp
 class ObjectLivenessTest : public IntervalTest {
@@ -47,12 +48,16 @@ class ObjectLivenessTest : public IntervalTest {
 
     void interval(
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
-        // const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
-        stack_infof("Interval %d object liveness starting...\n", ++interval_count);
+        ++interval_count;
+        size_t objects_tracked = 0;
+        stack_infof("Interval %d object liveness starting...\n", interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
-            stack_infof("Site 0x%x\n", return_address);
+            if (site.allocations.num_entries() == 0) return;
+            stack_infof("Site 0x%x, %d allocations\n", return_address, site.allocations.num_entries());
             site.allocations.map([&](void *ptr, Allocation allocation) {
+                objects_tracked++;
+                stack_debugf("Object at 0x%x, age=%d, new=%d, dirty=%d\n", ptr, allocation.get_age(), allocation.is_new(), allocation.is_dirty());
                 csv.new_row();
                 csv.last()[0] = interval_count;
                 csv.last()[1] = CSVString::format("0x%x", site.return_address);
@@ -64,8 +69,11 @@ class ObjectLivenessTest : public IntervalTest {
                 csv.last()[6] = allocation.get_time_allocated_ms() - test_start_time_ms;
                 csv.last()[7] = (uint64_t)allocation.is_dirty();
 
+                memset(uncompressed_buffer, 0, MAX_COMPRESSED_SIZE);
+
+                allocation.protect();
                 // Get the physical pages, compress them, and calculate the savings in bytes
-                auto pages = allocation.physical_pages<10000>();
+                auto pages = allocation.physical_pages<MAX_PAGES>(false);
                 size_t original_physical_size = pages.reduce<size_t>([&](auto page, auto acc) {
                     // stack_infof("Found physical page at 0x%x (virtual=0x%x, dirty=%, zero=%)\n", page.get_physical_address(), page.get_virtual_address(), page.is_dirty(), page.is_zero());
                     if (uncompressed_buffer + acc + page.size() > uncompressed_buffer + MAX_COMPRESSED_SIZE) {
@@ -89,35 +97,10 @@ class ObjectLivenessTest : public IntervalTest {
                     memcpy(uncompressed_buffer + acc, page.get_virtual_address(), page.size());
                     return acc + page.size();
                 }, 0);
+                allocation.unprotect();
                 
                 uint64_t estimated_compressed_size = compressBound(original_physical_size);
                 uint64_t compressed_size = estimated_compressed_size;
-                
-                // Compress the pages
-                allocation.protect();
-                stack_debugf("Protected\n");
-                // Copy to buffer
-                memcpy(uncompressed_buffer, (const uint8_t*)ptr, original_physical_size);
-                allocation.unprotect();
-                stack_debugf("Unprotected\n");
-
-                // Print the uncompressed bytes
-
-                #ifdef DEBUG
-                stack_infof("Uncompressed bytes at %p (size=%):\n", ptr, allocation.size);
-                char *ch_ptr = (char*)ptr;
-                for (size_t i = 0; i < original_physical_size; i++) {
-                    // stack_infof("%", (char)uncompressed_buffer[i]);
-                    if (isalnum(ch_ptr[i])) {
-                        bk_printf("%x ", ch_ptr[i]);
-                    } else if (ch_ptr[i] == '\0') {
-                        bk_printf(". ");
-                    } else {
-                        bk_printf("? ");
-                    }
-                }
-                stack_infof("\n");
-                #endif
 
                 stack_debugf("Compressing %d bytes\n", original_physical_size);
 
@@ -142,6 +125,7 @@ class ObjectLivenessTest : public IntervalTest {
         csv.write(file);
         csv.clear();
         stack_infof("Interval %d complete for object liveness\n", interval_count);
+        stack_infof("Tracked %d objects\n", objects_tracked);
     }
 
     void cleanup() override {

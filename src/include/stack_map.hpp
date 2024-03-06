@@ -19,6 +19,7 @@ public:
     }
 
     void put(const KeyType& key, const ValueType& value) {
+        // get(key) = value;
         std::size_t index = hash(key);
         uint64_t i = 0;
         while (hashtable[index].occupied) {
@@ -28,6 +29,8 @@ public:
             } else if (i++ > Size) {
                 return;  // Map is full
             }
+
+            // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
         }
 
@@ -43,12 +46,36 @@ public:
             if (hashtable[index].key == key) {
                 return hashtable[index].value;
             }
+
+            // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
         }
         // Key not found
         // throw std::out_of_range("Key not found");
-        // return ValueType();
-        return hashtable[0].value;
+        hashtable[index].key = key;
+        hashtable[index].occupied = true;
+        entries++;
+        return hashtable[index].value;
+    }
+
+    ValueType &operator[](const KeyType& key) {
+        /*
+        std::size_t index = hash(key);
+        while (hashtable[index].occupied) {
+            if (hashtable[index].key == key) {
+                return hashtable[index].value;
+            }
+            
+            // index = std::hash<size_t>{}(index) % Size;
+            index = (index + 1) % Size;  // Linear probing for collision resolution
+        }
+
+        hashtable[index].key = key;
+        hashtable[index].occupied = true;
+        entries++;
+        return hashtable[index].value;
+        */
+        return get(key);
     }
 
     void remove(const KeyType& key) {
@@ -59,6 +86,7 @@ public:
                 entries--;
                 return;
             }
+            // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
         }
     }
@@ -69,15 +97,17 @@ public:
             if (hashtable[index].key == key) {
                 return true;
             }
+            // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
         }
         return false;
     }
 
     void clear() {
-        for (uint64_t i=0; i<Size; i++) {
-            hashtable[i].occupied = false;
-        }
+        // for (uint64_t i=0; i<Size; i++) {
+        //     hashtable[i].occupied = false;
+        // }
+        memset((uint8_t*)hashtable.data(), 0, sizeof(hashtable));
         entries = 0;
     }
 
@@ -102,12 +132,10 @@ public:
             return;
         }
         size_t j = 0;
-        for (uint64_t i=0; i<Size && j < num_entries(); i++) {
+        for (uint64_t i=0; i<Size && j<num_entries(); i++) {
             if (hashtable[i].occupied) {
                 func(hashtable[i].key, hashtable[i].value);
-                if (++j >= entries) {
-                    break;
-                }
+                j++;
             }
         }
     }
@@ -117,12 +145,10 @@ public:
             return;
         }
         size_t j = 0;
-        for (uint64_t i=0; i<Size && j < num_entries(); i++) {
+        for (uint64_t i=0; i<Size && j<num_entries(); i++) {
             if (hashtable[i].occupied) {
                 func(hashtable[i].key, hashtable[i].value);
-                if (++j >= entries) {
-                    break;
-                }
+                j++;
             }
         }
     }
@@ -131,9 +157,25 @@ public:
     template <typename T>
     T reduce(std::function<T(const KeyType&, const ValueType&, T)> func, T initial) const {
         T result = initial;
-        for (uint64_t i=0; i<Size; i++) {
+        uint64_t j = 0;
+        for (uint64_t i=0; i<Size && j<num_entries(); i++) {
             if (hashtable[i].occupied) {
                 result = func(hashtable[i].key, hashtable[i].value, result);
+                j++;
+            }
+        }
+        return result;
+    }
+
+    // Reduce
+    template <typename T>
+    T reduce(std::function<T(const KeyType&, ValueType&, T)> func, T initial) {
+        T result = initial;
+        uint64_t j = 0;
+        for (uint64_t i=0; i<Size && j<num_entries(); i++) {
+            if (hashtable[i].occupied) {
+                result = func(hashtable[i].key, hashtable[i].value, result);
+                j++;
             }
         }
         return result;
@@ -163,27 +205,14 @@ public:
         return hashtable[index];
     }
 
-    ValueType &operator[](const KeyType& key) {
-        std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
-            if (hashtable[index].key == key) {
-                return hashtable[index].value;
-            }
-            index = (index + 1) % Size;  // Linear probing for collision resolution
-        }
-
-        hashtable[index].key = key;
-        hashtable[index].occupied = true;
-        entries++;
-        return hashtable[index].value;
-    }
-
     template <size_t N>
     void keys(StackVec<KeyType, N> &keys) const {
         keys.clear();
-        for (size_t i = 0; i < Size; i++) {
+        uint64_t j = 0;
+        for (size_t i = 0; i < Size && j < num_entries(); i++) {
             if (hashtable[i].occupied) {
                 keys.push(hashtable[i].key);
+                j++;
             }
         }
     }
@@ -191,9 +220,11 @@ public:
     template <size_t N>
     void values(StackVec<ValueType, N> &values) const {
         values.clear();
-        for (size_t i = 0; i < Size; i++) {
+        uint64_t j = 0;
+        for (size_t i = 0; i < Size && j < num_entries(); i++) {
             if (hashtable[i].occupied) {
                 values.push(hashtable[i].value);
+                j++;
             }
         }
     }
