@@ -1,0 +1,7 @@
+Interval #,Allocation Site,Age (intervals),Age (ms since allocated),Is new?,Object Address,Time allocated (ms since start),Written During This Interval?,Object Virtual Size (bytes),Object Physical Size (bytes),Object Physical Page Compression Savings (bytes)
+2,0x7FF88F5778E1,1,1395069,1,0x7FF88EB80480,33,true,96,4096,3988
+2,0x7FF88F295D7C,1,1395053,1,0x7FF88E580100,54,true,224,4096,4024
+2,0x7FF88F295D7C,1,1395047,1,0x7FF816D80000,64,true,4096,4096,3633
+2,0x40121E,1,1395030,1,0x7FF7FD300060,85,true,214400000,1048576,1044070
+3,0x7FF88F295D7C,2,1395506,0,0x7FF88E580100,54,true,224,4096,4013
+3,0x7FF88F295D7C,2,1395500,0,0x7FF816D80000,64,false,4096,4096,3633

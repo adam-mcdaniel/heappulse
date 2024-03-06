@@ -1,5 +1,7 @@
 #pragma once
 
+#include "config.hpp"
+
 #include <stack_string.hpp>
 #include "stack_file.hpp"
 #include <bkmalloc.h>
@@ -7,15 +9,11 @@
 // Whether to print debug messages
 // #define DEBUG true
 // The log file to write to
-#define LOG_FILE "log.txt"
-
-
 #ifndef DEBUG
 #define stack_debugf(...)
 #endif
 
 static StackFile log_file(StackString<256>::from(LOG_FILE), Mode::WRITE);
-
 
 template <typename... Args>
 void stack_printf(const char* format, Args... args) {
@@ -57,7 +55,7 @@ void stack_sprintf(StackString<Size> &buf, const char* format, Args... args) {
 template <size_t Size, typename... Args>
 void stack_sprintf(char *buf, const char* format, Args... args) {
     StackString<Size> buf2 = StackString<Size>::format(format, args...);
-    strncpy(buf, buf2.c_str(), buf2.size());
+    buf2.c_str(buf);
 }
 
 
@@ -71,9 +69,7 @@ void stack_debugf(const char* format, Args... args);
 void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
     #ifdef DEBUG
-    if (DEBUG) {
-        stack_debugf(str);
-    }
+    stack_debugf(str);
     #endif
     stack_fprintf(log_file, "%s", str);
     // stack_printf(str);
@@ -84,9 +80,7 @@ template <typename... Args>
 void stack_logf(const char* format, Args... args) {
     // StackString<1 << 14>::format(format, args...).print();
     #ifdef DEBUG
-    if (DEBUG) {
-        stack_debugf(format, args...);
-    }
+    stack_debugf(format, args...);
     #endif
     stack_fprintf(log_file, format, args...);
     // stack_printf(format, args...);
@@ -102,16 +96,14 @@ void stack_debugf(const char* format, Args... args);
 
 void stack_debugf(const char* str) {
     #ifdef DEBUG
-    if (DEBUG) {
-        if (last_was_newline) {
-            stack_printf("[DEBUG] ");
-        }
-        stack_printf(str);
-        if (str[strlen(str) - 1] == '\n') {
-            last_was_newline = true;
-        } else {
-            last_was_newline = false;
-        }
+    if (last_was_newline) {
+        stack_printf("[DEBUG] ");
+    }
+    stack_printf(str);
+    if (str[strlen(str) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
     }
     #endif
 }
@@ -119,16 +111,14 @@ void stack_debugf(const char* str) {
 template <typename... Args>
 void stack_debugf(const char* format, Args... args) {
     #ifdef DEBUG
-    if (DEBUG) {
-        if (last_was_newline) {
-            stack_printf("[DEBUG] ");
-        }
-        stack_printf(format, args...);
-        if (format[strlen(format) - 1] == '\n') {
-            last_was_newline = true;
-        } else {
-            last_was_newline = false;
-        }
+    if (last_was_newline) {
+        stack_printf("[DEBUG] ");
+    }
+    stack_printf(format, args...);
+    if (format[strlen(format) - 1] == '\n') {
+        last_was_newline = true;
+    } else {
+        last_was_newline = false;
     }
     #endif
 }
@@ -230,7 +220,6 @@ void stack_errorf(const char* format, Args... args) {
 }
 
 
-// #define OPTIMIZE
 #ifdef OPTIMIZE
 #define stack_printf(...)
 #define stack_logf(...)

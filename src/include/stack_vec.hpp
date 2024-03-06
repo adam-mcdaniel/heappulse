@@ -1,4 +1,5 @@
 #pragma once
+
 #include <array>
 #include <stdint.h>
 #include <functional>
@@ -116,18 +117,6 @@ public:
 
     StackVec() : elements(0), capacity(Size) {}
 
-    // friend std::ostream& operator<<(std::ostream& os, const StackVec& stack) {
-    //     os << "[";
-    //     for (size_t i=0; i<stack.elements; i++) {
-    //         os << stack.data[i];
-    //         if (i != stack.elements - 1) {
-    //             os << ", ";
-    //         }
-    //     }
-    //     os << "]";
-    //     return os;
-    // }
-
     void print() const {
         // std::cout << *this << std::endl;
     }
@@ -186,32 +175,4 @@ public:
         }
         return *this;
     }
-    
-    // // Copy constructor
-    // StackVec(const StackVec<ValueType, Size>& other) {
-    //     elements = other.elements;
-    //     capacity = other.capacity;
-    //     for (size_t i=0; i<elements; i++) {
-    //         data[i] = other.data[i];
-    //     }
-    // }
-
-    // // Copy assignment operator
-    // StackVec<ValueType, Size>& operator=(const StackVec<ValueType, Size>& other) {
-    //     elements = other.elements;
-    //     capacity = other.capacity;
-    //     for (size_t i=0; i<elements; i++) {
-    //         data[i] = other.data[i];
-    //     }
-    //     return *this;
-    // }
-
-    // // Move constructor
-    // StackVec(StackVec<ValueType, Size>&& other) {
-    //     elements = other.elements;
-    //     capacity = other.capacity;
-    //     for (size_t i=0; i<elements; i++) {
-    //         data[i] = other.data[i];
-    //     }
-    // }
 };

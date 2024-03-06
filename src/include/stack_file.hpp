@@ -1,9 +1,13 @@
 #pragma once
+
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdexcept>
+#include "stack_io.hpp"
+#include "stack_string.hpp"
+
 // A file object that only uses stack memory
 class StackFile;
 enum class Mode {
@@ -11,10 +15,8 @@ enum class Mode {
     WRITE = 2,
     APPEND = 3
 };
-#include "stack_io.hpp"
-#include "stack_string.hpp"
 
-
+// std::mutex mutex;
 
 class StackFile {
 private:
@@ -22,13 +24,14 @@ private:
     int fd;
 
     // The name of the file
-    char filename[256];
+    char filename[256] = {0};
 
     // The position
     size_t position;
 
     // The mode
     Mode mode;
+
 public:
     StackFile() : fd(-1), position(0) {
         memset(filename, 0, 256);
@@ -45,13 +48,8 @@ public:
     // Open a file
     template<size_t Size>
     StackFile(StackString<Size> name, Mode mode) {
-        // stack_debugf("Opening file %s\n", filename.c_str());
-        // char buf[Size + 1];
-        size_t i;
-        for (i=0; i<name.size() && i < Size; i++) {
-            filename[i] = name.c_str()[i];
-        }
-        filename[i] = '\0';
+        name.c_str(filename);
+        // bk_printf("Opening file \"%s\"\n", filename);
 
         switch (mode) {
         case Mode::READ:
@@ -82,7 +80,7 @@ public:
         return fd;
     }
 
-    // // Close the file
+    // Close the file
     // ~StackFile() {
     //     close(fd);
     // }
@@ -127,7 +125,9 @@ public:
     // Write to the file
     template <size_t Size>
     void write(const StackString<Size>& data) {
-        ssize_t bytes = ::write(fd, data.c_str(), data.size());
+        char buf[Size + 1] = {0};
+        data.c_str(buf);
+        ssize_t bytes = ::write(fd, buf, strlen(buf));
         if (bytes == -1) {
             throw std::runtime_error("Could not write to file");
         }

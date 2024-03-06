@@ -1,20 +1,40 @@
 #define BKMALLOC_HOOK
 #include <bkmalloc.h>
-#include <stack_io.hpp>
+
+#include <config.hpp>
 #include <timer.hpp>
-#include "stack_map.cpp"
-// #include "stack_file.cpp"
+#include <stack_io.hpp>
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
-#include "compression_test.cpp"
-#include "object_liveness_test.cpp"
-#include "page_liveness_test.cpp"
 
+#ifdef DUMMY_TEST
+#include "intervals/dummy_test.cpp"
+static DummyTest dt;
+#endif
 
-// static CompressionTest ct;
+#ifdef COMPRESSION_TEST
+#include "intervals/compression_test.cpp"
+static CompressionTest ct;
+#endif
+
+#ifdef OBJECT_LIVENESS_TEST
+#include "intervals/object_liveness_test.cpp"
 static ObjectLivenessTest olt;
+#endif
+
+#ifdef PAGE_LIVENESS_TEST
+#include "intervals/page_liveness_test.cpp"
 static PageLivenessTest plt;
-static IntervalTestSuite its;
+#endif
+
+#ifdef PAGE_TRACKING_TEST
+#include "intervals/page_tracking.cpp"
+static PageTrackingTest ptt;
+#endif
+
+
+IntervalTestConfig config = {.period_milliseconds = 15000};
+static IntervalTestSuite its(config);
 
 static uint64_t malloc_count = 0;
 static uint64_t free_count = 0;
@@ -22,6 +42,7 @@ static uint64_t mmap_count = 0;
 static uint64_t munmap_count = 0;
 
 const uint64_t STATS_INTERVAL_MS = 5000;
+Stopwatch overhead_sw, update_sw, invalidate_sw;
 
 class Hooks {
 public:
@@ -30,9 +51,23 @@ public:
 
         stack_debugf("Adding test...\n");
         hook_timer.start();
-        // its.add_test(&ct);
+
+        #ifdef DUMMY_TEST
+        its.add_test(&dt);
+        #endif
+        #ifdef COMPRESSION_TEST
+        its.add_test(&ct);
+        #endif
+        #ifdef OBJECT_LIVENESS_TEST
         its.add_test(&olt);
+        #endif
+        #ifdef PAGE_LIVENESS_TEST
         its.add_test(&plt);
+        #endif
+        #ifdef PAGE_TRACKING_TEST
+        its.add_test(&ptt);
+        #endif
+        
         stack_debugf("Done\n");
     }
 
@@ -42,6 +77,11 @@ public:
             return;
         }
         stack_debugf("Post mmap\n");
+        update_sw.start();
+        its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.stop();
+        stack_debugf("Post mmap update\n");
+        /*
         if (!hook_lock.try_lock()) return;
         try {
             its.update(addr_in, n_bytes, (uintptr_t)BK_GET_RA());
@@ -57,6 +97,7 @@ public:
         } catch (...) {
             stack_warnf("Post mmap unknown exception\n");
         }
+        */
 
         hook_lock.unlock();
         stack_debugf("Post mmap done\n");
@@ -67,8 +108,14 @@ public:
             stack_debugf("Test finished, not updating\n");
             return;
         }
-        if (!hook_lock.try_lock()) return;
+        // if (!hook_lock.try_lock()) return;
         stack_debugf("Post alloc\n");
+        stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.start();
+        its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
+        update_sw.stop();
+        stack_debugf("Post alloc update\n");
+        /*
         try {
             stack_debugf("About to update with arguments %p, %d, %d\n", allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
             its.update(allocation_address, n_bytes, (uintptr_t)BK_GET_RA());
@@ -84,7 +131,8 @@ public:
         } catch (...) {
             stack_warnf("Post alloc unknown exception exception\n");
         }
-        hook_lock.unlock();
+        */
+        // hook_lock.unlock();
         stack_debugf("Post alloc done\n");
     }
 
@@ -94,6 +142,17 @@ public:
             return;
         }
         stack_debugf("Pre free\n");
+        if (its.contains(addr)) {
+            stack_debugf("About to invalidate %p\n", addr);
+            hook_lock.lock();
+            invalidate_sw.start();
+            its.invalidate(addr);
+            invalidate_sw.stop();
+            hook_lock.unlock();
+        } else {
+            stack_debugf("Pre free does not contain %p\n", addr);
+        }
+        /*
         try {
             if (its.contains(addr)) {
                 stack_debugf("About to invalidate %p\n", addr);
@@ -114,6 +173,7 @@ public:
         } catch (...) {
             stack_warnf("Pre free unknown exception\n");
         }
+        */
         stack_debugf("Pre free done\n");
     }
 
@@ -131,6 +191,9 @@ public:
 
     void print_stats() {
         stack_infof("Elapsed time: % ms\n", hook_timer.elapsed_milliseconds());
+        stack_infof("Total overhead: % ms\n", overhead_sw.elapsed_milliseconds());
+        stack_infof("  Update overhead:     % ms\n", update_sw.elapsed_milliseconds());
+        stack_infof("  Invalidate overhead: % ms\n", invalidate_sw.elapsed_milliseconds());
         stack_infof("Malloc count: %\n", malloc_count);
         stack_infof("Free count: %\n", free_count);
         stack_infof("Mmap count: %\n", mmap_count);
@@ -158,100 +221,87 @@ private:
     Timer hook_timer;
 };
 
-
 static Hooks hooks;
-
 std::mutex bk_lock;
-
 
 extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
-    setup_protection_handler();
-    malloc_count++;
-    hooks.report_stats();
-    if (hooks.is_done() || !hooks.can_update()) return;
-    if (!bk_lock.try_lock()) {
-        stack_debugf("Failed to lock\n");
+    overhead_sw.start();
+    if (hooks.is_done() || !hooks.can_update()) {
+        overhead_sw.stop();
         return;
     }
+    if (!bk_lock.try_lock()) {
+        stack_debugf("Failed to lock\n");
+        overhead_sw.stop();
+        return;
+    }
+    malloc_count++;
+    hooks.report_stats();
     stack_debugf("Entering hook\n");
     hooks.post_alloc(heap, n_bytes, alignment, zero_mem, addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
+    overhead_sw.stop();
 }
 
 extern "C"
 void bk_pre_free_hook(bk_Heap *heap, void *addr) {
-    // if (!protection_handler_setup) {
-    //     setup_protection_handler();
-    //     protection_handler_setup = true;
-    // }
-    setup_protection_handler();
-    free_count++;
-    hooks.report_stats();
-    if (hooks.is_done()) return;
+    overhead_sw.start();
+    if (hooks.is_done()) {
+        overhead_sw.stop();
+        return;
+    }
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
+        free_count++;
+        hooks.report_stats();
         stack_debugf("Entering hook\n");
         hooks.pre_free(heap, addr);
         stack_debugf("Leaving hook\n");
         bk_lock.unlock();
     }
+    overhead_sw.stop();
 }
 
 extern "C"
-void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {
-    mmap_count++;
-    hooks.report_stats();
-
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
-    setup_protection_handler();
-    // stack_infof("Got mmap\n");
-    // bk_printf("Got mmap(%x, %d, %d, %d, %d, %d, %x)\n", addr, n_bytes, prot, flags, fd, offset, ret_addr);
-    if (hooks.is_done() || !hooks.can_update()) return;
-    if (!bk_lock.try_lock()) {
-        stack_debugf("Failed to lock\n");
+void bk_post_mmap_hook(void *addr, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *ret_addr) {;
+    overhead_sw.start();
+    if (hooks.is_done() || !hooks.can_update()) {
+        overhead_sw.stop();
         return;
     }
+    if (!bk_lock.try_lock()) {
+        stack_debugf("Failed to lock\n");
+        overhead_sw.stop();
+        return;
+    }
+    mmap_count++;
+    hooks.report_stats();
     stack_debugf("Entering hook\n");
     hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
     stack_debugf("Leaving hook\n");
     bk_lock.unlock();
+    overhead_sw.stop();
 }
 
 extern "C"
 void bk_post_munmap_hook(void *addr, size_t n_bytes) {
-    munmap_count++;
-    hooks.report_stats();
-
-    // if (!protection_handler_setup) {
-    //     protection_handler_setup = true;
-    // }
-    setup_protection_handler();
-    // stack_infof("Got munmap\n");
-
-    if (hooks.is_done()) return;
+    overhead_sw.start();
+    if (hooks.is_done()) {
+        overhead_sw.stop();
+        return;
+    }
     if (hooks.contains(addr)) {
         stack_debugf("About to block on lock\n");
         bk_lock.lock();
+        munmap_count++;
+        hooks.report_stats();
         stack_debugf("Entering hook\n");
         hooks.pre_free(NULL, addr);
         stack_debugf("Leaving hook\n");
         bk_lock.unlock();
     }
-    // if (hooks.is_done() || !hooks.can_update()) return;
-    // if (!bk_lock.try_lock()) {
-    //     stack_debugf("Failed to lock\n");
-    //     return;
-    // }
-    // stack_debugf("Entering hook\n");
-    // // hooks.post_mmap(ret_addr, n_bytes, prot, flags, fd, offset, ret_addr);
-    // stack_debugf("Leaving hook\n");
-    // bk_lock.unlock();
+    overhead_sw.stop();
 }
