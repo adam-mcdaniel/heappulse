@@ -83,8 +83,7 @@ An interval test has the following methods you can overload to implement your te
 
     // A virtual method for running the test's interval
     virtual void interval(
-        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites,
-        const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
+        const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
     ) {}
 
     virtual void schedule() {}
