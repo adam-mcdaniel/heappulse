@@ -316,7 +316,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
             present_pages.set(j++, present);
         }
         n_resident_pages++;
-        if (j >= Size || present_pages.full() || page_info.full()) {
+        if (present_pages.full() || page_info.full()) {
             stack_warnf("Page info full: filtered pages=%d\n", page_info.size());
             break;
         }
