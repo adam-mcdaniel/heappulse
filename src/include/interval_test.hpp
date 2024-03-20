@@ -374,7 +374,6 @@ void clear_page_faults() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
-    stack_warnf("PROTECTION HANDLER: Got SIGSEGV at %x, recording and giving back access\n", si->si_addr);
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
     // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
