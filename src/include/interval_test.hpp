@@ -373,16 +373,26 @@ void clear_page_faults() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *unused)
 {
-    stack_warnf("PROTECTION HANDLER: Got SIGSEGV at %x, recording and giving back access\n", si->si_addr);
     // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
     // char buf[1024];
     // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
     // write(STDOUT_FILENO, buf, strlen(buf));
 
-    long page_size = sysconf(_SC_PAGESIZE);
-    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    page_faults.insert(aligned_address);
-    mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    if (is_working_thread()) {
+        stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
+
+        long page_size = sysconf(_SC_PAGESIZE);
+        void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
+        mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    } else {
+        page_faults.insert(aligned_address);
+        if (IS_PROTECTED) {
+            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
+            while (IS_PROTECTED) {}
+        }
+        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
+    }
+
     /*
     // Is this thread the main?
     if (is_working_thread()) {
@@ -512,7 +522,6 @@ struct Allocation {
     }
 
     void protect() {
-        IS_PROTECTED = true;
         #ifdef MPROTECT
         protect_with_mprotect();
         #endif
@@ -529,7 +538,6 @@ struct Allocation {
         #ifdef PKEYS
         pkey_unprotect();
         #endif
-        IS_PROTECTED = false;
     }
 
     void protect_with_mprotect() {
