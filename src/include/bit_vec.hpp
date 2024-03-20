@@ -92,6 +92,10 @@ public:
         return get(len--);
     }
 
+    bool full() const {
+        return len == Bits;
+    }
+
     bool operator[](size_t index) const {
         return get(index);
     }

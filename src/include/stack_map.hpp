@@ -19,6 +19,9 @@ public:
     }
 
     void put(const KeyType& key, const ValueType& value) {
+        if (full() && !has(key)) {
+            return;
+        }
         // get(key) = value;
         std::size_t index = hash(key);
         uint64_t i = 0;
@@ -49,6 +52,10 @@ public:
 
             // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
+        }
+
+        if (full()) {
+            return hashtable[0].value;  // Return first value if map is full
         }
         // Key not found
         // throw std::out_of_range("Key not found");

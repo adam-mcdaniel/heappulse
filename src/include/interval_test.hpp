@@ -316,7 +316,8 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
             present_pages.set(j++, present);
         }
         n_resident_pages++;
-        if (j >= Size) {
+        if (j >= Size || present_pages.full() || page_info.full()) {
+            stack_warnf("Page info full: filtered pages=%d\n", page_info.size());
             break;
         }
         if (n_resident_pages >= size_in_pages) {
@@ -381,8 +382,22 @@ static void protection_handler(int sig, siginfo_t *si, void *unused)
 
     long page_size = sysconf(_SC_PAGESIZE);
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    page_faults.insert(aligned_address);
+    // page_faults.insert(aligned_address);
+    // mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+
+
+    if (is_working_thread()) {
+        stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
+    } else {
+        page_faults.insert(aligned_address);
+        if (IS_PROTECTED) {
+            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
+            while (IS_PROTECTED) {}
+        }
+        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
+    }
     mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+
     /*
     // Is this thread the main?
     if (is_working_thread()) {
@@ -512,7 +527,6 @@ struct Allocation {
     }
 
     void protect() {
-        IS_PROTECTED = true;
         #ifdef MPROTECT
         protect_with_mprotect();
         #endif
@@ -529,7 +543,6 @@ struct Allocation {
         #ifdef PKEYS
         pkey_unprotect();
         #endif
-        IS_PROTECTED = false;
     }
 
     void protect_with_mprotect() {

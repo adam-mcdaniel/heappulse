@@ -287,6 +287,9 @@ public:
                 is_first_write = false;
             }
             for (size_t i=0; i<rows.size(); i++) {
+                if ((i + 1) % (rows.size() / 10) == 0) {
+                    stack_infof("%d percent done writing CSV\n", (int)((i + 1) * 100 / rows.size()));
+                }
                 rows[i].write(file);
                 stack_fprintf(file, "\n");
             }
@@ -302,6 +305,10 @@ public:
                 is_first_write = false;
             }
             for (size_t i=0; i<rows.size(); i++) {
+                // Print a percentage done
+                if ((i + 1) % (rows.size() / 10) == 0) {
+                    stack_infof("%d percent done writing CSV\n", (int)((i + 1) * 100 / rows.size()));
+                }
                 rows[i].write(file);
                 stack_fprintf(file, "\n");
             }
@@ -334,5 +341,9 @@ public:
             new_row();
         }
         return rows[row];
+    }
+
+    size_t size() const {
+        return rows.size();
     }
 };

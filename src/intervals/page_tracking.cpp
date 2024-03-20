@@ -50,7 +50,7 @@ struct PageTracking {
 
 // Path: src/compression_test.cpp
 class PageTrackingTest : public IntervalTest {
-    CSV<12, 100000> csv;
+    CSV<12, 80000> csv;
     StackFile file;
     size_t interval_count = 0;
     std::chrono::steady_clock::time_point test_start_time;
@@ -90,17 +90,23 @@ class PageTrackingTest : public IntervalTest {
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
         // const StackVec<Allocation, TOTAL_TRACKED_ALLOCATIONS> &allocations
     ) override {
+        /*
         stack_infof("Interval %d page liveness starting...\n", ++interval_count);
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             stack_infof("Site 0x%x\n", return_address);
             int page_count = 0;
             site.allocations.map([&](void *ptr, Allocation allocation) {
-                auto pages = allocation.physical_pages<20000>();
+                auto pages = allocation.physical_pages<100000>();
                 pages.map([&](auto page) {
                     if (page.is_zero()) {
                         return;
                     }
+                    if (csv.full()) {
+                        csv.write(file);
+                        csv.clear();
+                    }
                     page_count++;
+
                     csv.new_row();
                     csv.last()[0] = interval_count;
                     csv.last()[1] = CSVString::format("0x%x", site.return_address);
@@ -136,26 +142,39 @@ class PageTrackingTest : public IntervalTest {
         csv.write(file);
         csv.clear();
         stack_infof("Interval %d complete for page liveness\n", interval_count);
-        /*
+        */
         stack_infof("Interval %d page tracking starting...\n", ++interval_count);
-        StackSet<void*, 10000> tracked_physical_pages, tracked_virtual_pages;
+        StackSet<void*, 100000> tracked_physical_pages, tracked_virtual_pages;
         allocation_sites.map([&](auto return_address, AllocationSite const &site) {
             if (site.allocations.num_entries() == 0) return;
-            int page_count = 0;
+            int site_page_count = 0;
             site.allocations.map([&](void *ptr, Allocation allocation) {
                 if (allocation.size <= PAGE_SIZE && tracked_virtual_pages.has((void*)((uint64_t)ptr / PAGE_SIZE * PAGE_SIZE))) {
                     return;
                 }
-
+                stack_infof("Getting pages for allocation at 0x%x\n", (uintptr_t)ptr);
                 auto pages = allocation.physical_pages<10000>([&](auto page) {
                     return !page.is_zero() && !tracked_physical_pages.has(page.get_physical_address()) && !tracked_virtual_pages.has(page.get_virtual_address());
                 });
 
+                int allocation_page_count = 0;
                 pages.map([&](auto page) {
-                    tracked_physical_pages.insert(page.get_physical_address());
-                    tracked_virtual_pages.insert(page.get_virtual_address());
+                    if (csv.size() >= 20000) {
+                        stack_infof("Buffering CSV\n");
+                        csv.write(file);
+                        stack_infof("CSV written\n");
+                        csv.clear();
+                        stack_infof("CSV cleared\n");
+                    }
+                    if (!tracked_physical_pages.full()) {
+                        tracked_physical_pages.insert(page.get_physical_address());
+                    }
+                    if (!tracked_virtual_pages.full()) {
+                        tracked_virtual_pages.insert(page.get_virtual_address());
+                    }
 
-                    page_count++;
+                    allocation_page_count++;
+                    site_page_count++;
 
                     csv.new_row();
                     csv.last()[0] = interval_count;
@@ -183,16 +202,18 @@ class PageTrackingTest : public IntervalTest {
                     csv.last()[9] = get_write_count(page.get_physical_address());
                     csv.last()[10] = get_interval_since_last_write(page.get_physical_address());
                 });
+
+                stack_infof("Tracked %d pages for allocation\n", allocation_page_count);
             });
-            stack_infof("Site 0x%x complete, tracked %d pages\n", return_address, page_count);
+            stack_infof("Site 0x%x complete, tracked %d pages\n", return_address, site_page_count);
         });
 
+        stack_infof("Ticking age for %d pages\n", tracked_physical_pages.size());
         age_all_pages();
 
         csv.write(file);
         csv.clear();
         stack_infof("Interval %d complete for page tracking, tracked %d total pages\n", interval_count, tracked_physical_pages.size());
-        */
     }
     
     int get_first_interval_for_page(void* physical_address) {

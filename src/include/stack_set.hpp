@@ -38,6 +38,10 @@ public:
         return map.num_entries();
     }
 
+    bool full() const {
+        return map.full();
+    }
+
     StackVec<T, N> items() const {
         StackVec<T, N> result;
         map.keys(result);
