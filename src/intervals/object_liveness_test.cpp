@@ -4,7 +4,7 @@
 #include <stack_csv.hpp>
 #include <zlib.h>
 
-#define MAX_COMPRESSED_SIZE 0x100000
+#define MAX_COMPRESSED_SIZE 0x10000000
 #define MAX_PAGES (MAX_COMPRESSED_SIZE / PAGE_SIZE)
 
 uint8_t uncompressed_buffer[MAX_COMPRESSED_SIZE], compressed_buffer[MAX_COMPRESSED_SIZE];
@@ -73,7 +73,7 @@ class ObjectLivenessTest : public IntervalTest {
 
                 allocation.protect();
                 // Get the physical pages, compress them, and calculate the savings in bytes
-                auto pages = allocation.physical_pages<MAX_PAGES>(false);
+                auto pages = allocation.physical_pages<MAX_PAGES>(true);
                 size_t original_physical_size = pages.reduce<size_t>([&](auto page, auto acc) {
                     // stack_infof("Found physical page at 0x%x (virtual=0x%x, dirty=%, zero=%)\n", page.get_physical_address(), page.get_virtual_address(), page.is_dirty(), page.is_zero());
                     if (uncompressed_buffer + acc + page.size() > uncompressed_buffer + MAX_COMPRESSED_SIZE) {

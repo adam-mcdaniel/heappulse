@@ -316,8 +316,8 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
             present_pages.set(j++, present);
         }
         n_resident_pages++;
-        if (present_pages.full() || page_info.full()) {
-            stack_warnf("Page info full: filtered pages=%d\n", page_info.size());
+        if (page_info.full()) {
+            stack_warnf("Page info full: filtered pages=%d/%d\n", page_info.size(), page_info.max_size());
             break;
         }
         if (n_resident_pages >= size_in_pages) {
@@ -733,7 +733,7 @@ struct AllocationSite {
 };
 
 struct IntervalTestConfig {
-    double period_milliseconds = 15000.0;
+    double period_milliseconds = 5000.0;
     bool clear_soft_dirty_bits = true;
 };
 
@@ -1000,12 +1000,13 @@ private:
         become_working_thread();
         timer.reset();
 
-        stack_logf("Running interval\n");
+        stack_infof("Running interval\n");
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
             if (!tests[i]->has_quit()) {
-                stack_logf("Running interval for test %d: %\n", i, tests[i]->name());
+                stack_infof("Running interval for test %d: %\n", i, tests[i]->name());
                 tests[i]->interval(allocation_sites);
+                stack_infof("Test %d (%) has finished\n", i, tests[i]->name());
             } else {
                 stack_warnf("Test %d has quit\n", i);
             }
