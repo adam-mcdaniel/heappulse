@@ -30,7 +30,7 @@ struct CSVCell {
 
     CSVCell(StackString<CSV_STR_SIZE> string) : type(Type::STRING), string(string) {}
     CSVCell(int64_t integer) : type(Type::INTEGER), integer(integer) {}
-    CSVCell(float floating_point) : type(Type::FLOAT), floating_point(floating_point) {}
+    CSVCell(double floating_point) : type(Type::FLOAT), floating_point(floating_point) {}
     CSVCell(bool boolean) : type(Type::BOOLEAN), boolean(boolean) {}
     CSVCell(void *pointer) : type(Type::POINTER), pointer(pointer) {}
 

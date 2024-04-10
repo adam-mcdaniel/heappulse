@@ -5,13 +5,14 @@
 #include <timer.hpp>
 #include <backtrace.hpp>
 #include <zlib.h>
-
 #include <stack_io.hpp>
+#include <stdint.h>
 #include <stdlib.h>
 #include <chrono>
 #include <vector>
 #include <signal.h>
 #include <unistd.h>
+#include <ucontext.h>
 #include <csetjmp>
 #include <thread>
 #include <sys/mman.h>
@@ -356,78 +357,65 @@ void no_longer_working_thread() {
 
 /// A map to track pages that incur a page fault.
 /// This is used to track which pages incur a write between intervals.
-static StackSet<void*, 1000> page_faults;
+static StackSet<void*, 1000> write_page_faults, read_page_faults;
 
-StackVec<void*, 1000> get_page_faults() {
-    StackVec<void*, 1000> result = page_faults.items();
-    page_faults.clear();
+StackVec<void*, 1000> get_write_page_faults() {
+    StackVec<void*, 1000> result = write_page_faults.items();
+    write_page_faults.clear();
+    return result;
+}
+
+StackVec<void*, 1000> get_read_page_faults() {
+    StackVec<void*, 1000> result = read_page_faults.items();
+    read_page_faults.clear();
     return result;
 }
 
 void clear_page_faults() {
-    page_faults.clear();
+    write_page_faults.clear();
+    read_page_faults.clear();
 }
 
 // This is the handler for SIGSEGV. It's called when we try to access
 // a protected page. This will put the thread to sleep until we finish
 // compressing the page. This thread will then be woken up when we
 // unprotect the page.
-static void protection_handler(int sig, siginfo_t *si, void *unused)
+static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    // std::cout << "Got SIGSEGV at address: 0x" << std::hex << si->si_addr << std::endl;
-    // char buf[1024];
-    // sprintf(buf, "Got SIGSEGV at address: 0x%lx\n", (long) si->si_addr);
-    // write(STDOUT_FILENO, buf, strlen(buf));
+    ucontext_t *context = (ucontext_t *)ucontext;
+
+    if (si->si_addr == NULL) {
+        stack_errorf("Caught NULL pointer access: segfault at NULL\n");
+        exit(1);
+    }
 
     long page_size = sysconf(_SC_PAGESIZE);
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    // page_faults.insert(aligned_address);
-    // mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
-
+    u64 error_code = context->uc_mcontext.gregs[REG_ERR];
+    bool is_write = error_code & 0x2;
 
     if (is_working_thread()) {
         stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
+        mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
     } else {
-        page_faults.insert(aligned_address);
+        // If the access is a write, add it to the write page faults
+        stack_infof("Error code: %x\n", error_code);
         if (IS_PROTECTED) {
-            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
+            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (void*)si->si_addr);
             while (IS_PROTECTED) {}
         }
-        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
-    }
-    mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
-
-    /*
-    // Is this thread the main?
-    if (is_working_thread()) {
-        // sprintf(buf, "[FAULT] Working thread, giving back access: 0x%lx\n", (long) si->si_addr);
-        // write(STDOUT_FILENO, buf, strlen(buf));
-
-        mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
-        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
-    } else {
-        // Add the page to the page faults set
-        page_faults.insert(aligned_address);
-        mprotect(aligned_address, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
         
-
-        if (!IS_PROTECTED) {
-            // sprintf(buf, "[FAULT] Dereferenced address 0x%lx when unprotected, halting program\n", (long) si->si_addr);
-            // write(STDOUT_FILENO, buf, strlen(buf));
-            // stack_warnf("[FAULT] Dereferenced address 0x%X when unprotected, halting program\n", (uint64_t)si->si_addr);
-            stack_warnf("PROTECTION HANDLER: Caught access of unprotected memory (possibly a fault) 0x%X, sleeping for 0.25 seconds\n", (uint64_t)si->si_addr);
-            // usleep(250000);
+        if (is_write) {
+            stack_infof("Caught write page fault at 0x%X\n", (void*)si->si_addr);
+            mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_EXEC);
+            write_page_faults.insert(aligned_address);
+        } else {
+            stack_infof("Caught read page fault at 0x%X\n", (void*)si->si_addr);
+            mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC);
+            read_page_faults.insert(aligned_address);
         }
-        stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (uint64_t)si->si_addr);
-        // sprintf(buf, "[INFO] Caught access of temporarily protected memory: 0x%lx\n", (long) si->si_addr);
-        // write(STDOUT_FILENO, buf, strlen(buf));
-        while (IS_PROTECTED) {}
-        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (uint64_t)si->si_addr);
-
-        // sprintf(buf, "[INFO] Resuming after protection ended: 0x%lx\n", (long) si->si_addr);
-        // write(STDOUT_FILENO, buf, strlen(buf));
+        stack_warnf("PROTECTION HANDLER: Giving back access to 0x%X\n", (void*)si->si_addr);
     }
-    */
 }
 
 // This sets the SEGV signal handler to be the protection handler.
@@ -525,12 +513,12 @@ struct Allocation {
         stack_logf("Allocation: %p, size: %x\n", ptr, size);
     }
 
-    void protect() {
+    void protect(uint64_t protections=0) {
         #ifdef MPROTECT
-        protect_with_mprotect();
+        protect_with_mprotect(protections);
         #endif
         #ifdef PKEYS
-        protect_with_pkeys();
+        protect_with_pkeys(protections);
         pkey_protect();
         #endif
     }
@@ -544,15 +532,16 @@ struct Allocation {
         #endif
     }
 
-    void protect_with_mprotect() {
+    void protect_with_mprotect(uint64_t protections) {
         long page_size = sysconf(_SC_PAGESIZE);
         uintptr_t address = (uintptr_t)ptr;
         void* aligned_address = (void*)(address & ~(page_size - 1));
 
         // Align the size to the page boundary
         size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
+        stack_infof("Protecting %p, size: %d\n", aligned_address, aligned_size);
 
-        if (mprotect(aligned_address, aligned_size, PROT_READ) == -1) {
+        if (mprotect(aligned_address, aligned_size, protections) == -1) {
             perror("mprotect");
             exit(1);
         }
@@ -565,6 +554,7 @@ struct Allocation {
 
         // Align the size to the page boundary
         size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
+        stack_infof("Unprotecting %p, size: %d\n", aligned_address, aligned_size);
 
         if (mprotect(aligned_address, aligned_size, PROT_READ | PROT_WRITE | PROT_EXEC) == -1) {
             perror("mprotect");
@@ -572,7 +562,7 @@ struct Allocation {
         }
     }
 
-    void protect_with_pkeys() {
+    void protect_with_pkeys(uint64_t protections) {
         if (!PKEY_INITIALIZED) {
             PKEY = pkey_alloc(0, 0);
             if (PKEY == -1) {
@@ -588,12 +578,27 @@ struct Allocation {
         // Align the size to the page boundary
         size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
 
-        if (pkey_mprotect(aligned_address, aligned_size, PROT_READ, 0) == -1) {
+        if (pkey_mprotect(aligned_address, aligned_size, protections, 0) == -1) {
             perror("pkey_mprotect");
             exit(1);
         }
     }
 
+    void unprotect_with_pkeys() {
+        long page_size = sysconf(_SC_PAGESIZE);
+        uintptr_t address = (uintptr_t)ptr;
+        void* aligned_address = (void*)(address & ~(page_size - 1));
+
+        // Align the size to the page boundary
+        size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
+
+        if (pkey_mprotect(aligned_address, aligned_size, PROT_READ | PROT_WRITE | PROT_EXEC, 0) == -1) {
+            perror("pkey_mprotect");
+            exit(1);
+        }
+    }
+
+    /*
     void pkey_protect() {
         if (!PKEY_INITIALIZED) {
             PKEY = pkey_alloc(0, 0);
@@ -625,20 +630,7 @@ struct Allocation {
             exit(1);
         }
     }
-
-    void unprotect_with_pkeys() {
-        long page_size = sysconf(_SC_PAGESIZE);
-        uintptr_t address = (uintptr_t)ptr;
-        void* aligned_address = (void*)(address & ~(page_size - 1));
-
-        // Align the size to the page boundary
-        size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
-
-        if (pkey_mprotect(aligned_address, aligned_size, PROT_READ | PROT_WRITE | PROT_EXEC, 0) == -1) {
-            perror("pkey_mprotect");
-            exit(1);
-        }
-    }
+    */
 
 // private:
     template<size_t Size>

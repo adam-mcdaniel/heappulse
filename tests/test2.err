@@ -1,0 +1,1 @@
+./run.sh: line 15: 793415 Floating point exceptionLD_PRELOAD=$SCRIPT_DIR/libbkmalloc.so BKMALLOC_OPTS="--hooks-file=$SCRIPT_DIR/hook.so --log-hooks" "$PROGRAM_TO_RUN" "$@" 0>&-

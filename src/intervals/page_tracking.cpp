@@ -146,12 +146,14 @@ class PageTrackingTest : public IntervalTest {
         stack_infof("Interval %d page tracking starting...\n", ++interval_count);
         StackSet<void*, 100000> tracked_physical_pages, tracked_virtual_pages;
         allocation_sites.map([&](auto return_address, AllocationSite const &site) {
-            if (site.allocations.num_entries() == 0) return;
+            // if (site.allocations.num_entries() == 0) return;
             int site_page_count = 0;
             site.allocations.map([&](void *ptr, Allocation allocation) {
+                allocation.unprotect();
                 if (allocation.size <= PAGE_SIZE && tracked_virtual_pages.has((void*)((uint64_t)ptr / PAGE_SIZE * PAGE_SIZE))) {
                     return;
                 }
+
                 stack_infof("Getting pages for allocation at 0x%x\n", (uintptr_t)ptr);
                 auto pages = allocation.physical_pages<10000>([&](auto page) {
                     return !page.is_zero() && !tracked_physical_pages.has(page.get_physical_address()) && !tracked_virtual_pages.has(page.get_virtual_address());
@@ -202,7 +204,7 @@ class PageTrackingTest : public IntervalTest {
                     csv.last()[9] = get_write_count(page.get_physical_address());
                     csv.last()[10] = get_interval_since_last_write(page.get_physical_address());
                 });
-
+                allocation.protect();
                 stack_infof("Tracked %d pages for allocation\n", allocation_page_count);
             });
             stack_infof("Site 0x%x complete, tracked %d pages\n", return_address, site_page_count);

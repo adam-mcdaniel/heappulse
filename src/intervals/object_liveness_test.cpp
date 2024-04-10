@@ -3,6 +3,7 @@
 #include <interval_test.hpp>
 #include <stack_csv.hpp>
 #include <zlib.h>
+#include <sys/mman.h>
 
 #define MAX_COMPRESSED_SIZE 0x10000000
 #define MAX_PAGES (MAX_COMPRESSED_SIZE / PAGE_SIZE)
@@ -71,7 +72,7 @@ class ObjectLivenessTest : public IntervalTest {
 
                 memset(uncompressed_buffer, 0, MAX_COMPRESSED_SIZE);
 
-                allocation.protect();
+                allocation.protect(PROT_READ);
                 // Get the physical pages, compress them, and calculate the savings in bytes
                 auto pages = allocation.physical_pages<MAX_PAGES>(true);
                 size_t original_physical_size = pages.reduce<size_t>([&](auto page, auto acc) {

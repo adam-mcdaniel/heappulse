@@ -18,7 +18,7 @@
 int main() {
     srand(SEED);
     u64 number_of_pages = 16;
-    while (number_of_pages < (16 << 5)) {
+    while (number_of_pages < (16 << 10)) {
         u64 number_of_bytes = number_of_pages * PAGE_SIZE;
 
         char *ptr = (char*)alloc(number_of_bytes);
@@ -44,7 +44,7 @@ int main() {
         printf("Wrote to %llu bytes\n", number_of_bytes/2);
 
         // Sleep for 10 seconds
-        std::this_thread::sleep_for(std::chrono::seconds(15));
+        std::this_thread::sleep_for(std::chrono::seconds(4));
         volatile int *x = (int*)alloc(1000);
         *x = 10;
         printf("x = %d\n", *x);

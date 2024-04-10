@@ -14,7 +14,7 @@ int main() {
             printf("Tock\n");
         const int SIZE = 1000;
         char *ptr = (char*)malloc(SIZE * (rand() % 10 + 5));
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         // for (int j=0; j<SIZE/10; j++) {
         //     if (rand() % 2 == 0) {
         //         ptr[j * 10] = rand() % 256;

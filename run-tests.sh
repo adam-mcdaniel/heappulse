@@ -9,6 +9,13 @@ fi
 echo "Running tests..."
 echo "================"
 
+
+g++ tests/read_access_test.cpp -o tests/read_access_test.exe -g -O0
+./run.sh ./tests/read_access_test.exe tests/read_access_test.in > tests/read_access_test.out 2> tests/read_access_test.err
+mv page-tracking.csv tests/read_access_test_page_tracking.csv
+mv log.txt tests/read_access_test_log.txt
+echo "Test #0 done"
+
 g++ tests/reuse_test.cpp -o tests/reuse_test.exe -g -O3
 ./run.sh ./tests/reuse_test.exe tests/reuse_test.in > tests/reuse_test.out 2> tests/reuse_test.err
 # mv bucket_stats.csv tests/test1_buckets.csv

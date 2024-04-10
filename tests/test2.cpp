@@ -29,7 +29,7 @@ void* threadFunction(void* arg) {
         // Here, we are simply writing 'A' to the memory repeatedly
         for (int i = 0; i < MEMORY_SIZE; i++) {
             int *x = (int*)malloc(10 * i);
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
             memory[i] = 'A';
             free(x);
         }

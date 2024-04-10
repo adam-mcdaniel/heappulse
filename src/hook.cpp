@@ -33,7 +33,7 @@ static PageTrackingTest ptt;
 #endif
 
 
-IntervalTestConfig config = {.period_milliseconds = 15000};
+IntervalTestConfig config = {.period_milliseconds = 5000};
 static IntervalTestSuite its(config);
 
 static uint64_t malloc_count = 0;
