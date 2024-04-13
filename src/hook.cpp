@@ -32,8 +32,13 @@ static PageLivenessTest plt;
 static PageTrackingTest ptt;
 #endif
 
+#ifdef GENERATIONAL_TEST
+#include "intervals/generational.cpp"
+static GenerationalTest gt;
+#endif
 
-IntervalTestConfig config = {.period_milliseconds = 5000};
+
+IntervalTestConfig config = {.period_milliseconds = 1000};
 static IntervalTestSuite its(config);
 
 static uint64_t malloc_count = 0;
@@ -66,6 +71,9 @@ public:
         #endif
         #ifdef PAGE_TRACKING_TEST
         its.add_test(&ptt);
+        #endif
+        #ifdef GENERATIONAL_TEST
+        its.add_test(&gt);
         #endif
         
         stack_debugf("Done\n");

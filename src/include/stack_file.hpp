@@ -111,7 +111,7 @@ public:
     template <size_t Size>
     StackString<Size> read() {
         StackString<Size> result;
-        char buf[Size + 1];
+        char buf[Size + 10] = {0};
         ssize_t bytes = read(fd, buf, Size);
         if (bytes == -1) {
             throw std::runtime_error("Could not read from file");
@@ -125,7 +125,7 @@ public:
     // Write to the file
     template <size_t Size>
     void write(const StackString<Size>& data) {
-        char buf[Size + 1] = {0};
+        char buf[Size + 10] = {0};
         data.c_str(buf);
         ssize_t bytes = ::write(fd, buf, strlen(buf));
         if (bytes == -1) {

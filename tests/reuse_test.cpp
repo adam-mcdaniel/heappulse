@@ -24,15 +24,16 @@ void *mmap_malloc(size_t size) {
     return ptr;
 }
 #define alloc(x) mmap_malloc(x)
+#define free(x) munmap(x, 0)
 
 
 int main() {
     srand(SEED);
     u64 number_of_pages = 16;
 
-    void **ptrs = (void**)malloc(20000 * sizeof(void*));
+    void **ptrs = (void**)alloc(20000 * sizeof(void*));
     int ptrs_index = 0;
-    for (int interval=0; interval<40; interval++) {
+    for (int interval=0; interval<10; interval++) {
         u64 number_of_bytes = number_of_pages * PAGE_SIZE;
 
         char *ptr = (char*)alloc(number_of_bytes);
@@ -75,6 +76,12 @@ int main() {
         // free((void*)x);
         // free(ptr);
     }
+    for (int i=0; i<ptrs_index; i++) {
+        printf("Freeing %d %08llX\n", i, (u64)ptrs[i]);
+        free(ptrs[i]);
+    }
+    free(ptrs);
+
     printf("Hello World!\n");
     return 0;
 }

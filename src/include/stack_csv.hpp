@@ -5,6 +5,8 @@
 
 const size_t CSV_STR_SIZE = 128;
 
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
 typedef StackString<CSV_STR_SIZE> CSVString;
 
 struct CSVCell {
@@ -30,6 +32,7 @@ struct CSVCell {
 
     CSVCell(StackString<CSV_STR_SIZE> string) : type(Type::STRING), string(string) {}
     CSVCell(int64_t integer) : type(Type::INTEGER), integer(integer) {}
+    CSVCell(uint64_t integer) : type(Type::INTEGER), integer(integer) {}
     CSVCell(double floating_point) : type(Type::FLOAT), floating_point(floating_point) {}
     CSVCell(bool boolean) : type(Type::BOOLEAN), boolean(boolean) {}
     CSVCell(void *pointer) : type(Type::POINTER), pointer(pointer) {}
@@ -47,6 +50,7 @@ struct CSVCell {
             case Type::POINTER:
                 return StackString<CSV_STR_SIZE>::from_number((uintptr_t)pointer, 16);
             case Type::EMPTY:
+            default:
                 return StackString<CSV_STR_SIZE>();
         }
     }
@@ -70,6 +74,7 @@ struct CSVCell {
                 stack_logf("%s", boolean ? "true" : "false");
                 break;
             case Type::EMPTY:
+            // default:
                 break;
         }
     }
@@ -93,6 +98,7 @@ struct CSVCell {
                 stack_fprintf(file, "%s", boolean ? "true" : "false");
                 break;
             case Type::EMPTY:
+            // default:
                 break;
         }
     }
@@ -180,6 +186,8 @@ private:
     StackVec<CSVCell, Size> cells;
 
 public:
+    CSVRow() : cells() {}
+
     template<typename T>
     void add(T t) {
         if constexpr (std::is_same<T, StackString<CSV_STR_SIZE>>::value) {
@@ -195,6 +203,19 @@ public:
         } else {
             add_string(StackString<CSV_STR_SIZE>::from(t));
         }
+    }
+
+    template<typename T>
+    void set(CSVRow<Size> &title_row, const StackString<CSV_STR_SIZE> &title, T value) {
+        for (size_t i=0; i<title_row.size(); i++) {
+            if (title_row[i].to_string() == title) {
+                // cells[i] = CSVCell(value);
+                stack_debugf("Found title % in title row\n", title);
+                (*this)[i] = value;
+                return;
+            }
+        }
+        stack_errorf("Could not find title % in title row\n", title);
     }
 
     void add_string(StackString<CSV_STR_SIZE> string) {
@@ -273,6 +294,7 @@ public:
     }
 
     void write(StackFile &file) {
+        stack_debugf("Writing % rows to CSV\n", rows.size());
         // stack_debugf("Writing to % with descriptor %\n", file.get_filename(), file.get_descriptor());
         // if (file.get_mode() == Mode::WRITE) {
         switch (file.get_mode()) {
@@ -287,7 +309,7 @@ public:
                 is_first_write = false;
             }
             for (size_t i=0; i<rows.size(); i++) {
-                if ((i + 1) % (rows.size() / 10) == 0) {
+                if ((i + 1) % max(rows.size() / 10, 1) == 0) {
                     stack_infof("%d percent done writing CSV\n", (int)((i + 1) * 100 / rows.size()));
                 }
                 rows[i].write(file);
@@ -296,7 +318,7 @@ public:
             break;
         // } else if (file.get_mode() == Mode::APPEND) {
         case Mode::APPEND:
-            // stack_debugf("Appending to %\n", file.get_filename());
+            stack_debugf("Appending to %\n", file.get_filename());
             if (is_first_write) {
                 title_row.write(file);
                 if (title_row.size() > 0) {
@@ -305,10 +327,14 @@ public:
                 is_first_write = false;
             }
             for (size_t i=0; i<rows.size(); i++) {
+                if (rows[i].size() == 0) {
+                    continue;
+                }
                 // Print a percentage done
-                if ((i + 1) % (rows.size() / 10) == 0) {
+                if ((i + 1) % max(rows.size() / 10, 1) == 0) {
                     stack_infof("%d percent done writing CSV\n", (int)((i + 1) * 100 / rows.size()));
                 }
+                // stack_debugf("Writing row %d\n", i);
                 rows[i].write(file);
                 stack_fprintf(file, "\n");
             }
@@ -317,6 +343,7 @@ public:
             stack_errorf("Not writing to % because it is not open for writing\n", file.get_filename());
             throw std::runtime_error("File not open for writing");
         }
+        stack_debugf("Done writing CSV\n");
     }
 
     bool full() const {

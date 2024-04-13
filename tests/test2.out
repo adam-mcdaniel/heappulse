@@ -1,29 +1,320 @@
+[DEBUG] Setting up protection handler
+[DEBUG] Set up protection handler
 [WARN] Clearing soft dirty bits
+[DEBUG] [WARN] Clearing soft dirty bits
+[DEBUG] Hooks constructor
+[DEBUG] Adding test...
+[DEBUG] Setup
+[DEBUG] Writing 0 rows to CSV
+[DEBUG] Appending to generational.csv
+[DEBUG] Done writing CSV
+[DEBUG] Done
+[DEBUG] Entering hook
+[DEBUG] Post alloc
+[DEBUG] About to update with arguments 7F1CBB180800, 320, 139761387248919
+[DEBUG] IntervalTestSuite::update
+[DEBUG] Got pointer: 7F1CBB180800
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Only 62.000000ms have elapsed, not yet at 1000.000000ms interval
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Locked hook
+[DEBUG] Allocation at 7F1CBB180800, size: 320
+[DEBUG] Return address: 7F1CBBD71D17
+[DEBUG] Allocation-site bookkeeping elements: 0
+[DEBUG] Allocation-sites: 0
+[DEBUG] Running on_alloc for test Generational Test
+[DEBUG] Allocation: 7F1CBB180800, size: 140
+[DEBUG] on_alloc
+[INFO] Total allocations: 1
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 320
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 320
+[INFO] Total memory freed: 0
+[DEBUG] Releasing lock
+[DEBUG] Leaving IntervalTestSuite::update
+[DEBUG] Post alloc update
+[DEBUG] Post alloc done
+[DEBUG] Leaving hook
+[DEBUG] Entering hook
+[DEBUG] [DEBUG] Failed to lock
+Post alloc
+[DEBUG] About to update with arguments 7F1CBB180A00, 320, 139761387248919
+[DEBUG] [DEBUG] Failed to lock
+IntervalTestSuite::update
+[DEBUG] Got pointer: 7F1CBB180A00
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Only 64.000000ms have elapsed, not yet at 1000.000000ms interval
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Locked hook
+[DEBUG] Allocation at 7F1CBB180A00, size: 320
+[DEBUG] Return address: 7F1CBBD71D17
+[DEBUG] Allocation-site bookkeeping elements: 1
+[DEBUG] Allocation-sites: 1
+[DEBUG] Running on_alloc for test Generational Test
+[DEBUG] Allocation: 7F1CBB180A00, size: 140
+[DEBUG] on_alloc
+[INFO] Total allocations: 2
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 640
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 640
+[INFO] Total memory freed: 0
+[DEBUG] Releasing lock
+[DEBUG] Leaving IntervalTestSuite::update
+[DEBUG] Post alloc update
+[DEBUG] Post alloc done
+[DEBUG] Leaving hook
+[DEBUG] Entering hook
+[DEBUG] Post alloc
+[DEBUG] About to update with arguments 7F1CBAD80200, 224, 94735068177064
+[DEBUG] IntervalTestSuite::update
+[DEBUG] Got pointer: 7F1CBAD80200
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Only 66.000000ms have elapsed, not yet at 1000.000000ms interval
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Locked hook
+[DEBUG] Allocation at 7F1CBAD80200, size: 224
+[DEBUG] Return address: 56293A1622A8
+[DEBUG] Allocation-site bookkeeping elements: 0
+[DEBUG] Allocation-sites: 1
+[DEBUG] Running on_alloc for test Generational Test
+[DEBUG] Allocation: 7F1CBAD80200, size: E0
+[DEBUG] on_alloc
+[INFO] Total allocations: 3
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 864
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 864
+[INFO] Total memory freed: 0
+[DEBUG] Releasing lock
+[DEBUG] Leaving IntervalTestSuite::update
+[DEBUG] Post alloc update
+[DEBUG] Post alloc done
+[DEBUG] Leaving hook
+[DEBUG] Entering hook
+[DEBUG] Post alloc
+[DEBUG] About to update with arguments 7F1C9F580000, 1024, 94735068177064
+[DEBUG] IntervalTestSuite::update
+[DEBUG] Got pointer: 7F1C9F580000
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Only 69.000000ms have elapsed, not yet at 1000.000000ms interval
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Locked hook
+[DEBUG] Allocation at 7F1C9F580000, size: 1024
+[DEBUG] Return address: 56293A1622A8
+[DEBUG] Allocation-site bookkeeping elements: 1
+[DEBUG] Allocation-sites: 2
+[DEBUG] Running on_alloc for test Generational Test
+[DEBUG] Allocation: 7F1C9F580000, size: 400
+[DEBUG] on_alloc
+[INFO] Total allocations: 4
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 1888
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 1888
+[INFO] Total memory freed: 0
+[DEBUG] Releasing lock
+[DEBUG] Leaving IntervalTestSuite::update
+[DEBUG] Post alloc update
+[DEBUG] Post alloc done
+[DEBUG] Leaving hook
+[DEBUG] Pre free hook 7F1C9F780000
 [INFO] Elapsed time: 102499 ms
-[INFO] Total overhead: 0 ms
-[INFO]   Update overhead:     0 ms
+[INFO] Total overhead: 8 ms
+[INFO]   Update overhead:     6 ms
 [INFO]   Invalidate overhead: 0 ms
-[INFO] Malloc count: 4
+[INFO] Malloc count: 5
+[INFO] Free count: 0
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 5
+[INFO] Total frees: 0
+[DEBUG] Entering hook
+[DEBUG] Post alloc
+[DEBUG] About to update with arguments 7F1C9F380000, 64, 139761387230238
+[DEBUG] IntervalTestSuite::update
+[DEBUG] Got pointer: 7F1C9F380000
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 102565ms, test is ready!
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Setting up protection handler
+[DEBUG] Set up protection handler
+[DEBUG] IntervalTestSuite::interval
+[DEBUG] Became working thread with TID=139760929294080
+[INFO] Running interval
+[INFO] Running interval for test 0: Generational Test
+[INFO] Interval 1 generational test starting...
+[DEBUG] Pre free hook 7F1C9F580000
+[DEBUG] About to block on lock
+[DEBUG] count_resident_pages(7F1CBAD80200, 224lu, 2787013)
+[DEBUG] Filename: /proc/2787013/pagemap
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1C9F180100
+[DEBUG] count_resident_pages(7F1C9F580000, 1024lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1C9F180100
+[DEBUG] Pre free hook 7F1C9F180080
+[DEBUG] count_resident_pages(7F1CBB180800, 320lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1C9F180100
+[DEBUG] count_resident_pages(7F1CBB180A00, 320lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1C9F180100
+[DEBUG] Pre free hook 7F1C9F180080
+[DEBUG] Pre free hook 7F1C9F180000
+[DEBUG] Found title Interval # in title row
+[DEBUG] Found title Total Memory Allocated in title row
+[DEBUG] Found title Total Memory Freed in title row
+[DEBUG] Found title Memory Allocated Since Last Interval in title row
+[DEBUG] Found title Memory Freed Since Last Interval in title row
+[DEBUG] Found title Objects Live This Interval Physical Size in title row
+[DEBUG] Found title Objects Live >=2 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=4 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=8 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=10 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=16 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=24 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=32 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live This Interval Virtual Size in title row
+[DEBUG] Found title Objects Live >=2 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=4 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=8 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=10 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=16 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=24 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=32 Intervals Virtual Size in title row
+[DEBUG] Finishing up interval
+[INFO] Total allocations: 4
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 1888
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 1888
+[INFO] Total memory freed: 0
+[DEBUG] Wrote 1 rows to file
+[DEBUG] Writing 1 rows to CSV
+[DEBUG] Appending to generational.csv
+[INFO] 100 percent done writing CSV
+[DEBUG] Done writing CSV
+[INFO] Interval 1 complete for generational test
+[INFO] Test 0 (Generational Test) has finished
+[WARN] Clearing soft dirty bits
+[DEBUG] [WARN] Clearing soft dirty bits
+[DEBUG] TID=139760929294080 is no longer working thread
+[INFO] IntervalTestSuite::interval -- Interval done
+[INFO] Finished interval in 30 milliseconds
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Locked hook
+[DEBUG] Allocation at 7F1C9F380000, size: 64
+[DEBUG] Return address: 7F1CBBD6D41E
+[DEBUG] Allocation-site bookkeeping elements: 0
+[DEBUG] Allocation-sites: 2
+[DEBUG] Running on_alloc for test Generational Test
+[DEBUG] Allocation: 7F1C9F380000, size: 40
+[DEBUG] on_alloc
+[INFO] Total allocations: 5
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 64
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 1952
+[INFO] Total memory freed: 0
+[DEBUG] Releasing lock
+[DEBUG] Leaving IntervalTestSuite::update
+[DEBUG] Post alloc update
+[DEBUG] Post alloc done
+[DEBUG] Leaving hook
+[DEBUG] Entering hook
+[DEBUG] Pre free
+[DEBUG] About to invalidate 7F1C9F580000
+[DEBUG] IntervalTestSuite::invalidate
+[DEBUG] Invalidating 7F1C9F580000
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Only 5.000000ms have elapsed, not yet at 1000.000000ms interval
+[DEBUG] IntervalTestSuite::schedule
+[DEBUG] Leaving IntervalTestSuite::invalidate
+[DEBUG] Pre free done
+[DEBUG] Leaving hook
+[DEBUG] IntervalTestSuite::finish
+[DEBUG] Setting up protection handler
+[DEBUG] Set up protection handler
+[DEBUG] IntervalTestSuite::interval
+[DEBUG] Became working thread with TID=139761381607296
+[INFO] Running interval
+[INFO] Running interval for test 0: Generational Test
+[INFO] Interval 2 generational test starting...
+[DEBUG] count_resident_pages(7F1CBAD80200, 224lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1CBB380500
+[DEBUG] Pre free hook 7F1CBB380480
+[DEBUG] count_resident_pages(7F1C9F380000, 64lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1CBB380500
+[DEBUG] Pre free hook 7F1CBB380480
+[DEBUG] count_resident_pages(7F1CBB180800, 320lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1CBB380500
+[DEBUG] count_resident_pages(7F1CBB180A00, 320lu, 2787013)
+[DEBUG] Size in pages: 1
+[DEBUG] Done with count_resident_pages
+[DEBUG] Pre free hook 7F1CBB380500
+[DEBUG] Pre free hook 7F1CBB380480
+[DEBUG] Pre free hook 7F1CBB380400
+[DEBUG] Found title Interval # in title row
+[DEBUG] Found title Total Memory Allocated in title row
+[DEBUG] Found title Total Memory Freed in title row
+[DEBUG] Found title Memory Allocated Since Last Interval in title row
+[DEBUG] Found title Memory Freed Since Last Interval in title row
+[DEBUG] Found title Objects Live This Interval Physical Size in title row
+[DEBUG] Found title Objects Live >=2 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=4 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=8 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=10 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=16 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=24 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live >=32 Intervals Physical Size in title row
+[DEBUG] Found title Objects Live This Interval Virtual Size in title row
+[DEBUG] Found title Objects Live >=2 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=4 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=8 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=10 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=16 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=24 Intervals Virtual Size in title row
+[DEBUG] Found title Objects Live >=32 Intervals Virtual Size in title row
+[DEBUG] Finishing up interval
+[INFO] Total allocations: 5
+[INFO] Total frees: 0
+[INFO] Memory allocated since last interval: 64
+[INFO] Memory freed since last interval: 0
+[INFO] Total memory allocated: 1952
+[INFO] Total memory freed: 0
+[DEBUG] Wrote 1 rows to file
+[DEBUG] Writing 1 rows to CSV
+[DEBUG] Appending to generational.csv
+[INFO] 100 percent done writing CSV
+[DEBUG] Done writing CSV
+[INFO] Interval 2 complete for generational test
+[INFO] Test 0 (Generational Test) has finished
+[WARN] Clearing soft dirty bits
+[DEBUG] [WARN] Clearing soft dirty bits
+[DEBUG] TID=139761381607296 is no longer working thread
+[INFO] IntervalTestSuite::interval -- Interval done
+[INFO] Finished interval in 10 milliseconds
+[DEBUG] IntervalTestSuite::cleanup
+[INFO] Elapsed time: 102551 ms
+[INFO] Total overhead: 59 ms
+[INFO]   Update overhead:     42 ms
+[INFO]   Invalidate overhead: 1 ms
+[INFO] Malloc count: 5
 [INFO] Free count: 1
 [INFO] Mmap count: 0
 [INFO] Munmap count: 0
-[INFO] Total allocations: 4
+[INFO] Total allocations: 5
 [INFO] Total frees: 1
-[INFO] Heart beat (1 second has elapsed)
-[INFO] Interval timer is at 102576ms, test is ready!
-[INFO] Running interval
-[INFO] Running interval for test 0: Page Tracking Test
-[INFO] Interval 1 page tracking starting...
-[INFO] Site 0x561D168F72A8 complete, tracked 0 pages
-[INFO] Unprotecting 7FF4A2180000, size: 4096
-[INFO] Getting pages for allocation at 0x7FF4A2180200
-[INFO] Protecting 7FF4A2180000, size: 4096
-[INFO] Tracked 1 pages for allocation
-[INFO] Unprotecting 7FF4A2180000, size: 4096
-[INFO] Unprotecting 7FF4B2C80000, size: 4096
-[INFO] Getting pages for allocation at 0x7FF4B2C80100
-[INFO] Protecting 7FF4B2C80000, size: 4096
-[INFO] Tracked 1 pages for allocation
-[WARN] Working thread, giving back access: 0x7FF4B2C8020C
-[INFO] Site 0x7FF4B3C96D17 complete, tracked 2 pages
-[INFO] Ticking age for 2 pages
+[DEBUG] Hooks destructor

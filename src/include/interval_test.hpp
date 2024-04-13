@@ -749,6 +749,11 @@ public:
         return "Base IntervalTest";
     }
 
+    // A virtual method that gets called when an allocation is made
+    virtual void on_alloc(const Allocation &alloc) {}
+    // A virtual method that gets called when an allocation is freed
+    virtual void on_free(const Allocation &alloc) {}
+
     // A virtual method for setting up the test
     // This is run once on startup. Do your initialization here
     virtual void setup() {}
@@ -852,6 +857,16 @@ public:
         } else {
             stack_debugf("Unable to add allocation site\n");
         }
+
+        // Go through interval tests and update them
+        for (size_t i=0; i<tests.size(); i++) {
+            if (!tests[i]->has_quit()) {
+                stack_debugf("Running on_alloc for test %\n", tests[i]->name());
+                allocation.log();
+                tests[i]->on_alloc(allocation);
+            }
+        }
+
         stack_debugf("Releasing lock\n");
         hook_lock.unlock();
                 
@@ -891,6 +906,12 @@ public:
         hook_lock.lock();
         assert(allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
             if (!found && site.allocations.has(ptr)) {
+                for (size_t i=0; i<tests.size(); i++) {
+                    if (!tests[i]->has_quit()) {
+                        tests[i]->on_free(site.allocations.get(ptr));
+                    }
+                }
+
                 site.allocations.remove(ptr);
                 allocation_sites.put(site.return_address, site);
                 return true;

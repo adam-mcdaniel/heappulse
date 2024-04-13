@@ -13,6 +13,8 @@ private:
     size_t elements, capacity;
 
 public:
+    StackVec() : elements(0), capacity(Size) {}
+
     void push(const ValueType& value) {
         if (elements >= capacity) {
             // throw std::out_of_range("StackVec is full");
@@ -114,8 +116,6 @@ public:
         }
         return result;
     }
-
-    StackVec() : elements(0), capacity(Size) {}
 
     void print() const {
         // std::cout << *this << std::endl;
