@@ -68,6 +68,7 @@ public:
         this->position = 0;
 
         if (fd == -1) {
+            bk_printf("Could not open file %s\n", filename);
             throw std::runtime_error("Could not open file");
         } else {
             // bk_printf("Opening file %s with descriptor %d\n", filename, fd);
@@ -114,6 +115,7 @@ public:
         char buf[Size + 10] = {0};
         ssize_t bytes = read(fd, buf, Size);
         if (bytes == -1) {
+            bk_printf("Could not read from file\n");
             throw std::runtime_error("Could not read from file");
         }
         buf[bytes] = '\0';
@@ -129,6 +131,7 @@ public:
         data.c_str(buf);
         ssize_t bytes = ::write(fd, buf, strlen(buf));
         if (bytes == -1) {
+            bk_printf("Could not write to file\n");
             throw std::runtime_error("Could not write to file");
         }
         position += bytes;

@@ -10,7 +10,7 @@ echo "Building allocator..."
     # LTO="-flto"
     # MARCHTUNE="-march=native -mtune=native"
     # OPT_PASSES=""
-    LEVEL="-O3 -fno-trapping-math"
+    LEVEL="-O3 -fno-trapping-math -g"
     # LEVEL="-O1"
     # LEVEL="-O0"
 

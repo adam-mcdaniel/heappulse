@@ -18,16 +18,28 @@
 
 int main() {
     for (int i=0; i<10; i++) {
-        volatile void *ptr = alloc(PAGE_SIZE);
-        printf("ptr: %p\n", ptr);
-        for (int j=0; j<PAGE_SIZE; j+=8) {
-            *(u64 *)(ptr + j) = 0xdeadbeef;
-            printf("ptr: %p, value: %llu\n", ptr + j, *(u64 *)(ptr + j));
+        const int size = PAGE_SIZE * 3;
+        volatile void *ptr = alloc(size);
+        // printf("ptr: %p\n", ptr);
+        for (int j=0; j<size; j+=8) {
+            // for (int k=0; k<size && k<10; k++)
+            //     printf("%02X", *((char *)(ptr + j) + k));
+            // printf("\nRead from %p: %llX\n", ptr + j, *(u64 *)(ptr + j));
+            // *(u64 *)(ptr + j) = 0xdeadbeef;
+            // printf("Wrote %llX\n", *(u64 *)(ptr + j));
+
+            // Alternate between reads and writes
+            if (j % 16 == 0) {
+                printf("Read from %p: %llX\n", ptr + j, *(u64 *)(ptr + j));
+            } else {
+                *(u64 *)(ptr + j) = 0xdeadbeef;
+                printf("Wrote %llX\n", *(u64 *)(ptr + j));
+            }
         }
+        std::this_thread::sleep_for(std::chrono::seconds(2));
         *(u64 *)ptr = 100;
-        printf("ptr: %p, value: %llu\n", ptr, *(u64 *)ptr);
+        printf("Finished read/write loop for %p\n", ptr);
         free((void *)ptr);
-        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     printf("Done\n");
