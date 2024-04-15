@@ -393,26 +393,6 @@ void no_longer_working_thread() {
 }
 
 
-/// A map to track pages that incur a page fault.
-/// This is used to track which pages incur a write between intervals.
-static StackSet<void*, 1000> write_page_faults, read_page_faults;
-
-StackVec<void*, 1000> get_write_page_faults() {
-    StackVec<void*, 1000> result = write_page_faults.items();
-    write_page_faults.clear();
-    return result;
-}
-
-StackVec<void*, 1000> get_read_page_faults() {
-    StackVec<void*, 1000> result = read_page_faults.items();
-    read_page_faults.clear();
-    return result;
-}
-
-void clear_page_faults() {
-    write_page_faults.clear();
-    read_page_faults.clear();
-}
 
 // This is the handler for SIGSEGV. It's called when we try to access
 // a protected page. This will put the thread to sleep until we finish
@@ -496,7 +476,7 @@ struct Allocation {
     }
 
     bool operator==(const Allocation &other) const {
-        return ptr == other.ptr && size == other.size;
+        return ptr == other.ptr;
     }
 
     // @brief Check if the allocation contains the address
@@ -553,7 +533,6 @@ struct Allocation {
     }
 
     void protect(uint64_t protections=PROT_NONE) {
-        setup_protection_handler();
         stack_infof("Protecting allocation %p, size: %d\n", ptr, size);
         #ifdef MPROTECT
         protect_with_mprotect(protections);
@@ -565,7 +544,6 @@ struct Allocation {
     }
 
     void unprotect() {
-        setup_protection_handler();
         #ifdef MPROTECT
         unprotect_with_mprotect();
         #endif
@@ -771,15 +749,42 @@ namespace std {
     template <>
     struct hash<Allocation> {
         std::size_t operator()(const Allocation &alloc) const {
-            return std::hash<void*>()(alloc.ptr) ^ std::hash<size_t>()(alloc.size);
+            return std::hash<void*>()(alloc.ptr);
         }
     };
+}
+
+/// A map to track pages that incur a page fault.
+/// This is used to track which pages incur a write between intervals.
+static StackSet<void*, MAX_TRACKED_ACCESSES> written_addresses, read_addresses;
+
+
+StackVec<void*, MAX_TRACKED_ACCESSES> get_written_addresses() {
+    return written_addresses.items();
+}
+
+StackVec<void*, MAX_TRACKED_ACCESSES> get_read_addresses() {
+    return read_addresses.items();
+}
+
+void mark_address_written(void *address) {
+    written_addresses.insert(address);
+}
+
+void mark_address_read(void *address) {
+    read_addresses.insert(address);
+}
+
+void clear_accesses() {
+    read_addresses.clear();
+    written_addresses.clear();
 }
 
 struct IntervalTestConfig {
     double period_milliseconds = 5000.0;
     bool clear_soft_dirty_bits = true;
 };
+
 
 class IntervalTest {
 private:
@@ -863,6 +868,7 @@ public:
 
     void protect_allocations() {
         #ifdef GUARD_ACCESSES
+        setup_protection_handler();
         allocation_sites.map([](uintptr_t key, AllocationSite &site) {
             stack_infof("Protecting allocation site %X\n", site.return_address);
             site.allocations.map([](void *key, Allocation &alloc) {
@@ -893,7 +899,6 @@ public:
             return;
         }
 
-        schedule();
         if (!hook_lock.try_lock()) {
             stack_debugf("Unable to lock hook\n");
             return;
@@ -934,12 +939,12 @@ public:
         if (allocation_sites.has(return_address)) {
             allocation_sites.put(return_address, site);
             #ifdef GUARD_ACCESSES
-            allocation.protect(PROT_NONE);
+            // allocation.protect(PROT_NONE);
             #endif
         } else if (!allocation_sites.full()) {
             allocation_sites.put(return_address, site);
             #ifdef GUARD_ACCESSES
-            allocation.protect(PROT_NONE);
+            // allocation.protect(PROT_NONE);
             #endif
         } else {
             stack_debugf("Unable to add allocation site\n");
@@ -957,7 +962,8 @@ public:
 
         stack_debugf("Releasing lock\n");
         hook_lock.unlock();
-                
+        schedule();
+
         stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
@@ -1063,6 +1069,9 @@ public:
                                 alloc.protect(PROT_READ);
                                 #endif
                             }
+                            #ifdef SOFT_GUARD_ACCESSES
+                            alloc.protect(PROT_READ | PROT_WRITE);
+                            #endif
                         }
                     }
                     return true;
@@ -1159,6 +1168,41 @@ private:
         become_working_thread();
         timer.reset();
 
+        // Go through all the access addresses, provide the test with the addresses
+        // and clear the addresses
+        StackVec<void*, MAX_TRACKED_ACCESSES> writes = get_written_addresses();
+        writes.map([&](void *address) {
+            if (!contains(address)) {
+                return;
+            }
+            Allocation &alloc = alloc_from_addr(address);
+
+            for (size_t i=0; i<tests.size(); i++) {
+                if (!tests[i]->has_quit()) {
+                    tests[i]->on_access(alloc, true);
+                    tests[i]->on_write(alloc);
+                }
+            }
+        });
+        
+        StackVec<void*, MAX_TRACKED_ACCESSES> reads = get_read_addresses();
+        reads.map([&](void *address) {
+            if (!contains(address)) {
+                return;
+            }
+            Allocation &alloc = alloc_from_addr(address);
+
+            for (size_t i=0; i<tests.size(); i++) {
+                if (!tests[i]->has_quit()) {
+                    tests[i]->on_access(alloc, false);
+                    tests[i]->on_read(alloc);
+                }
+            }
+        });
+
+        clear_accesses();
+
+
         stack_infof("Running interval\n");
         // interval_lock.lock();
         for (size_t i=0; i<tests.size(); i++) {
@@ -1183,7 +1227,9 @@ private:
         });
 
         #ifdef GUARD_ACCESSES
-        protect_allocations();
+        #ifndef SOFT_GUARD_ACCESSES
+        // protect_allocations();
+        #endif
         #endif
 
         no_longer_working_thread();
@@ -1192,6 +1238,23 @@ private:
         // End time
         uint64_t time_taken = interval_timer.elapsed_milliseconds();
         stack_infof("Finished interval in %d milliseconds\n", time_taken);
+    }
+
+    Allocation &alloc_from_addr(void *addr) {
+        Allocation *alloc = NULL;
+        allocation_sites.map([&](uintptr_t key, AllocationSite &site) {
+            if (alloc != NULL) return;
+            site.allocations.map([&](void *key, Allocation &allocation) {
+                if (alloc != NULL) return;
+                if (allocation.contains(addr)) {
+                    alloc = &allocation;
+                }
+            });
+        });
+        if (alloc == NULL) {
+            stack_errorf("Allocation not found for address %p\n", addr);
+        }
+        return *alloc;
     }
 
     void cleanup() {
@@ -1234,7 +1297,7 @@ IntervalTestSuite *IntervalTestSuite::get_instance() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    stack_infof("PROTECTION HANDLER: Entering segfault handler\n");
+    stack_debugf("PROTECTION HANDLER: Entering segfault handler\n");
     ucontext_t *context = (ucontext_t *)ucontext;
     static std::mutex protection_lock;
     std::lock_guard<std::mutex> lock(protection_lock);
@@ -1243,19 +1306,19 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         stack_errorf("Caught NULL pointer access: segfault at NULL\n");
         exit(1);
     } else {
-        stack_infof("Caught segfault at %p\n", si->si_addr);
+        stack_debugf("Caught segfault at %p\n", si->si_addr);
     }
-
-    if (si->si_code == SEGV_ACCERR) {
-        // printf("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
-        stack_infof("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
-    }
-    
     long page_size = sysconf(_SC_PAGESIZE);
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
     u64 error_code = context->uc_mcontext.gregs[REG_ERR];
     bool is_write = error_code & 0x2;
 
+
+    if (si->si_code == SEGV_ACCERR) {
+        // printf("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
+        stack_debugf("Invalid permissions for %s.\n",is_write? "write" : "read");
+    }
+    
     if (is_working_thread()) {
         stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
         // if (mprotect(aligned_address, getpagesize(), PROT_NONE) == -1) {
@@ -1263,19 +1326,19 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         //     exit(1);
         // }
         if (is_write) {
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE) == -1) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
                 exit(1);
             }
         } else {
-            if (mprotect(aligned_address, getpagesize(), PROT_READ) == -1) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
                 exit(1);
             }
         }
     } else {
         // If the access is a write, add it to the write page faults
-        stack_infof("Error code: %x\n", error_code);
+        stack_debugf("Error code: %x\n", error_code);
         if (IS_PROTECTED) {
             stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (void*)si->si_addr);
             while (IS_PROTECTED) {}
@@ -1290,10 +1353,6 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         //     mprotect(aligned_address, getpagesize(), PROT_READ);
         //     // read_page_faults.insert(aligned_address);
         // }
-        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
-            perror("mprotect");
-            exit(1);
-        }
         // if (is_write) {
         //     stack_infof("Giving back write access to 0x%X\n", (void*)si->si_addr);
         //     if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_NONE) == -1) {
@@ -1308,21 +1367,40 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         //     }
         // }
 
-        IntervalTestSuite::get_instance()->access(si->si_addr, is_write);
-        #ifdef GUARD_ACCESSES
+        // if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+        //     perror("mprotect");
+        //     exit(1);
+        // }
+        // IntervalTestSuite::get_instance()->access(si->si_addr, is_write);
+
         if (is_write) {
-            stack_infof("Giving back write access to 0x%X\n", (void*)si->si_addr);
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE) == -1) {
+            mark_address_written(si->si_addr);
+        } else {
+            mark_address_read(si->si_addr);
+        }
+
+        #ifdef GUARD_ACCESSES
+        #ifndef SOFT_GUARD_ACCESSES
+        if (is_write) {
+            stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_EXEC) == -1) {
                 perror("mprotect");
                 exit(1);
             }
         } else {
-            stack_infof("Giving back read access to 0x%X\n", (void*)si->si_addr);
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE) == -1) {
+            stack_debugf("Giving back read access to 0x%X\n", (void*)si->si_addr);
+            if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
                 exit(1);
             }
         }
+        #else
+        stack_infof("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
+        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+            perror("mprotect");
+            exit(1);
+        }
+        #endif
         #endif
         // if (is_write) {
         //     mprotect(aligned_address, getpagesize(), PROT_WRITE);
@@ -1331,5 +1409,5 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         // }
     }
 
-    stack_infof("PROTECTION HANDLER: Leaving segfault handler\n");
+    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
 }

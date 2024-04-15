@@ -55,7 +55,14 @@ class AccessPatternTest : public IntervalTest {
                                 unaccessed_last_3_intervals,
                                 unaccessed_last_4_intervals,
                                 unaccessed_last_5_intervals,
-                                unaccessed_last_6_intervals;
+                                unaccessed_last_6_intervals,
+                                
+                                live_this_interval,
+                                live_last_2_intervals,
+                                live_last_3_intervals,
+                                live_last_4_intervals,
+                                live_last_5_intervals,
+                                live_last_6_intervals;
 
     const char *name() const override {
         return "Access Pattern Test";
@@ -258,6 +265,17 @@ class AccessPatternTest : public IntervalTest {
         unaccessed_last_3_intervals = unaccessed_last_2_intervals;
         unaccessed_last_2_intervals.clear();
         unaccessed_last_2_intervals = unaccessed_this_interval;
+
+        live_last_6_intervals.clear();
+        live_last_6_intervals = live_last_5_intervals;
+        live_last_5_intervals.clear();
+        live_last_5_intervals = live_last_4_intervals;
+        live_last_4_intervals.clear();
+        live_last_4_intervals = live_last_3_intervals;
+        live_last_3_intervals.clear();
+        live_last_3_intervals = live_last_2_intervals;
+        live_last_2_intervals.clear();
+        live_last_2_intervals = live_this_interval;
     }
 
     void on_write(const Allocation &write) override {
@@ -285,7 +303,31 @@ class AccessPatternTest : public IntervalTest {
         total_objects_live++;
         total_bytes_live += alloc.size;
 
-        unaccessed_this_interval.insert(alloc);
+        // unaccessed_this_interval.insert(alloc);
+        live_this_interval.insert(alloc);
+        write_accessed_this_interval.insert(alloc);
+        read_accessed_this_interval.insert(alloc);
+        accessed_this_interval.insert(alloc);
+
+        write_accessed_last_2_intervals.insert(alloc);
+        read_accessed_last_2_intervals.insert(alloc);
+        accessed_last_2_intervals.insert(alloc);
+
+        write_accessed_last_3_intervals.insert(alloc);
+        read_accessed_last_3_intervals.insert(alloc);
+        accessed_last_3_intervals.insert(alloc);
+
+        write_accessed_last_4_intervals.insert(alloc);
+        read_accessed_last_4_intervals.insert(alloc);
+        accessed_last_4_intervals.insert(alloc);
+
+        write_accessed_last_5_intervals.insert(alloc);
+        read_accessed_last_5_intervals.insert(alloc);
+        accessed_last_5_intervals.insert(alloc);
+
+        write_accessed_last_6_intervals.insert(alloc);
+        read_accessed_last_6_intervals.insert(alloc);
+        accessed_last_6_intervals.insert(alloc);
 
         memory_allocated_since_last_interval += alloc.size;
         total_memory_allocated += alloc.size;
@@ -301,37 +343,44 @@ class AccessPatternTest : public IntervalTest {
         memory_freed_since_last_interval += alloc.size;
         total_memory_freed += alloc.size;
 
-        unaccessed_this_interval.remove(alloc);
-        unaccessed_last_2_intervals.remove(alloc);
-        unaccessed_last_3_intervals.remove(alloc);
-        unaccessed_last_4_intervals.remove(alloc);
-        unaccessed_last_5_intervals.remove(alloc);
-        unaccessed_last_6_intervals.remove(alloc);
+        live_this_interval.remove(alloc);
+        live_last_2_intervals.remove(alloc);
+        live_last_3_intervals.remove(alloc);
+        live_last_4_intervals.remove(alloc);
+        live_last_5_intervals.remove(alloc);
+        live_last_6_intervals.remove(alloc);
+
+        // unaccessed_this_interval.remove(alloc);
+        // unaccessed_last_2_intervals.remove(alloc);
+        // unaccessed_last_3_intervals.remove(alloc);
+        // unaccessed_last_4_intervals.remove(alloc);
+        // unaccessed_last_5_intervals.remove(alloc);
+        // unaccessed_last_6_intervals.remove(alloc);
 
         // Remove from the access pattern tracking
-        accessed_this_interval.remove(alloc);
-        write_accessed_this_interval.remove(alloc);
-        read_accessed_this_interval.remove(alloc);
+        // accessed_this_interval.remove(alloc);
+        // write_accessed_this_interval.remove(alloc);
+        // read_accessed_this_interval.remove(alloc);
 
-        accessed_last_2_intervals.remove(alloc);
-        write_accessed_last_2_intervals.remove(alloc);
-        read_accessed_last_2_intervals.remove(alloc);
+        // accessed_last_2_intervals.remove(alloc);
+        // write_accessed_last_2_intervals.remove(alloc);
+        // read_accessed_last_2_intervals.remove(alloc);
 
-        accessed_last_3_intervals.remove(alloc);
-        write_accessed_last_3_intervals.remove(alloc);
-        read_accessed_last_3_intervals.remove(alloc);
+        // accessed_last_3_intervals.remove(alloc);
+        // write_accessed_last_3_intervals.remove(alloc);
+        // read_accessed_last_3_intervals.remove(alloc);
 
-        accessed_last_4_intervals.remove(alloc);
-        write_accessed_last_4_intervals.remove(alloc);
-        read_accessed_last_4_intervals.remove(alloc);
+        // accessed_last_4_intervals.remove(alloc);
+        // write_accessed_last_4_intervals.remove(alloc);
+        // read_accessed_last_4_intervals.remove(alloc);
 
-        accessed_last_5_intervals.remove(alloc);
-        write_accessed_last_5_intervals.remove(alloc);
-        read_accessed_last_5_intervals.remove(alloc);
+        // accessed_last_5_intervals.remove(alloc);
+        // write_accessed_last_5_intervals.remove(alloc);
+        // read_accessed_last_5_intervals.remove(alloc);
 
-        accessed_last_6_intervals.remove(alloc);
-        write_accessed_last_6_intervals.remove(alloc);
-        read_accessed_last_6_intervals.remove(alloc);
+        // accessed_last_6_intervals.remove(alloc);
+        // write_accessed_last_6_intervals.remove(alloc);
+        // read_accessed_last_6_intervals.remove(alloc);
      
         summary();
     }
@@ -400,6 +449,36 @@ class AccessPatternTest : public IntervalTest {
             return acc + alloc.size;
         }, 0);
 
+        unaccessed_this_interval = live_this_interval;
+        accessed_this_interval.map([&](const Allocation &alloc) {
+            unaccessed_this_interval.remove(alloc);
+        });
+
+        unaccessed_last_2_intervals = live_last_2_intervals;
+        accessed_last_2_intervals.map([&](const Allocation &alloc) {
+            unaccessed_last_2_intervals.remove(alloc);
+        });
+
+        unaccessed_last_3_intervals = live_last_3_intervals;
+        accessed_last_3_intervals.map([&](const Allocation &alloc) {
+            unaccessed_last_3_intervals.remove(alloc);
+        });
+
+        unaccessed_last_4_intervals = live_last_4_intervals;
+        accessed_last_4_intervals.map([&](const Allocation &alloc) {
+            unaccessed_last_4_intervals.remove(alloc);
+        });
+
+        unaccessed_last_5_intervals = live_last_5_intervals;
+        accessed_last_5_intervals.map([&](const Allocation &alloc) {
+            unaccessed_last_5_intervals.remove(alloc);
+        });
+
+        unaccessed_last_6_intervals = live_last_6_intervals;
+        accessed_last_6_intervals.map([&](const Allocation &alloc) {
+            unaccessed_last_6_intervals.remove(alloc);
+        });
+
         // int64_t objects_unaccessed_this_interval = total_objects_live - objects_accessed_this_interval;
         // int64_t bytes_unaccessed_this_interval = total_bytes_live - bytes_accessed_this_interval;
         
@@ -409,8 +488,13 @@ class AccessPatternTest : public IntervalTest {
         row.set(csv.title(), "Total Memory Freed", total_memory_freed);
         row.set(csv.title(), "Memory Allocated Since Last Interval", memory_allocated_since_last_interval);
         row.set(csv.title(), "Memory Freed Since Last Interval", memory_freed_since_last_interval);
-        row.set(csv.title(), "Live Objects", total_objects_live);
-        row.set(csv.title(), "Live Bytes", total_bytes_live);
+        // row.set(csv.title(), "Live Objects", total_objects_live);
+        // row.set(csv.title(), "Live Bytes", total_bytes_live);
+        int64_t live_bytes = live_this_interval.reduce<int64_t>([](const Allocation &alloc, int64_t acc) {
+            return acc + alloc.size;
+        }, 0);
+        row.set(csv.title(), "Live Objects", live_this_interval.size());
+        row.set(csv.title(), "Live Bytes", live_bytes);
         
         row.set(csv.title(), "Objects Accessed This Interval", accessed_this_interval.size());
         row.set(csv.title(), "Objects Written To This Interval", write_accessed_this_interval.size());
@@ -538,5 +622,12 @@ class AccessPatternTest : public IntervalTest {
 
         stack_debugf("Finishing up interval\n");
         finish_interval();
+
+        // Go through and protect allocations
+        allocation_sites.map([&](auto return_address, AllocationSite site) {
+            site.allocations.map([&](void *ptr, Allocation allocation) {
+                allocation.protect();
+            });
+        });
     }
 };
