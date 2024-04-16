@@ -1,6 +1,6 @@
 // #define DEBUG
 
-#define INTERVAL_CONFIG {.period_milliseconds = 1000, .clear_soft_dirty_bits=false}
+#define INTERVAL_CONFIG {.period_milliseconds = 5000, .clear_soft_dirty_bits=false}
 
 // #define OPTIMIZE
 // #define COLLECT_BACKTRACE
@@ -17,4 +17,5 @@
 // #define PAGE_LIVENESS_TEST
 // #define OBJECT_LIVENESS_TEST
 // #define GENERATIONAL_TEST
-#define ACCESS_PATTERN_TEST
+// #define ACCESS_PATTERN_TEST
+#define ACCESS_COMPRESSION_TEST

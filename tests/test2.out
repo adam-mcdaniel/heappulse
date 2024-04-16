@@ -1,438 +1,67 @@
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[WARN] Clearing soft dirty bits
-[DEBUG] [WARN] Clearing soft dirty bits
-[DEBUG] Clearing soft dirty bits
-[DEBUG] Getting instance of IntervalTestSuite
-[DEBUG] Hooks constructor
-[DEBUG] Adding test...
-[DEBUG] Setup
-[DEBUG] Writing 0 rows to CSV
-[DEBUG] Appending to access_patterns.csv
-[DEBUG] Done writing CSV
-[DEBUG] Done
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Entering hook
-[DEBUG] Post alloc
-[DEBUG] About to update with arguments 7F9D99980100, 224, 140314880498967
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D99980100
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 499.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D99980100, size: 224
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 0
-[DEBUG] Allocation-sites: 0
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D99980100, size: E0
-[DEBUG] on_alloc
-[INFO] Total objects live: 1
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 1
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 224
-[INFO] Memory allocated since last interval: 224
+[INFO] Elapsed time: 102499 ms
+[INFO] Total overhead: 0 ms
+[INFO]   Update overhead:     0 ms
+[INFO]   Invalidate overhead: 0 ms
+[INFO] Malloc count: 5
+[INFO] Free count: 0
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 5
+[INFO] Total frees: 0
+[INFO] Heart beat (1 second has elapsed)
+[INFO] Interval timer is at 102929ms, test is ready!
+[INFO] Running interval
+[INFO] Running interval for test 0: Access Compression Test
+[INFO] Interval 1 generational test starting...
+[INFO] Live bytes: 3840
+[INFO] Live objects: 9
+[INFO] Memory allocated since last interval: 3840
 [INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 224
+[INFO] Total memory allocated: 3840
 [INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] About to update with arguments 7F9D99980100, 224, 140314880498967
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D99980100
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 507.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D99980100, size: 224
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 1
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D99980100, size: E0
-[DEBUG] on_alloc
-[INFO] Total objects live: 2
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 2
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 448
-[INFO] Memory allocated since last interval: 448
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 448
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] Post alloc done
-[DEBUG] Leaving hook
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Entering hook
-[DEBUG] Post alloc
-[DEBUG] About to update with arguments 7F9D61D80000, 320, 140314880498967
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D61D80000
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 514.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61D80000, size: 320
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 1
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61D80000, size: 140
-[DEBUG] on_alloc
-[INFO] Total objects live: 3
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 3
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 768
-[INFO] Memory allocated since last interval: 768
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 768
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] About to update with arguments 7F9D61D80000, 320, 140314880498967
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D61D80000
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 520.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61D80000, size: 320
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 2
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61D80000, size: 140
-[DEBUG] on_alloc
-[INFO] Total objects live: 4
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 4
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 1088
-[INFO] Memory allocated since last interval: 1088
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 1088
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] Post alloc done
-[DEBUG] Leaving hook
-[DEBUG] [DEBUG] Setting up protection handler
-Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Set up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Set up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Set up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Entering hook
-[DEBUG] [DEBUG] Failed to lock
-Post alloc
-[DEBUG] [DEBUG] Setting up protection handler
-About to update with arguments 7F9D61D80200, 320, 140314880498967
-[DEBUG] [DEBUG] Set up protection handler
-IntervalTestSuite::update
-[DEBUG] [DEBUG] Set up protection handler
-Got pointer: 7F9D61D80200
-[DEBUG] [DEBUG] Set up protection handler
-Setting up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Set up protection handler
-[DEBUG] [DEBUG] Set up protection handler
-Failed to lock
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 530.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61D80200, size: 320
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 2
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61D80200, size: 140
-[DEBUG] on_alloc
-[INFO] Total objects live: 5
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 5
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 1408
-[INFO] Memory allocated since last interval: 1408
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 1408
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] About to update with arguments 7F9D61D80200, 320, 140314880498967
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D61D80200
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 536.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61D80200, size: 320
-[DEBUG] Return address: 7F9D9A9BDD17
-[DEBUG] Allocation-site bookkeeping elements: 3
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61D80200, size: 140
-[DEBUG] on_alloc
-[INFO] Total objects live: 6
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 6
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 1728
-[INFO] Memory allocated since last interval: 1728
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 1728
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] Post alloc done
-[DEBUG] Leaving hook
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Entering hook
-[DEBUG] Post alloc
-[DEBUG] About to update with arguments 7F9D99980300, 224, 94429851783848
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D99980300
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 545.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D99980300, size: 224
-[DEBUG] Return address: 55E229C592A8
-[DEBUG] Allocation-site bookkeeping elements: 0
-[DEBUG] Allocation-sites: 1
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D99980300, size: E0
-[DEBUG] on_alloc
-[INFO] Total objects live: 7
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 7
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 1952
-[INFO] Memory allocated since last interval: 1952
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 1952
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] About to update with arguments 7F9D99980300, 224, 94429851783848
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D99980300
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 555.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D99980300, size: 224
-[DEBUG] Return address: 55E229C592A8
-[DEBUG] Allocation-site bookkeeping elements: 1
-[DEBUG] Allocation-sites: 2
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D99980300, size: E0
-[DEBUG] on_alloc
-[INFO] Total objects live: 8
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 8
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 2176
-[INFO] Memory allocated since last interval: 2176
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 2176
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] Post alloc done
-[DEBUG] Leaving hook
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Entering hook
-[DEBUG] Post alloc
-[DEBUG] About to update with arguments 7F9D61180000, 1024, 94429851783848
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D61180000
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 563.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61180000, size: 1024
-[DEBUG] Return address: 55E229C592A8
-[DEBUG] Allocation-site bookkeeping elements: 1
-[DEBUG] Allocation-sites: 2
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61180000, size: 400
-[DEBUG] on_alloc
-[INFO] Total objects live: 9
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 9
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 3200
-[INFO] Memory allocated since last interval: 3200
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 3200
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] About to update with arguments 7F9D61180000, 1024, 94429851783848
-[DEBUG] IntervalTestSuite::update
-[DEBUG] Got pointer: 7F9D61180000
-[DEBUG] Setting up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] Set up protection handler
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Only 570.000000ms have elapsed, not yet at 1000.000000ms interval
-[DEBUG] IntervalTestSuite::schedule
-[DEBUG] Locked hook
-[DEBUG] Allocation at 7F9D61180000, size: 1024
-[DEBUG] Return address: 55E229C592A8
-[DEBUG] Allocation-site bookkeeping elements: 2
-[DEBUG] Allocation-sites: 2
-[DEBUG] Running on_alloc for test Access Pattern Test
-[DEBUG] Allocation: 7F9D61180000, size: 400
-[DEBUG] on_alloc
-[INFO] Total objects live: 10
-[INFO] Objects accessed this interval: 0
-[INFO] Objects written to this interval: 0
-[INFO] Objects read from this interval: 0
-[INFO] Objects unaccessed this interval: 10
-[INFO] Bytes accessed this interval: 0
-[INFO] Bytes written to this interval: 0
-[INFO] Bytes read from this interval: 0
-[INFO] Bytes unaccessed this interval: 4224
-[INFO] Memory allocated since last interval: 4224
-[INFO] Memory freed since last interval: 0
-[INFO] Total memory allocated: 4224
-[INFO] Total memory freed: 0
-[DEBUG] Releasing lock
-[DEBUG] Leaving IntervalTestSuite::update
-[DEBUG] Post alloc update
-[DEBUG] Post alloc done
-[DEBUG] Leaving hook
+[INFO] 20 percent done writing CSV
+[INFO] 40 percent done writing CSV
+[INFO] 60 percent done writing CSV
+[INFO] 80 percent done writing CSV
+[INFO] 100 percent done writing CSV
+[INFO] Interval 1 complete for access pattern test
+[INFO] Test 0 (Access Compression Test) has finished
+[INFO] IntervalTestSuite::interval -- Interval done
+[INFO] Finished interval in 11 milliseconds
+[INFO] PROTECTION HANDLER: Entering segfault handler
+[INFO] [INFO] PROTECTION HANDLER: Entering segfault handler
+Invalid permissions for write.
+[INFO] PROTECTION HANDLER: Leaving segfault handler
+[INFO] [INFO] Invalid permissions for write.
+PROTECTION HANDLER: Entering segfault handler
+[INFO] PROTECTION HANDLER: Leaving segfault handler
+[INFO] Invalid permissions for read.
+[INFO] PROTECTION HANDLER: Leaving segfault handler
+[INFO] Running interval
+[INFO] Running interval for test 0: Access Compression Test
+[INFO] Interval 2 generational test starting...
+[INFO] Live bytes: 2880
+[INFO] Live objects: 9
+[INFO] Memory allocated since last interval: 64
+[INFO] Memory freed since last interval: 1024
+[INFO] Total memory allocated: 3904
+[INFO] Total memory freed: 1024
+[INFO] 20 percent done writing CSV
+[INFO] 40 percent done writing CSV
+[INFO] 60 percent done writing CSV
+[INFO] 80 percent done writing CSV
+[INFO] 100 percent done writing CSV
+[INFO] Interval 2 complete for access pattern test
+[INFO] Test 0 (Access Compression Test) has finished
+[INFO] IntervalTestSuite::interval -- Interval done
+[INFO] Finished interval in 7 milliseconds
+[INFO] Elapsed time: 102523 ms
+[INFO] Total overhead: 14 ms
+[INFO]   Update overhead:     12 ms
+[INFO]   Invalidate overhead: 0 ms
+[INFO] Malloc count: 5
+[INFO] Free count: 1
+[INFO] Mmap count: 0
+[INFO] Munmap count: 0
+[INFO] Total allocations: 5
+[INFO] Total frees: 1

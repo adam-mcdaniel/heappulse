@@ -38,8 +38,13 @@ static GenerationalTest gt;
 #endif
 
 #ifdef ACCESS_PATTERN_TEST
-#include "intervals/access_patterns.cpp"
+#include "intervals/access_patterns_test.cpp"
 static AccessPatternTest apt;
+#endif
+
+#ifdef ACCESS_COMPRESSION_TEST
+#include "intervals/access_compression_test.cpp"
+static AccessCompressionTest act;
 #endif
 
 static uint64_t malloc_count = 0;
@@ -80,6 +85,9 @@ public:
         #endif
         #ifdef ACCESS_PATTERN_TEST
         its->add_test(&apt);
+        #endif
+        #ifdef ACCESS_COMPRESSION_TEST
+        its->add_test(&act);
         #endif
         
         stack_debugf("Done\n");

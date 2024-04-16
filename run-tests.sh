@@ -26,6 +26,7 @@ mv page-tracking.csv tests/reuse_test_page_tracking.csv
 mv generational.csv tests/reuse_test_generational.csv
 mv log.txt tests/reuse_test_log.txt
 mv access_patterns.csv tests/reuse_test_access_patterns.csv
+mv access-compression.csv tests/reuse_test_access_compression.csv
 # mv compression.csv tests/reuse_test_compression.csv
 # mv object-liveness.csv tests/reuse_test_object_liveness.csv
 # mv page-liveness.csv tests/reuse_test_page_liveness.csv
@@ -40,6 +41,7 @@ mv log.txt tests/pagetest_log.txt
 mv generational.csv tests/pagetest_generational.csv
 mv page-tracking.csv tests/pagetest_page_tracking.csv
 mv access_patterns.csv tests/pagetest_access_patterns.csv
+mv access-compression.csv tests/pagetest_access_compression.csv
 
 # mv compression.csv tests/pagetest_compression.csv
 # mv object-liveness.csv tests/pagetest_object_liveness.csv
@@ -55,6 +57,7 @@ mv log.txt tests/test1_log.txt
 mv generational.csv tests/test1_generational.csv
 mv page-tracking.csv tests/test1_page_tracking.csv
 mv access_patterns.csv tests/test1_access_patterns.csv
+mv access-compression.csv tests/test1_access_compression.csv
 
 # mv compression.csv tests/test1_compression.csv
 # mv object-liveness.csv tests/test1_object_liveness.csv
@@ -70,6 +73,7 @@ mv log.txt tests/test2_log.txt
 mv generational.csv tests/test2_generational.csv
 mv page-tracking.csv tests/test2_page_tracking.csv
 mv access_patterns.csv tests/test2_access_patterns.csv
+mv access-compression.csv tests/test2_access_compression.csv
 # mv compression.csv tests/test2_compression.csv
 # mv object-liveness.csv tests/test2_object_liveness.csv
 # mv page-liveness.csv tests/test2_page_liveness.csv
@@ -85,6 +89,7 @@ mv log.txt tests/basic_log.txt
 mv generational.csv tests/basic_generational.csv
 mv page-tracking.csv tests/basic_page_tracking.csv
 mv access_patterns.csv tests/basic_access_patterns.csv
+mv access-compression.csv tests/basic_access_compression.csv
 # mv compression.csv tests/test2_compression.csv
 # mv object-liveness.csv tests/test2_object_liveness.csv
 # mv page-liveness.csv tests/test2_page_liveness.csv

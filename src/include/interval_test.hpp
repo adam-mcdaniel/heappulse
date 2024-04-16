@@ -533,7 +533,6 @@ struct Allocation {
     }
 
     void protect(uint64_t protections=PROT_NONE) {
-        stack_infof("Protecting allocation %p, size: %d\n", ptr, size);
         #ifdef MPROTECT
         protect_with_mprotect(protections);
         #endif
@@ -559,7 +558,7 @@ struct Allocation {
 
         // Align the size to the page boundary
         size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
-        stack_infof("Protecting %p, size: %d\n", aligned_address, aligned_size);
+        stack_debugf("Protecting %p, size: %d\n", aligned_address, aligned_size);
 
         if (mprotect(aligned_address, aligned_size, protections) == -1) {
             perror("mprotect");
@@ -568,18 +567,7 @@ struct Allocation {
     }
 
     void unprotect_with_mprotect() {
-        long page_size = sysconf(_SC_PAGESIZE);
-        uintptr_t address = (uintptr_t)ptr;
-        void* aligned_address = (void*)(address & ~(page_size - 1));
-
-        // Align the size to the page boundary
-        size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
-        stack_infof("Unprotecting %p, size: %d\n", aligned_address, aligned_size);
-
-        if (mprotect(aligned_address, aligned_size, PROT_READ | PROT_WRITE | PROT_EXEC) == -1) {
-            perror("mprotect");
-            exit(1);
-        }
+        protect_with_mprotect(PROT_READ | PROT_WRITE | PROT_EXEC);
     }
 
     void protect_with_pkeys(uint64_t protections) {
@@ -1297,7 +1285,7 @@ IntervalTestSuite *IntervalTestSuite::get_instance() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    stack_debugf("PROTECTION HANDLER: Entering segfault handler\n");
+    stack_infof("PROTECTION HANDLER: Entering segfault handler\n");
     ucontext_t *context = (ucontext_t *)ucontext;
     static std::mutex protection_lock;
     std::lock_guard<std::mutex> lock(protection_lock);
@@ -1316,7 +1304,7 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 
     if (si->si_code == SEGV_ACCERR) {
         // printf("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
-        stack_debugf("Invalid permissions for %s.\n",is_write? "write" : "read");
+        stack_infof("Invalid permissions for %s.\n",is_write? "write" : "read");
     }
     
     if (is_working_thread()) {
@@ -1409,5 +1397,5 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         // }
     }
 
-    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
+    stack_infof("PROTECTION HANDLER: Leaving segfault handler\n");
 }

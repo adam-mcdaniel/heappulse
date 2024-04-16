@@ -676,3 +676,9 @@ private:
         format_append_impl(StackString<Size>::from_number((uintptr_t)ptr, 16));
     }
 };
+
+// Format a string
+template <size_t Size, typename... Args>
+StackString<Size> format(const char *fmt, Args ...args) {
+    return StackString<Size>::format(fmt, args...);
+}
