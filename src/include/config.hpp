@@ -1,4 +1,4 @@
-// #define DEBUG
+#define DEBUG
 
 #define INTERVAL_CONFIG {.period_milliseconds = 5000, .clear_soft_dirty_bits=false}
 
