@@ -559,6 +559,7 @@ struct Allocation {
         // Align the size to the page boundary
         size_t aligned_size = (size + page_size - 1) & ~(page_size - 1);
         stack_debugf("Protecting %p, size: %d\n", aligned_address, aligned_size);
+        stack_debugf("  Read: %d, Write: %d, Exec: %d\n", protections & PROT_READ, protections & PROT_WRITE, protections & PROT_EXEC);
 
         if (mprotect(aligned_address, aligned_size, protections) == -1) {
             perror("mprotect");
@@ -1283,7 +1284,7 @@ IntervalTestSuite *IntervalTestSuite::get_instance() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    stack_infof("PROTECTION HANDLER: Entering segfault handler\n");
+    stack_infof("PROTECTION HANDLER: Entering segfault handler with address %p\n", si->si_addr);
     ucontext_t *context = (ucontext_t *)ucontext;
     static std::mutex protection_lock;
     std::lock_guard<std::mutex> lock(protection_lock);

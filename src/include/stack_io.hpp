@@ -13,7 +13,11 @@
 #define stack_debugf(...)
 #endif
 
+#ifdef LOG_FILE
 static StackFile log_file(StackString<256>::from(LOG_FILE), Mode::WRITE);
+#else
+#define stack_logf(...)
+#endif
 
 template <typename... Args>
 void stack_printf(const char* format, Args... args) {

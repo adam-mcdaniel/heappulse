@@ -1,0 +1,11 @@
+Interval #,Total Memory Allocated,Total Memory Freed,Memory Allocated Since Last Interval,Memory Freed Since Last Interval,Objects Live This Interval Physical Size,Objects Live >=2 Intervals Physical Size,Objects Live >=4 Intervals Physical Size,Objects Live >=8 Intervals Physical Size,Objects Live >=10 Intervals Physical Size,Objects Live >=16 Intervals Physical Size,Objects Live >=24 Intervals Physical Size,Objects Live >=32 Intervals Physical Size,Objects Live This Interval Virtual Size,Objects Live >=2 Intervals Virtual Size,Objects Live >=4 Intervals Virtual Size,Objects Live >=8 Intervals Virtual Size,Objects Live >=10 Intervals Virtual Size,Objects Live >=16 Intervals Virtual Size,Objects Live >=24 Intervals Virtual Size,Objects Live >=32 Intervals Virtual Size
+1,8416,4096,8416,4096,4320,0,0,0,0,0,0,0,4320,0,0,0,0,0,0,0
+2,12512,8192,4096,4096,4320,0,0,0,0,0,0,0,4320,0,0,0,0,0,0,0
+3,16608,12288,4096,4096,4320,4320,0,0,0,0,0,0,4320,4320,0,0,0,0,0,0
+4,20704,16384,4096,4096,4320,4320,0,0,0,0,0,0,4320,4320,0,0,0,0,0,0
+5,24800,20480,4096,4096,4320,4320,4320,0,0,0,0,0,4320,4320,4320,0,0,0,0,0
+6,28896,24576,4096,4096,4320,4320,4320,0,0,0,0,0,4320,4320,4320,0,0,0,0,0
+7,32992,28672,4096,4096,4320,4320,4320,0,0,0,0,0,4320,4320,4320,0,0,0,0,0
+8,37088,32768,4096,4096,4320,4320,4320,0,0,0,0,0,4320,4320,4320,0,0,0,0,0
+9,41184,36864,4096,4096,4320,4320,4320,4320,0,0,0,0,4320,4320,4320,4320,0,0,0,0
+10,45280,40960,4096,4096,4320,4320,4320,4320,0,0,0,0,4320,4320,4320,4320,0,0,0,0

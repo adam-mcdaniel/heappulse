@@ -4,9 +4,7 @@
 
 class GroupTest : public IntervalTest {
 public:
-    GroupTest() {
-        stack_debugf("Creating group test\n");
-    }
+    GroupTest() {}
 
     void add_test(IntervalTest *t) {
         stack_debugf("Adding test %s to group\n", t->name());
@@ -14,7 +12,7 @@ public:
     }
 
 private:
-    StackVec<IntervalTest*, 10> tests;
+    StackVec<IntervalTest*, 100> tests;
     
     const char *name() const override {
         return "Group Test";

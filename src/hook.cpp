@@ -46,7 +46,7 @@ static AccessPatternTest apt;
 
 #ifdef ACCESS_COMPRESSION_TEST
 #include "intervals/access_compression_test.cpp"
-// static GroupTest acts;
+static GroupTest acts;
 // static AccessCompressionTest acts;
 #endif
 
@@ -91,7 +91,6 @@ public:
         #endif
         #ifdef ACCESS_COMPRESSION_TEST
 
-        /*
         #ifdef USE_ZLIB_COMPRESSION
         static AccessCompressionTest act_zlib(COMPRESS_ZLIB);
         acts.add_test(&act_zlib);
@@ -120,19 +119,8 @@ public:
         static AccessCompressionTest act_lz4hc(COMPRESS_LZ4HC);
         acts.add_test(&act_lz4hc);
         #endif
-        */
-
-        // acts.add_test<AccessCompressionTest>(COMPRESS_ZLIB);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_LZ4);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_LZO);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_SNAPPY);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_ZSTD);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_LZF);
-        // acts.add_test<AccessCompressionTest>(COMPRESS_LZ4HC);
-
-        // acts.set_compression_type(COMPRESS_ZLIB);
         
-        // its->add_test(&acts);
+        its->add_test(&acts);
         #endif
         
         stack_debugf("Done\n");
