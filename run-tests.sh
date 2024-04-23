@@ -10,92 +10,24 @@ echo "Running tests..."
 echo "================"
 
 
-# g++ tests/read_access_test.cpp -o tests/read_access_test.exe -g -O0
-# ./run.sh ./tests/read_access_test.exe tests/read_access_test.in > tests/read_access_test.out 2> tests/read_access_test.err
-# mv page-tracking.csv tests/read_access_test_page_tracking.csv
-# mv generational.csv tests/read_access_test_generational.csv
-# mv log.txt tests/read_access_test_log.txt
-# echo "Test #0 done"
+# For every test directory in /tests, compile `test.cpp` and run the executable with the input file `test.in`
+for test_dir in tests/*; do
+    if [ -d "$test_dir" ]; then
+        echo "Running test in $test_dir"
+        g++ $test_dir/test.cpp -o $test_dir/test.exe -g -O0 -pthread
+        rm -Rf $test_dir/results
+        mkdir $test_dir/results
+        ./run.sh $test_dir/test.exe < $test_dir/test.in > $test_dir/results/test.out 2> $test_dir/results/test.err
+        echo "Test in $test_dir done"
+        # Move all the CSV files in the current directory to the test directory
+        shopt -s nullglob # This makes *.csv expand to nothing if no files match
+        csv_files=(./*.csv)
+        if [ ${#csv_files[@]} -gt 0 ]; then
+            for file in "${csv_files[@]}"; do
+                mv "$file" "$test_dir/results"
+            done
+        fi
 
-g++ tests/reuse_test.cpp -o tests/reuse_test.exe -g -O3
-./run.sh ./tests/reuse_test.exe tests/reuse_test.in > tests/reuse_test.out 2> tests/reuse_test.err
-# mv bucket_stats.csv tests/test1_buckets.csv
-# mv allocation_site_stats.csv tests/test1_alloc.csv
-# mv page_info.csv tests/test1_page_stats.csv
-mv page-tracking.csv tests/reuse_test_page_tracking.csv
-mv generational.csv tests/reuse_test_generational.csv
-mv log.txt tests/reuse_test_log.txt
-mv access_patterns.csv tests/reuse_test_access_patterns.csv
-mv access-compression.csv tests/reuse_test_access_compression.csv
-# mv compression.csv tests/reuse_test_compression.csv
-# mv object-liveness.csv tests/reuse_test_object_liveness.csv
-# mv page-liveness.csv tests/reuse_test_page_liveness.csv
-echo "Test #1 done"
-
-g++ tests/pagetest.cpp -o tests/pagetest.exe -g -O3
-./run.sh ./tests/pagetest.exe tests/pagetest.in > tests/pagetest.out 2> tests/pagetest.err
-# mv bucket_stats.csv tests/pagetest_buckets.csv
-# mv allocation_site_stats.csv tests/pagetest_alloc.csv
-# mv page_info.csv tests/pagetest_page_stats.csv
-mv log.txt tests/pagetest_log.txt
-mv generational.csv tests/pagetest_generational.csv
-mv page-tracking.csv tests/pagetest_page_tracking.csv
-mv access_patterns.csv tests/pagetest_access_patterns.csv
-mv access-compression.csv tests/pagetest_access_compression.csv
-
-# mv compression.csv tests/pagetest_compression.csv
-# mv object-liveness.csv tests/pagetest_object_liveness.csv
-# mv page-liveness.csv tests/pagetest_page_liveness.csv
-echo "Test #2 done"
-
-g++ tests/test1.cpp -o tests/test1.exe -g -O3
-./run.sh ./tests/test1.exe tests/test1.in > tests/test1.out 2> tests/test1.err
-# mv bucket_stats.csv tests/test1_buckets.csv
-# mv allocation_site_stats.csv tests/test1_alloc.csv
-# mv page_info.csv tests/test1_page_stats.csv
-mv log.txt tests/test1_log.txt
-mv generational.csv tests/test1_generational.csv
-mv page-tracking.csv tests/test1_page_tracking.csv
-mv access_patterns.csv tests/test1_access_patterns.csv
-mv access-compression.csv tests/test1_access_compression.csv
-
-# mv compression.csv tests/test1_compression.csv
-# mv object-liveness.csv tests/test1_object_liveness.csv
-# mv page-liveness.csv tests/test1_page_liveness.csv
-echo "Test #3 done"
-
-g++ tests/test2.cpp -pthread -o tests/test2.exe -g -O3
-./run.sh ./tests/test2.exe tests/test2.in > tests/test2.out 2> tests/test2.err
-# mv bucket_stats.csv tests/test2_buckets.csv
-# mv allocation_site_stats.csv tests/test2_alloc.csv
-# mv page_info.csv tests/test2_page_stats.csv
-mv log.txt tests/test2_log.txt
-mv generational.csv tests/test2_generational.csv
-mv page-tracking.csv tests/test2_page_tracking.csv
-mv access_patterns.csv tests/test2_access_patterns.csv
-mv access-compression.csv tests/test2_access_compression.csv
-# mv compression.csv tests/test2_compression.csv
-# mv object-liveness.csv tests/test2_object_liveness.csv
-# mv page-liveness.csv tests/test2_page_liveness.csv
-echo "Test #4 done"
-
-
-g++ tests/basic.cpp -pthread -o tests/basic.exe -g -O0
-./run.sh ./tests/basic.exe tests/basic.in > tests/basic.out 2> tests/basic.err
-# mv bucket_stats.csv tests/test2_buckets.csv
-# mv allocation_site_stats.csv tests/test2_alloc.csv
-# mv page_info.csv tests/test2_page_stats.csv
-mv log.txt tests/basic_log.txt
-mv generational.csv tests/basic_generational.csv
-mv page-tracking.csv tests/basic_page_tracking.csv
-mv access_patterns.csv tests/basic_access_patterns.csv
-mv access-compression.csv tests/basic_access_compression.csv
-# mv compression.csv tests/test2_compression.csv
-# mv object-liveness.csv tests/test2_object_liveness.csv
-# mv page-liveness.csv tests/test2_page_liveness.csv
-echo "Test #5 done"
-
-### gdb commands for debugging executables with hook
-# set env LD_PRELOAD=./libbkmalloc.so
-# set env BKMALLOC_OPTS="--hooks-file=./hook.so"
-# run
+        echo "Test in $test_dir done"
+    fi
+done
