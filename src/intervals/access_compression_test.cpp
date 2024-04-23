@@ -47,7 +47,9 @@ LZO_ALIGN(16) unsigned char __LZO_MMODEL lzo_work[LZO1X_1_MEM_COMPRESS];
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
 // Path: src/compression_test.cpp
-#define MAX_COMPRESSED_SIZE 0x10000
+#define MAX_COMPRESSED_SIZE 0x100000
+#define MAX_PAGES 0x10000
+
 
 static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
@@ -76,15 +78,49 @@ typedef enum {
     #endif
 } CompressionType;
 
-// void init_compression() {
-//     #ifdef USE_LZO_COMPRESSION
-//     // Call this function at the beginning of your program
-//     if (lzo_init() != LZO_E_OK) {
-//         printf("LZO initialization error\n");
-//         return;
-//     }
-//     #endif
-// }
+StackString<100> compression_to_string(CompressionType type) {
+    switch (type) {
+        #ifdef USE_ZLIB_COMPRESSION
+        case COMPRESS_ZLIB:
+            return "zlib";
+        #endif
+        #ifdef USE_LZ4_COMPRESSION
+        case COMPRESS_LZ4:
+            return "lz4";
+        #endif
+        #ifdef USE_LZO_COMPRESSION
+        case COMPRESS_LZO:
+            return "lzo";
+        #endif
+        #ifdef USE_SNAPPY_COMPRESSION
+        case COMPRESS_SNAPPY:
+            return "snappy";
+        #endif
+        #ifdef USE_ZSTD_COMPRESSION
+        case COMPRESS_ZSTD:
+            return "zstd";
+        #endif
+        #ifdef USE_LZF_COMPRESSION
+        case COMPRESS_LZF:
+            return "lzf";
+        #endif
+        #ifdef USE_LZ4HC_COMPRESSION
+        case COMPRESS_LZ4HC:
+            return "lz4hc";
+        #endif
+    }
+    return "unknown";
+}
+
+void init_compression() {
+    #ifdef USE_LZO_COMPRESSION
+    // Call this function at the beginning of your program
+    if (lzo_init() != LZO_E_OK) {
+        printf("LZO initialization error\n");
+        return;
+    }
+    #endif
+}
 
 void compress(void *input_buffer, uint64_t &uncompressed_size, uint64_t &compressed_size, CompressionType type=COMPRESS_ZLIB) {
     stack_debugf("Compressing buffer at %p\n", input_buffer);
@@ -155,7 +191,7 @@ class AccessCompressionTest : public IntervalTest {
 public:
     AccessCompressionTest(CompressionType type=COMPRESS_ZLIB) : IntervalTest() {
         // stack_debugf("Creating access compression test\n");
-        // init_compression();
+        init_compression();
         compression_type = type;
     }
 
@@ -195,8 +231,8 @@ private:
         stack_debugf("Setup\n");
         test_start_time = std::chrono::steady_clock::now();
         test_start_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(test_start_time.time_since_epoch()).count();
-        file = StackFile(StackString<256>("access-compression.csv"), Mode::APPEND);
-        // file = StackFile(format<256>("access-%s-compression.csv", compression_to_string(compression_type)), Mode::APPEND);
+        // file = StackFile(StackString<256>("access-compression.csv"), Mode::APPEND);
+        file = StackFile(format<256>("access-%s-compression.csv", compression_to_string(compression_type)), Mode::APPEND);
         file.clear();
 
         csv.title().add("Interval #");
