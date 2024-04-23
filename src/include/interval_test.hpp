@@ -817,8 +817,6 @@ public:
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
     ) {}
 
-    virtual void schedule() {}
-
     ~IntervalTest() {
         cleanup();
     }

@@ -7,6 +7,8 @@
 #include <stack_csv.hpp>
 #include <interval_test.hpp>
 
+#include "intervals/group_test.cpp"
+
 #ifdef DUMMY_TEST
 #include "intervals/dummy_test.cpp"
 static DummyTest dt;
@@ -44,7 +46,8 @@ static AccessPatternTest apt;
 
 #ifdef ACCESS_COMPRESSION_TEST
 #include "intervals/access_compression_test.cpp"
-static AccessCompressionTest act;
+// static GroupTest acts;
+// static AccessCompressionTest acts;
 #endif
 
 static uint64_t malloc_count = 0;
@@ -87,7 +90,49 @@ public:
         its->add_test(&apt);
         #endif
         #ifdef ACCESS_COMPRESSION_TEST
-        its->add_test(&act);
+
+        /*
+        #ifdef USE_ZLIB_COMPRESSION
+        static AccessCompressionTest act_zlib(COMPRESS_ZLIB);
+        acts.add_test(&act_zlib);
+        #endif
+        #ifdef USE_LZ4_COMPRESSION
+        static AccessCompressionTest act_lz4(COMPRESS_LZ4);
+        acts.add_test(&act_lz4);
+        #endif
+        #ifdef USE_LZO_COMPRESSION
+        static AccessCompressionTest act_lzo(COMPRESS_LZO);
+        acts.add_test(&act_lzo);
+        #endif
+        #ifdef USE_SNAPPY_COMPRESSION
+        static AccessCompressionTest act_snappy(COMPRESS_SNAPPY);
+        acts.add_test(&act_snappy);
+        #endif
+        #ifdef USE_ZSTD_COMPRESSION
+        static AccessCompressionTest act_zstd(COMPRESS_ZSTD);
+        acts.add_test(&act_zstd);
+        #endif
+        #ifdef USE_LZF_COMPRESSION
+        static AccessCompressionTest act_lzf(COMPRESS_LZF);
+        acts.add_test(&act_lzf);
+        #endif
+        #ifdef USE_LZ4HC_COMPRESSION
+        static AccessCompressionTest act_lz4hc(COMPRESS_LZ4HC);
+        acts.add_test(&act_lz4hc);
+        #endif
+        */
+
+        // acts.add_test<AccessCompressionTest>(COMPRESS_ZLIB);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_LZ4);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_LZO);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_SNAPPY);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_ZSTD);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_LZF);
+        // acts.add_test<AccessCompressionTest>(COMPRESS_LZ4HC);
+
+        // acts.set_compression_type(COMPRESS_ZLIB);
+        
+        // its->add_test(&acts);
         #endif
         
         stack_debugf("Done\n");
