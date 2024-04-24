@@ -70,6 +70,7 @@ void stack_debugf(const char* format, Args... args);
 #endif
 
 
+#ifdef LOG_FILE
 void stack_logf(const char* str) {
     // StackString<1 << 14>(str).print();
     #ifdef DEBUG
@@ -89,7 +90,7 @@ void stack_logf(const char* format, Args... args) {
     stack_fprintf(log_file, format, args...);
     // stack_printf(format, args...);
 }
-
+#endif
 
 static bool last_was_newline = true;
 
