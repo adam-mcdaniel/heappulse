@@ -1,4 +1,5 @@
 #define BKMALLOC_HOOK
+#define BK_MMAP_OVERRIDE
 #include <bkmalloc.h>
 
 #include <config.hpp>
