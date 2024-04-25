@@ -27,6 +27,9 @@ if (( $EUID != 0 )); then
     exit
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+pushd $SCRIPT_DIR > /dev/null
+
 # Remove libbkmalloc.so and libheappulse.so
 rm -f libbkmalloc.so libheappulse.so
 echo "Removed libbkmalloc.so and libheappulse.so✅"
@@ -40,3 +43,5 @@ rm -rf tests/*/results
 echo "Removed tests/*/results directories✅"
 
 echo "Cleaned up everything🧹✨"
+
+popd > /dev/null

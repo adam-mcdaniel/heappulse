@@ -22,11 +22,14 @@
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝             
 # 
 
-
 if (( $EUID != 0 )); then
     echo "Please run as root"
     exit
 fi
+
+# Cd into the directory of this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+pushd $SCRIPT_DIR > /dev/null
 
 echo "Cleaning up🧹"
 echo "========================================================================="
@@ -71,3 +74,8 @@ for test_dir in tests/*; do
         echo "Test in $test_dir done✅      "
     fi
 done
+
+echo ""
+echo "All tests done🎉✨"
+
+popd > /dev/null

@@ -29,12 +29,11 @@ if (( $EUID == 0 )); then
     exit
 fi
 
-echo "Building allocator🚧..."
-echo "========================================================================="
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd $SCRIPT_DIR > /dev/null
 
+echo "Building allocator🚧..."
+echo "========================================================================="
 
 # Check if `build` directory exists
 if [ ! -d "build" ]; then

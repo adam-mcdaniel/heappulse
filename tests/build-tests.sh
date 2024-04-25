@@ -25,8 +25,7 @@
 
 # cd into the build-tests.sh directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-pushd $SCRIPT_DIR
+pushd $SCRIPT_DIR > /dev/null
 
 # For every test directory in /tests, compile `test.cpp` and run the executable with the input file `test.in`
 for test_dir in *; do
@@ -42,4 +41,4 @@ for test_dir in *; do
     fi
 done
 
-popd
+popd > /dev/null
