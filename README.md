@@ -1,4 +1,4 @@
-# allocation-compressibility-tracker
+# HeapPulse
 
 This is a tool for tracking the compressibility of heap allocations on timed intervals for various executables by dynamically linking in `malloc`, `free`, and `mmap` hooks.
 
