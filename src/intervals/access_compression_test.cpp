@@ -1,8 +1,48 @@
 #pragma once
 
+#include <config.hpp>
 #include <interval_test.hpp>
 #include <stack_csv.hpp>
+
+#ifdef USE_ZLIB_COMPRESSION
 #include <zlib.h>
+#endif
+
+#ifdef USE_LZ4_COMPRESSION
+#include <lz4.h>
+#endif
+
+#ifdef USE_LZO_COMPRESSION
+#include <lzo/lzoconf.h>
+#include <lzo/lzo1x.h>
+
+#ifndef LZO_ALIGN
+#define LZO_ALIGN(x) __attribute__((aligned(x)))
+#endif
+#ifndef __LZO_MMODEL
+#define __LZO_MMODEL
+#endif
+
+// Declare a scratch memory area for LZO
+LZO_ALIGN(16) unsigned char __LZO_MMODEL lzo_work[LZO1X_1_MEM_COMPRESS];
+#endif
+
+#ifdef USE_SNAPPY_COMPRESSION
+#include <snappy-c.h>
+#endif
+
+#ifdef USE_ZSTD_COMPRESSION
+#include <zstd.h>
+#endif
+
+#ifdef USE_LZF_COMPRESSION
+#include <liblzf/lzf.h>
+#endif
+
+#ifdef USE_LZ4HC_COMPRESSION
+#include <lz4hc.h>
+#endif
+
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 
@@ -10,10 +50,80 @@
 #define MAX_COMPRESSED_SIZE 0x100000
 #define MAX_PAGES 0x10000
 
-static uint8_t buffer[MAX_COMPRESSED_SIZE];
 
-void compress(void *buf, uint64_t &uncompressed_size, uint64_t &compressed_size) {
-    stack_debugf("Compressing buffer at %p\n", buf);
+static uint8_t buffer[MAX_COMPRESSED_SIZE * 2];
+
+
+typedef enum {
+    #ifdef USE_ZLIB_COMPRESSION
+    COMPRESS_ZLIB = 1,
+    #endif
+    #ifdef USE_LZ4_COMPRESSION
+    COMPRESS_LZ4 = 2,
+    #endif
+    #ifdef USE_LZO_COMPRESSION
+    COMPRESS_LZO = 3,
+    #endif
+    #ifdef USE_SNAPPY_COMPRESSION
+    COMPRESS_SNAPPY = 4,
+    #endif
+    #ifdef USE_ZSTD_COMPRESSION
+    COMPRESS_ZSTD = 5,
+    #endif
+    #ifdef USE_LZF_COMPRESSION
+    COMPRESS_LZF = 6,
+    #endif
+    #ifdef USE_LZ4HC_COMPRESSION
+    COMPRESS_LZ4HC = 7
+    #endif
+} CompressionType;
+
+StackString<100> compression_to_string(CompressionType type) {
+    switch (type) {
+        #ifdef USE_ZLIB_COMPRESSION
+        case COMPRESS_ZLIB:
+            return "zlib";
+        #endif
+        #ifdef USE_LZ4_COMPRESSION
+        case COMPRESS_LZ4:
+            return "lz4";
+        #endif
+        #ifdef USE_LZO_COMPRESSION
+        case COMPRESS_LZO:
+            return "lzo";
+        #endif
+        #ifdef USE_SNAPPY_COMPRESSION
+        case COMPRESS_SNAPPY:
+            return "snappy";
+        #endif
+        #ifdef USE_ZSTD_COMPRESSION
+        case COMPRESS_ZSTD:
+            return "zstd";
+        #endif
+        #ifdef USE_LZF_COMPRESSION
+        case COMPRESS_LZF:
+            return "lzf";
+        #endif
+        #ifdef USE_LZ4HC_COMPRESSION
+        case COMPRESS_LZ4HC:
+            return "lz4hc";
+        #endif
+    }
+    return "unknown";
+}
+
+void init_compression() {
+    #ifdef USE_LZO_COMPRESSION
+    // Call this function at the beginning of your program
+    if (lzo_init() != LZO_E_OK) {
+        printf("LZO initialization error\n");
+        return;
+    }
+    #endif
+}
+
+void compress(void *input_buffer, uint64_t &uncompressed_size, uint64_t &compressed_size, CompressionType type) {
+    stack_debugf("Compressing buffer at %p\n", input_buffer);
     stack_debugf("  size: %d\n", uncompressed_size);
 
     compressed_size = MAX_COMPRESSED_SIZE;
@@ -22,27 +132,86 @@ void compress(void *buf, uint64_t &uncompressed_size, uint64_t &compressed_size)
         uncompressed_size = MAX_COMPRESSED_SIZE;
     }
 
-    int result = compress2(buffer, (uLongf*)&compressed_size, (const Bytef*)buf, uncompressed_size, Z_BEST_COMPRESSION);
-    if (result != Z_OK) {
-        stack_errorf("Failed to compress buffer at %p\n", buf);
-        stack_errorf("  size: %d\n", uncompressed_size);
-        stack_errorf("  compressed size: %d\n", compressed_size);
-        stack_errorf("  result: %d\n", result);
-        return;
+    switch (type) {
+        #ifdef USE_ZLIB_COMPRESSION
+        case COMPRESS_ZLIB:
+            // Zlib compression
+            compress2((Bytef*)buffer, (uLongf*)&compressed_size, (const Bytef*)input_buffer, uncompressed_size, Z_BEST_COMPRESSION);
+            break;
+        #endif
+        #ifdef USE_LZ4_COMPRESSION
+        case COMPRESS_LZ4:
+            // LZ4 compression
+            // compressed_size = LZ4_compress_default((const char*)input_buffer, (char*)buffer, uncompressed_size, compressed_size);
+            if ((compressed_size = LZ4_compress_default((const char*)input_buffer, (char*)buffer, uncompressed_size, compressed_size)) == 0) {
+                stack_warnf("LZ4 compression failed\n");
+            }
+            break;
+        #endif
+        #ifdef USE_LZO_COMPRESSION
+        case COMPRESS_LZO:
+            // LZO compression
+            if (lzo1x_1_compress((const unsigned char*)input_buffer, uncompressed_size, (unsigned char*)buffer, &compressed_size, lzo_work) == LZO_E_OK) {
+                stack_warnf("LZO compression failed\n");
+            }
+            break;
+        #endif
+        #ifdef USE_SNAPPY_COMPRESSION
+        case COMPRESS_SNAPPY:
+            // Snappy compression
+            if (snappy_compress((const char*)input_buffer, uncompressed_size, (char*)buffer, &compressed_size) == SNAPPY_OK) {
+                stack_warnf("Snappy compression failed\n");
+            }
+            break;
+        #endif
+        #ifdef USE_LZF_COMPRESSION
+        case COMPRESS_LZF:
+            // LZF compression
+            // compressed_size = lzf_compress(input_buffer, uncompressed_size, buffer, compressed_size);
+            if ((compressed_size = lzf_compress(input_buffer, uncompressed_size, buffer, compressed_size)) == 0) {
+                stack_warnf("LZF compression failed\n");
+            }
+            break;
+        #endif
+        #ifdef USE_LZ4HC_COMPRESSION
+        case COMPRESS_LZ4HC:
+            // LZ4HC compression
+            // compressed_size = LZ4_compress_HC((const char*)input_buffer, (char*)buffer, uncompressed_size, compressed_size, LZ4HC_CLEVEL_MAX);
+            if ((compressed_size = LZ4_compress_HC((const char*)input_buffer, (char*)buffer, uncompressed_size, compressed_size, LZ4HC_CLEVEL_MAX)) == 0) {
+                stack_warnf("LZ4HC compression failed\n");
+            }
+            break;
+        #endif
+        #ifdef USE_ZSTD_COMPRESSION
+        case COMPRESS_ZSTD:
+            // Zstd compression
+            // compressed_size = ZSTD_compress(buffer, compressed_size, input_buffer, uncompressed_size, 1);
+            if (ZSTD_isError(compressed_size = ZSTD_compress(buffer, compressed_size, input_buffer, uncompressed_size, 1))) {
+                stack_warnf("Zstd compression failed\n");
+            }
+            break;
+        #endif
     }
 
-    stack_debugf("Compressed buffer at %p\n", buf);
+    stack_debugf("Compressed buffer at %p\n", (void*)input_buffer);
     stack_debugf("  size: %d\n", uncompressed_size);
     stack_debugf("  compressed size: %d\n", compressed_size);
 }
 
-void compress(Allocation &alloc, uint64_t &uncompressed_size, uint64_t &compressed_size) {
-    compress(alloc.ptr, uncompressed_size, compressed_size);
+void compress(Allocation &alloc, uint64_t &uncompressed_size, uint64_t &compressed_size, CompressionType type) {
+    compress(alloc.ptr, uncompressed_size, compressed_size, type);
 }
-
 
 // Path: src/compression_test.cpp
 class AccessCompressionTest : public IntervalTest {
+public:
+    AccessCompressionTest(CompressionType type) : IntervalTest() {
+        // stack_debugf("Creating access compression test\n");
+        init_compression();
+        compression_type = type;
+    }
+
+private:
     CSV<64, 80000> csv;
     StackFile file;
     size_t interval_count = 0;
@@ -68,6 +237,7 @@ class AccessCompressionTest : public IntervalTest {
                                 write_accessed_this_interval,
                                 read_accessed_this_interval,
                                 live_this_interval;
+    CompressionType compression_type;
 
     const char *name() const override {
         return "Access Compression Test";
@@ -77,9 +247,9 @@ class AccessCompressionTest : public IntervalTest {
         stack_debugf("Setup\n");
         test_start_time = std::chrono::steady_clock::now();
         test_start_time_ms = std::chrono::duration_cast<std::chrono::milliseconds>(test_start_time.time_since_epoch()).count();
-        file = StackFile(StackString<256>("access-compression.csv"), Mode::APPEND);
+        // file = StackFile(StackString<256>("access-compression.csv"), Mode::APPEND);
+        file = StackFile(format<256>("access-%s-compression.csv", compression_to_string(compression_type)), Mode::APPEND);
         file.clear();
-
 
         csv.title().add("Interval #");
         csv.title().add("Object Address");
@@ -227,12 +397,13 @@ class AccessCompressionTest : public IntervalTest {
     void interval(
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
     ) override {
-        stack_infof("Interval %d generational test starting...\n", ++interval_count);
+        stack_infof("Interval %d access compression test with %s starting...\n", ++interval_count, compression_to_string(compression_type));
 
 
         // Iterate over the allocations and record compression stats + access patterns
         allocation_sites.map([&](auto return_address, AllocationSite site) {
             site.allocations.map([&](void *ptr, Allocation allocation) {
+                allocation.protect(PROT_READ);
                 auto &row = csv.new_row();
                 row.set(csv.title(), "Interval #", interval_count);
                 row.set(csv.title(), "Object Address", (void*)ptr);
@@ -250,7 +421,7 @@ class AccessCompressionTest : public IntervalTest {
                 physical_pages.map([&](auto page) {
                     uint64_t uncompressed_size = page.size();
                     uint64_t compressed_size = 0;
-                    compress(page.get_virtual_address(), uncompressed_size, compressed_size);
+                    compress(page.get_virtual_address(), uncompressed_size, compressed_size, compression_type);
                     total_uncompressed_size += uncompressed_size;
                     total_compressed_size += compressed_size;
                 });

@@ -2,6 +2,7 @@
 *.so
 debug.sh
 *.txt
+!CMakeLists.txt
 *.exe
 *.out
 .vscode/
@@ -11,3 +12,5 @@ debug.sh
 deprecated/
 Makefile
 data/
+build/
+/tests/*/results

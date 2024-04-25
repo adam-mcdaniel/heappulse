@@ -2362,6 +2362,7 @@ static void bk_init_hooks(void) {
         }
     }
 
+    bk_printf("Loading library %s\n", bk_config.hooks_file ? bk_config.hooks_file : "libbkmalloc.so");
     bk_hooks.handle = bk_open_library(bk_config.hooks_file ? bk_config.hooks_file : "libbkmalloc.so");
 
     if (bk_hooks.unhooked) {
@@ -2381,9 +2382,9 @@ do {                                                                            
     bk_hooks._name = (__typeof(bk_hooks._name))bk_library_symbol(bk_hooks.handle, "bk_" #_name "_hook"); \
     if (bk_config.log_hooks) {                                                                           \
         if (bk_hooks._name != NULL) {                                                                    \
-            bk_logf("hooks-install %-13s LOADED\n", #_name);                                             \
+            bk_printf("hooks-install %-13s LOADED\n", #_name);                                             \
         } else {                                                                                         \
-            bk_logf("hooks-install %-13s NOT FOUND %s\n", #_name, dlerror());                            \
+            bk_printf("hooks-install %-13s NOT FOUND %s\n", #_name, dlerror());                            \
         }                                                                                                \
     }                                                                                                    \
 } while (0)

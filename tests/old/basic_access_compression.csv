@@ -1,0 +1,12 @@
+Interval #,Object Address,Allocation Site,Age (intervals),Virtual Size (bytes),Physical Size (bytes),Physical Compressed Size (bytes),New?,Written?,Read?,Unaccessed?,Physical Compression Ratio (compressed/uncompressed),Live Virtual Bytes
+1,7FE3CD480100,55E98CC211AF,0,224,4096,152,true,true,true,false,0.037109,57792
+1,7FE39A880000,55E98CC211AF,0,12288,12288,135,true,true,true,false,0.010986,57792
+1,7FE39A680000,7FE3CE358D7C,0,4096,4096,322,true,true,true,false,0.078613,57792
+2,7FE3CD480100,55E98CC211AF,1,224,4096,152,false,false,false,true,0.037109,94656
+2,7FE39A880000,55E98CC211AF,0,12288,12288,135,true,true,true,false,0.010986,94656
+2,7FE39A680000,7FE3CE358D7C,1,4096,4096,321,false,false,false,true,0.078369,94656
+3,7FE3CD480100,55E98CC211AF,2,224,4096,152,false,false,false,true,0.037109,131520
+3,7FE39A880000,55E98CC211AF,0,12288,12288,135,true,true,true,false,0.010986,131520
+3,7FE39A680000,7FE3CE358D7C,2,4096,4096,321,false,false,false,true,0.078369,131520
+4,7FE3CD480100,55E98CC211AF,3,224,4096,152,false,false,false,true,0.037109,131520
+4,7FE39A680000,7FE3CE358D7C,3,4096,4096,324,false,false,false,true,0.079102,131520

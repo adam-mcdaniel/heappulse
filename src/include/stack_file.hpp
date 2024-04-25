@@ -1,5 +1,8 @@
 #pragma once
 
+#include <bkmalloc.h>
+#include <cstring>
+
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>

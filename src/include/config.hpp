@@ -1,10 +1,10 @@
-// #define DEBUG
+#define DEBUG
 
-#define INTERVAL_CONFIG {.period_milliseconds = 5000, .clear_soft_dirty_bits=false}
+#define INTERVAL_CONFIG {.period_milliseconds = 1000, .clear_soft_dirty_bits=false}
 
 // #define OPTIMIZE
 // #define COLLECT_BACKTRACE
-#define LOG_FILE "log.txt"
+// #define LOG_FILE "log.txt"
 
 #define MAX_TRACKED_ACCESSES 100000
 
@@ -19,3 +19,11 @@
 // #define GENERATIONAL_TEST
 // #define ACCESS_PATTERN_TEST
 #define ACCESS_COMPRESSION_TEST
+
+#define USE_ZLIB_COMPRESSION // (1.2.11-1)
+// #define USE_LZ4_COMPRESSION // (1.9.0)
+// #define USE_LZO_COMPRESSION // (2.09)
+// #define USE_SNAPPY_COMPRESSION // (1.1.4)
+// #define USE_ZSTD_COMPRESSION // (1.4.0-1)
+// #define USE_LZF_COMPRESSION // (3.6)
+// #define USE_LZ4HC_COMPRESSION // (1.9.0)
