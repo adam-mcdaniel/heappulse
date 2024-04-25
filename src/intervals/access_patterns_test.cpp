@@ -438,7 +438,7 @@ class AccessPatternTest : public IntervalTest {
     void interval(
         const StackMap<uintptr_t, AllocationSite, TRACKED_ALLOCATION_SITES> &allocation_sites
     ) override {
-        stack_infof("Interval %d generational test starting...\n", ++interval_count);
+        stack_infof("Interval %d access patterns test starting...\n", ++interval_count);
 
         #ifndef GUARD_ACCESSES
         track_accesses(allocation_sites);
