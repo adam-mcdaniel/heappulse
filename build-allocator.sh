@@ -24,13 +24,21 @@
 
 # If we are root, demote to the user
 if (( $EUID == 0 )); then
-    echo "Running as root, demoting to user🚨..."
-    su $SUDO_USER -c "bash $0"
+    echo "Tried to run build as root, demoting to user🚨..."
+    su $SUDO_USER -c "$0 $*"
     exit
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd $SCRIPT_DIR > /dev/null
+
+# Check args to see if we do a full build or a partial build
+# If the arg is "full", clean the build first
+if [ $# -gt 0 ]; then
+    if [ "$1" == "full" ]; then
+        rm -rf build
+    fi
+fi
 
 echo "Building allocator🚧..."
 echo "========================================================================="

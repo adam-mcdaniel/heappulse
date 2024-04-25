@@ -282,6 +282,28 @@ static Hooks hooks;
 std::mutex bk_lock;
 
 extern "C"
+void bk_block_new_hook(struct bk_Heap *heap, union bk_Block *block) {
+    stack_debugf("Block new hook\n");
+    stack_infof("New block:\n");
+    stack_infof("   Size: %d\n", block->meta.size);
+    stack_infof("   Location: %p\n", block->meta.bump_base);
+    size_t i = 0;
+    for (char *addr=(char*)block->meta.bump_base; addr<(char*)block->meta.end; addr+=8) {
+        i += 8;
+    }
+    stack_infof("   Measured size: %d\n", i);
+}
+
+extern "C"
+void bk_block_release_hook(struct bk_Heap *heap, union bk_Block *block) {
+    stack_debugf("Block release hook\n");
+    stack_infof("Released block:\n");
+    stack_infof("   Size: %d\n", block->meta.size);
+    stack_infof("   Location: %p\n", block->meta.bump_base);
+}
+
+
+extern "C"
 void bk_post_alloc_hook(bk_Heap *heap, u64 n_bytes, u64 alignment, int zero_mem, void *addr) {
     setup_protection_handler();
     overhead_sw.start();
