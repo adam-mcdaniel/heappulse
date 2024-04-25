@@ -330,8 +330,8 @@ void operator delete[](void* ptr, std::size_t size, std::align_val_t alignment) 
 
 /* #define BK_MIN_ALIGN                            (16ULL) */
 #define BK_MIN_ALIGN                            (32ULL)
-#define BK_BLOCK_SIZE                           (MB(1))
-#define BK_BLOCK_ALIGN                          (MB(1))
+#define BK_BLOCK_SIZE                           (MB(2))
+#define BK_BLOCK_ALIGN                          (MB(2))
 #define BK_BASE_SIZE_CLASS                      (BK_MIN_ALIGN)
 #define BK_NR_SIZE_CLASSES                      (LOG2_64BIT(BK_BLOCK_SIZE / BK_BASE_SIZE_CLASS) - 1)
 #define BK_MAX_BLOCK_ALLOC_SIZE                 (BK_BASE_SIZE_CLASS * (1 << (BK_NR_SIZE_CLASSES - 1)))
@@ -1076,7 +1076,8 @@ static void bk_sprintf(char *buff, const char *fmt, ...) {
 
 #define DEFAULT_START_SIZE_IDX (3)
 
-static uint64_t ht_prime_sizes[] = {
+
+[[maybe_unused]] static uint64_t ht_prime_sizes[] = {
     5ULL,  11ULL,  23ULL,  47ULL,  97ULL,  199ULL,  409ULL,  823ULL,  1741ULL,  3469ULL,
     6949ULL,  14033ULL,  28411ULL,  57557ULL,  116731ULL,  236897ULL,  480881ULL,  976369ULL,
     1982627ULL,  4026031ULL,  8175383ULL,  16601593ULL,  33712729ULL,  68460391ULL,

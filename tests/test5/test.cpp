@@ -19,7 +19,7 @@
 int main() {
     for (int i=0; i<10; i++) {
         const int size = PAGE_SIZE * 3;
-        volatile void *ptr = alloc(size);
+        volatile char *ptr = (char*)alloc(size);
         // printf("ptr: %p\n", ptr);
         for (int j=0; j<size; j+=8) {
             // for (int k=0; k<size && k<10; k++)

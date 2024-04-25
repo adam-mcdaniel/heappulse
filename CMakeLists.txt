@@ -46,7 +46,7 @@ set(CMAKE_CXX_COMPILER "g++")
 add_definitions(-DBK_MMAP_OVERRIDE -DBK_RETURN_ADDR -DBKMALLOC_IMPL)
 
 # If we're doing a debug build, add the debug flag.
-if(CMAKE_BUILD_TYPE STREQUAL "debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_definitions(-DDEBUG)
     add_definitions(-DBK_DEBUG)
 endif()
@@ -65,7 +65,7 @@ include_directories(include)
 
 # Add the source files.
 add_library(heappulse SHARED
-    src/hook.cpp)
+    src/heappulse.cpp)
 set_target_properties(heappulse PROPERTIES LINKER_LANGUAGE CXX)
 # Link -lz to the library.
 target_link_libraries(heappulse z)
