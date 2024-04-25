@@ -12,3 +12,5 @@ debug.sh
 deprecated/
 Makefile
 data/
+build/
+/tests/*/results

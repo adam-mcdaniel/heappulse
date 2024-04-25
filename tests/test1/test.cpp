@@ -23,9 +23,7 @@ int main() {
         // }
         strcpy(ptr, "Hello World!");
 
-        if (rand() % 2 == 0) {
-            free(ptr);
-        }
+        free(ptr);
     }
     printf("Hello World!\n");
     return 0;

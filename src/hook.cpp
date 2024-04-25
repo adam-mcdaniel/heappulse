@@ -1,4 +1,3 @@
-#define BKMALLOC_HOOK
 #include <bkmalloc.h>
 
 #include <config.hpp>
