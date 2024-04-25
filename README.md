@@ -1,5 +1,7 @@
 # HeapPulse
 
+![Header Image](assets/header.png)
+
 This is a tool for tracking the compressibility of heap allocations on timed intervals for various executables by dynamically linking in `malloc`, `free`, and `mmap` hooks.
 
 ## Results

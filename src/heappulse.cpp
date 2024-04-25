@@ -287,9 +287,13 @@ void bk_block_new_hook(struct bk_Heap *heap, union bk_Block *block) {
     stack_infof("New block:\n");
     stack_infof("   Size: %d\n", block->meta.size);
     stack_infof("   Location: %p\n", block->meta.bump_base);
-    // for (size_t i=0; i<block->meta.size; i++) {
-    //     stack_infof("   %d: %d\n", i, (int64_t)((char*)block->meta.bump_base)[i]);
-    // }
+    size_t i = 0;
+    for (char *addr=(char*)block->meta.bump_base; addr<(char*)block->meta.end; addr+=8) {
+        if (i % 0x4000)
+            stack_infof("   %p: %X\n", addr, *(uint64_t*)addr);
+        i += 8;
+    }
+    stack_infof("   Measured size: %d\n", i);
 }
 
 extern "C"
@@ -298,9 +302,6 @@ void bk_block_release_hook(struct bk_Heap *heap, union bk_Block *block) {
     stack_infof("Released block:\n");
     stack_infof("   Size: %d\n", block->meta.size);
     stack_infof("   Location: %p\n", block->meta.bump_base);
-    // for (size_t i=0; i<block->meta.size; i++) {
-    //     stack_infof("   %d: %d\n", i, (int64_t)((char*)block->meta.bump_base)[i]);
-    // }
 }
 
 
