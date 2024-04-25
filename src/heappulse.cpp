@@ -289,8 +289,6 @@ void bk_block_new_hook(struct bk_Heap *heap, union bk_Block *block) {
     stack_infof("   Location: %p\n", block->meta.bump_base);
     size_t i = 0;
     for (char *addr=(char*)block->meta.bump_base; addr<(char*)block->meta.end; addr+=8) {
-        if (i % 0x4000)
-            stack_infof("   %p: %X\n", addr, *(uint64_t*)addr);
         i += 8;
     }
     stack_infof("   Measured size: %d\n", i);
