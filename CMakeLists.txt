@@ -73,7 +73,6 @@ target_link_libraries(heappulse ${CMAKE_DL_LIBS})
 # Add -DBKMALLOC_HOOK for heap pulse.
 target_compile_definitions(heappulse PRIVATE BKMALLOC_HOOK)
 
-
 # Add the bkmalloc library.
 add_library(bkmalloc SHARED
     include/bkmalloc.cpp)

@@ -401,7 +401,7 @@ private:
     ) override {
         stack_infof("Interval %d access compression test with %s starting...\n", ++interval_count, compression_to_string(compression_type));
 
-        Compressor<MAX_COMPRESSED_SIZE> compressor;
+        static Compressor<MAX_COMPRESSED_SIZE> compressor;
 
         // Iterate over the allocations and record compression stats + access patterns
         allocation_sites.map([&](auto return_address, AllocationSite site) {
