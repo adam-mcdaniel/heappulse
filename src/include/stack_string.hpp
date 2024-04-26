@@ -236,7 +236,7 @@ public:
     }
 
     bool operator!=(const char *str) const {
-        return !(*this == str);
+        return !(*this == StackString<Size>(str));
     }
 
     char& operator[](size_t index) {

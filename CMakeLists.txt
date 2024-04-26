@@ -69,6 +69,7 @@ add_library(heappulse SHARED
 set_target_properties(heappulse PROPERTIES LINKER_LANGUAGE CXX)
 # Link -lz to the library.
 target_link_libraries(heappulse z)
+target_link_libraries(heappulse ${CMAKE_DL_LIBS})
 # Add -DBKMALLOC_HOOK for heap pulse.
 target_compile_definitions(heappulse PRIVATE BKMALLOC_HOOK)
 

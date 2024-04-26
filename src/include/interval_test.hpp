@@ -1,5 +1,7 @@
 #pragma once
 
+#include <config.hpp>
+
 #include <stack_set.hpp>
 #include <stack_vec.hpp>
 #include <timer.hpp>
@@ -22,15 +24,6 @@
 #include <execinfo.h>
 #include <timer.hpp>
 #include <bit_vec.hpp>
-
-#define MPROTECT
-#ifndef MPROTECT
-#define PKEYS
-#endif
-
-#ifndef PAGE_SIZE
-#define PAGE_SIZE 4096
-#endif
 
 class PageInfo {
 public:
@@ -1297,7 +1290,7 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
     }
     long page_size = sysconf(_SC_PAGESIZE);
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    u64 error_code = context->uc_mcontext.gregs[REG_ERR];
+    uint64_t error_code = context->uc_mcontext.gregs[REG_ERR];
     bool is_write = error_code & 0x2;
 
 
