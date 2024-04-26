@@ -60,6 +60,7 @@ void check_dynamic_libraries() {
     if (checked) {
         return;
     }
+    stack_infof("Checking dynamic libraries...\n");
 
     #ifdef USE_ZLIB_COMPRESSION
     void *zlib_handle = dlopen("libz.so", RTLD_LAZY);
@@ -137,7 +138,7 @@ void check_dynamic_libraries() {
         dlclose(lz4hc_handle);
     }
     #endif
-
+    stack_infof("Dynamic libraries check succeeded!\n");
     checked = true;
     #endif
 }
@@ -203,23 +204,55 @@ StackString<100> compression_to_string(CompressionType type) {
 
 void init_compression() {
     #ifdef USE_LZO_COMPRESSION
+    static bool has_lzo_init = false;
+    if (has_lzo_init) {
+        return;
+    }
     // Call this function at the beginning of your program
     if (lzo_init() != LZO_E_OK) {
         printf("LZO initialization error\n");
-        return;
+        exit(1);
     }
+    stack_infof("LZO initialized\n");
+    has_lzo_init = true;
     #endif
 }
 
-template<size_t MaxUncompressedSize, bool CreateInternalBuffer = true>
+#ifdef USE_ZLIB_COMPRESSION
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_ZLIB;
+#elif defined(USE_LZ4_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_LZ4;
+#elif defined(USE_LZO_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_LZO;
+#elif defined(USE_SNAPPY_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_SNAPPY;
+#elif defined(USE_ZSTD_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_ZSTD;
+#elif defined(USE_LZF_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_LZF;
+#elif defined(USE_LZ4HC_COMPRESSION)
+const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_LZ4HC;
+#else
+#error "No compression library defined"
+#endif
+
+
+
+template<size_t MaxUncompressedSize=0x100000, bool CreateInternalBuffer = true>
 class Compressor {
 public:
-    Compressor() : type(COMPRESS_ZLIB) {
+    Compressor() : type(DEFAULT_COMPRESSION_TYPE) {
         check_dynamic_libraries();
+        init_compression();
+        stack_infof("Intialized compressor with %s\n", compression_to_string(type));
+        if constexpr (CreateInternalBuffer) {
+            stack_infof("   Internal buffer size: %d\n", max_compressed_size());
+        }
     }
 
     Compressor(CompressionType type) : type(type) {
         check_dynamic_libraries();
+        init_compression();
     }
     
     size_t max_compressed_size() {
@@ -271,7 +304,7 @@ public:
         } else {
             compressed_size = output_size;
         }
-        uint64_t err = 0;
+        [[maybe_unused]] uint64_t err = 0;
         switch (type) {
             #ifdef USE_ZLIB_COMPRESSION
             case COMPRESS_ZLIB:
@@ -337,6 +370,7 @@ public:
                 break;
             #endif
         }
+        stack_debugf("Compressed buffer at %p\n", (void*)input_buffer);
         return compressed_size;
     }
 
