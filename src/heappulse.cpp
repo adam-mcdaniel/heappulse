@@ -68,8 +68,12 @@ static AccessPatternTest apt;
 
 #ifdef ACCESS_COMPRESSION_TEST
 #include "intervals/access_compression_test.cpp"
-static GroupTest acts;
-// static AccessCompressionTest acts;
+static AccessCompressionTest act;
+#endif
+
+#ifdef HUGE_PAGE_ACCESS_COMPRESSION_TEST
+#include "intervals/huge_page_access_compression_test.cpp"
+static HugePageAccessCompressionTest huge_page_act;
 #endif
 
 static uint64_t malloc_count = 0;
@@ -112,42 +116,27 @@ public:
         its->add_test(&apt);
         #endif
         #ifdef ACCESS_COMPRESSION_TEST
-
-        #ifdef USE_ZLIB_COMPRESSION
-        static AccessCompressionTest act_zlib(COMPRESS_ZLIB);
-        acts.add_test(&act_zlib);
+        its->add_test(&act);
         #endif
-        #ifdef USE_LZ4_COMPRESSION
-        static AccessCompressionTest act_lz4(COMPRESS_LZ4);
-        acts.add_test(&act_lz4);
-        #endif
-        #ifdef USE_LZO_COMPRESSION
-        static AccessCompressionTest act_lzo(COMPRESS_LZO);
-        acts.add_test(&act_lzo);
-        #endif
-        #ifdef USE_SNAPPY_COMPRESSION
-        static AccessCompressionTest act_snappy(COMPRESS_SNAPPY);
-        acts.add_test(&act_snappy);
-        #endif
-        #ifdef USE_ZSTD_COMPRESSION
-        static AccessCompressionTest act_zstd(COMPRESS_ZSTD);
-        acts.add_test(&act_zstd);
-        #endif
-        #ifdef USE_LZF_COMPRESSION
-        static AccessCompressionTest act_lzf(COMPRESS_LZF);
-        acts.add_test(&act_lzf);
-        #endif
-        #ifdef USE_LZ4HC_COMPRESSION
-        static AccessCompressionTest act_lz4hc(COMPRESS_LZ4HC);
-        acts.add_test(&act_lz4hc);
-        #endif
-        
-        its->add_test(&acts);
+        #ifdef HUGE_PAGE_ACCESS_COMPRESSION_TEST
+        its->add_test(&huge_page_act);
         #endif
         
         stack_debugf("Done\n");
 
         setup_protection_handler();
+    }
+
+    void block_new(bk_Heap *heap, union bk_Block *block) {
+        stack_debugf("Block new\n");
+        its->new_huge_page((uint8_t*)block, block->meta.size);
+        stack_debugf("Block new done\n");
+    }
+
+    void block_release(bk_Heap *heap, union bk_Block *block) {
+        stack_debugf("Block release\n");
+        its->free_huge_page((uint8_t*)block, block->meta.size);
+        stack_debugf("Block release done\n");
     }
 
     void post_mmap(void *addr_in, size_t n_bytes, int prot, int flags, int fd, off_t offset, void *allocation_address) {
@@ -306,24 +295,26 @@ std::mutex bk_lock;
 
 extern "C"
 void bk_block_new_hook(struct bk_Heap *heap, union bk_Block *block) {
-    stack_debugf("Block new hook\n");
-    stack_infof("New block:\n");
-    stack_infof("   Size: %d\n", block->meta.size);
-    stack_infof("   Location: %p\n", (void*)block);
-    stack_infof("   Bump Base Location: %p\n", block->meta.bump_base);
-    size_t i = 0;
-    for (char *addr=(char*)block; addr<(char*)block->meta.end; addr+=8) {
-        i += 8;
-    }
-    stack_infof("   Measured size: %d\n", i);
+    // stack_debugf("Block new hook\n");
+    // stack_infof("New block:\n");
+    // stack_infof("   Size: %d\n", block->meta.size);
+    // stack_infof("   Location: %p\n", (void*)block);
+    // stack_infof("   Bump Base Location: %p\n", block->meta.bump_base);
+    // size_t i = 0;
+    // for (char *addr=(char*)block; addr<(char*)block->meta.end; addr+=8) {
+    //     i += 8;
+    // }
+    // stack_infof("   Measured size: %d\n", i);
+    hooks.block_new(heap, block);
 }
 
 extern "C"
 void bk_block_release_hook(struct bk_Heap *heap, union bk_Block *block) {
-    stack_debugf("Block release hook\n");
-    stack_infof("Released block:\n");
-    stack_infof("   Size: %d\n", block->meta.size);
-    stack_infof("   Location: %p\n", (void*)block);
+    // stack_debugf("Block release hook\n");
+    // stack_infof("Released block:\n");
+    // stack_infof("   Size: %d\n", block->meta.size);
+    // stack_infof("   Location: %p\n", (void*)block);
+    hooks.block_release(heap, block);
 }
 
 
