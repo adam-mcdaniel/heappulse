@@ -79,9 +79,9 @@ private:
     int64_t bytes_written_to_this_interval = 0;
     int64_t bytes_read_from_this_interval = 0;
 
-    StackSet<HugePage, 100000> huge_page_liveset;
+    StackSet<HugePage, 10000> huge_page_liveset;
 
-    StackSet<Allocation, 100000> accessed_this_interval,
+    StackSet<Allocation, 50000> accessed_this_interval,
                                 write_accessed_this_interval,
                                 read_accessed_this_interval,
                                 live_this_interval;
@@ -282,6 +282,7 @@ private:
         static Compressor<MAX_COMPRESSED_SIZE> compressor;
 
         huge_page_liveset.map([&](HugePage &page) {
+            mprotect(page.address, page.size, PROT_READ | PROT_WRITE | PROT_EXEC);
             // mprotect(page.address, page.size, PROT_READ | PROT_EXEC);
             auto &row = csv.new_row();
             row.set(csv.title(), "Interval #", interval_count);
@@ -303,7 +304,6 @@ private:
             } else {
                 row.set(csv.title(), "Compression Ratio (compressed/uncompressed)", (double)compressed_size / (double)uncompressed_size);
             }
-            // mprotect(page.address, page.size, PROT_READ | PROT_WRITE | PROT_EXEC);
         });
 
         huge_page_liveset.map([&](HugePage &page) {

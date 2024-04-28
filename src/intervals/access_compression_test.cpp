@@ -213,6 +213,8 @@ public:
         compression_type = type;
     }
 
+    AccessCompressionTest() : AccessCompressionTest(DEFAULT_COMPRESSION_TYPE) {}
+
 private:
     CSV<64, 80000> csv;
     StackFile file;

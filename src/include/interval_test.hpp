@@ -1320,7 +1320,8 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 
     if (si->si_addr == NULL) {
         stack_errorf("Caught NULL pointer access: segfault at NULL\n");
-        exit(1);
+        // exit(1);
+        return;
     } else {
         stack_debugf("Caught segfault at %p\n", si->si_addr);
     }
@@ -1344,12 +1345,14 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         if (is_write) {
             if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
-                exit(1);
+                // exit(1);
+                return;
             }
         } else {
             if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
-                exit(1);
+                // exit(1);
+                return;
             }
         }
     } else {
@@ -1399,15 +1402,17 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         #ifndef SOFT_GUARD_ACCESSES
         if (is_write) {
             stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_EXEC) == -1) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ |  PROT_EXEC) == -1) {
                 perror("mprotect");
-                exit(1);
+                // exit(1);
+                return;
             }
         } else {
             stack_debugf("Giving back read access to 0x%X\n", (void*)si->si_addr);
             if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
-                exit(1);
+                // exit(1);
+                return;
             }
         }
         #else
@@ -1423,6 +1428,10 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         // } else {
         //     mprotect(aligned_address, getpagesize(), PROT_READ);
         // }
+    }
+    if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+        perror("mprotect");
+        return;
     }
 
     stack_infof("PROTECTION HANDLER: Leaving segfault handler\n");
