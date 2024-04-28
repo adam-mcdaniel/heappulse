@@ -1,4 +1,4 @@
-#define DEBUG
+// #define DEBUG
 
 #define INTERVAL_CONFIG {.period_milliseconds = 1000, .clear_soft_dirty_bits=false}
 
@@ -20,7 +20,8 @@
 // #define OBJECT_LIVENESS_TEST
 // #define GENERATIONAL_TEST
 // #define ACCESS_PATTERN_TEST
-#define ACCESS_COMPRESSION_TEST
+// #define ACCESS_COMPRESSION_TEST
+#define HUGE_PAGE_ACCESS_COMPRESSION_TEST
 
 // #define USE_ZLIB_COMPRESSION // (1.2.11-1)
 // #define USE_LZ4_COMPRESSION // (1.9.0)
