@@ -5,7 +5,7 @@
 #include <stack_csv.hpp>
 #include <compressor.hpp>
 
-#define MAX_COMPRESSED_SIZE 0x100000
+// #define MAX_COMPRESSED_SIZE 0x100000
 
 struct HugePage {
     uint8_t *address;
@@ -279,11 +279,13 @@ private:
     ) override {
         stack_infof("Interval %d access compression test with %s starting...\n", ++interval_count, compression_to_string(compression_type));
 
-        static Compressor<MAX_COMPRESSED_SIZE> compressor;
-
+        static Compressor<> compressor;
+        stack_infof("Compressing %d pages\n", huge_page_liveset.size());
+        size_t i=0;
         huge_page_liveset.map([&](HugePage &page) {
-            mprotect(page.address, page.size, PROT_READ | PROT_WRITE | PROT_EXEC);
+            // mprotect(page.address, page.size, PROT_READ | PROT_WRITE | PROT_EXEC);
             // mprotect(page.address, page.size, PROT_READ | PROT_EXEC);
+            stack_infof("Compressing page %d/%d\n", ++i, huge_page_liveset.size());
             auto &row = csv.new_row();
             row.set(csv.title(), "Interval #", interval_count);
             row.set(csv.title(), "Huge Page Address", (void*)page.address);

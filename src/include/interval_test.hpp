@@ -1313,8 +1313,16 @@ IntervalTestSuite *IntervalTestSuite::get_instance() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    stack_infof("PROTECTION HANDLER: Entering segfault handler with address %p\n", si->si_addr);
     ucontext_t *context = (ucontext_t *)ucontext;
+    long page_size = sysconf(_SC_PAGESIZE);
+    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
+    uint64_t error_code = context->uc_mcontext.gregs[REG_ERR];
+    bool is_write = error_code & 0x2;
+    stack_debugf("PROTECTION HANDLER: Entering segfault handler with address %p and %s access\n", si->si_addr, is_write? "write": "read");
+    stack_debugf("Aligned address: %p\n", aligned_address);
+    [[maybe_unused]] char buf[1024];
+    // bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+    // system(buf);
     static std::mutex protection_lock;
     std::lock_guard<std::mutex> lock(protection_lock);
 
@@ -1325,15 +1333,11 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
     } else {
         stack_debugf("Caught segfault at %p\n", si->si_addr);
     }
-    long page_size = sysconf(_SC_PAGESIZE);
-    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    uint64_t error_code = context->uc_mcontext.gregs[REG_ERR];
-    bool is_write = error_code & 0x2;
 
 
     if (si->si_code == SEGV_ACCERR) {
         // printf("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
-        stack_infof("Invalid permissions for %s.\n",is_write? "write" : "read");
+        stack_debugf("Invalid permissions for %s.\n",is_write? "write" : "read");
     }
     
     if (is_working_thread()) {
@@ -1345,14 +1349,12 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         if (is_write) {
             if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
-                // exit(1);
-                return;
+                exit(1);
             }
         } else {
             if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) == -1) {
                 perror("mprotect");
-                // exit(1);
-                return;
+                exit(1);
             }
         }
     } else {
@@ -1402,21 +1404,19 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         #ifndef SOFT_GUARD_ACCESSES
         if (is_write) {
             stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ |  PROT_EXEC) == -1) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
-                // exit(1);
-                return;
+                exit(1);
             }
         } else {
             stack_debugf("Giving back read access to 0x%X\n", (void*)si->si_addr);
             if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
-                // exit(1);
-                return;
+                exit(1);
             }
         }
         #else
-        stack_infof("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
+        stack_debugf("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
         if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
             perror("mprotect");
             exit(1);
@@ -1429,10 +1429,124 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         //     mprotect(aligned_address, getpagesize(), PROT_READ);
         // }
     }
-    if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
-        perror("mprotect");
-        return;
-    }
+    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
+    return;
+    /*
+    if (is_working_thread()) {
+        stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
+        // if (mprotect(aligned_address, getpagesize(), PROT_NONE) == -1) {
+        //     perror("mprotect");
+        //     exit(1);
+        // }
+        if (is_write) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) != 0) {
+                bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+                system(buf);
+                // perror("mprotect");
+                // exit(1);
+                return;
+            }
+        } else {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) != 0) {
+                // exit(1);
+                return;
+            }
+        }
+    } else {
+        // If the access is a write, add it to the write page faults
+        stack_debugf("Error code: %x\n", error_code);
+        if (IS_PROTECTED) {
+            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (void*)si->si_addr);
+            while (IS_PROTECTED) {}
+        }
+        
+        // if (is_write) {
+        //     stack_infof("Caught write page fault at 0x%X\n", (void*)si->si_addr);
+        //     mprotect(aligned_address, getpagesize(), PROT_WRITE);
+        //     // write_page_faults.insert(aligned_address);
+        // } else {
+        //     stack_infof("Caught read page fault at 0x%X\n", (void*)si->si_addr);
+        //     mprotect(aligned_address, getpagesize(), PROT_READ);
+        //     // read_page_faults.insert(aligned_address);
+        // }
+        // if (is_write) {
+        //     stack_infof("Giving back write access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_NONE) == -1) {
+        //         perror("mprotect");
+        //         exit(1);
+        //     }
+        // } else {
+        //     stack_infof("Giving back read access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_NONE) == -1) {
+        //         perror("mprotect");
+        //         exit(1);
+        //     }
+        // }
 
-    stack_infof("PROTECTION HANDLER: Leaving segfault handler\n");
+        // if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+        //     perror("mprotect");
+        //     exit(1);
+        // }
+        // IntervalTestSuite::get_instance()->access(si->si_addr, is_write);
+
+        if (is_write) {
+            mark_address_written(si->si_addr);
+        } else {
+            mark_address_read(si->si_addr);
+        }
+
+        #ifdef GUARD_ACCESSES
+        #ifndef SOFT_GUARD_ACCESSES
+
+        #ifdef DIFFERENTIATE_READS_AND_WRITES
+        if (mprotect(aligned_address, getpagesize(), (is_write? PROT_WRITE | PROT_READ: PROT_READ) | PROT_EXEC) == -1) {
+            perror("mprotect");
+            return;
+        }
+        #else
+        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
+            bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+            system(buf);
+            // perror("mprotect");
+            return;
+        }
+        #endif
+
+
+        // if (is_write) {
+        //     stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ |  PROT_EXEC) == -1) {
+        //         perror("mprotect");
+        //         // exit(1);
+        //         return;
+        //     }
+        // } else {
+        //     stack_debugf("Giving back read access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
+        //         perror("mprotect");
+        //         // exit(1);
+        //         return;
+        //     }
+        // }
+        #else
+        stack_infof("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
+        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+            // perror("mprotect");
+            exit(1);
+        }
+        #endif
+        #endif
+        // if (is_write) {
+        //     mprotect(aligned_address, getpagesize(), PROT_WRITE);
+        // } else {
+        //     mprotect(aligned_address, getpagesize(), PROT_READ);
+        // }
+    }
+    // if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
+    //     perror("mprotect");
+    //     return;
+    // }
+
+    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
+    */
 }

@@ -3,6 +3,7 @@
 #include <config.hpp>
 #include <stack_string.hpp>
 #include <interval_test.hpp>
+#include <timer.hpp>
 
 #ifdef CHECK_DYNAMIC_LIBRARIES
 #include <dlfcn.h>
@@ -19,14 +20,12 @@
 #ifdef USE_LZO_COMPRESSION
 #include <lzo/lzoconf.h>
 #include <lzo/lzo1x.h>
-
 #ifndef LZO_ALIGN
 #define LZO_ALIGN(x) __attribute__((aligned(x)))
 #endif
 #ifndef __LZO_MMODEL
 #define __LZO_MMODEL
 #endif
-
 // Declare a scratch memory area for LZO
 LZO_ALIGN(16) unsigned char __LZO_MMODEL lzo_work[LZO1X_1_MEM_COMPRESS];
 #endif
@@ -54,8 +53,8 @@ LZO_ALIGN(16) unsigned char __LZO_MMODEL lzo_work[LZO1X_1_MEM_COMPRESS];
 #define MAX_COMPRESSED_SIZE 0x100000
 #define MAX_PAGES 0x10000
 
+#ifdef CHECK_DYNAMIC_LIBRARIES
 void check_dynamic_libraries() {
-    #ifdef CHECK_DYNAMIC_LIBRARIES
     static bool checked = false;
     if (checked) {
         return;
@@ -140,8 +139,10 @@ void check_dynamic_libraries() {
     #endif
     stack_infof("Dynamic libraries check succeeded!\n");
     checked = true;
-    #endif
 }
+#else
+void check_dynamic_libraries() {}
+#endif
 
 
 typedef enum {
@@ -237,8 +238,11 @@ const CompressionType DEFAULT_COMPRESSION_TYPE = COMPRESS_LZ4HC;
 #endif
 
 
+static double total_compressed_sizes = 0;
+static double total_uncompressed_sizes = 0;
+static Stopwatch compression_overhead_timer;
 
-template<size_t MaxUncompressedSize=0x100000, bool CreateInternalBuffer = true>
+template<size_t MaxUncompressedSize=0x1000000, bool CreateInternalBuffer = true>
 class Compressor {
 public:
     Compressor() : type(DEFAULT_COMPRESSION_TYPE) {
@@ -255,35 +259,35 @@ public:
         init_compression();
     }
     
-    size_t max_compressed_size() {
+    size_t max_compressed_size(size_t uncompressed_size=MaxUncompressedSize) {
         switch (type) {
             #ifdef USE_ZLIB_COMPRESSION
             case COMPRESS_ZLIB:
-                return compressBound(MaxUncompressedSize);
+                return compressBound(uncompressed_size);
             #endif
             #ifdef USE_LZ4_COMPRESSION
             case COMPRESS_LZ4:
-                return LZ4_COMPRESSBOUND(MaxUncompressedSize);
+                return LZ4_COMPRESSBOUND(uncompressed_size);
             #endif
             #ifdef USE_LZO_COMPRESSION
             case COMPRESS_LZO:
-                return MaxUncompressedSize + MaxUncompressedSize / 16 + 64 + 3;
+                return uncompressed_size + uncompressed_size / 16 + 64 + 3;
             #endif
             #ifdef USE_SNAPPY_COMPRESSION
             case COMPRESS_SNAPPY:
-                return snappy_max_compressed_length(MaxUncompressedSize);
+                return snappy_max_compressed_length(uncompressed_size);
             #endif
             #ifdef USE_ZSTD_COMPRESSION
             case COMPRESS_ZSTD:
-                return ZSTD_compressBound(MaxUncompressedSize);
+                return ZSTD_compressBound(uncompressed_size);
             #endif
             #ifdef USE_LZF_COMPRESSION
             case COMPRESS_LZF:
-                return MaxUncompressedSize + MaxUncompressedSize / 16 + 64 + 3;
+                return uncompressed_size + uncompressed_size / 16 + 64 + 3;
             #endif
             #ifdef USE_LZ4HC_COMPRESSION
             case COMPRESS_LZ4HC:
-                return LZ4_COMPRESSBOUND(MaxUncompressedSize);
+                return LZ4_COMPRESSBOUND(uncompressed_size);
             #endif
         }
         return 0;
@@ -298,20 +302,52 @@ public:
     }
 
     size_t compress(const uint8_t *input_buffer, size_t uncompressed_size, uint8_t *output_buffer, size_t output_size) {
+        compression_overhead_timer.start();
         size_t compressed_size;
         if constexpr (CreateInternalBuffer) {
             compressed_size = max_compressed_size();
         } else {
-            compressed_size = output_size;
+            compressed_size = max_compressed_size(uncompressed_size);
         }
-        [[maybe_unused]] uint64_t err = 0;
+        total_uncompressed_sizes += uncompressed_size;
+
+        [[maybe_unused]] int64_t err = 0;
+
         switch (type) {
             #ifdef USE_ZLIB_COMPRESSION
             case COMPRESS_ZLIB:
-                err = compress2((Bytef*)output_buffer, (uLongf*)&compressed_size, (const Bytef*)input_buffer, uncompressed_size, Z_BEST_COMPRESSION);
-                if (err != Z_OK) {
-                    stack_errorf("Zlib compression failed\n");
-                    exit(1);
+                err = compress2((Bytef*)output_buffer, (uLongf*)&compressed_size, (const Bytef*)input_buffer, uncompressed_size, Z_DEFAULT_COMPRESSION);
+                // if (err != Z_OK) {
+                //     stack_errorf("Zlib compression failed\n");
+                //     return 0;
+                // }
+                switch ((int)err) {
+                case Z_OK:
+                    break;
+                case Z_MEM_ERROR:
+                    stack_errorf("Zlib compression failed: Z_MEM_ERROR\n");
+                    compression_overhead_timer.stop();
+                    return 0;
+                case Z_BUF_ERROR:
+                    stack_errorf("Zlib compression failed: Z_BUF_ERROR\n");
+                    compression_overhead_timer.stop();
+                    return 0;
+                case Z_STREAM_ERROR:
+                    stack_errorf("Zlib compression failed: Z_STREAM_ERROR\n");
+                    compression_overhead_timer.stop();
+                    return 0;
+                case Z_DATA_ERROR:
+                    stack_errorf("Zlib compression failed: Z_DATA_ERROR\n");
+                    compression_overhead_timer.stop();
+                    return 0;
+                case Z_VERSION_ERROR:
+                    stack_errorf("Zlib compression failed: Z_VERSION_ERROR\n");
+                    compression_overhead_timer.stop();
+                    return 0;
+                default:
+                    stack_errorf("Zlib compression failed: %d\n", err);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -320,7 +356,8 @@ public:
                 compressed_size = LZ4_compress_default((const char*)input_buffer, (char*)output_buffer, uncompressed_size, compressed_size);
                 if (compressed_size == 0) {
                     stack_errorf("LZ4 compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -329,7 +366,8 @@ public:
                 err = lzo1x_1_compress((const unsigned char*)input_buffer, uncompressed_size, (unsigned char*)output_buffer, &compressed_size, lzo_work);
                 if (compressed_size == 0) {
                     stack_warnf("LZO compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -338,7 +376,8 @@ public:
                 err = snappy_compress((const char*)input_buffer, uncompressed_size, (char*)output_buffer, &compressed_size);
                 if (err != SNAPPY_OK) {
                     stack_errorf("Snappy compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -347,7 +386,8 @@ public:
                 compressed_size = ZSTD_compress(output_buffer, compressed_size, input_buffer, uncompressed_size, 1);
                 if (ZSTD_isError(compressed_size)) {
                     stack_errorf("Zstd compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -356,7 +396,8 @@ public:
                 compressed_size = lzf_compress(input_buffer, uncompressed_size, output_buffer, compressed_size);
                 if (compressed_size == 0) {
                     stack_errorf("LZF compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
@@ -365,17 +406,27 @@ public:
                 compressed_size = LZ4_compress_HC((const char*)input_buffer, (char*)output_buffer, uncompressed_size, compressed_size, LZ4HC_CLEVEL_MAX);
                 if (compressed_size == 0) {
                     stack_errorf("LZ4HC compression failed\n");
-                    exit(1);
+                    compression_overhead_timer.stop();
+                    return 0;
                 }
                 break;
             #endif
         }
-        stack_debugf("Compressed buffer at %p\n", (void*)input_buffer);
+        stack_debugf("Compressed buffer at %p of %d bytes to fit in %d bytes\n", input_buffer, uncompressed_size, compressed_size);
+        total_compressed_sizes += compressed_size;
+        compression_overhead_timer.stop();
         return compressed_size;
     }
 
     size_t compress_object(const Allocation &alloc) {
         return compress(alloc.ptr, alloc.size);
+    }
+
+    static void summary() {
+        stack_infof("Compression overhead: %d ms\n", compression_overhead_timer.elapsed_milliseconds());
+        stack_infof("Total uncompressed size: %f\n", total_uncompressed_sizes);
+        stack_infof("Total compressed size: %f\n", total_compressed_sizes);
+        stack_infof("Overall compression ratio: %f\n", total_compressed_sizes / total_uncompressed_sizes);
     }
 
     template<size_t MaxPhysicalPages=10000>
@@ -389,7 +440,7 @@ public:
     }
 private:
     CompressionType type;
-    uint8_t internal_buffer[CreateInternalBuffer ? MaxUncompressedSize : 0];
+    uint8_t internal_buffer[CreateInternalBuffer ? int(MaxUncompressedSize * 1.5) : 0];
 };
 
 

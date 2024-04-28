@@ -269,6 +269,7 @@ public:
         stack_infof("Munmap count: %\n", munmap_count);
         stack_infof("Total allocations: %\n", malloc_count + mmap_count);
         stack_infof("Total frees: %\n", free_count + munmap_count);
+        Compressor<>::summary();
     }
 
     void report_stats() {
@@ -280,6 +281,7 @@ public:
 
     ~Hooks() {
         its->finish();
+        stack_infof("*** TESTS FINISHED! ***\n");
         print_stats();
         stack_logf("Hooks destructor\n");
     }

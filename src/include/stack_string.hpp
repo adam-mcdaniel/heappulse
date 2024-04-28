@@ -671,6 +671,10 @@ private:
         format_append_impl(StackString<Size>::from(str));
     }
 
+    void format_append_impl(const unsigned char *str) {
+        format_append_impl(StackString<Size>::from(str));
+    }
+
     // Format a string and append it to this string
     void format_append_impl(void *ptr) {
         format_append_impl(StackString<Size>::from_number((uintptr_t)ptr, 16));

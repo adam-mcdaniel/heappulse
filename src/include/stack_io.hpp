@@ -229,6 +229,6 @@ void stack_errorf(const char* format, Args... args) {
 #define stack_printf(...)
 #define stack_logf(...)
 #define stack_infof(...)
-#define stack_warnf(...)
+// #define stack_warnf(...)
 #define stack_debugf(...)
 #endif
