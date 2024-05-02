@@ -1318,6 +1318,21 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
     void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
     uint64_t error_code = context->uc_mcontext.gregs[REG_ERR];
     bool is_write = error_code & 0x2;
+    static void *last_address = NULL;
+    static size_t consecutive_faults_on_same_address = 0;
+    if (last_address == si->si_addr) {
+        consecutive_faults_on_same_address++;
+    } else {
+        consecutive_faults_on_same_address = 0;
+        last_address = si->si_addr;
+    }
+
+    if (consecutive_faults_on_same_address >= 50) {
+        stack_errorf("Caught %d consecutive faults on the same address\n", consecutive_faults_on_same_address);
+        exit(1);
+    }
+
+
     stack_debugf("PROTECTION HANDLER: Entering segfault handler with address %p and %s access\n", si->si_addr, is_write? "write": "read");
     stack_debugf("Aligned address: %p\n", aligned_address);
     [[maybe_unused]] char buf[1024];

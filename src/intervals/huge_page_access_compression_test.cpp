@@ -283,7 +283,22 @@ private:
         stack_infof("Compressing %d pages\n", huge_page_liveset.size());
         size_t i=0;
         huge_page_liveset.map([&](HugePage &page) {
-            // mprotect(page.address, page.size, PROT_READ | PROT_WRITE | PROT_EXEC);
+            // Align page address
+            const size_t HUGE_PAGE_SIZE = 2 * 1024 * 1024;
+            auto aligned_address = (uint8_t*)((uintptr_t)page.address & ~(HUGE_PAGE_SIZE - 1));
+
+            // Align the huge page size down to the nearest page size
+            if (page.size > HUGE_PAGE_SIZE) {
+                page.size = HUGE_PAGE_SIZE;
+            }
+            if (page.size < HUGE_PAGE_SIZE) {
+                return;
+            }
+            // if (mprotect(aligned_address, HUGE_PAGE_SIZE, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
+            //     stack_errorf("Failed to mprotect page %p\n", (void*)aligned_address);
+            //     return;
+            // }
+
             // mprotect(page.address, page.size, PROT_READ | PROT_EXEC);
             stack_infof("Compressing page %d/%d\n", ++i, huge_page_liveset.size());
             auto &row = csv.new_row();
