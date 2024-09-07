@@ -1,14 +1,18 @@
 // #define DEBUG
 
-#define INTERVAL_CONFIG {.period_milliseconds = 5000, .clear_soft_dirty_bits=false}
+// #define STDLIB_MALLOC_BACKEND
+#define BKMALLOC_BACKEND
+
+#define INTERVAL_CONFIG {.period_milliseconds = 15000, .clear_soft_dirty_bits = true}
 
 // #define OPTIMIZE
 // #define COLLECT_BACKTRACE
 // #define LOG_FILE "log.txt"
 
 #define MAX_TRACKED_ACCESSES 100000
+#define MAX_CONSECUTIVE_PAGE_FAULTS 200
 
-#define GUARD_ACCESSES
+// #define GUARD_ACCESSES
 // #define SOFT_GUARD_ACCESSES
 
 // #define DIFFERENTIATE_READS_AND_WRITES
@@ -23,7 +27,8 @@
 // #define GENERATIONAL_TEST
 // #define ACCESS_PATTERN_TEST
 // #define ACCESS_COMPRESSION_TEST
-#define HUGE_PAGE_ACCESS_COMPRESSION_TEST
+// #define HUGE_PAGE_ACCESS_COMPRESSION_TEST
+#define ALL_TEST
 
 // #define USE_ZLIB_COMPRESSION // (1.2.11-1)
 // #define USE_LZ4_COMPRESSION // (1.9.0)

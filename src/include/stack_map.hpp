@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <iostream>
 #include <stdint.h>
 #include <functional>
@@ -18,23 +19,39 @@ public:
         clear();
     }
 
+    StackMap &operator=(const StackMap &other) {
+        for (size_t i = 0; i < Size; i++) {
+            hashtable[i] = other.hashtable[i];
+        }
+        entries = other.entries;
+        return *this;
+    }
+
+    StackMap(const StackMap &other) {
+        for (size_t i = 0; i < Size; i++) {
+            hashtable[i] = other.hashtable[i];
+        }
+        entries = other.entries;
+    }
+
     void put(const KeyType& key, const ValueType& value) {
         if (full() && !has(key)) {
             return;
         }
         // get(key) = value;
         std::size_t index = hash(key);
-        uint64_t i = 0;
-        while (hashtable[index].occupied) {
+        size_t i=0;
+        while (hashtable[index].occupied && i++ < num_entries() * 2) {
             if (hashtable[index].key == key) {
                 hashtable[index].value = value;  // Update value if key already exists
                 return;
-            } else if (i++ > Size) {
-                return;  // Map is full
             }
-
             // index = std::hash<size_t>{}(index) % Size;
             index = (index + 1) % Size;  // Linear probing for collision resolution
+        }
+
+        if (full()) {
+             return;
         }
 
         hashtable[index].key = key;
@@ -45,7 +62,8 @@ public:
 
     ValueType &get(const KeyType& key) {
         std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
+        size_t i=0;
+        while (hashtable[index].occupied && i++ < num_entries() * 2) {
             if (hashtable[index].key == key) {
                 return hashtable[index].value;
             }
@@ -100,7 +118,11 @@ public:
 
     bool has(const KeyType& key) const {
         std::size_t index = hash(key);
-        while (hashtable[index].occupied) {
+        size_t i=0;
+        if (full()) {
+            stack_warnf("Map is full: %d entries of %d max entries\n", num_entries(), max_size());
+        }
+        while (hashtable[index].occupied && i++ < num_entries() * 2) {
             if (hashtable[index].key == key) {
                 return true;
             }
@@ -123,6 +145,7 @@ public:
     }
 
     size_t num_entries() const {
+        assert(entries <= max_size());
         return entries;
     }
 

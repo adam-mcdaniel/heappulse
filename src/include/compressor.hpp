@@ -4,6 +4,7 @@
 #include <stack_string.hpp>
 #include <interval_test.hpp>
 #include <timer.hpp>
+#include <stack_csv.hpp>
 
 #ifdef CHECK_DYNAMIC_LIBRARIES
 #include <dlfcn.h>
@@ -169,7 +170,7 @@ typedef enum {
     #endif
 } CompressionType;
 
-StackString<100> compression_to_string(CompressionType type) {
+CSVString compression_to_string(CompressionType type) {
     switch (type) {
         #ifdef USE_ZLIB_COMPRESSION
         case COMPRESS_ZLIB:
@@ -257,6 +258,32 @@ public:
     Compressor(CompressionType type) : type(type) {
         check_dynamic_libraries();
         init_compression();
+    }
+
+    static StackVec<CompressionType, 20> supported_compression_types() {
+        auto types = StackVec<CompressionType, 20>();
+        #ifdef USE_ZLIB_COMPRESSION
+        types.push(COMPRESS_ZLIB);
+        #endif
+        #ifdef USE_LZ4_COMPRESSION
+        types.push(COMPRESS_LZ4);
+        #endif
+        #ifdef USE_LZO_COMPRESSION
+        types.push(COMPRESS_LZO);
+        #endif
+        #ifdef USE_SNAPPY_COMPRESSION
+        types.push(COMPRESS_SNAPPY);
+        #endif
+        #ifdef USE_ZSTD_COMPRESSION
+        types.push(COMPRESS_ZSTD);
+        #endif
+        #ifdef USE_LZF_COMPRESSION
+        types.push(COMPRESS_LZF);
+        #endif
+        #ifdef USE_LZ4HC_COMPRESSION
+        types.push(COMPRESS_LZ4HC);
+        #endif
+        return types;
     }
     
     size_t max_compressed_size(size_t uncompressed_size=MaxUncompressedSize) {
@@ -440,7 +467,8 @@ public:
     }
 private:
     CompressionType type;
-    uint8_t internal_buffer[CreateInternalBuffer ? int(MaxUncompressedSize * 1.5) : 0];
+    
+    uint8_t internal_buffer[CreateInternalBuffer ? int(MaxUncompressedSize * 1.5) : 1];
 };
 
 

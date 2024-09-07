@@ -139,6 +139,33 @@ public:
     bool is_file_mapped() const {
         return file_mapped;
     }
+
+    bool operator==(const PageInfo &other) const {
+        return page_frame_number == other.page_frame_number;
+    }
+    bool operator!=(const PageInfo &other) const {
+        return page_frame_number != other.page_frame_number;
+    }
+
+    uint64_t count_overlapping_bytes(void *ptr, uint64_t size) const {
+        // Convert all to uintptr_t for pointer arithmetic
+        uintptr_t obj_start = (uintptr_t) ptr;
+        uintptr_t obj_end = obj_start + size;
+        uintptr_t page_start = (uintptr_t) start_address;
+        uintptr_t page_end = (uintptr_t) end_address;
+
+        // Check if object is completely outside the page
+        if (obj_end <= page_start || obj_start >= page_end) {
+            return 0;  // No overlap
+        }
+
+        // Calculate the overlap between object range and page range
+        uintptr_t overlap_start = (obj_start > page_start) ? obj_start : page_start;
+        uintptr_t overlap_end = (obj_end < page_end) ? obj_end : page_end;
+
+        // Return the number of overlapping bytes
+        return overlap_end - overlap_start;
+    }
 private:
     uint64_t page_frame_number;
     void* start_address, *end_address;
@@ -167,10 +194,22 @@ void perform_clear_soft_dirty_bits() {
     static int fd = -1;
     if (!is_open) {
 
-        int pid = getpid();
-        char filename[1024] = "";
-        stack_sprintf<128>(filename, "/proc/%d/clear_refs", pid);
+        uint64_t pid = getpid();
+        if (pid == 0) {
+            perror("getting pid of process");
+            pid = getpid();
+            if (pid == 0) {
+                perror("getting pid of process");
+                return;
+            }
+        }
 
+        bk_printf("pid: %d", pid);
+
+
+        char filename[1024] = "";
+        stack_sprintf<1000>(filename, "/proc/%u/clear_refs", pid);
+        stack_debugf("Opening % for pid %", filename, pid);
         // Open the clear_refs file
         // Only open it ONCE statically
         fd = open(filename, O_WRONLY);
@@ -235,7 +274,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
 
     int pid = getpid();
 
-    stack_debugf("count_resident_pages(%p, %lu, %d)\n", addr, size_in_bytes, pid);
+    // stack_debugf("count_resident_pages(%p, %lu, %d)\n", addr, size_in_bytes, pid);
 
     // Make size_in_bytes a multiple of the page size
     uint64_t size_in_pages = count_virtual_pages(addr, size_in_bytes);
@@ -361,7 +400,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
 
     // close(pagemap_fd);
     // close(kpageflags_fd);
-    stack_debugf("Done with count_resident_pages\n");
+    // stack_debugf("Done with count_resident_pages\n");
 
     IS_PROTECTED = protection;
     return true;
@@ -439,7 +478,7 @@ void setup_protection_handler()
     }
 }
 
-const int TRACKED_ALLOCATIONS_PER_SITE = 1000;
+const int TRACKED_ALLOCATIONS_PER_SITE = 10000;
 const int TRACKED_ALLOCATION_SITES = 1000;
 const int TOTAL_TRACKED_ALLOCATIONS = TRACKED_ALLOCATIONS_PER_SITE * TRACKED_ALLOCATION_SITES;
 
@@ -734,6 +773,13 @@ namespace std {
             return std::hash<void*>()(alloc.ptr);
         }
     };
+
+    template <>
+    struct hash<PageInfo> {
+        std::size_t operator()(const PageInfo &page_info) const {
+            return std::hash<void*>()(page_info.get_virtual_address());
+        }
+    };
 }
 
 /// A map to track pages that incur a page fault.
@@ -836,6 +882,13 @@ public:
         }
     }
 
+    IntervalTestSuite &operator=(const IntervalTestSuite &other) {
+        this->config = other.config;
+        this->tests = other.tests;
+        this->allocation_sites = other.allocation_sites;
+        return *this;
+    }
+
     IntervalTestSuite(IntervalTestConfig config) {
         this->config = config;
         setup_protection_handler();
@@ -845,7 +898,21 @@ public:
         }
     }
 
+    void sanity_check() {
+        stack_debugf("Interval: %dms\n", config.period_milliseconds);
+        stack_debugf("Clear soft dirty bits: %d\n", config.clear_soft_dirty_bits);
+
+        // Check to make sure the members are initialized properly
+        for (size_t i=0; i<tests.size(); i++) {
+            assert(tests[i] != NULL);
+        }
+
+        assert(config.period_milliseconds > 0);
+    }
+
     void new_huge_page(uint8_t *huge_page, size_t size) {
+        if (size <= 4096) return;
+
         for (size_t i=0; i<tests.size(); i++) {
             if (!tests[i]->has_quit()) {
                 tests[i]->on_huge_page_alloc(huge_page, size);
@@ -854,6 +921,7 @@ public:
     }
 
     void free_huge_page(uint8_t *huge_page, size_t size) {
+        if (size <= 4096) return;
         for (size_t i=0; i<tests.size(); i++) {
             if (!tests[i]->has_quit()) {
                 tests[i]->on_huge_page_free(huge_page, size);
@@ -864,8 +932,16 @@ public:
     /// @brief A function that indicates whether the interval test suite is capable of being updated by the hook
     /// @return True if the interval test suite can be updated, false otherwise. If the interval test suite is
     ///         actively performing an interval, it cannot be updated.
-    bool can_update() const {
+    bool can_update() {
         return !IS_PROTECTED && !is_done() && !is_in_interval;
+        /*
+        bool already_locked = !hook_lock.try_lock();
+        if (!already_locked) {
+            hook_lock.unlock();
+        }
+
+        return !IS_PROTECTED && !is_done() && !is_in_interval && !already_locked;
+        */
     }
 
     /// @brief Add an interval test to the test suite. This interval test will be run for every interval that
@@ -905,8 +981,8 @@ public:
     /// @param size The size of the allocation
     /// @param return_address The return address where the allocation came from
     void update(void *ptr, size_t size, uintptr_t return_address) {
-        stack_debugf("IntervalTestSuite::update\n");
-        stack_debugf("Got pointer: %p\n", ptr);
+        // stack_debugf("IntervalTestSuite::update\n");
+        // stack_debugf("Got pointer: %p\n", ptr);
         heart_beat();
 
         setup_protection_handler();
@@ -919,7 +995,7 @@ public:
             stack_debugf("Unable to lock hook\n");
             return;
         } else {
-            stack_debugf("Locked hook\n");
+            // stack_debugf("Locked hook\n");
         }
 
         AllocationSite site;
@@ -929,10 +1005,10 @@ public:
             site = {return_address, StackMap<void*, Allocation, TRACKED_ALLOCATIONS_PER_SITE>()};
         }
 
-        stack_debugf("Allocation at %X, size: %d\n", (uintptr_t)ptr, size);
-        stack_debugf("Return address: %X\n", return_address);
-        stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-        stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
+        // stack_debugf("Allocation at %X, size: %d\n", (uintptr_t)ptr, size);
+        // stack_debugf("Return address: %X\n", return_address);
+        // stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+        // stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
 
         Allocation allocation = Allocation(ptr, size);
         if (site.allocations.has(ptr)) {
@@ -976,11 +1052,11 @@ public:
         }
 
 
-        stack_debugf("Releasing lock\n");
+        // stack_debugf("Releasing lock\n");
         hook_lock.unlock();
         schedule();
 
-        stack_debugf("Leaving IntervalTestSuite::update\n");
+        // stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
     bool contains(void *ptr) {
@@ -1005,8 +1081,8 @@ public:
 
     void invalidate(void *ptr) {
         // std::lock_guard<std::mutex> lock(hook_lock);
-        stack_debugf("IntervalTestSuite::invalidate\n");
-        stack_debugf("Invalidating %X\n", ptr);
+        // stack_debugf("IntervalTestSuite::invalidate\n");
+        // stack_debugf("Invalidating %X\n", ptr);
         
         setup_protection_handler();
 
@@ -1017,7 +1093,7 @@ public:
         // });
         schedule();
         hook_lock.lock();
-        assert(allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
+        allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
             if (!found && site.allocations.has(ptr)) {
                 for (size_t i=0; i<tests.size(); i++) {
                     if (!tests[i]->has_quit()) {
@@ -1030,7 +1106,7 @@ public:
                 return true;
             }
             return found;
-        }, false));
+        }, false);
         hook_lock.unlock();
         /*
         for (size_t i=0; i<allocation_sites.max_size(); i++) {
@@ -1049,7 +1125,7 @@ public:
         }
         */
 
-        stack_debugf("Leaving IntervalTestSuite::invalidate\n");
+        // stack_debugf("Leaving IntervalTestSuite::invalidate\n");
     }
 
     void access(void *address, bool is_write) {
@@ -1327,7 +1403,7 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         last_address = si->si_addr;
     }
 
-    if (consecutive_faults_on_same_address >= 50) {
+    if (consecutive_faults_on_same_address >= MAX_CONSECUTIVE_PAGE_FAULTS) {
         stack_errorf("Caught %d consecutive faults on the same address\n", consecutive_faults_on_same_address);
         exit(1);
     }
