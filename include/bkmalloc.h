@@ -2374,6 +2374,7 @@ static void bk_init_hooks(void) {
     if (bk_hooks.handle == NULL) {
         if (bk_config.log_hooks) {
             bk_logf("error loading %shooks: %s\n", bk_config.hooks_file ? "" : "built-in ", dlerror());
+            bk_printf("error loading %shooks: %s\n", bk_config.hooks_file ? "" : "built-in ", dlerror());
         }
         return;
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <config.hpp>
+
 #include <stack_set.hpp>
 #include <stack_vec.hpp>
 #include <timer.hpp>
@@ -22,15 +24,6 @@
 #include <execinfo.h>
 #include <timer.hpp>
 #include <bit_vec.hpp>
-
-#define MPROTECT
-#ifndef MPROTECT
-#define PKEYS
-#endif
-
-#ifndef PAGE_SIZE
-#define PAGE_SIZE 4096
-#endif
 
 class PageInfo {
 public:
@@ -146,6 +139,33 @@ public:
     bool is_file_mapped() const {
         return file_mapped;
     }
+
+    bool operator==(const PageInfo &other) const {
+        return page_frame_number == other.page_frame_number;
+    }
+    bool operator!=(const PageInfo &other) const {
+        return page_frame_number != other.page_frame_number;
+    }
+
+    uint64_t count_overlapping_bytes(void *ptr, uint64_t size) const {
+        // Convert all to uintptr_t for pointer arithmetic
+        uintptr_t obj_start = (uintptr_t) ptr;
+        uintptr_t obj_end = obj_start + size;
+        uintptr_t page_start = (uintptr_t) start_address;
+        uintptr_t page_end = (uintptr_t) end_address;
+
+        // Check if object is completely outside the page
+        if (obj_end <= page_start || obj_start >= page_end) {
+            return 0;  // No overlap
+        }
+
+        // Calculate the overlap between object range and page range
+        uintptr_t overlap_start = (obj_start > page_start) ? obj_start : page_start;
+        uintptr_t overlap_end = (obj_end < page_end) ? obj_end : page_end;
+
+        // Return the number of overlapping bytes
+        return overlap_end - overlap_start;
+    }
 private:
     uint64_t page_frame_number;
     void* start_address, *end_address;
@@ -174,10 +194,22 @@ void perform_clear_soft_dirty_bits() {
     static int fd = -1;
     if (!is_open) {
 
-        int pid = getpid();
-        char filename[1024] = "";
-        stack_sprintf<128>(filename, "/proc/%d/clear_refs", pid);
+        uint64_t pid = getpid();
+        if (pid == 0) {
+            perror("getting pid of process");
+            pid = getpid();
+            if (pid == 0) {
+                perror("getting pid of process");
+                return;
+            }
+        }
 
+        bk_printf("pid: %d", pid);
+
+
+        char filename[1024] = "";
+        stack_sprintf<1000>(filename, "/proc/%u/clear_refs", pid);
+        stack_debugf("Opening % for pid %", filename, pid);
         // Open the clear_refs file
         // Only open it ONCE statically
         fd = open(filename, O_WRONLY);
@@ -242,7 +274,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
 
     int pid = getpid();
 
-    stack_debugf("count_resident_pages(%p, %lu, %d)\n", addr, size_in_bytes, pid);
+    // stack_debugf("count_resident_pages(%p, %lu, %d)\n", addr, size_in_bytes, pid);
 
     // Make size_in_bytes a multiple of the page size
     uint64_t size_in_pages = count_virtual_pages(addr, size_in_bytes);
@@ -368,7 +400,7 @@ bool get_page_info(void *addr, uint64_t size_in_bytes, StackVec<PageInfo, Size> 
 
     // close(pagemap_fd);
     // close(kpageflags_fd);
-    stack_debugf("Done with count_resident_pages\n");
+    // stack_debugf("Done with count_resident_pages\n");
 
     IS_PROTECTED = protection;
     return true;
@@ -446,7 +478,7 @@ void setup_protection_handler()
     }
 }
 
-const int TRACKED_ALLOCATIONS_PER_SITE = 1000;
+const int TRACKED_ALLOCATIONS_PER_SITE = 10000;
 const int TRACKED_ALLOCATION_SITES = 1000;
 const int TOTAL_TRACKED_ALLOCATIONS = TRACKED_ALLOCATIONS_PER_SITE * TRACKED_ALLOCATION_SITES;
 
@@ -741,6 +773,13 @@ namespace std {
             return std::hash<void*>()(alloc.ptr);
         }
     };
+
+    template <>
+    struct hash<PageInfo> {
+        std::size_t operator()(const PageInfo &page_info) const {
+            return std::hash<void*>()(page_info.get_virtual_address());
+        }
+    };
 }
 
 /// A map to track pages that incur a page fault.
@@ -795,6 +834,15 @@ public:
         return "Base IntervalTest";
     }
 
+    // A virtual method that gets called whenever a huge-page is allocated
+    // WARNING: This ONLY applies to hooks using BKMalloc. For the time being,
+    //          HeapPulse only uses BKMalloc, so this is fine.
+    virtual void on_huge_page_alloc(uint8_t *huge_page, size_t size) {}
+    // A virtual method that gets called whenever a huge-page is released
+    // WARNING: This ONLY applies to hooks using BKMalloc. For the time being,
+    //          HeapPulse only uses BKMalloc, so this is fine.
+    virtual void on_huge_page_free(uint8_t *huge_page, size_t size) {}
+
     // A virtual method that gets called when an allocation is made
     virtual void on_alloc(const Allocation &alloc) {}
     // A virtual method that gets called when an allocation is freed
@@ -834,6 +882,13 @@ public:
         }
     }
 
+    IntervalTestSuite &operator=(const IntervalTestSuite &other) {
+        this->config = other.config;
+        this->tests = other.tests;
+        this->allocation_sites = other.allocation_sites;
+        return *this;
+    }
+
     IntervalTestSuite(IntervalTestConfig config) {
         this->config = config;
         setup_protection_handler();
@@ -843,16 +898,62 @@ public:
         }
     }
 
-    bool can_update() const {
-        return !IS_PROTECTED && !is_done() && !is_in_interval;
+    void sanity_check() {
+        stack_debugf("Interval: %dms\n", config.period_milliseconds);
+        stack_debugf("Clear soft dirty bits: %d\n", config.clear_soft_dirty_bits);
+
+        // Check to make sure the members are initialized properly
+        for (size_t i=0; i<tests.size(); i++) {
+            assert(tests[i] != NULL);
+        }
+
+        assert(config.period_milliseconds > 0);
     }
 
+    void new_huge_page(uint8_t *huge_page, size_t size) {
+        if (size <= 4096) return;
+
+        for (size_t i=0; i<tests.size(); i++) {
+            if (!tests[i]->has_quit()) {
+                tests[i]->on_huge_page_alloc(huge_page, size);
+            }
+        }
+    }
+
+    void free_huge_page(uint8_t *huge_page, size_t size) {
+        if (size <= 4096) return;
+        for (size_t i=0; i<tests.size(); i++) {
+            if (!tests[i]->has_quit()) {
+                tests[i]->on_huge_page_free(huge_page, size);
+            }
+        }
+    }
+
+    /// @brief A function that indicates whether the interval test suite is capable of being updated by the hook
+    /// @return True if the interval test suite can be updated, false otherwise. If the interval test suite is
+    ///         actively performing an interval, it cannot be updated.
+    bool can_update() {
+        return !IS_PROTECTED && !is_done() && !is_in_interval;
+        /*
+        bool already_locked = !hook_lock.try_lock();
+        if (!already_locked) {
+            hook_lock.unlock();
+        }
+
+        return !IS_PROTECTED && !is_done() && !is_in_interval && !already_locked;
+        */
+    }
+
+    /// @brief Add an interval test to the test suite. This interval test will be run for every interval that
+    ///        the test suite is active.
+    /// @param test The interval test to add to the test suite
     void add_test(IntervalTest *test) {
         test->setup();
         tests.push(test);
         assert(tests.size() > 0);
     }
 
+    /// @brief Go through the live set of allocations and protect all their data against both reads and writes.
     void protect_allocations() {
         #ifdef GUARD_ACCESSES
         setup_protection_handler();
@@ -875,9 +976,13 @@ public:
         #endif
     }
 
+    /// @brief Update the interval test suites's liveset of allocations with a new allocation.
+    /// @param ptr The pointer to the allocation
+    /// @param size The size of the allocation
+    /// @param return_address The return address where the allocation came from
     void update(void *ptr, size_t size, uintptr_t return_address) {
-        stack_debugf("IntervalTestSuite::update\n");
-        stack_debugf("Got pointer: %p\n", ptr);
+        // stack_debugf("IntervalTestSuite::update\n");
+        // stack_debugf("Got pointer: %p\n", ptr);
         heart_beat();
 
         setup_protection_handler();
@@ -890,7 +995,7 @@ public:
             stack_debugf("Unable to lock hook\n");
             return;
         } else {
-            stack_debugf("Locked hook\n");
+            // stack_debugf("Locked hook\n");
         }
 
         AllocationSite site;
@@ -900,10 +1005,10 @@ public:
             site = {return_address, StackMap<void*, Allocation, TRACKED_ALLOCATIONS_PER_SITE>()};
         }
 
-        stack_debugf("Allocation at %X, size: %d\n", (uintptr_t)ptr, size);
-        stack_debugf("Return address: %X\n", return_address);
-        stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
-        stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
+        // stack_debugf("Allocation at %X, size: %d\n", (uintptr_t)ptr, size);
+        // stack_debugf("Return address: %X\n", return_address);
+        // stack_debugf("Allocation-site bookkeeping elements: %d\n", site.allocations.num_entries());
+        // stack_debugf("Allocation-sites: %d\n", allocation_sites.num_entries());
 
         Allocation allocation = Allocation(ptr, size);
         if (site.allocations.has(ptr)) {
@@ -947,11 +1052,11 @@ public:
         }
 
 
-        stack_debugf("Releasing lock\n");
+        // stack_debugf("Releasing lock\n");
         hook_lock.unlock();
         schedule();
 
-        stack_debugf("Leaving IntervalTestSuite::update\n");
+        // stack_debugf("Leaving IntervalTestSuite::update\n");
     }
 
     bool contains(void *ptr) {
@@ -976,8 +1081,8 @@ public:
 
     void invalidate(void *ptr) {
         // std::lock_guard<std::mutex> lock(hook_lock);
-        stack_debugf("IntervalTestSuite::invalidate\n");
-        stack_debugf("Invalidating %X\n", ptr);
+        // stack_debugf("IntervalTestSuite::invalidate\n");
+        // stack_debugf("Invalidating %X\n", ptr);
         
         setup_protection_handler();
 
@@ -988,7 +1093,7 @@ public:
         // });
         schedule();
         hook_lock.lock();
-        assert(allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
+        allocation_sites.reduce<bool>([&](auto key, AllocationSite &site, bool found) {
             if (!found && site.allocations.has(ptr)) {
                 for (size_t i=0; i<tests.size(); i++) {
                     if (!tests[i]->has_quit()) {
@@ -1001,7 +1106,7 @@ public:
                 return true;
             }
             return found;
-        }, false));
+        }, false);
         hook_lock.unlock();
         /*
         for (size_t i=0; i<allocation_sites.max_size(); i++) {
@@ -1020,7 +1125,7 @@ public:
         }
         */
 
-        stack_debugf("Leaving IntervalTestSuite::invalidate\n");
+        // stack_debugf("Leaving IntervalTestSuite::invalidate\n");
     }
 
     void access(void *address, bool is_write) {
@@ -1284,26 +1389,46 @@ IntervalTestSuite *IntervalTestSuite::get_instance() {
 // unprotect the page.
 static void protection_handler(int sig, siginfo_t *si, void *ucontext)
 {
-    stack_infof("PROTECTION HANDLER: Entering segfault handler with address %p\n", si->si_addr);
     ucontext_t *context = (ucontext_t *)ucontext;
+    long page_size = sysconf(_SC_PAGESIZE);
+    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
+    uint64_t error_code = context->uc_mcontext.gregs[REG_ERR];
+    bool is_write = error_code & 0x2;
+    static void *last_address = NULL;
+    static size_t consecutive_faults_on_same_address = 0;
+    if (last_address == si->si_addr) {
+        consecutive_faults_on_same_address++;
+    } else {
+        consecutive_faults_on_same_address = 0;
+        last_address = si->si_addr;
+    }
+
+    if (consecutive_faults_on_same_address >= MAX_CONSECUTIVE_PAGE_FAULTS) {
+        stack_errorf("Caught %d consecutive faults on the same address\n", consecutive_faults_on_same_address);
+        exit(1);
+    }
+
+
+    stack_debugf("PROTECTION HANDLER: Entering segfault handler with address %p and %s access\n", si->si_addr, is_write? "write": "read");
+    stack_debugf("Aligned address: %p\n", aligned_address);
+    [[maybe_unused]] char buf[1024];
+    // bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+    // system(buf);
     static std::mutex protection_lock;
     std::lock_guard<std::mutex> lock(protection_lock);
 
     if (si->si_addr == NULL) {
         stack_errorf("Caught NULL pointer access: segfault at NULL\n");
-        exit(1);
+        // exit(1);
+        return;
     } else {
         stack_debugf("Caught segfault at %p\n", si->si_addr);
     }
-    long page_size = sysconf(_SC_PAGESIZE);
-    void* aligned_address = (void*)((uint64_t)si->si_addr & ~(page_size - 1));
-    u64 error_code = context->uc_mcontext.gregs[REG_ERR];
-    bool is_write = error_code & 0x2;
 
 
     if (si->si_code == SEGV_ACCERR) {
         // printf("Invalid permissions for %s.\n", (si->si_code & 2) ? "write" : "read");
-        stack_infof("Invalid permissions for %s.\n",is_write? "write" : "read");
+        stack_debugf("Invalid permissions for %s.\n",is_write? "write" : "read");
     }
     
     if (is_working_thread()) {
@@ -1370,7 +1495,7 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         #ifndef SOFT_GUARD_ACCESSES
         if (is_write) {
             stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
-            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_EXEC) == -1) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
                 perror("mprotect");
                 exit(1);
             }
@@ -1382,7 +1507,7 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
             }
         }
         #else
-        stack_infof("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
+        stack_debugf("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
         if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
             perror("mprotect");
             exit(1);
@@ -1395,6 +1520,124 @@ static void protection_handler(int sig, siginfo_t *si, void *ucontext)
         //     mprotect(aligned_address, getpagesize(), PROT_READ);
         // }
     }
+    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
+    return;
+    /*
+    if (is_working_thread()) {
+        stack_warnf("Working thread, giving back access: 0x%X\n", (uint64_t)si->si_addr);
+        // if (mprotect(aligned_address, getpagesize(), PROT_NONE) == -1) {
+        //     perror("mprotect");
+        //     exit(1);
+        // }
+        if (is_write) {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) != 0) {
+                bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+                system(buf);
+                // perror("mprotect");
+                // exit(1);
+                return;
+            }
+        } else {
+            if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ) != 0) {
+                // exit(1);
+                return;
+            }
+        }
+    } else {
+        // If the access is a write, add it to the write page faults
+        stack_debugf("Error code: %x\n", error_code);
+        if (IS_PROTECTED) {
+            stack_warnf("PROTECTION HANDLER: Caught access of temporarily protected memory 0x%X\n", (void*)si->si_addr);
+            while (IS_PROTECTED) {}
+        }
+        
+        // if (is_write) {
+        //     stack_infof("Caught write page fault at 0x%X\n", (void*)si->si_addr);
+        //     mprotect(aligned_address, getpagesize(), PROT_WRITE);
+        //     // write_page_faults.insert(aligned_address);
+        // } else {
+        //     stack_infof("Caught read page fault at 0x%X\n", (void*)si->si_addr);
+        //     mprotect(aligned_address, getpagesize(), PROT_READ);
+        //     // read_page_faults.insert(aligned_address);
+        // }
+        // if (is_write) {
+        //     stack_infof("Giving back write access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_NONE) == -1) {
+        //         perror("mprotect");
+        //         exit(1);
+        //     }
+        // } else {
+        //     stack_infof("Giving back read access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_NONE) == -1) {
+        //         perror("mprotect");
+        //         exit(1);
+        //     }
+        // }
 
-    stack_infof("PROTECTION HANDLER: Leaving segfault handler\n");
+        // if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+        //     perror("mprotect");
+        //     exit(1);
+        // }
+        // IntervalTestSuite::get_instance()->access(si->si_addr, is_write);
+
+        if (is_write) {
+            mark_address_written(si->si_addr);
+        } else {
+            mark_address_read(si->si_addr);
+        }
+
+        #ifdef GUARD_ACCESSES
+        #ifndef SOFT_GUARD_ACCESSES
+
+        #ifdef DIFFERENTIATE_READS_AND_WRITES
+        if (mprotect(aligned_address, getpagesize(), (is_write? PROT_WRITE | PROT_READ: PROT_READ) | PROT_EXEC) == -1) {
+            perror("mprotect");
+            return;
+        }
+        #else
+        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
+            bk_sprintf(buf, "cat /proc/%d/maps", (int)getpid());
+            system(buf);
+            // perror("mprotect");
+            return;
+        }
+        #endif
+
+
+        // if (is_write) {
+        //     stack_debugf("Giving back write access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ |  PROT_EXEC) == -1) {
+        //         perror("mprotect");
+        //         // exit(1);
+        //         return;
+        //     }
+        // } else {
+        //     stack_debugf("Giving back read access to 0x%X\n", (void*)si->si_addr);
+        //     if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
+        //         perror("mprotect");
+        //         // exit(1);
+        //         return;
+        //     }
+        // }
+        #else
+        stack_infof("Giving back read and write access to 0x%X\n", (void*)si->si_addr);
+        if (mprotect(aligned_address, getpagesize(), PROT_WRITE | PROT_READ | PROT_EXEC) == -1) {
+            // perror("mprotect");
+            exit(1);
+        }
+        #endif
+        #endif
+        // if (is_write) {
+        //     mprotect(aligned_address, getpagesize(), PROT_WRITE);
+        // } else {
+        //     mprotect(aligned_address, getpagesize(), PROT_READ);
+        // }
+    }
+    // if (mprotect(aligned_address, getpagesize(), PROT_READ | PROT_EXEC) == -1) {
+    //     perror("mprotect");
+    //     return;
+    // }
+
+    stack_debugf("PROTECTION HANDLER: Leaving segfault handler\n");
+    */
 }

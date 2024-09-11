@@ -3,8 +3,32 @@
 #include <stack_io.hpp>
 #include <stack_vec.hpp>
 #include <stdint.h>
-#include <stdlib.h>
 #include <cassert>
+
+void strreverse(char* begin, char* end) {
+	char aux;
+	while(end>begin)
+		aux=*end, *end--=*begin, *begin++=aux;
+}
+	
+void itoa(int64_t value, char* str, int64_t base) {
+	static char num[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+	
+	char* wstr=str;
+	int64_t sign;
+	
+	// Validate base
+	if (base<2 || base>35){ *wstr='\0'; return; }
+	
+	// Take care of sign
+	if ((sign=value) < 0) value = -value;
+	// Conversion. Number is reversed.
+	do *wstr++ = num[value%base]; while(value/=base);
+	if(sign<0) *wstr++='-';
+	*wstr='\0';
+	// Reverse string
+	strreverse(str, wstr-1);
+}
 
 #define MAX_PRECISION	(10)
 static const double rounders[MAX_PRECISION + 1] =
@@ -34,6 +58,15 @@ char *ftoa(double f, char * buf, int precision)
 	if (precision > MAX_PRECISION)
 		precision = MAX_PRECISION;
 
+    if (f < rounders[precision])
+    {
+        *ptr++ = '0';
+        *ptr++ = '.';
+        *ptr++ = '0';
+        *ptr = '\0';
+        return buf;
+    }
+
 	// sign stuff
 	if (f < 0)
 	{
@@ -59,6 +92,15 @@ char *ftoa(double f, char * buf, int precision)
 	// integer part...
 	intPart = f;
 	f -= intPart;
+
+    if (f < rounders[precision])
+    {
+        *ptr++ = '0';
+        *ptr++ = '.';
+        *ptr++ = '0';
+        *ptr = '\0';
+        return buf;
+    }
 
 	if (!intPart)
 		*ptr++ = '0';
@@ -103,7 +145,10 @@ char *ftoa(double f, char * buf, int precision)
 			*ptr++ = '0' + c;
 			f -= c;
 		}
-	}
+	} else {
+        *ptr++ = '.';
+        *ptr++ = '0';
+    }
 
 	// terminating zero
 	*ptr = 0;
@@ -236,7 +281,7 @@ public:
     }
 
     bool operator!=(const char *str) const {
-        return !(*this == str);
+        return !(*this == StackString<Size>(str));
     }
 
     char& operator[](size_t index) {
@@ -300,15 +345,15 @@ public:
     template <typename T>
     static StackString<Size> from_number(T number, size_t radix=10) {
         if (radix == 10) {
-            if constexpr (std::is_same<T, int64_t>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value || std::is_same<T, int64_t>::value) {
+            if constexpr (std::is_integral<T>::value) {
                 char buf[Size];
-                ftoa((double)number, buf, 0);
+                itoa(number, buf, 10);
                 buf[Size - 1] = '\0';
                 return StackString<Size>(buf);
             }
         }
 
-        if constexpr (std::is_same<T, double>::value) {
+        if constexpr (std::is_floating_point<T>::value) {
             assert(radix == 10);
             char buf[Size];
             ftoa(number, buf, 6);
@@ -318,13 +363,15 @@ public:
 
         StackString<Size> str;
         bool negative = false;
-        if (number < 0) {
-            negative = true;
-            number = -number;
+        if constexpr (std::is_signed<T>::value) {
+            if (number < 0) {
+                negative = true;
+                number = -number;
+            }
         }
         while (number > 0) {
             // Confirm the number is an integer at compile time
-            if constexpr (std::is_same<T, int64_t>::value || std::is_same<T, size_t>::value || std::is_same<T, uintptr_t>::value || std::is_same<T, uint64_t>::value || std::is_same<T, int64_t>::value) {
+            if constexpr (std::is_integral<T>::value) {
                 if (number % radix < 10) {
                     str.push('0' + (number % radix));
                 } else {
@@ -361,11 +408,9 @@ public:
         buf[i] = '\0';
 
         T number = 0;
-        if constexpr (std::is_same<T, double>::value) {
+        if constexpr (std::is_floating_point<T>::value) {
             return atof(buf);
-        } else if constexpr (std::is_same<T, int64_t>::value) {
-            return atoi(buf);
-        } else if constexpr (std::is_same<T, size_t>::value) {
+        } if constexpr (std::is_integral<T>::value) {
             return atoi(buf);
         } else {
             return 0;
@@ -433,21 +478,17 @@ public:
         return str;
     }
 
-    // static StackString<Size> from(int64_t number) {
-    //     return from_number(number);
-    // }
-
     static StackString<Size> from(int64_t number) {
         return from_number(number);
     }
 
-    static StackString<Size> from(uint64_t number) {
+    static StackString<Size> from(size_t number) {
         return from_number(number);
     }
 
-    // static StackString<Size> from(size_t number) {
-    //     return from_number(number);
-    // }
+    static StackString<Size> from(pid_t number) {
+        return from_number(number);
+    }
 
     static StackString<Size> from(double number) {
         return from_number(number);
@@ -564,9 +605,9 @@ private:
         for (size_t i=0; fmt[i] != '\0' && i < Size; i++) {
             if (fmt[i] == '%') {
                 if (fmt[i + 1] == '%') {
-                    format_append_impl(arg);
+                    format_append_impl<Arg>(arg);
                 } else if (fmt[i + 1] == '\0') {
-                    format_append_impl(arg);
+                    format_append_impl<Arg>(arg);
                     return;
                 } else if (fmt[i + 1] == 'd') {
                     // Check if the cast can be done safely
@@ -574,6 +615,15 @@ private:
                         format_append_impl((int64_t)arg);
                     } else if constexpr (std::is_same<Arg, size_t>::value) {
                         format_append_impl((int64_t)arg);
+                    } else {
+                        format_append_impl(arg);
+                    }
+                } else if (fmt[i + 1] == 'u') {
+                    // Check if the cast can be done safely
+                    if constexpr (std::is_same<Arg, int64_t>::value || std::is_same<Arg, int>::value) {
+                        format_append_impl((uint64_t)arg);
+                    } else if constexpr (std::is_same<Arg, size_t>::value) {
+                        format_append_impl((uint64_t)arg);
                     } else {
                         format_append_impl(arg);
                     }
@@ -637,22 +687,21 @@ private:
     }
 
     // Format a string and append it to this string
-    void format_append_impl(int64_t number) {
-        format_append_impl(StackString<Size>::from_number(number));
-    }
-
-    void format_append_impl(uint64_t number) {
-        format_append_impl(StackString<Size>::from_number(number));
-    }
-
-    void format_append_impl(int number) {
-        format_append_impl(StackString<Size>::from_number((int64_t)number));
+    template<typename T>
+    void format_append_impl(T number) {
+        if constexpr (std::is_integral<T>::value) {
+            format_append_impl(StackString<Size>::from_number(number));
+        } else if constexpr (std::is_floating_point<T>::value) {
+            format_append_impl(StackString<Size>::from_number(number));
+        } else {
+            format_append_impl(number);
+        }
     }
     
-    // Format a string and append it to this string
-    void format_append_impl(double number) {
-        format_append_impl(StackString<Size>::from_number(number));
-    }
+    // // Format a string and append it to this string
+    // void format_append_impl(double number) {
+    //     format_append_impl(StackString<Size>::from_number(number));
+    // }
 
     // Format a string and append it to this string
     template <size_t N>
@@ -668,6 +717,10 @@ private:
     }
 
     void format_append_impl(const char *str) {
+        format_append_impl(StackString<Size>::from(str));
+    }
+
+    void format_append_impl(const unsigned char *str) {
         format_append_impl(StackString<Size>::from(str));
     }
 
