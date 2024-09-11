@@ -50,11 +50,29 @@ for test_dir in *; do
         fi
         # Skip directories that don't have a test.cpp file
         if [ ! -f "$test_dir/test.cpp" ]; then
-            echo "Skipping test in $test_dir🚨"
             continue
         fi
         echo -ne "Building test in $test_dir🚧"\\r
         g++ $test_dir/test.cpp -o $test_dir/test.exe -g -O0 -pthread || { echo "Failed to compile test in $test_dir❌"; exit 1; }
+        echo "Compiled test in $test_dir✅      "
+    fi
+done
+
+# For every test directory in /tests, compile `test.cpp`
+for test_dir in *; do
+    if [ -d "$test_dir" ]; then
+        # Check if there are arguments. If so, skip the test directories that are not in the arguments
+        if [ $# -gt 0 ]; then
+            if [[ ! " $@ " =~ "$test_dir" ]]; then
+                continue
+            fi
+        fi
+        # Skip directories that don't have a test.cpp file
+        if [ ! -f "$test_dir/test.f90" ]; then
+            continue
+        fi
+        echo -ne "Building test in $test_dir🚧"\\r
+        gfortran $test_dir/test.f90 -o $test_dir/test.exe -g -O0 -pthread || { echo "Failed to compile test in $test_dir❌"; exit 1; }
         echo "Compiled test in $test_dir✅      "
     fi
 done
