@@ -77,7 +77,7 @@ for test_dir in *; do
             fi
         fi
         # Skip directories that don't have a test.cpp file
-        if [ ! -f "$test_dir/test.cpp" ]; then
+        if [ ! -f "$test_dir/test.exe" ]; then
             echo "Skipping test in $test_dir🚨"
             continue
         fi
