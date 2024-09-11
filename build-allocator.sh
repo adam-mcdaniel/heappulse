@@ -52,6 +52,7 @@ fi
 pushd build > /dev/null
 echo "Building in $(pwd)🏗️"
 
+# cmake -DCMAKE_BUILD_TYPE=Release .. || { echo "Failed to run cmake❌"; exit 1; }
 cmake .. || { echo "Failed to run cmake❌"; exit 1; }
 # Run make and check if it was successful
 make || { echo "Failed to build allocator❌"; exit 1; }
